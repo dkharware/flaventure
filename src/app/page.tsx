@@ -92,7 +92,7 @@ export default function Home() {
           </div>
           <div className="mx-auto grid grid-cols-1 gap-6 pt-12 sm:grid-cols-2 md:grid-cols-4">
             {categories.map((category) => (
-              <Link key={category.name} href={`/templates?category=${category.name}`} className="block">
+              <Link key={category.name} href={`/templates?category=${category.name}`} className="block h-full">
                 <div className={`flex flex-col items-center space-y-2 rounded-lg border p-6 text-center transition-all hover:shadow-lg hover:-translate-y-1 h-full ${category.bgColor} ${category.borderColor}`}>
                   <div className={`${category.iconColor}`}>{React.cloneElement(category.icon, { size: 32 })}</div>
                   <h3 className="text-lg font-bold text-foreground">{category.name}</h3>
