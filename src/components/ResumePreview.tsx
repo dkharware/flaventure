@@ -19,7 +19,6 @@ import { TimelineTemplate } from './templates/Timeline';
 import { TwoColumnTemplate } from './templates/TwoColumn';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
-import saveAs from 'html-to-docx';
 
 const templateComponents: { [key: string]: React.ComponentType<any> } = {
   professional: ProfessionalTemplate,
@@ -43,27 +42,9 @@ export default function ResumePreview() {
   const componentToPrintRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = templateComponents[templateId];
 
-  const handleDownload = async () => {
-    const { personalInfo } = resumeData;
-    const content = componentToPrintRef.current;
-    if (content) {
-      await saveAs(content.outerHTML, `${personalInfo.name.replace(/ /g, '_')}_Resume.docx`);
-    }
-  };
-
-
   return (
     <>
       <div className="bg-gray-100 min-h-full" id="preview-area">
-        <div className="sticky top-0 bg-gray-100 z-10 p-2 pb-0">
-          <div className="flex justify-end">
-            <button onClick={handleDownload} className={cn(buttonVariants())}>
-              <Download className="mr-2 h-4 w-4" />
-              Download DOCX
-            </button>
-          </div>
-        </div>
-        
         <div className="p-4 lg:p-8 pt-2">
             <div id="printable-area" className="bg-white shadow-lg rounded-lg overflow-hidden">
                 <div ref={componentToPrintRef} className="w-full aspect-[210/297]">

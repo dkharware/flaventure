@@ -8,7 +8,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Download } from 'lucide-react';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
-import saveAs from 'html-to-docx';
 
 const CoverLetterPreview = React.forwardRef<HTMLDivElement, { formData: any }>(({ formData }, ref) => {
     return (
@@ -57,13 +56,6 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
 
   const componentToPrintRef = useRef<HTMLDivElement>(null);
 
-  const handleDownload = async () => {
-    const content = componentToPrintRef.current;
-    if (content) {
-       await saveAs(content.outerHTML, `${formData.fullName.replace(/ /g, '_')}_Cover_Letter.docx`);
-    }
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -110,16 +102,7 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
           </Card>
         </div>
         <div id="preview-area" className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
-          <div className="sticky top-0 bg-gray-100 z-10">
-            <div className="flex justify-end mb-4">
-              <button onClick={handleDownload} className={cn(buttonVariants())}>
-                  <Download className="mr-2 h-4 w-4" /> Download DOCX
-              </button>
-            </div>
-          </div>
-          
           <CoverLetterPreview formData={formData} ref={componentToPrintRef} />
-
         </div>
       </div>
     </>
