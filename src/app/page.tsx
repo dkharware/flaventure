@@ -18,7 +18,7 @@ const testimonials = [
   {
     name: 'Priya S.',
     title: 'Marketing Head',
-    quote: 'ResumeFlow made it incredibly simple to create a professional resume. The AI suggestions for my marketing profile were spot on!',
+    quote: 'EasyFreeCV made it incredibly simple to create a professional resume. The AI suggestions for my marketing profile were spot on!',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'woman portrait',
   },
@@ -32,7 +32,7 @@ const testimonials = [
   {
     name: 'Aisha M.',
     title: 'B.Com Graduate',
-    quote: 'Being a recent graduate from Mumbai, I was unsure how to structure my resume. ResumeFlow was a lifesaver!',
+    quote: 'Being a recent graduate from Mumbai, I was unsure how to structure my resume. EasyFreeCV was a lifesaver!',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'woman professional',
   },
@@ -40,7 +40,7 @@ const testimonials = [
 
 const faqs = [
   {
-    question: 'Is ResumeFlow free to use?',
+    question: 'Is EasyFreeCV free to use?',
     answer: 'Yes, our basic features, including access to all templates and the resume editor, are completely free. We believe everyone should have access to tools that help them succeed.',
   },
   {
@@ -93,7 +93,7 @@ export default function Home() {
         <div className="container px-6 md:px-10">
           <h2 className="text-3xl font-bold font-headline tracking-tighter text-center sm:text-4xl">Loved by Professionals Worldwide</h2>
           <p className="mx-auto max-w-[700px] text-center text-muted-foreground md:text-xl/relaxed mt-2">
-            See what our users are saying about ResumeFlow.
+            See what our users are saying about EasyFreeCV.
           </p>
           <div className="mx-auto grid grid-cols-1 gap-8 pt-12 sm:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((testimonial) => (

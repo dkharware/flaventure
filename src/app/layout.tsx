@@ -8,7 +8,7 @@ import { NavigationEvents } from '@/components/NavigationEvents';
 import { Suspense } from 'react';
 
 export const metadata: Metadata = {
-  title: 'ResumeFlow',
+  title: 'EasyFreeCV',
   description: 'Create your professional resume in minutes.',
 };
 

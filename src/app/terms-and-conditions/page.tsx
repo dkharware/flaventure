@@ -11,7 +11,7 @@ export default function TermsAndConditionsPage() {
           <p>Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
           
           <p>
-            Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the ResumeFlow website (the "Service") operated by ResumeFlow ("us", "we", or "our").
+            Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the EasyFreeCV website (the "Service") operated by EasyFreeCV ("us", "we", or "our").
           </p>
           <p>
             Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who access or use the Service.
@@ -24,7 +24,7 @@ export default function TermsAndConditionsPage() {
           
           <h3 className="text-xl font-headline text-foreground">Intellectual Property</h3>
           <p>
-            The Service and its original content (excluding Content provided by users), features, and functionality are and will remain the exclusive property of ResumeFlow and its licensors.
+            The Service and its original content (excluding Content provided by users), features, and functionality are and will remain the exclusive property of EasyFreeCV and its licensors.
           </p>
 
           <h3 className="text-xl font-headline text-foreground">User Content</h3>
