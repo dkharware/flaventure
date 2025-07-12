@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useRef } from 'react';
@@ -39,7 +40,7 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
 };
 
 export default function ResumePreview() {
-  const { templateId } = useResume();
+  const { templateId, resumeData: { personalInfo } } = useResume();
   const componentToPrintRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = templateComponents[templateId];
 
@@ -48,8 +49,6 @@ export default function ResumePreview() {
     documentTitle: `${personalInfo.name} - Resume`,
     onAfterPrint: () => console.log('Printed successfully!'),
   });
-
-  const { resumeData: { personalInfo } } = useResume();
 
   return (
     <div className="bg-gray-100 min-h-full" id="preview-area">
