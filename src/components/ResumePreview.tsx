@@ -3,7 +3,6 @@
 import React, { useRef } from 'react';
 import { useResume } from './Editor';
 import { useReactToPrint } from 'react-to-print';
-import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { ProfessionalTemplate } from './templates/Professional';
 import { CreativeTemplate } from './templates/Creative';
@@ -19,6 +18,8 @@ import { PortfolioTemplate } from './templates/Portfolio';
 import { SalesTemplate } from './templates/Sales';
 import { TimelineTemplate } from './templates/Timeline';
 import { TwoColumnTemplate } from './templates/TwoColumn';
+import { buttonVariants } from './ui/button';
+import { cn } from '@/lib/utils';
 
 const templateComponents: { [key: string]: React.ComponentType } = {
   professional: ProfessionalTemplate,
@@ -51,10 +52,10 @@ export default function ResumePreview() {
   return (
     <div className="sticky top-0">
       <div className="flex justify-end mb-4">
-        <Button onClick={handlePrint}>
+        <button onClick={handlePrint} className={cn(buttonVariants())}>
           <Download className="mr-2 h-4 w-4" />
           Download PDF
-        </Button>
+        </button>
       </div>
       <div className="bg-white shadow-lg rounded-lg p-2">
         <div ref={componentRef} className="w-full aspect-[210/297]">

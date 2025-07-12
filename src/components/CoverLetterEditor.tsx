@@ -7,8 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Button } from './ui/button';
 import { Download } from 'lucide-react';
+import { buttonVariants } from './ui/button';
+import { cn } from '@/lib/utils';
 
 export default function CoverLetterEditor({ templateId }: { templateId: string }) {
   const [formData, setFormData] = useState({
@@ -76,7 +77,9 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
       <div className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
         <div className="sticky top-0">
           <div className="flex justify-end mb-4">
-            <Button onClick={handlePrint}><Download className="mr-2 h-4 w-4" /> Download PDF</Button>
+            <button onClick={handlePrint} className={cn(buttonVariants())}>
+                <Download className="mr-2 h-4 w-4" /> Download PDF
+            </button>
           </div>
           <div ref={componentRef}>
             <Card>
