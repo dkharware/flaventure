@@ -3,9 +3,12 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { LoaderProvider } from '@/context/LoaderContext';
+import { NavigationEvents } from '@/components/NavigationEvents';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
-  title: 'ResumeFlow',
+  title: 'EasyFreeCV',
   description: 'Create your professional resume in minutes.',
 };
 
@@ -22,12 +25,17 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </div>
-        <Toaster />
+        <LoaderProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
+            <Toaster />
+            <Suspense fallback={null}>
+              <NavigationEvents />
+            </Suspense>
+        </LoaderProvider>
       </body>
     </html>
   );
