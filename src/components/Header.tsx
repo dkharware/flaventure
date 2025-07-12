@@ -80,41 +80,44 @@ export default function Header() {
               <NavigationMenuContent>
                 <div className="grid grid-cols-12 gap-x-8 p-4 md:w-[600px] lg:w-[700px]">
                   <div className="col-span-4">
-                    <div className="relative h-full flex flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md">
-                      <Image 
-                        src="https://placehold.co/400x565.png"
-                        data-ai-hint="resume professional"
-                        alt="Featured Template"
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-md opacity-20"
-                      />
-                      <FileText className="h-6 w-6 text-primary" />
-                      <div className="mb-2 mt-4 text-lg font-medium">ResumeFlow</div>
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Beautifully designed, AI-powered resume templates.
-                      </p>
-                    </div>
+                     <NavigationMenuLink asChild>
+                      <Link
+                        href="/templates"
+                        className="relative h-full flex flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                      >
+                        <Image 
+                          src="https://placehold.co/400x565.png"
+                          data-ai-hint="resume professional"
+                          alt="Featured Template"
+                          fill
+                          objectFit="cover"
+                          className="rounded-md opacity-20"
+                        />
+                        <FileText className="h-6 w-6 text-primary" />
+                        <div className="mb-2 mt-4 text-lg font-medium">ResumeFlow</div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          Beautifully designed, AI-powered resume templates.
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
                   </div>
                   <ul className="col-span-8 grid grid-cols-2 gap-2">
                     {categories.map((component) => (
-                      <ListItem
-                        key={component.title}
-                        href={component.href}
-                        title={component.title}
-                      >
-                        <div className="flex items-start gap-2">
-                          <div className="text-primary mt-0.5">{component.icon}</div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{component.description}</p>
-                        </div>
-                      </ListItem>
+                      <Link key={component.title} href={component.href} legacyBehavior passHref>
+                        <ListItem title={component.title}>
+                          <div className="flex items-start gap-2">
+                            <div className="text-primary mt-0.5">{component.icon}</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{component.description}</p>
+                          </div>
+                        </ListItem>
+                      </Link>
                     ))}
                   </ul>
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/editor/professional" passHref>
+              <Link href="/editor/professional" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Create Resume
                 </NavigationMenuLink>
