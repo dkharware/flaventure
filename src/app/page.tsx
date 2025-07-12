@@ -16,7 +16,7 @@ const testimonials = [
   {
     name: 'Sarah L.',
     title: 'Marketing Manager',
-    quote: 'ResumeFlow made it incredibly easy to create a professional-looking resume in minutes. The AI suggestions were a game-changer!',
+    quote: 'EasyFreeCV made it incredibly easy to create a professional-looking resume in minutes. The AI suggestions were a game-changer!',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'woman portrait',
   },
@@ -30,7 +30,7 @@ const testimonials = [
   {
     name: 'Jessica P.',
     title: 'Recent Graduate',
-    quote: 'As a recent graduate, I was struggling with my resume. ResumeFlow helped me highlight my skills and projects perfectly.',
+    quote: 'As a recent graduate, I was struggling with my resume. EasyFreeCV helped me highlight my skills and projects perfectly.',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'woman professional',
   },
@@ -38,7 +38,7 @@ const testimonials = [
 
 const faqs = [
   {
-    question: 'Is ResumeFlow free to use?',
+    question: 'Is EasyFreeCV free to use?',
     answer: 'Yes, our basic features, including access to all templates and the resume editor, are completely free. We believe everyone should have access to tools that help them succeed.',
   },
   {
@@ -64,7 +64,7 @@ export default function Home() {
           <div className="flex flex-col items-center space-y-4 text-center">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none">
-                Craft Your Perfect Resume with ResumeFlow
+                Craft Your Perfect Resume with EasyFreeCV
               </h1>
               <p className="max-w-[600px] text-primary-foreground/80 md:text-xl">
                 Choose from dozens of professional templates, get AI-powered content suggestions, and create a standout resume in minutes.
@@ -94,7 +94,7 @@ export default function Home() {
           </div>
           <div className="mx-auto grid grid-cols-1 gap-6 pt-12 sm:grid-cols-2 md:grid-cols-4">
             {categories.map((category) => (
-              <div key={category.name} className="flex flex-col items-center space-y-2 rounded-lg border bg-card p-6 text-center transition-all hover:shadow-lg">
+              <div key={category.name} className="flex flex-col items-center space-y-2 rounded-lg border bg-card p-6 text-center transition-all hover:shadow-lg hover:-translate-y-1">
                 <div className="text-primary">{React.cloneElement(category.icon, { size: 32 })}</div>
                 <h3 className="text-lg font-bold">{category.name}</h3>
                 <p className="text-sm text-muted-foreground">Professionally designed {category.name.toLowerCase()} templates.</p>
@@ -109,7 +109,7 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline tracking-tighter text-center sm:text-4xl">Loved by Professionals Worldwide</h2>
           <p className="mx-auto max-w-[700px] text-center text-muted-foreground md:text-xl/relaxed mt-2">
-            See what our users are saying about ResumeFlow.
+            See what our users are saying about EasyFreeCV.
           </p>
           <div className="mx-auto grid grid-cols-1 gap-8 pt-12 sm:grid-cols-2 lg:grid-cols-3">
             {testimonials.map((testimonial) => (

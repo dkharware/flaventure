@@ -1,5 +1,13 @@
 import Link from 'next/link';
-import { FileText, Github, Twitter, Linkedin } from 'lucide-react';
+import { Github, Twitter, Linkedin } from 'lucide-react';
+
+const Logo = () => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="32" rx="8" fill="hsl(var(--primary))"/>
+      <path d="M10 10V22H12.5V17.5H15.5V22H18V10H15.5V15H12.5V10H10Z" fill="hsl(var(--primary-foreground))"/>
+      <path d="M20 10V12.5H22V22H24V10H20Z" fill="hsl(var(--primary-foreground))"/>
+    </svg>
+  );
 
 export default function Footer() {
   return (
@@ -7,9 +15,9 @@ export default function Footer() {
       <div className="container mx-auto py-12 px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2" aria-label="ResumeFlow Home">
-              <FileText className="w-8 h-8 text-primary" />
-              <h1 className="text-2xl font-headline font-bold text-foreground">ResumeFlow</h1>
+            <Link href="/" className="flex items-center gap-2" aria-label="EasyFreeCV Home">
+              <Logo />
+              <h1 className="text-2xl font-headline font-bold text-foreground">EasyFreeCV</h1>
             </Link>
             <p className="text-sm">
               Craft your professional resume in minutes with our AI-powered builder and beautiful templates.
@@ -36,14 +44,14 @@ export default function Footer() {
           <div>
             <h3 className="font-headline font-semibold text-foreground mb-4">Connect With Us</h3>
             <div className="flex space-x-4">
-              <Link href="#" aria-label="GitHub" className="hover:text-primary transition-colors"><Github size={20} /></Link>
-              <Link href="#" aria-label="Twitter" className="hover:text-primary transition-colors"><Twitter size={20} /></Link>
-              <Link href="#" aria-label="LinkedIn" className="hover:text-primary transition-colors"><Linkedin size={20} /></Link>
+              <Link href="#" aria-label="GitHub" className="hover:text-primary transition-all hover:-translate-y-1 block"><Github size={20} /></Link>
+              <Link href="#" aria-label="Twitter" className="hover:text-primary transition-all hover:-translate-y-1 block"><Twitter size={20} /></Link>
+              <Link href="#" aria-label="LinkedIn" className="hover:text-primary transition-all hover:-translate-y-1 block"><Linkedin size={20} /></Link>
             </div>
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-border/50 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} ResumeFlow. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} EasyFreeCV. All rights reserved.</p>
         </div>
       </div>
     </footer>
