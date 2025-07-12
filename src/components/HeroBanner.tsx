@@ -8,8 +8,8 @@ import { ArrowRight } from 'lucide-react';
 
 export function HeroBanner() {
   return (
-    <section className="w-full py-20 md:py-32 lg:py-40 bg-background">
-      <div className="container px-4 md:px-6">
+    <section className="w-full py-20 md:py-32 lg:py-40 bg-white">
+      <div className="container px-6 md:px-10">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col justify-center space-y-6">
             <h1 className="text-4xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none text-foreground">

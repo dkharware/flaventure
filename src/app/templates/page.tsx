@@ -27,7 +27,7 @@ export default function TemplatesPage() {
   const categories = ['All', ...new Set(templates.map(t => t.category))];
 
   return (
-    <div className="container mx-auto py-12 px-4 md:px-6">
+    <div className="container mx-auto py-12 px-6 md:px-10">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">Choose Your Template</h1>
         <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Select a professionally designed template to start building your standout resume.</p>

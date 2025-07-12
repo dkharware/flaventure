@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="container mx-auto py-12 px-4 md:px-6">
+    <div className="container mx-auto py-12 px-6 md:px-10">
       <Card className="max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle className="text-3xl font-headline">Privacy Policy</CardTitle>
@@ -11,7 +11,7 @@ export default function PrivacyPolicyPage() {
           <p>Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
           
           <p>
-            ResumeFlow ("us", "we", or "our") operates the ResumeFlow website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
+            EasyFreeCV ("us", "we", or "our") operates the EasyFreeCV website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
           </p>
 
           <h3 className="text-xl font-headline text-foreground">Information Collection and Use</h3>

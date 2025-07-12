@@ -64,8 +64,8 @@ export default function Home() {
       <HeroBanner />
 
       {/* Categories Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-        <div className="container px-4 md:px-6">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <div className="container px-6 md:px-10">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Find the Perfect Template for Your Industry</h2>
@@ -87,8 +87,8 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <div className="container px-6 md:px-10">
           <h2 className="text-3xl font-bold font-headline tracking-tighter text-center sm:text-4xl">Loved by Professionals Worldwide</h2>
           <p className="mx-auto max-w-[700px] text-center text-muted-foreground md:text-xl/relaxed mt-2">
             See what our users are saying about EasyFreeCV.
@@ -111,8 +111,8 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-        <div className="container px-4 md:px-6">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <div className="container px-6 md:px-10">
           <h2 className="text-3xl font-bold font-headline tracking-tighter text-center sm:text-4xl">Frequently Asked Questions</h2>
           <div className="mx-auto mt-8 max-w-3xl">
             <Accordion type="single" collapsible className="w-full">

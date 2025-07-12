@@ -13,7 +13,7 @@ const links = [
 
 export default function SitemapPage() {
   return (
-    <div className="container mx-auto py-12 px-4 md:px-6">
+    <div className="container mx-auto py-12 px-6 md:px-10">
       <Card className="max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle className="text-3xl font-headline">Sitemap</CardTitle>
