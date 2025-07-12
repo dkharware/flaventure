@@ -35,12 +35,10 @@ export default function Editor({ templateId }: { templateId: string }) {
   return (
     <ResumeContext.Provider value={contextValue}>
       <div className="grid grid-cols-1 md:grid-cols-[450px_1fr] xl:grid-cols-[500px_1fr] min-h-[calc(100vh-81px)]">
-        <div className="bg-card border-r overflow-y-auto">
+        <div className="bg-card border-r overflow-y-auto no-print" id="editor-form">
           <ResumeForm />
         </div>
-        <div className="p-4 lg:p-8 overflow-y-auto">
-          <ResumePreview />
-        </div>
+        <ResumePreview />
       </div>
     </ResumeContext.Provider>
   );

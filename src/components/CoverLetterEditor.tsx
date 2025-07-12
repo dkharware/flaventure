@@ -67,27 +67,33 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     <>
      <style jsx global>{`
         @media print {
+          body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
           .no-print {
-            display: none;
-          }
-          #editor-form {
-            display: none;
-          }
-          #preview-area {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            background-color: #fff;
+            display: none !important;
           }
           #printable-cover-letter {
-            box-shadow: none;
-            border: none;
+             display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+          }
+           #printable-cover-letter > div {
+             box-shadow: none;
+             border: none;
+             width: 100%;
+             height: 100%;
+           }
+           @page {
+            size: A4;
+            margin: 0;
           }
         }
       `}</style>
@@ -130,16 +136,16 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
           </Card>
         </div>
         <div id="preview-area" className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
-          <div className="sticky top-0">
-            <div className="flex justify-end mb-4 no-print">
+          <div className="sticky top-0 bg-gray-100 z-10 no-print">
+            <div className="flex justify-end mb-4">
               <button onClick={handlePrint} className={cn(buttonVariants())}>
                   <Download className="mr-2 h-4 w-4" /> Download PDF
               </button>
             </div>
-            
-            <CoverLetterPreview formData={formData} />
-
           </div>
+          
+          <CoverLetterPreview formData={formData} />
+
         </div>
       </div>
     </>

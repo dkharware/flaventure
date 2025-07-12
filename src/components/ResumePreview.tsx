@@ -50,15 +50,17 @@ export default function ResumePreview() {
       <style jsx global>{`
         @media print {
           body {
-            background-color: #fff;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
           }
           .no-print {
-            display: none;
+            display: none !important;
           }
           #printable-resume {
+            display: block;
             position: absolute;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             margin: 0;
@@ -68,17 +70,29 @@ export default function ResumePreview() {
             transform: scale(1);
             background-color: #fff;
           }
+           @page {
+            size: A4;
+            margin: 0;
+          }
+        }
+        #editor-form {
+          display: none;
+        }
+        #preview-area {
+          background-color: #f3f4f6;
         }
       `}</style>
-      <div className="sticky top-0 bg-gray-100">
-        <div className="flex justify-end mb-4 no-print p-4 lg:p-8 pb-0">
-          <button onClick={handlePrint} className={cn(buttonVariants())}>
-            <Download className="mr-2 h-4 w-4" />
-            Download PDF
-          </button>
+      <div className="bg-gray-100 min-h-full" id="preview-area">
+        <div className="sticky top-0 bg-gray-100 z-10 no-print">
+          <div className="flex justify-end p-4 lg:p-8 pb-4">
+            <button onClick={handlePrint} className={cn(buttonVariants())}>
+              <Download className="mr-2 h-4 w-4" />
+              Download PDF
+            </button>
+          </div>
         </div>
         
-        <div className="p-4 lg:p-8">
+        <div className="p-4 lg:p-8 pt-0">
             <div id="printable-resume" className="bg-white shadow-lg rounded-lg">
                 <div className="w-full aspect-[210/297] overflow-hidden">
                     {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
