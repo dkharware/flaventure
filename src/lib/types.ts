@@ -91,4 +91,6 @@ export interface Template {
   category: string;
   imageUrl: string;
   hint: string;
+  isPremium?: boolean;
+  price?: number;
 }
