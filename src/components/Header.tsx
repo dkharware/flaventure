@@ -2,8 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { FileText, Briefcase, Star, UserCircle, FileText as FileTextIcon, Crown } from 'lucide-react';
+import { FileText, Briefcase, Star, UserCircle, FileText as FileTextIcon, Crown, PenSquare, LayoutTemplate, Palette, Sparkles, BookUser } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,54 +15,61 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 
-const categories: { title: string; href: string; description: string; icon: React.ReactElement }[] = [
+const featureLinks: { title: string; href: string; description: string; icon: React.ReactElement }[] = [
   {
-    title: 'Modern',
-    href: '/templates',
-    description: 'Sleek templates for the contemporary professional.',
-    icon: <Briefcase className="h-4 w-4" />,
+    title: 'AI Resume Writer',
+    href: '/editor/professional',
+    description: 'Get AI-powered suggestions for skills and summaries.',
+    icon: <Sparkles className="h-6 w-6 text-primary" />,
   },
   {
-    title: 'Creative',
-    href: '/templates',
-    description: 'Express your personality with visually striking resumes.',
-    icon: <Star className="h-4 w-4" />,
+    title: 'Template Customizer',
+    href: '/editor/professional',
+    description: 'Easily edit and customize your resume content.',
+    icon: <PenSquare className="h-6 w-6 text-primary" />,
   },
   {
-    title: 'Corporate',
+    title: 'Explore All Templates',
     href: '/templates',
-    description: 'Classic, professional designs perfect for any industry.',
-    icon: <UserCircle className="h-4 w-4" />,
+    description: 'Browse our full collection of professional designs.',
+    icon: <Palette className="h-6 w-6 text-primary" />,
   },
   {
-    title: 'Simple',
-    href: '/templates',
-    description: 'Clean, minimalist templates that focus on content.',
-    icon: <FileTextIcon className="h-4 w-4" />,
+    title: 'Cover Letter Builder',
+    href: '#', // TBD
+    description: 'Create matching cover letters for your resumes.',
+    icon: <BookUser className="h-6 w-6 text-primary" />,
   },
-  {
-    title: 'Premium',
-    href: '/templates',
-    description: 'Unlock exclusive designs with our premium templates.',
-    icon: <Crown className="h-4 w-4" />,
-  }
 ];
 
-const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'>>(
-  ({ className, title, children, ...props }, ref) => {
+const templateLinks = [
+  { title: 'Modern', href: '/templates' },
+  { title: 'Creative', href: '/templates' },
+  { title: 'Corporate', href: '/templates' },
+  { title: 'Simple', href: '/templates' },
+  { title: 'Technical', href: '/templates' },
+  { title: 'Academic', href: '/templates' },
+];
+
+
+const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'> & { icon: React.ReactElement }>(
+  ({ className, title, children, icon, ...props }, ref) => {
     return (
       <li>
         <NavigationMenuLink asChild>
           <a
             ref={ref}
             className={cn(
-              'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+              'flex items-start gap-4 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
               className
             )}
             {...props}
           >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
+            <div className="flex-shrink-0">{icon}</div>
+            <div className="flex-grow">
+              <div className="text-sm font-bold leading-none">{title}</div>
+              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
+            </div>
           </a>
         </NavigationMenuLink>
       </li>
@@ -98,43 +104,33 @@ export default function Header() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Resume Templates</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid grid-cols-12 gap-x-8 p-4 md:w-[600px] lg:w-[700px]">
-                      <div className="col-span-4">
-                        <NavigationMenuLink asChild>
-                          <Link
-                            href="/templates"
-                            className="relative h-full flex flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                          >
-                            <Image
-                              src="https://placehold.co/400x565.png"
-                              data-ai-hint="resume professional"
-                              alt="Featured Template"
-                              fill
-                              style={{ objectFit: 'cover' }}
-                              className="rounded-md opacity-20"
-                            />
-                            <FileText className="h-6 w-6 text-primary" />
-                            <div className="mb-2 mt-4 text-lg font-medium">All Templates</div>
-                            <p className="text-sm leading-tight text-muted-foreground">
-                              Browse our full collection of beautifully designed resume templates.
-                            </p>
-                          </Link>
-                        </NavigationMenuLink>
-                      </div>
-                      <ul className="col-span-8 grid grid-cols-2 gap-2">
-                        {categories.map((component) => (
+                    <div className="grid grid-cols-3 gap-4 p-4 md:w-[650px] lg:w-[750px]">
+                      <ul className="col-span-2 grid grid-rows-2 gap-2">
+                        {featureLinks.map((component) => (
                           <Link key={component.title} href={component.href} passHref>
-                            <ListItem title={component.title}>
-                              <div className="flex items-start gap-2">
-                                <div className="text-primary mt-0.5">{component.icon}</div>
-                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                  {component.description}
-                                </p>
-                              </div>
+                            <ListItem title={component.title} icon={component.icon}>
+                              {component.description}
                             </ListItem>
                           </Link>
                         ))}
                       </ul>
+                       <div className="col-span-1 flex flex-col justify-start space-y-2 py-3 px-2">
+                        <h3 className="font-bold text-sm px-2">TEMPLATES</h3>
+                        {templateLinks.map((link) => (
+                          <Link key={link.title} href={link.href} passHref>
+                              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-normal justify-start w-full hover:bg-accent/50")}>
+                                {link.title}
+                              </NavigationMenuLink>
+                          </Link>
+                        ))}
+                         <div className="h-px w-full bg-border my-2"></div>
+                         <h3 className="font-bold text-sm px-2">PREMIUM</h3>
+                          <Link href={'/templates'} passHref>
+                              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-normal justify-start w-full bg-primary/10 text-primary hover:bg-primary/20")}>
+                                <Crown className="mr-2 h-4 w-4" /> Premium Templates
+                              </NavigationMenuLink>
+                          </Link>
+                      </div>
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
