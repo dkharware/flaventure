@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -62,6 +62,8 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
+  
+  const componentToPrintRef = useRef(null);
 
   return (
     <>
@@ -144,7 +146,7 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
             </div>
           </div>
           
-          <CoverLetterPreview formData={formData} />
+          <CoverLetterPreview formData={formData} ref={componentToPrintRef} />
 
         </div>
       </div>
