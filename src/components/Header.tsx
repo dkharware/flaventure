@@ -14,6 +14,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
+import { Button } from './ui/button';
 
 const categories: { title: string; href: string; description: string; icon: React.ReactElement }[] = [
   {
@@ -68,63 +69,73 @@ ListItem.displayName = 'ListItem';
 export default function Header() {
   return (
     <header className="py-4 px-6 md:px-10 bg-card border-b sticky top-0 z-50">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2" aria-label="ResumeFlow Home">
-          <FileText className="w-8 h-8 text-primary" />
-          <h1 className="text-2xl font-headline font-bold text-foreground">ResumeFlow</h1>
-        </Link>
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Resume Templates</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="grid grid-cols-12 gap-x-8 p-4 md:w-[600px] lg:w-[700px]">
-                  <div className="col-span-4">
-                     <NavigationMenuLink asChild>
-                      <Link
-                        href="/templates"
-                        className="relative h-full flex flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      >
-                        <Image 
-                          src="https://placehold.co/400x565.png"
-                          data-ai-hint="resume professional"
-                          alt="Featured Template"
-                          fill
-                          style={{objectFit: 'cover'}}
-                          className="rounded-md opacity-20"
-                        />
-                        <FileText className="h-6 w-6 text-primary" />
-                        <div className="mb-2 mt-4 text-lg font-medium">ResumeFlow</div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          Beautifully designed, AI-powered resume templates.
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </div>
-                  <ul className="col-span-8 grid grid-cols-2 gap-2">
-                    {categories.map((component) => (
-                      <Link key={component.title} href={component.href} passHref>
-                        <ListItem title={component.title}>
-                          <div className="flex items-start gap-2">
-                            <div className="text-primary mt-0.5">{component.icon}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{component.description}</p>
-                          </div>
-                        </ListItem>
-                      </Link>
-                    ))}
-                  </ul>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                  <Link href="/editor/professional">
-                    Create Resume
-                  </Link>
-                </NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+      <div className="container mx-auto flex items-center">
+        <div className="flex-1">
+          <Link href="/" className="flex items-center gap-2" aria-label="ResumeFlow Home">
+            <FileText className="w-8 h-8 text-primary" />
+            <h1 className="text-2xl font-headline font-bold text-foreground">ResumeFlow</h1>
+          </Link>
+        </div>
+
+        <div className="flex-1 flex justify-center">
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Resume Templates</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="grid grid-cols-12 gap-x-8 p-4 md:w-[600px] lg:w-[700px]">
+                      <div className="col-span-4">
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href="/templates"
+                            className="relative h-full flex flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          >
+                            <Image
+                              src="https://placehold.co/400x565.png"
+                              data-ai-hint="resume professional"
+                              alt="Featured Template"
+                              fill
+                              style={{ objectFit: 'cover' }}
+                              className="rounded-md opacity-20"
+                            />
+                            <FileText className="h-6 w-6 text-primary" />
+                            <div className="mb-2 mt-4 text-lg font-medium">ResumeFlow</div>
+                            <p className="text-sm leading-tight text-muted-foreground">
+                              Beautifully designed, AI-powered resume templates.
+                            </p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </div>
+                      <ul className="col-span-8 grid grid-cols-2 gap-2">
+                        {categories.map((component) => (
+                          <Link key={component.title} href={component.href} passHref>
+                            <ListItem title={component.title}>
+                              <div className="flex items-start gap-2">
+                                <div className="text-primary mt-0.5">{component.icon}</div>
+                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                  {component.description}
+                                </p>
+                              </div>
+                            </ListItem>
+                          </Link>
+                        ))}
+                      </ul>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <Link href="/editor/professional">
+                      Create Resume
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+        </div>
+        
+        <div className="flex-1" />
+
       </div>
     </header>
   );
