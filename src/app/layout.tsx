@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import { LoaderProvider } from '@/context/LoaderContext';
 import { NavigationEvents } from '@/components/NavigationEvents';
 import { Suspense } from 'react';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: 'EasyFreeCV - Free Resume & CV Builder',
@@ -37,6 +38,7 @@ export default function RootLayout({
               <NavigationEvents />
             </Suspense>
         </LoaderProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
