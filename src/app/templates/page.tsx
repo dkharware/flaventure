@@ -1,7 +1,7 @@
-import { TemplateCard } from '@/components/TemplateCard';
 import { TemplateFilters } from '@/components/TemplateFilters';
 import type { Template } from '@/lib/types';
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Free Resume Templates & CV Letter Examples | EasyFreeCV',
@@ -43,7 +43,9 @@ export default function TemplatesPage() {
         <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Select a professionally designed template to start building your standout CV or free resume. We also have CV letter examples.</p>
       </div>
       
-      <TemplateFilters templates={templates} categories={categories} colors={colors} />
+      <Suspense fallback={<div>Loading filters...</div>}>
+        <TemplateFilters templates={templates} categories={categories} colors={colors} />
+      </Suspense>
       
     </div>
   );
