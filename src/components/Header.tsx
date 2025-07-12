@@ -90,7 +90,7 @@ export default function Header() {
                           data-ai-hint="resume professional"
                           alt="Featured Template"
                           fill
-                          objectFit="cover"
+                          style={{objectFit: 'cover'}}
                           className="rounded-md opacity-20"
                         />
                         <FileText className="h-6 w-6 text-primary" />
@@ -103,7 +103,7 @@ export default function Header() {
                   </div>
                   <ul className="col-span-8 grid grid-cols-2 gap-2">
                     {categories.map((component) => (
-                      <Link key={component.title} href={component.href} passHref legacyBehavior>
+                      <Link key={component.title} href={component.href} passHref>
                         <ListItem title={component.title}>
                           <div className="flex items-start gap-2">
                             <div className="text-primary mt-0.5">{component.icon}</div>
@@ -117,11 +117,11 @@ export default function Header() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/editor/professional" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Create Resume
-                </NavigationMenuLink>
-              </Link>
+              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                <Link href="/editor/professional">
+                    Create Resume
+                </Link>
+              </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
