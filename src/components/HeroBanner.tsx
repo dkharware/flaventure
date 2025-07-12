@@ -58,7 +58,7 @@ export function HeroBanner() {
   return (
     <section 
       ref={containerRef} 
-      className="relative w-full py-20 md:py-32 lg:py-40 xl:py-56 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 text-primary-foreground overflow-hidden"
+      className="relative w-full py-20 md:py-32 lg:py-40 xl:py-56 bg-gradient-to-br from-indigo-900 via-slate-900 to-cyan-900 text-primary-foreground overflow-hidden"
     >
       <div className="container px-4 md:px-6 relative z-10">
         <div className="flex flex-col items-center space-y-4 text-center">
