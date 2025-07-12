@@ -66,7 +66,7 @@ export function HeroBanner() {
             <h1 ref={titleRef} className="text-3xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none text-white shadow-lg">
               Craft Your Perfect Resume with EasyFreeCV
             </h1>
-            <p ref={textRef} className="max-w-[600px] text-white/80 md:text-xl">
+            <p ref={textRef} className="mx-auto max-w-[600px] text-white/80 md:text-xl">
               Choose from dozens of professional templates, get AI-powered content suggestions, and create a standout resume in minutes.
             </p>
           </div>
