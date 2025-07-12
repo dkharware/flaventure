@@ -1,11 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { createFeatureFlag } from '@/lib/flags';
 
-export default function AboutPage() {
+const useNewAboutPageTitle = createFeatureFlag("new_about_page_title", false);
+
+export default async function AboutPage() {
+  const newTitleEnabled = await useNewAboutPageTitle();
+  const pageTitle = newTitleEnabled ? "About ResumeFlow" : "About EasyFreeCV";
+
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
       <Card className="max-w-4xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-3xl font-headline">About EasyFreeCV</CardTitle>
+          <CardTitle className="text-3xl font-headline">{pageTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-muted-foreground">
           <p>
