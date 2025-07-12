@@ -22,37 +22,27 @@ const featureLinks: { title: string; href: string; description: string; icon: Re
     title: 'AI Resume Writer',
     href: '/editor/professional',
     description: 'Get AI-powered suggestions for skills and summaries.',
-    icon: <Sparkles className="h-6 w-6 text-primary" />,
+    icon: <Sparkles className="h-8 w-8 text-primary" />,
   },
   {
     title: 'Template Customizer',
     href: '/editor/professional',
     description: 'Easily edit and customize your resume content.',
-    icon: <PenSquare className="h-6 w-6 text-primary" />,
+    icon: <PenSquare className="h-8 w-8 text-primary" />,
   },
   {
     title: 'Explore All Templates',
     href: '/templates',
     description: 'Browse our full collection of professional designs.',
-    icon: <Palette className="h-6 w-6 text-primary" />,
+    icon: <Palette className="h-8 w-8 text-primary" />,
   },
   {
     title: 'Cover Letter Builder',
     href: '#', // TBD
     description: 'Create matching cover letters for your resumes.',
-    icon: <BookUser className="h-6 w-6 text-primary" />,
+    icon: <BookUser className="h-8 w-8 text-primary" />,
   },
 ];
-
-const templateLinks = [
-  { title: 'Modern', href: '/templates' },
-  { title: 'Creative', href: '/templates' },
-  { title: 'Corporate', href: '/templates' },
-  { title: 'Simple', href: '/templates' },
-  { title: 'Technical', href: '/templates' },
-  { title: 'Academic', href: '/templates' },
-];
-
 
 const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'> & { icon: React.ReactElement }>(
   ({ className, title, children, icon, ...props }, ref) => {
@@ -62,14 +52,14 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
           <a
             ref={ref}
             className={cn(
-              'flex items-start gap-4 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+              'flex items-center gap-4 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
               className
             )}
             {...props}
           >
-            <div className="flex-shrink-0">{icon}</div>
+            <div className="flex-shrink-0 w-10">{icon}</div>
             <div className="flex-grow">
-              <div className="text-sm font-bold leading-none">{title}</div>
+              <div className="text-base font-bold leading-none">{title}</div>
               <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
             </div>
           </a>
@@ -94,46 +84,25 @@ export default function Header() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Resume Templates</NavigationMenuTrigger>
+                  <NavigationMenuTrigger>Resume Tools</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid grid-cols-3 gap-4 p-4 md:w-[650px] lg:w-[750px]">
-                      <ul className="col-span-1 grid grid-rows-2 gap-2">
-                        {featureLinks.slice(0, 2).map((component) => (
-                          <Link key={component.title} href={component.href} passHref>
-                            <ListItem title={component.title} icon={component.icon}>
-                              {component.description}
-                            </ListItem>
-                          </Link>
-                        ))}
-                      </ul>
-                       <div className="col-span-1 flex flex-col justify-start space-y-2 py-3 px-2">
-                        <h3 className="font-bold text-sm px-2">TEMPLATES</h3>
-                        {templateLinks.slice(0, 3).map((link) => (
-                          <Link key={link.title} href={link.href} passHref>
-                              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-normal justify-start w-full hover:bg-accent/50")}>
-                                {link.title}
-                              </NavigationMenuLink>
-                          </Link>
-                        ))}
-                      </div>
-                       <div className="col-span-1 flex flex-col justify-start space-y-2 py-3 px-2 mt-[2.1rem]">
-                        {templateLinks.slice(3, 6).map((link) => (
-                          <Link key={link.title} href={link.href} passHref>
-                              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-normal justify-start w-full hover:bg-accent/50")}>
-                                {link.title}
-                              </NavigationMenuLink>
-                          </Link>
-                        ))}
-                         <div className="h-px w-full bg-border my-2"></div>
-                         <h3 className="font-bold text-sm px-2">PREMIUM</h3>
-                          <Link href={'/templates'} passHref>
-                              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-normal justify-start w-full bg-primary/10 text-primary hover:bg-primary/20")}>
-                                <Crown className="mr-2 h-4 w-4" /> Premium Templates
-                              </NavigationMenuLink>
-                          </Link>
-                      </div>
-                    </div>
+                    <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
+                      {featureLinks.map((component) => (
+                        <Link key={component.title} href={component.href} passHref>
+                          <ListItem title={component.title} icon={component.icon}>
+                            {component.description}
+                          </ListItem>
+                        </Link>
+                      ))}
+                    </ul>
                   </NavigationMenuContent>
+                </NavigationMenuItem>
+                 <NavigationMenuItem>
+                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <Link href="/templates">
+                      Templates
+                    </Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
