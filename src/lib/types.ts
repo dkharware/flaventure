@@ -1,3 +1,4 @@
+
 export interface ResumeData {
   personalInfo: {
     name: string;
@@ -93,4 +94,5 @@ export interface Template {
   hint: string;
   isPremium?: boolean;
   price?: number;
+  color?: string;
 }
