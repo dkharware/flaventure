@@ -22,5 +22,9 @@ export default function EditorPage({ params }: { params: { templateId: string } 
     notFound();
   }
 
-  return <Editor templateId={params.templateId} />;
+  return (
+    <div className="container mx-auto py-2">
+      <Editor templateId={params.templateId} />
+    </div>
+  );
 }
