@@ -22,6 +22,9 @@ const templates: Template[] = [
   { id: 'two-column', name: 'Two Column', category: 'Modern', imageUrl: '/images/templates/two-column.png', hint: 'resume two column', color: 'blue' },
   { id: 'timeline', name: 'Timeline', category: 'Creative', imageUrl: '/images/templates/timeline.png', hint: 'resume timeline', isPremium: true, price: 50, color: 'orange' },
   { id: 'compact', name: 'Compact', category: 'Simple', imageUrl: '/images/templates/compact.png', hint: 'resume compact', color: 'black' },
+  { id: 'cover-letter-professional', name: 'Professional Cover Letter', category: 'Cover Letter', imageUrl: 'https://placehold.co/400x565.png', hint: 'cover letter simple', color: 'blue' },
+  { id: 'cover-letter-modern', name: 'Modern Cover Letter', category: 'Cover Letter', imageUrl: 'https://placehold.co/400x565.png', hint: 'cover letter clean', color: 'black' },
+  { id: 'cover-letter-creative', name: 'Creative Cover Letter', category: 'Cover Letter', imageUrl: 'https://placehold.co/400x565.png', hint: 'cover letter creative', isPremium: true, price: 25, color: 'orange' },
 ];
 
 export default function TemplatesPage() {
