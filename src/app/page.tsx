@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -15,23 +16,23 @@ const categories = [
 
 const testimonials = [
   {
-    name: 'Sarah L.',
-    title: 'Marketing Manager',
-    quote: 'EasyFreeCV made it incredibly easy to create a professional-looking resume in minutes. The AI suggestions were a game-changer!',
+    name: 'Priya S.',
+    title: 'Marketing Head',
+    quote: 'EasyFreeCV made it incredibly simple to create a professional resume. The AI suggestions for my marketing profile were spot on!',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'woman portrait',
   },
   {
-    name: 'Michael B.',
-    title: 'Software Developer',
-    quote: 'I loved the variety of templates, especially the tech-focused ones. I finally have a resume that stands out.',
+    name: 'Rohan K.',
+    title: 'Software Engineer, Bangalore',
+    quote: 'As a developer, I appreciated the clean, tech-focused templates. I got my resume ready in minutes for a job application in Bengaluru.',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'man portrait',
   },
   {
-    name: 'Jessica P.',
-    title: 'Recent Graduate',
-    quote: 'As a recent graduate, I was struggling with my resume. EasyFreeCV helped me highlight my skills and projects perfectly.',
+    name: 'Aisha M.',
+    title: 'B.Com Graduate',
+    quote: 'Being a recent graduate from Mumbai, I was unsure how to structure my resume. EasyFreeCV was a lifesaver!',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'woman professional',
   },
