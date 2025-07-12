@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FileText, Briefcase, Star, UserCircle, FileText as FileTextIcon } from 'lucide-react';
+import { FileText, Briefcase, Star, UserCircle, FileText as FileTextIcon, Crown } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -41,6 +41,12 @@ const categories: { title: string; href: string; description: string; icon: Reac
     description: 'Clean, minimalist templates that focus on content.',
     icon: <FileTextIcon className="h-4 w-4" />,
   },
+  {
+    title: 'Premium',
+    href: '/templates',
+    description: 'Unlock exclusive designs with our premium templates.',
+    icon: <Crown className="h-4 w-4" />,
+  }
 ];
 
 const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'>>(
@@ -66,14 +72,23 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
 );
 ListItem.displayName = 'ListItem';
 
+const Logo = () => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="32" height="32" rx="8" fill="hsl(var(--primary))"/>
+      <path d="M10 10V22H12.5V17.5H15.5V22H18V10H15.5V15H12.5V10H10Z" fill="hsl(var(--primary-foreground))"/>
+      <path d="M20 10V12.5H22V22H24V10H20Z" fill="hsl(var(--primary-foreground))"/>
+    </svg>
+);
+
+
 export default function Header() {
   return (
     <header className="py-4 px-6 md:px-10 bg-card border-b sticky top-0 z-50">
       <div className="container mx-auto flex items-center">
         <div className="flex-1">
-          <Link href="/" className="flex items-center gap-2" aria-label="ResumeFlow Home">
-            <FileText className="w-8 h-8 text-primary" />
-            <h1 className="text-2xl font-headline font-bold text-foreground">ResumeFlow</h1>
+          <Link href="/" className="flex items-center gap-2" aria-label="EasyFreeCV Home">
+            <Logo />
+            <h1 className="text-2xl font-headline font-bold text-foreground">EasyFreeCV</h1>
           </Link>
         </div>
 
@@ -99,9 +114,9 @@ export default function Header() {
                               className="rounded-md opacity-20"
                             />
                             <FileText className="h-6 w-6 text-primary" />
-                            <div className="mb-2 mt-4 text-lg font-medium">ResumeFlow</div>
+                            <div className="mb-2 mt-4 text-lg font-medium">All Templates</div>
                             <p className="text-sm leading-tight text-muted-foreground">
-                              Beautifully designed, AI-powered resume templates.
+                              Browse our full collection of beautifully designed resume templates.
                             </p>
                           </Link>
                         </NavigationMenuLink>
@@ -134,7 +149,10 @@ export default function Header() {
             </NavigationMenu>
         </div>
         
-        <div className="flex-1" />
+        <div className="flex-1 flex justify-end gap-2">
+            <Button variant="ghost">Sign In</Button>
+            <Button>Sign Up</Button>
+        </div>
 
       </div>
     </header>
