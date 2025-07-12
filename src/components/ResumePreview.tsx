@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, forwardRef } from 'react';
 import { useResume } from './Editor';
 import { useReactToPrint } from 'react-to-print';
 import { Download } from 'lucide-react';
@@ -21,7 +21,7 @@ import { TwoColumnTemplate } from './templates/TwoColumn';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
 
-const templateComponents: { [key: string]: React.ComponentType } = {
+const templateComponents: { [key: string]: React.ComponentType<any> } = {
   professional: ProfessionalTemplate,
   creative: CreativeTemplate,
   modern: ModernTemplate,
@@ -38,12 +38,21 @@ const templateComponents: { [key: string]: React.ComponentType } = {
   'two-column': TwoColumnTemplate,
 };
 
+// A separate component for printing to isolate the ref and avoid issues with re-renders.
+const PrintableResume = forwardRef<HTMLDivElement, { component: React.ReactNode }>(({ component }, ref) => {
+    if (!component) return null;
+    // Clone the component to attach the ref directly to it.
+    return React.cloneElement(component as React.ReactElement, { ref });
+});
+PrintableResume.displayName = 'PrintableResume';
+
+
 export default function ResumePreview() {
   const { templateId } = useResume();
-  const componentRef = useRef<HTMLDivElement>(null);
+  const componentToPrintRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
+    content: () => componentToPrintRef.current,
     documentTitle: 'resume',
   });
 
@@ -57,8 +66,15 @@ export default function ResumePreview() {
           Download PDF
         </button>
       </div>
+      
+      {/* Hidden component for printing */}
+      <div className="hidden">
+        <PrintableResume component={TemplateComponent ? <TemplateComponent /> : null} ref={componentToPrintRef} />
+      </div>
+
+      {/* Visible component for preview */}
       <div className="bg-white shadow-lg rounded-lg p-2">
-        <div ref={componentRef} className="w-full aspect-[210/297]">
+        <div className="w-full aspect-[210/297]">
           {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
         </div>
       </div>
