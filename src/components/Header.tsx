@@ -38,7 +38,7 @@ const featureLinks: { title: string; href: string; description: string; icon: Re
   },
   {
     title: 'Cover Letter Builder',
-    href: '#', // TBD
+    href: '/templates?category=Cover+Letter',
     description: 'Create matching cover letters for your resumes.',
     icon: <BookUser className="h-8 w-8 text-primary" />,
   },
