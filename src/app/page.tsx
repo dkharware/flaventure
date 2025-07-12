@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { ArrowRight, Star, FileText, Briefcase, UserCircle } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HeroBanner } from '@/components/HeroBanner';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { Card, CardContent } from '@/components/ui/card';
 
 const categories = [
   { name: 'Modern', icon: <Briefcase />, bgColor: 'bg-blue-100/50', iconColor: 'text-blue-600', borderColor: 'border-blue-200' },
@@ -35,6 +37,20 @@ const testimonials = [
     quote: 'Being a recent graduate from Mumbai, I was unsure how to structure my resume. EasyFreeCV was a lifesaver!',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'woman professional',
+  },
+  {
+    name: 'Vikram Rao',
+    title: 'Project Manager',
+    quote: 'The templates are top-notch and the interface is very user-friendly. Highly recommended for anyone looking to make a great first impression.',
+    avatar: 'https://placehold.co/100x100.png',
+    hint: 'professional man',
+  },
+  {
+    name: 'Sneha Gupta',
+    title: 'UX Designer',
+    quote: 'I love the creative templates! They allowed me to showcase my portfolio in a visually appealing way. The AI helper was a bonus.',
+    avatar: 'https://placehold.co/100x100.png',
+    hint: 'woman creative',
   },
 ];
 
@@ -95,19 +111,42 @@ export default function Home() {
           <p className="mx-auto max-w-[700px] text-center text-muted-foreground md:text-xl/relaxed mt-2">
             See what our users are saying about EasyFreeCV.
           </p>
-          <div className="mx-auto grid grid-cols-1 gap-8 pt-12 sm:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.name} className="rounded-lg border bg-card p-6 shadow-sm">
-                <div className="flex items-start gap-4">
-                  <UserCircle className="w-8 h-8 text-muted-foreground flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-sm text-muted-foreground">"{testimonial.quote}"</p>
-                    <div className="mt-4 font-semibold">{testimonial.name}</div>
-                    <div className="text-xs text-muted-foreground">{testimonial.title}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="relative mt-12">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-4xl mx-auto"
+            >
+              <CarouselContent>
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-1 h-full">
+                      <Card className="h-full flex flex-col">
+                        <CardContent className="p-6 flex flex-col items-center text-center flex-grow">
+                          <Image
+                            src={testimonial.avatar}
+                            data-ai-hint={testimonial.hint}
+                            alt={`Avatar of ${testimonial.name}`}
+                            width={80}
+                            height={80}
+                            className="rounded-full mb-4"
+                          />
+                           <p className="text-sm text-muted-foreground flex-grow">"{testimonial.quote}"</p>
+                          <div className="mt-4">
+                            <div className="font-semibold">{testimonial.name}</div>
+                            <div className="text-xs text-muted-foreground">{testimonial.title}</div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-[-50px] top-1/2 -translate-y-1/2" />
+              <CarouselNext className="absolute right-[-50px] top-1/2 -translate-y-1/2" />
+            </Carousel>
           </div>
         </div>
       </section>
