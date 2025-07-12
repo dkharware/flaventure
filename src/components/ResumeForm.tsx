@@ -1,18 +1,29 @@
 'use client'
 
 import { useResume } from './Editor'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { Trash2, PlusCircle, User, Briefcase, GraduationCap, Star, Heart } from 'lucide-react'
+import { Trash2, PlusCircle, User, Briefcase, GraduationCap, Star, Heart, ArrowLeft, ArrowRight } from 'lucide-react'
 import type { ChangeEvent } from 'react'
 import { AIGenerator } from './AIGenerator'
+import { useState } from 'react'
+import { Progress } from '@/components/ui/progress'
+
+const steps = [
+  { id: 'personal-info', name: 'Personal Info', icon: User },
+  { id: 'summary', name: 'Summary', icon: Briefcase },
+  { id: 'experience', name: 'Experience', icon: Briefcase },
+  { id: 'education', name: 'Education', icon: GraduationCap },
+  { id: 'skills', name: 'Skills', icon: Star },
+  { id: 'hobbies', name: 'Hobbies', icon: Heart },
+];
 
 export default function ResumeForm() {
   const { resumeData, setResumeData } = useResume()
+  const [currentStep, setCurrentStep] = useState(0);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -65,14 +76,39 @@ export default function ResumeForm() {
     setResumeData(prev => ({ ...prev, [section]: (prev as any)[section].filter((_: any, i: number) => i !== index) }));
   }
 
+  const nextStep = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const progress = ((currentStep + 1) / steps.length) * 100;
+  const CurrentIcon = steps[currentStep].icon;
+
   return (
     <div className="p-6 space-y-6">
-      <h2 className="text-2xl font-headline font-bold">Resume Content</h2>
-      <Accordion type="multiple" defaultValue={['personal-info']} className="w-full">
-        
-        <AccordionItem value="personal-info">
-          <AccordionTrigger><div className="flex items-center gap-2"><User /> Personal Information</div></AccordionTrigger>
-          <AccordionContent className="space-y-4 p-2">
+      <div className="space-y-3">
+        <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-headline font-bold flex items-center gap-2">
+              <CurrentIcon className="text-primary" />
+              {steps[currentStep].name}
+            </h2>
+            <span className="text-sm text-muted-foreground">
+              Step {currentStep + 1} of {steps.length}
+            </span>
+        </div>
+        <Progress value={progress} className="w-full" />
+      </div>
+
+      <div className="space-y-4">
+        {steps[currentStep].id === 'personal-info' && (
+           <div className="space-y-4 p-2">
             <div><Label htmlFor="personalInfo.name">Full Name</Label><Input id="personalInfo.name" name="personalInfo.name" value={resumeData.personalInfo.name} onChange={handleChange} /></div>
             <div><Label htmlFor="personalInfo.title">Title</Label><Input id="personalInfo.title" name="personalInfo.title" value={resumeData.personalInfo.title} onChange={handleChange} /></div>
             <div><Label htmlFor="personalInfo.phone">Phone</Label><Input id="personalInfo.phone" name="personalInfo.phone" value={resumeData.personalInfo.phone} onChange={handleChange} /></div>
@@ -80,23 +116,22 @@ export default function ResumeForm() {
             <div><Label htmlFor="personalInfo.location">Location</Label><Input id="personalInfo.location" name="personalInfo.location" value={resumeData.personalInfo.location} onChange={handleChange} /></div>
             <div><Label htmlFor="personalInfo.linkedin">LinkedIn</Label><Input id="personalInfo.linkedin" name="personalInfo.linkedin" value={resumeData.personalInfo.linkedin} onChange={handleChange} /></div>
             <div><Label htmlFor="personalInfo.website">Website</Label><Input id="personalInfo.website" name="personalInfo.website" value={resumeData.personalInfo.website} onChange={handleChange} /></div>
-          </AccordionContent>
-        </AccordionItem>
-        
-        <AccordionItem value="summary">
-          <AccordionTrigger><div className="flex items-center gap-2"><Briefcase /> Professional Summary</div></AccordionTrigger>
-          <AccordionContent className="space-y-4 p-2">
-            <Textarea name="summary" value={resumeData.summary} onChange={handleChange} rows={5} />
+          </div>
+        )}
+
+        {steps[currentStep].id === 'summary' && (
+          <div className="space-y-4 p-2">
+            <Label>Professional Summary</Label>
+            <Textarea name="summary" value={resumeData.summary} onChange={handleChange} rows={8} />
             <AIGenerator
                 fieldName="summary"
                 onSuggestionSelect={(suggestion) => setResumeData(prev => ({...prev, summary: suggestion}))}
               />
-          </AccordionContent>
-        </AccordionItem>
+          </div>
+        )}
 
-        <AccordionItem value="experience">
-          <AccordionTrigger><div className="flex items-center gap-2"><Briefcase /> Work Experience</div></AccordionTrigger>
-          <AccordionContent className="space-y-4 p-2">
+        {steps[currentStep].id === 'experience' && (
+          <div className="space-y-4 p-2">
             {resumeData.experience.map((exp, index) => (
               <Card key={exp.id}>
                 <CardContent className="p-4 space-y-4 relative">
@@ -113,12 +148,11 @@ export default function ResumeForm() {
               </Card>
             ))}
             <Button variant="outline" onClick={() => addArrayItem('experience')}><PlusCircle className="mr-2 h-4 w-4" /> Add Experience</Button>
-          </AccordionContent>
-        </AccordionItem>
+          </div>
+        )}
 
-        <AccordionItem value="education">
-          <AccordionTrigger><div className="flex items-center gap-2"><GraduationCap /> Education</div></AccordionTrigger>
-          <AccordionContent className="space-y-4 p-2">
+        {steps[currentStep].id === 'education' && (
+           <div className="space-y-4 p-2">
             {resumeData.education.map((edu, index) => (
               <Card key={edu.id}>
                 <CardContent className="p-4 space-y-4 relative">
@@ -134,12 +168,12 @@ export default function ResumeForm() {
               </Card>
             ))}
             <Button variant="outline" onClick={() => addArrayItem('education')}><PlusCircle className="mr-2 h-4 w-4" /> Add Education</Button>
-          </AccordionContent>
-        </AccordionItem>
-        
-        <AccordionItem value="skills">
-          <AccordionTrigger><div className="flex items-center gap-2"><Star /> Skills</div></AccordionTrigger>
-          <AccordionContent className="space-y-4 p-2">
+          </div>
+        )}
+
+        {steps[currentStep].id === 'skills' && (
+          <div className="space-y-4 p-2">
+            <Label>Skills</Label>
             <div className="grid grid-cols-2 gap-4">
             {resumeData.skills.map((skill, index) => (
               <div key={skill.id} className="flex items-center gap-2">
@@ -156,12 +190,12 @@ export default function ResumeForm() {
                   setResumeData(prev => ({...prev, skills: [...prev.skills, newSkill]}));
                 }}
               />
-          </AccordionContent>
-        </AccordionItem>
+          </div>
+        )}
 
-        <AccordionItem value="hobbies">
-          <AccordionTrigger><div className="flex items-center gap-2"><Heart /> Hobbies</div></AccordionTrigger>
-          <AccordionContent className="space-y-4 p-2">
+        {steps[currentStep].id === 'hobbies' && (
+          <div className="space-y-4 p-2">
+             <Label>Hobbies</Label>
             <div className="grid grid-cols-2 gap-4">
               {resumeData.hobbies.map((hobby, index) => (
                 <div key={hobby.id} className="flex items-center gap-2">
@@ -178,9 +212,20 @@ export default function ResumeForm() {
                   setResumeData(prev => ({...prev, hobbies: [...prev.hobbies, newHobby]}));
                 }}
               />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+          </div>
+        )}
+      </div>
+
+      <div className="flex justify-between pt-4 border-t">
+        <Button variant="outline" onClick={prevStep} disabled={currentStep === 0}>
+          <ArrowLeft className="mr-2 h-4 w-4" /> Back
+        </Button>
+        <Button onClick={nextStep} disabled={currentStep === steps.length - 1}>
+          Next <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
     </div>
   )
 }
+
+    

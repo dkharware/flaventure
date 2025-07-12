@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 import { useResume } from './Editor';
 import { Download } from 'lucide-react';
 import { ProfessionalTemplate } from './templates/Professional';
@@ -39,67 +40,37 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
 
 export default function ResumePreview() {
   const { templateId } = useResume();
+  const componentToPrintRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = templateComponents[templateId];
 
-  const handlePrint = () => {
-    window.print();
-  };
+  const handlePrint = useReactToPrint({
+    content: () => componentToPrintRef.current,
+    documentTitle: `${personalInfo.name} - Resume`,
+    onAfterPrint: () => console.log('Printed successfully!'),
+  });
+
+  const { resumeData: { personalInfo } } = useResume();
 
   return (
-    <>
-      <style jsx global>{`
-        @media print {
-          body {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-          .no-print {
-            display: none !important;
-          }
-          #printable-resume {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            border: none;
-            box-shadow: none;
-            transform: scale(1);
-            background-color: #fff;
-          }
-           @page {
-            size: A4;
-            margin: 0;
-          }
-        }
-        #editor-form {
-          display: none;
-        }
-        #preview-area {
-          background-color: #f3f4f6;
-        }
-      `}</style>
-      <div className="bg-gray-100 min-h-full" id="preview-area">
-        <div className="sticky top-0 bg-gray-100 z-10 no-print">
-          <div className="flex justify-end p-4 lg:p-8 pb-4">
-            <button onClick={handlePrint} className={cn(buttonVariants())}>
-              <Download className="mr-2 h-4 w-4" />
-              Download PDF
-            </button>
-          </div>
-        </div>
-        
-        <div className="p-4 lg:p-8 pt-0">
-            <div id="printable-resume" className="bg-white shadow-lg rounded-lg">
-                <div className="w-full aspect-[210/297] overflow-hidden">
-                    {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
-                </div>
-            </div>
+    <div className="bg-gray-100 min-h-full" id="preview-area">
+      <div className="sticky top-0 bg-gray-100 z-10 p-4 lg:p-8 pb-4">
+        <div className="flex justify-end">
+          <button onClick={handlePrint} className={cn(buttonVariants())}>
+            <Download className="mr-2 h-4 w-4" />
+            Download PDF
+          </button>
         </div>
       </div>
-    </>
+      
+      <div className="p-4 lg:p-8 pt-0">
+          <div ref={componentToPrintRef} className="bg-white shadow-lg rounded-lg overflow-hidden">
+              <div className="w-full aspect-[210/297]">
+                  {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+              </div>
+          </div>
+      </div>
+    </div>
   );
 }
+
+    
