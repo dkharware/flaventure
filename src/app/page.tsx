@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Star, FileText, Briefcase, UserCircle } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { HeroBanner } from '@/components/HeroBanner';
 
 const categories = [
   { name: 'Modern', icon: <Briefcase /> },
@@ -59,27 +60,7 @@ export default function Home() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="w-full py-20 md:py-32 lg:py-40 xl:py-56 bg-gradient-to-r from-primary to-accent text-primary-foreground">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none">
-                Craft Your Perfect Resume with EasyFreeCV
-              </h1>
-              <p className="max-w-[600px] text-primary-foreground/80 md:text-xl">
-                Choose from dozens of professional templates, get AI-powered content suggestions, and create a standout resume in minutes.
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button asChild size="lg" variant="secondary">
-                <Link href="/templates">
-                  Create Your Resume Now <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroBanner />
 
       {/* Categories Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
