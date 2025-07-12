@@ -49,11 +49,11 @@ export default function ResumePreview() {
     <>
       <style jsx global>{`
         @media print {
-          body * {
-            visibility: hidden;
+          body {
+            background-color: #fff;
           }
-          #printable-resume, #printable-resume * {
-            visibility: visible;
+          .no-print {
+            display: none;
           }
           #printable-resume {
             position: absolute;
@@ -66,24 +66,24 @@ export default function ResumePreview() {
             border: none;
             box-shadow: none;
             transform: scale(1);
-          }
-          .no-print {
-            display: none;
+            background-color: #fff;
           }
         }
       `}</style>
-      <div className="sticky top-0">
-        <div className="flex justify-end mb-4 no-print">
+      <div className="sticky top-0 bg-gray-100">
+        <div className="flex justify-end mb-4 no-print p-4 lg:p-8 pb-0">
           <button onClick={handlePrint} className={cn(buttonVariants())}>
             <Download className="mr-2 h-4 w-4" />
             Download PDF
           </button>
         </div>
         
-        <div id="printable-resume" className="bg-white shadow-lg rounded-lg p-2">
-          <div className="w-full aspect-[210/297]">
-            {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
-          </div>
+        <div className="p-4 lg:p-8">
+            <div id="printable-resume" className="bg-white shadow-lg rounded-lg">
+                <div className="w-full aspect-[210/297] overflow-hidden">
+                    {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+                </div>
+            </div>
         </div>
       </div>
     </>

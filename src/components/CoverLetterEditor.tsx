@@ -67,31 +67,32 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     <>
      <style jsx global>{`
         @media print {
-          body * {
-            visibility: hidden;
+          .no-print {
+            display: none;
           }
-          #printable-cover-letter, #printable-cover-letter * {
-            visibility: visible;
+          #editor-form {
+            display: none;
           }
-          #printable-cover-letter {
+          #preview-area {
             position: absolute;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            margin: 0;
             padding: 0;
-            border: none;
-            box-shadow: none;
-            transform: scale(1);
+            margin: 0;
+            background-color: #fff;
           }
-          .no-print {
-            display: none;
+          #printable-cover-letter {
+            box-shadow: none;
+            border: none;
+            width: 100%;
+            height: 100%;
           }
         }
       `}</style>
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-81px)]">
-        <div className="p-6 border-r overflow-y-auto no-print">
+        <div id="editor-form" className="p-6 border-r overflow-y-auto no-print">
           <Card>
             <CardHeader>
               <CardTitle>Cover Letter Content</CardTitle>
@@ -128,7 +129,7 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
             </CardContent>
           </Card>
         </div>
-        <div className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
+        <div id="preview-area" className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
           <div className="sticky top-0">
             <div className="flex justify-end mb-4 no-print">
               <button onClick={handlePrint} className={cn(buttonVariants())}>
