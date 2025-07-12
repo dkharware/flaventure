@@ -28,7 +28,7 @@ export default function ContactPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="john.doe@example.com" />
+              <Input id="email" type="email" placeholder="easyfreecv@gmail.com" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="message">Message</Label>
