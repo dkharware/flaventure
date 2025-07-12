@@ -3,17 +3,17 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Star, FileText, Briefcase, UserCircle } from 'lucide-react';
+import { ArrowRight, Star, FileText, Briefcase, UserCircle, LucideProps } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HeroBanner } from '@/components/HeroBanner';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Card, CardContent } from '@/components/ui/card';
 
-const categories = [
-  { name: 'Modern', icon: <Briefcase />, bgColor: 'bg-blue-100/50', iconColor: 'text-blue-600', borderColor: 'border-blue-200' },
-  { name: 'Creative', icon: <Star />, bgColor: 'bg-green-100/50', iconColor: 'text-green-600', borderColor: 'border-green-200' },
-  { name: 'Corporate', icon: <UserCircle />, bgColor: 'bg-purple-100/50', iconColor: 'text-purple-600', borderColor: 'border-purple-200' },
-  { name: 'Simple', icon: <FileText />, bgColor: 'bg-red-100/50', iconColor: 'text-red-600', borderColor: 'border-red-200' },
+const categories: { name: string; icon: React.FC<LucideProps>; bgColor: string; iconColor: string; borderColor: string; }[] = [
+  { name: 'Modern', icon: Briefcase, bgColor: 'bg-blue-100/50', iconColor: 'text-blue-600', borderColor: 'border-blue-200' },
+  { name: 'Creative', icon: Star, bgColor: 'bg-green-100/50', iconColor: 'text-green-600', borderColor: 'border-green-200' },
+  { name: 'Corporate', icon: UserCircle, bgColor: 'bg-purple-100/50', iconColor: 'text-purple-600', borderColor: 'border-purple-200' },
+  { name: 'Simple', icon: FileText, bgColor: 'bg-red-100/50', iconColor: 'text-red-600', borderColor: 'border-red-200' },
 ];
 
 const testimonials = [
@@ -91,15 +91,18 @@ export default function Home() {
             </div>
           </div>
           <div className="mx-auto grid grid-cols-1 gap-6 pt-12 sm:grid-cols-2 md:grid-cols-4">
-            {categories.map((category) => (
-              <Link key={category.name} href={`/templates?category=${category.name}`} className="block h-full">
-                <div className={`flex flex-col items-center space-y-2 rounded-lg border p-6 text-center transition-all hover:shadow-lg hover:-translate-y-1 h-full ${category.bgColor} ${category.borderColor}`}>
-                  <div className={`${category.iconColor}`}>{React.cloneElement(category.icon, { size: 32 })}</div>
-                  <h3 className="text-lg font-bold text-foreground">{category.name}</h3>
-                  <p className="text-sm text-muted-foreground">Professionally designed {category.name.toLowerCase()} templates.</p>
-                </div>
-              </Link>
-            ))}
+            {categories.map((category) => {
+              const IconComponent = category.icon;
+              return (
+                <Link key={category.name} href={`/templates?category=${category.name}`} className="block h-full">
+                  <div className={`flex flex-col items-center space-y-2 rounded-lg border p-6 text-center transition-all hover:shadow-lg hover:-translate-y-1 h-full ${category.bgColor} ${category.borderColor}`}>
+                    <div className={`${category.iconColor}`}><IconComponent size={32} /></div>
+                    <h3 className="text-lg font-bold text-foreground">{category.name}</h3>
+                    <p className="text-sm text-muted-foreground">Professionally designed {category.name.toLowerCase()} templates.</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
