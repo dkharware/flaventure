@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, forwardRef } from 'react';
+import React, { useRef } from 'react';
 import { useResume } from './Editor';
 import { useReactToPrint } from 'react-to-print';
 import { Download } from 'lucide-react';
@@ -38,15 +38,6 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
   'two-column': TwoColumnTemplate,
 };
 
-// A separate component for printing to isolate the ref and avoid issues with re-renders.
-const PrintableResume = forwardRef<HTMLDivElement, { component: React.ReactNode }>(({ component }, ref) => {
-    if (!component) return null;
-    // Clone the component to attach the ref directly to it.
-    return React.cloneElement(component as React.ReactElement, { ref });
-});
-PrintableResume.displayName = 'PrintableResume';
-
-
 export default function ResumePreview() {
   const { templateId } = useResume();
   const componentToPrintRef = useRef<HTMLDivElement>(null);
@@ -66,16 +57,13 @@ export default function ResumePreview() {
           Download PDF
         </button>
       </div>
-      
-      {/* Hidden component for printing */}
-      <div className="hidden">
-        <PrintableResume component={TemplateComponent ? <TemplateComponent /> : null} ref={componentToPrintRef} />
-      </div>
 
-      {/* Visible component for preview */}
-      <div className="bg-white shadow-lg rounded-lg p-2">
-        <div className="w-full aspect-[210/297]">
-          {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+      {/* This component is used for both preview and printing */}
+      <div ref={componentToPrintRef}>
+        <div className="bg-white shadow-lg rounded-lg p-2">
+          <div className="w-full aspect-[210/297]">
+            {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+          </div>
         </div>
       </div>
     </div>
