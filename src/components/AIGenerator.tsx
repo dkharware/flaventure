@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Lightbulb, Plus } from 'lucide-react';
 
 interface AIGeneratorProps {
@@ -29,6 +29,8 @@ export function AIGenerator({ fieldName, onSuggestionSelect }: AIGeneratorProps)
   const [state, formAction] = useFormState(getSuggestions, null);
   const { templateId, resumeData } = useResume();
   const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (state?.error) {
@@ -39,6 +41,18 @@ export function AIGenerator({ fieldName, onSuggestionSelect }: AIGeneratorProps)
       });
     }
   }, [state, toast]);
+  
+  const handleFormAction = (formData: FormData) => {
+    if (!textAreaRef.current?.value) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Please provide some input for suggestions.',
+      });
+      return;
+    }
+    formAction(formData);
+  }
 
   const getSuggestionsForField = () => {
     if (!state?.suggestions) return [];
@@ -57,9 +71,10 @@ export function AIGenerator({ fieldName, onSuggestionSelect }: AIGeneratorProps)
         <CardDescription>Get content ideas based on your resume.</CardDescription>
       </CardHeader>
       <CardContent>
-        <form action={formAction} className="space-y-2">
+        <form ref={formRef} action={handleFormAction} className="space-y-2">
           <input type="hidden" name="selectedTemplate" value={templateId} />
           <Textarea 
+            ref={textAreaRef}
             name="userInput" 
             placeholder="e.g., Senior Product Manager"
             className="text-sm"
