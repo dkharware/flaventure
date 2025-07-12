@@ -61,16 +61,40 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <>
+      <style jsx global>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #printable-cover-letter, #printable-cover-letter * {
+            visibility: visible;
+          }
+          #printable-cover-letter {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+          }
+          .no-print {
+            display: none !important;
+          }
+        }
+      `}</style>
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-81px)]">
-        <div id="editor-form" className="p-6 border-r overflow-y-auto">
+        <div id="editor-form" className="p-6 border-r overflow-y-auto no-print">
           <Card>
             <CardHeader>
               <CardTitle>Cover Letter Content</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
+               <div className="space-y-2">
                 <Label htmlFor="fullName">Full Name</Label>
                 <Input id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} />
               </div>
@@ -102,6 +126,15 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
           </Card>
         </div>
         <div id="preview-area" className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
+           <div className="p-4 flex justify-center no-print">
+            <button
+                onClick={handlePrint}
+                className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
+            >
+                <Download size={16} />
+                Download PDF
+            </button>
+          </div>
           <CoverLetterPreview formData={formData} ref={componentToPrintRef} />
         </div>
       </div>

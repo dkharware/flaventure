@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React,  { useRef } from 'react';
 import { useResume } from './Editor';
 import { Download } from 'lucide-react';
 import { ProfessionalTemplate } from './templates/Professional';
@@ -42,9 +42,44 @@ export default function ResumePreview() {
   const componentToPrintRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = templateComponents[templateId];
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <>
+       <style jsx global>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #printable-area, #printable-area * {
+            visibility: visible;
+          }
+          #printable-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transform-origin: top left;
+            transform: scale(1.18);
+          }
+           .no-print {
+            display: none !important;
+          }
+        }
+      `}</style>
       <div className="bg-gray-100 min-h-full" id="preview-area">
+         <div className="p-4 flex justify-center no-print">
+            <button
+                onClick={handlePrint}
+                className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
+            >
+                <Download size={16} />
+                Download PDF
+            </button>
+        </div>
         <div className="p-4 lg:p-8 pt-2">
             <div id="printable-area" className="bg-white shadow-lg rounded-lg overflow-hidden">
                 <div ref={componentToPrintRef} className="w-full aspect-[210/297]">
