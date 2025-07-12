@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Download } from 'lucide-react';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
+import htmlToDocx from 'html-to-docx';
 
 const CoverLetterPreview = React.forwardRef<HTMLDivElement, { formData: any }>(({ formData }, ref) => {
     return (
@@ -54,53 +55,36 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     letterBody: `Dear ${'Jane Smith'},\n\nI am writing to express my keen interest in the Software Engineer position at ${'Tech Innovations Inc.'}, which I saw advertised on LinkedIn. With my background in developing scalable web applications and my passion for innovative technology, I am confident that I would be a valuable asset to your team.\n\nThank you for considering my application. I have attached my resume for your review and look forward to the possibility of discussing this opportunity further.\n\nSincerely,\n${'John Doe'}`,
   });
 
-  const handlePrint = () => {
-    window.print();
+  const componentToPrintRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = async () => {
+    const content = componentToPrintRef.current;
+    if (content) {
+       const fileBuffer = await htmlToDocx(content.outerHTML);
+        const docxFileName = `${formData.fullName.replace(/ /g, '_')}_Cover_Letter.docx`;
+        
+        const blob = new Blob([fileBuffer], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = docxFileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-  
-  const componentToPrintRef = useRef(null);
 
   return (
     <>
-     <style jsx global>{`
-        @media print {
-          body {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-          }
-          .no-print {
-            display: none !important;
-          }
-          #printable-cover-letter {
-             display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-          }
-           #printable-cover-letter > div {
-             box-shadow: none;
-             border: none;
-             width: 100%;
-             height: 100%;
-           }
-           @page {
-            size: A4;
-            margin: 0;
-          }
-        }
-      `}</style>
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-81px)]">
-        <div id="editor-form" className="p-6 border-r overflow-y-auto no-print">
+        <div id="editor-form" className="p-6 border-r overflow-y-auto">
           <Card>
             <CardHeader>
               <CardTitle>Cover Letter Content</CardTitle>
@@ -138,10 +122,10 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
           </Card>
         </div>
         <div id="preview-area" className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
-          <div className="sticky top-0 bg-gray-100 z-10 no-print">
+          <div className="sticky top-0 bg-gray-100 z-10">
             <div className="flex justify-end mb-4">
-              <button onClick={handlePrint} className={cn(buttonVariants())}>
-                  <Download className="mr-2 h-4 w-4" /> Download PDF
+              <button onClick={handleDownload} className={cn(buttonVariants())}>
+                  <Download className="mr-2 h-4 w-4" /> Download DOCX
               </button>
             </div>
           </div>
