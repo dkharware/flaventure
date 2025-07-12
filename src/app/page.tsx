@@ -126,10 +126,13 @@ export default function Home() {
             {testimonials.map((testimonial) => (
               <div key={testimonial.name} className="rounded-lg border bg-card p-6 shadow-sm">
                 <div className="flex items-start gap-4">
-                  <Avatar>
-                    <AvatarImage src={testimonial.avatar} data-ai-hint={testimonial.hint} />
-                    <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
+                  <div className="flex items-center gap-4">
+                    <UserCircle className="w-8 h-8 text-muted-foreground" />
+                    <Avatar>
+                      <AvatarImage src={testimonial.avatar} data-ai-hint={testimonial.hint} />
+                      <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                  </div>
                   <div className="flex-1">
                     <p className="text-sm text-muted-foreground">"{testimonial.quote}"</p>
                     <div className="mt-4 font-semibold">{testimonial.name}</div>
