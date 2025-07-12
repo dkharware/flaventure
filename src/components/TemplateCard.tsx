@@ -1,0 +1,41 @@
+import Link from 'next/link';
+import Image from 'next/image';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Eye } from 'lucide-react';
+
+type TemplateCardProps = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  hint: string;
+};
+
+export function TemplateCard({ id, name, imageUrl, hint }: TemplateCardProps) {
+  return (
+    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+      <CardContent className="p-0">
+        <div className="relative">
+          <Link href={`/editor/${id}`} aria-label={`Use ${name} template`}>
+            <Image
+              src={imageUrl}
+              data-ai-hint={hint}
+              alt={`Resume template ${name}`}
+              width={400}
+              height={565}
+              className="w-full h-auto object-cover"
+            />
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <Button>
+                <Eye className="mr-2 h-4 w-4" /> Use Template
+              </Button>
+            </div>
+          </Link>
+        </div>
+        <div className="p-4 bg-card">
+          <h3 className="font-headline font-semibold text-lg text-center">{name}</h3>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
