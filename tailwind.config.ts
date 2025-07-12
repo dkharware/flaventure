@@ -8,6 +8,12 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      center: true,
+      screens: {
+        '2xl': '80vw',
+      },
+    },
     extend: {
       fontFamily: {
         body: ['PT Sans', 'sans-serif'],
