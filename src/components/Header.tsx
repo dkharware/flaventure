@@ -84,7 +84,7 @@ export default function Header() {
     <header className="py-4 px-6 md:px-10 bg-background text-foreground border-b sticky top-0 z-50">
       <div className="container mx-auto flex items-center">
         <div className="flex-1">
-          <Link href="/" className="flex items-center gap-2" aria-label="EasyFreeCV Home">
+          <Link href="/" className="flex items-center gap-2" aria-label="ResumeFlow Home">
             <Logo />
           </Link>
         </div>
