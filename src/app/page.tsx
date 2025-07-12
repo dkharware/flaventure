@@ -8,10 +8,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { HeroBanner } from '@/components/HeroBanner';
 
 const categories = [
-  { name: 'Modern', icon: <Briefcase /> },
-  { name: 'Creative', icon: <Star /> },
-  { name: 'Corporate', icon: <UserCircle /> },
-  { name: 'Simple', icon: <FileText /> },
+  { name: 'Modern', icon: <Briefcase />, bgColor: 'bg-green-100/50', iconColor: 'text-green-600', borderColor: 'border-green-200' },
+  { name: 'Creative', icon: <Star />, bgColor: 'bg-blue-100/50', iconColor: 'text-blue-600', borderColor: 'border-blue-200' },
+  { name: 'Corporate', icon: <UserCircle />, bgColor: 'bg-purple-100/50', iconColor: 'text-purple-600', borderColor: 'border-purple-200' },
+  { name: 'Simple', icon: <FileText />, bgColor: 'bg-red-100/50', iconColor: 'text-red-600', borderColor: 'border-red-200' },
 ];
 
 const testimonials = [
@@ -76,11 +76,13 @@ export default function Home() {
           </div>
           <div className="mx-auto grid grid-cols-1 gap-6 pt-12 sm:grid-cols-2 md:grid-cols-4">
             {categories.map((category) => (
-              <div key={category.name} className="flex flex-col items-center space-y-2 rounded-lg border bg-card p-6 text-center transition-all hover:shadow-lg hover:-translate-y-1">
-                <div className="text-primary">{React.cloneElement(category.icon, { size: 32 })}</div>
-                <h3 className="text-lg font-bold">{category.name}</h3>
-                <p className="text-sm text-muted-foreground">Professionally designed {category.name.toLowerCase()} templates.</p>
-              </div>
+              <Link key={category.name} href={`/templates?category=${category.name}`} className="block">
+                <div className={`flex flex-col items-center space-y-2 rounded-lg border p-6 text-center transition-all hover:shadow-lg hover:-translate-y-1 h-full ${category.bgColor} ${category.borderColor}`}>
+                  <div className={`${category.iconColor}`}>{React.cloneElement(category.icon, { size: 32 })}</div>
+                  <h3 className="text-lg font-bold text-foreground">{category.name}</h3>
+                  <p className="text-sm text-muted-foreground">Professionally designed {category.name.toLowerCase()} templates.</p>
+                </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { TemplateCard } from '@/components/TemplateCard';
 import type { Template } from '@/lib/types';
@@ -11,7 +12,18 @@ interface TemplateFiltersProps {
 }
 
 export function TemplateFilters({ templates, categories }: TemplateFiltersProps) {
-  const [activeFilter, setActiveFilter] = useState('All');
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get('category') || 'All';
+  const [activeFilter, setActiveFilter] = useState(initialCategory);
+
+  useEffect(() => {
+    const category = searchParams.get('category');
+    if (category && categories.includes(category)) {
+      setActiveFilter(category);
+    } else {
+      setActiveFilter('All');
+    }
+  }, [searchParams, categories]);
 
   const filteredTemplates = activeFilter === 'All'
     ? templates
