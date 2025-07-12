@@ -1,7 +1,8 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -19,6 +20,13 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     companyName: 'Tech Innovations Inc.',
     companyAddress: '123 Tech Street, Silicon Valley, CA 94000',
     letterBody: `Dear ${'Jane Smith'},\n\nI am writing to express my keen interest in the Software Engineer position at ${'Tech Innovations Inc.'}, which I saw advertised on LinkedIn. With my background in developing scalable web applications and my passion for innovative technology, I am confident that I would be a valuable asset to your team.\n\nThank you for considering my application. I have attached my resume for your review and look forward to the possibility of discussing this opportunity further.\n\nSincerely,\n${'John Doe'}`,
+  });
+
+  const componentRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: 'cover-letter',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -42,6 +50,10 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
               <Label htmlFor="email">Email</Label>
               <Input id="email" name="email" value={formData.email} onChange={handleChange} />
             </div>
+             <div className="space-y-2">
+              <Label htmlFor="phone">Phone</Label>
+              <Input id="phone" name="phone" value={formData.phone} onChange={handleChange} />
+            </div>
             <div className="space-y-2">
               <Label htmlFor="hiringManager">Hiring Manager Name</Label>
               <Input id="hiringManager" name="hiringManager" value={formData.hiringManager} onChange={handleChange} />
@@ -49,6 +61,10 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
             <div className="space-y-2">
               <Label htmlFor="companyName">Company Name</Label>
               <Input id="companyName" name="companyName" value={formData.companyName} onChange={handleChange} />
+            </div>
+             <div className="space-y-2">
+              <Label htmlFor="companyAddress">Company Address</Label>
+              <Input id="companyAddress" name="companyAddress" value={formData.companyAddress} onChange={handleChange} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="letterBody">Letter Body</Label>
@@ -60,32 +76,34 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
       <div className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
         <div className="sticky top-0">
           <div className="flex justify-end mb-4">
-            <Button><Download className="mr-2 h-4 w-4" /> Download PDF</Button>
+            <Button onClick={handlePrint}><Download className="mr-2 h-4 w-4" /> Download PDF</Button>
           </div>
-          <Card>
-            <CardContent className="p-8">
-              <div className="prose prose-sm max-w-none">
-                <div className="flex justify-between items-start">
-                    <div>
-                        <h2 className="font-bold text-lg">{formData.fullName}</h2>
-                        <p>{formData.email}</p>
-                        <p>{formData.phone}</p>
-                    </div>
-                    <p>{formData.date}</p>
-                </div>
-                
-                <div className="mt-8">
-                    <p className="font-semibold">{formData.hiringManager}</p>
-                    <p>{formData.companyName}</p>
-                    <p>{formData.companyAddress}</p>
-                </div>
+          <div ref={componentRef}>
+            <Card>
+              <CardContent className="p-8">
+                <div className="prose prose-sm max-w-none">
+                  <div className="flex justify-between items-start">
+                      <div>
+                          <h2 className="font-bold text-lg">{formData.fullName}</h2>
+                          <p>{formData.email}</p>
+                          <p>{formData.phone}</p>
+                      </div>
+                      <p>{formData.date}</p>
+                  </div>
+                  
+                  <div className="mt-8">
+                      <p className="font-semibold">{formData.hiringManager}</p>
+                      <p>{formData.companyName}</p>
+                      <p>{formData.companyAddress}</p>
+                  </div>
 
-                <div className="mt-8 whitespace-pre-wrap">
-                    {formData.letterBody}
+                  <div className="mt-8 whitespace-pre-wrap">
+                      {formData.letterBody}
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
