@@ -58,12 +58,21 @@ export default function ResumePreview() {
         </button>
       </div>
 
-      {/* This component is used for both preview and printing */}
-      <div ref={componentToPrintRef}>
-        <div className="bg-white shadow-lg rounded-lg p-2">
-          <div className="w-full aspect-[210/297]">
-            {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
-          </div>
+      {/* Hidden component for printing */}
+      <div className="absolute top-0 left-0 -z-10 opacity-0 pointer-events-none">
+        <div ref={componentToPrintRef}>
+             <div className="bg-white p-2">
+                <div className="w-[827px] h-[1170px] aspect-[210/297]">
+                    {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+                </div>
+            </div>
+        </div>
+      </div>
+      
+      {/* Visible component for preview */}
+      <div className="bg-white shadow-lg rounded-lg p-2">
+        <div className="w-full aspect-[210/297]">
+          {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
         </div>
       </div>
     </div>

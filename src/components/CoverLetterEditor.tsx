@@ -11,6 +11,39 @@ import { Download } from 'lucide-react';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
 
+const CoverLetterPreview = React.forwardRef<HTMLDivElement, { formData: any }>(({ formData }, ref) => {
+    return (
+        <div ref={ref}>
+            <Card>
+                <CardContent className="p-8">
+                    <div className="prose prose-sm max-w-none">
+                    <div className="flex justify-between items-start">
+                        <div>
+                            <h2 className="font-bold text-lg">{formData.fullName}</h2>
+                            <p>{formData.email}</p>
+                            <p>{formData.phone}</p>
+                        </div>
+                        <p>{formData.date}</p>
+                    </div>
+                    
+                    <div className="mt-8">
+                        <p className="font-semibold">{formData.hiringManager}</p>
+                        <p>{formData.companyName}</p>
+                        <p>{formData.companyAddress}</p>
+                    </div>
+
+                    <div className="mt-8 whitespace-pre-wrap">
+                        {formData.letterBody}
+                    </div>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+    );
+});
+CoverLetterPreview.displayName = 'CoverLetterPreview';
+
+
 export default function CoverLetterEditor({ templateId }: { templateId: string }) {
   const [formData, setFormData] = useState({
     fullName: 'John Doe',
@@ -81,32 +114,15 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
                 <Download className="mr-2 h-4 w-4" /> Download PDF
             </button>
           </div>
-          <div ref={componentRef}>
-            <Card>
-              <CardContent className="p-8">
-                <div className="prose prose-sm max-w-none">
-                  <div className="flex justify-between items-start">
-                      <div>
-                          <h2 className="font-bold text-lg">{formData.fullName}</h2>
-                          <p>{formData.email}</p>
-                          <p>{formData.phone}</p>
-                      </div>
-                      <p>{formData.date}</p>
-                  </div>
-                  
-                  <div className="mt-8">
-                      <p className="font-semibold">{formData.hiringManager}</p>
-                      <p>{formData.companyName}</p>
-                      <p>{formData.companyAddress}</p>
-                  </div>
-
-                  <div className="mt-8 whitespace-pre-wrap">
-                      {formData.letterBody}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          
+          {/* Hidden printable component */}
+          <div className="absolute top-0 left-0 -z-10 opacity-0 pointer-events-none">
+            <CoverLetterPreview ref={componentRef} formData={formData} />
           </div>
+
+          {/* Visible preview */}
+          <CoverLetterPreview formData={formData} ref={null}/>
+
         </div>
       </div>
     </div>
