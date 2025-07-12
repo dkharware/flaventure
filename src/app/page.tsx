@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Star, FileText, Briefcase, UserCircle } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const categories = [
   { name: 'Modern', icon: <Briefcase /> },
@@ -60,34 +59,24 @@ export default function Home() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+      <section className="w-full py-20 md:py-32 lg:py-40 xl:py-56 bg-gradient-to-r from-primary to-accent text-primary-foreground">
         <div className="container px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-            <div className="flex flex-col justify-center space-y-4">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  Craft Your Perfect Resume with ResumeFlow
-                </h1>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  Choose from dozens of professional templates, get AI-powered content suggestions, and create a standout resume in minutes.
-                </p>
-              </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button asChild size="lg">
-                  <Link href="/templates">
-                    Create Your Resume Now <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-              </div>
+          <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none">
+                Craft Your Perfect Resume with ResumeFlow
+              </h1>
+              <p className="max-w-[600px] text-primary-foreground/80 md:text-xl">
+                Choose from dozens of professional templates, get AI-powered content suggestions, and create a standout resume in minutes.
+              </p>
             </div>
-            <Image
-              src="https://placehold.co/600x600.png"
-              data-ai-hint="resume professional"
-              width="600"
-              height="600"
-              alt="Hero"
-              className="mx-auto aspect-square overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
-            />
+            <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <Button asChild size="lg" variant="secondary">
+                <Link href="/templates">
+                  Create Your Resume Now <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -126,13 +115,7 @@ export default function Home() {
             {testimonials.map((testimonial) => (
               <div key={testimonial.name} className="rounded-lg border bg-card p-6 shadow-sm">
                 <div className="flex items-start gap-4">
-                  <div className="flex items-center gap-4">
-                    <UserCircle className="w-8 h-8 text-muted-foreground" />
-                    <Avatar>
-                      <AvatarImage src={testimonial.avatar} data-ai-hint={testimonial.hint} />
-                      <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                  </div>
+                  <UserCircle className="w-8 h-8 text-muted-foreground flex-shrink-0" />
                   <div className="flex-1">
                     <p className="text-sm text-muted-foreground">"{testimonial.quote}"</p>
                     <div className="mt-4 font-semibold">{testimonial.name}</div>
