@@ -32,6 +32,13 @@ const testimonials = [
     hint: 'man portrait',
   },
   {
+    name: 'David L.',
+    title: 'Graphic Designer',
+    quote: 'The creative templates are fantastic! I could finally make a resume that reflects my design skills. The process was so intuitive.',
+    avatar: 'https://placehold.co/100x100.png',
+    hint: 'man graphic designer',
+  },
+  {
     name: 'Aisha M.',
     title: 'B.Com Graduate',
     quote: 'Being a recent graduate from Mumbai, I was unsure how to structure my resume. EasyFreeCV was a lifesaver!',
