@@ -16,6 +16,11 @@ export function TemplateCard({ id, name, imageUrl, hint }: TemplateCardProps) {
     <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
       <CardContent className="p-0">
         <div className="relative">
+          <div className="absolute top-0 left-0 z-10">
+            <div className="relative py-1 px-4 bg-primary text-primary-foreground text-sm font-semibold rounded-br-lg shadow-md">
+              {name}
+            </div>
+          </div>
           <Link href={`/editor/${id}`} aria-label={`Use ${name} template`}>
             <Image
               src={imageUrl}
