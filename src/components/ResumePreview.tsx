@@ -40,7 +40,8 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
 };
 
 export default function ResumePreview() {
-  const { templateId, resumeData: { personalInfo } } = useResume();
+  const { templateId, resumeData } = useResume();
+  const { personalInfo } = resumeData;
   const componentToPrintRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = templateComponents[templateId];
 
@@ -52,7 +53,7 @@ export default function ResumePreview() {
 
   return (
     <div className="bg-gray-100 min-h-full" id="preview-area">
-      <div className="sticky top-0 bg-gray-100 z-10 p-4 lg:p-8 pb-4">
+      <div className="sticky top-0 bg-gray-100 z-10 p-4 pb-4">
         <div className="flex justify-end">
           <button onClick={handlePrint} className={cn(buttonVariants())}>
             <Download className="mr-2 h-4 w-4" />
