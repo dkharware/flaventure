@@ -43,12 +43,11 @@ const categories: { title: string; href: string; description: string; icon: Reac
 ];
 
 const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'>>(
-  ({ className, title, children, href, ...props }, ref) => {
+  ({ className, title, children, ...props }, ref) => {
     return (
       <li>
         <NavigationMenuLink asChild>
-          <Link
-            href={href || '#'}
+          <a
             ref={ref}
             className={cn(
               'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
@@ -58,7 +57,7 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
           >
             <div className="text-sm font-medium leading-none">{title}</div>
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
-          </Link>
+          </a>
         </NavigationMenuLink>
       </li>
     );
@@ -104,19 +103,21 @@ export default function Header() {
                   </div>
                   <ul className="col-span-8 grid grid-cols-2 gap-2">
                     {categories.map((component) => (
-                      <ListItem key={component.title} href={component.href} title={component.title}>
-                        <div className="flex items-start gap-2">
-                          <div className="text-primary mt-0.5">{component.icon}</div>
-                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{component.description}</p>
-                        </div>
-                      </ListItem>
+                      <Link key={component.title} href={component.href} passHref legacyBehavior>
+                        <ListItem title={component.title}>
+                          <div className="flex items-start gap-2">
+                            <div className="text-primary mt-0.5">{component.icon}</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{component.description}</p>
+                          </div>
+                        </ListItem>
+                      </Link>
                     ))}
                   </ul>
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/editor/professional" passHref>
+              <Link href="/editor/professional" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Create Resume
                 </NavigationMenuLink>
