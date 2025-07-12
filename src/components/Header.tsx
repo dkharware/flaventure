@@ -117,11 +117,11 @@ export default function Header() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                <Link href="/editor/professional">
+                <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                  <Link href="/editor/professional">
                     Create Resume
-                </Link>
-              </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
