@@ -98,21 +98,23 @@ export default function Header() {
                   </div>
                   <ul className="col-span-8 grid grid-cols-2 gap-2">
                     {categories.map((component) => (
-                      <Link key={component.title} href={component.href} legacyBehavior passHref>
-                        <ListItem title={component.title}>
-                          <div className="flex items-start gap-2">
-                            <div className="text-primary mt-0.5">{component.icon}</div>
-                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{component.description}</p>
-                          </div>
-                        </ListItem>
-                      </Link>
+                      <ListItem
+                        key={component.title}
+                        href={component.href}
+                        title={component.title}
+                      >
+                        <div className="flex items-start gap-2">
+                          <div className="text-primary mt-0.5">{component.icon}</div>
+                          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{component.description}</p>
+                        </div>
+                      </ListItem>
                     ))}
                   </ul>
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/editor/professional" legacyBehavior passHref>
+              <Link href="/editor/professional" passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Create Resume
                 </NavigationMenuLink>
