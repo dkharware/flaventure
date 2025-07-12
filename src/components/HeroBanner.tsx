@@ -1,92 +1,56 @@
 
 'use client';
 
-import { useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight, FileText, Star, Briefcase } from 'lucide-react';
-import gsap from 'gsap';
+import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 
 export function HeroBanner() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const textRef = useRef<HTMLParagraphElement>(null);
-  const buttonRef = useRef<HTMLDivElement>(null);
-  const iconsRef = useRef<(SVGSVGElement | null)[]>([]);
-
-  useEffect(() => {
-    const context = gsap.context(() => {
-      // Intro animation
-      gsap.from(titleRef.current, { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' });
-      gsap.from(textRef.current, { y: 20, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power3.out' });
-      gsap.from(buttonRef.current, { y: 20, opacity: 0, duration: 0.8, delay: 0.4, ease: 'power3.out' });
-      gsap.from(iconsRef.current, {
-        scale: 0,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.1,
-        ease: 'elastic.out(1, 0.5)',
-        delay: 0.6,
-      });
-
-      // Mouse move parallax effect
-      const onMouseMove = (e: MouseEvent) => {
-        const { clientX, clientY } = e;
-        const { offsetWidth, offsetHeight } = containerRef.current!;
-        const x = (clientX / offsetWidth - 0.5) * 40;
-        const y = (clientY / offsetHeight - 0.5) * 40;
-
-        gsap.to(iconsRef.current, {
-          x: (i) => x * (i % 2 === 0 ? -1 : 1) * 0.5,
-          y: (i) => y * (i % 2 === 0 ? 1 : -1) * 0.5,
-          rotate: x * 0.2,
-          duration: 1,
-          ease: 'power3.out',
-        });
-      };
-      
-      containerRef.current?.addEventListener('mousemove', onMouseMove);
-
-      return () => {
-        containerRef.current?.removeEventListener('mousemove', onMouseMove);
-      }
-    }, containerRef);
-    
-    return () => context.revert();
-  }, []);
-
   return (
-    <section 
-      ref={containerRef} 
-      className="relative w-full py-20 md:py-32 lg:py-40 xl:py-56 bg-gradient-to-br from-primary/20 via-background to-background text-foreground overflow-hidden"
-    >
-      <div className="container px-4 md:px-6 relative z-10">
-        <div className="flex flex-col items-center space-y-4 text-center">
-          <div className="space-y-2">
-            <h1 ref={titleRef} className="text-3xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none text-foreground shadow-lg">
-              Craft Your Perfect Resume with EasyFreeCV
+    <section className="w-full py-20 md:py-32 lg:py-40 bg-background">
+      <div className="container px-4 md:px-6">
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-16">
+          <div className="flex flex-col justify-center space-y-6">
+            <h1 className="text-4xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none text-foreground">
+              Create your standout resume, fast.
             </h1>
-            <p ref={textRef} className="mx-auto max-w-[600px] text-muted-foreground md:text-xl">
-              Choose from dozens of professional templates, get AI-powered content suggestions, and create a standout resume in minutes.
+            <p className="max-w-[600px] text-muted-foreground md:text-xl">
+              Choose from professional templates, get AI-powered suggestions, and land your dream job. It's easy and free.
             </p>
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <Button asChild size="lg" variant="default">
+                <Link href="/templates">
+                  Create Your Resume Now <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href="/templates">
+                  Explore Templates
+                </Link>
+              </Button>
+            </div>
           </div>
-          <div ref={buttonRef} className="flex flex-col gap-2 min-[400px]:flex-row">
-            <Button asChild size="lg" variant="default">
-              <Link href="/templates">
-                Create Your Resume Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
+          <div className="relative flex items-center justify-center">
+             <Image
+                src="https://placehold.co/600x400.png"
+                data-ai-hint="resume modern"
+                alt="Resume template example 1"
+                width={550}
+                height={310}
+                className="rounded-lg shadow-2xl object-cover transform rotate-[-3deg] transition-transform duration-300 hover:rotate-[-1deg] hover:scale-105"
+            />
+             <Image
+                src="https://placehold.co/600x400.png"
+                data-ai-hint="resume creative"
+                alt="Resume template example 2"
+                width={550}
+                height={310}
+                className="rounded-lg shadow-2xl object-cover absolute transform rotate-[5deg] transition-transform duration-300 hover:rotate-[2deg] hover:scale-105 border-4 border-background"
+            />
           </div>
         </div>
       </div>
-      
-      {/* Animated Icons */}
-      <FileText ref={el => iconsRef.current[0] = el} className="absolute top-[15%] left-[10%] w-16 h-16 text-foreground/10 -rotate-12" />
-      <Star ref={el => iconsRef.current[1] = el} className="absolute top-[20%] right-[15%] w-12 h-12 text-foreground/10 rotate-12" />
-      <Briefcase ref={el => iconsRef.current[2] = el} className="absolute bottom-[25%] left-[20%] w-14 h-14 text-foreground/10 rotate-6" />
-      <FileText ref={el => iconsRef.current[3] = el} className="absolute bottom-[15%] right-[10%] w-20 h-20 text-foreground/10 -rotate-6" />
-      <Star ref={el => iconsRef.current[4] = el} className="absolute top-[50%] left-[30%] w-8 h-8 text-foreground/5" />
-      <Briefcase ref={el => iconsRef.current[5] = el} className="absolute top-[40%] right-[40%] w-10 h-10 text-foreground/5 rotate-12" />
     </section>
   );
 }
