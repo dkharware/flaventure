@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { TemplateCard } from '@/components/TemplateCard';
+import { TemplatePreviewModal } from '@/components/TemplatePreviewModal';
 import type { Template } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
@@ -29,6 +30,7 @@ export function TemplateFilters({ templates, categories, colors }: TemplateFilte
   
   const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [activeColor, setActiveColor] = useState('All');
+  const [previewTemplate, setPreviewTemplate] = useState<Template | null>(null);
 
   useEffect(() => {
     const category = searchParams.get('category');
@@ -46,6 +48,14 @@ export function TemplateFilters({ templates, categories, colors }: TemplateFilte
       return categoryMatch && colorMatch;
     });
   }, [templates, activeCategory, activeColor]);
+  
+  const handlePreview = (template: Template) => {
+    setPreviewTemplate(template);
+  };
+
+  const handleClosePreview = () => {
+    setPreviewTemplate(null);
+  };
 
   return (
     <>
@@ -84,9 +94,16 @@ export function TemplateFilters({ templates, categories, colors }: TemplateFilte
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {filteredTemplates.map(template => (
-          <TemplateCard key={template.id} {...template} />
+          <TemplateCard key={template.id} {...template} onPreview={handlePreview} />
         ))}
       </div>
+      
+      {previewTemplate && (
+        <TemplatePreviewModal 
+          template={previewTemplate} 
+          onClose={handleClosePreview} 
+        />
+      )}
     </>
   );
 }

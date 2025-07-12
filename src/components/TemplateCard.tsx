@@ -7,12 +7,17 @@ import { Eye, PenSquare, Crown } from 'lucide-react';
 import type { Template } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 
-export function TemplateCard({ id, name, category, imageUrl, hint, isPremium, price }: Template) {
+interface TemplateCardProps extends Template {
+  onPreview: (template: Template) => void;
+}
+
+export function TemplateCard({ onPreview, ...template }: TemplateCardProps) {
+  const { id, name, category, imageUrl, hint, isPremium, price } = template;
   const isCoverLetter = category === 'Cover Letter';
   const editUrl = isCoverLetter ? `/cover-letter-editor/${id}` : `/editor/${id}`;
 
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 rounded-lg border">
+    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 rounded-lg border flex flex-col">
       <CardContent className="p-4 bg-muted/30">
         <div className="relative overflow-hidden rounded-md shadow-lg">
            <div className="absolute top-3 left-3 z-10">
@@ -37,19 +42,19 @@ export function TemplateCard({ id, name, category, imageUrl, hint, isPremium, pr
           />
         </div>
       </CardContent>
-      <div className="p-4 bg-card border-t">
-          <h3 className="font-headline font-semibold text-lg truncate">{name}</h3>
-          <p className="text-sm text-muted-foreground">{category}</p>
+      <div className="p-4 bg-card border-t flex-grow flex flex-col">
+          <div className="flex-grow">
+            <h3 className="font-headline font-semibold text-lg truncate">{name}</h3>
+            <p className="text-sm text-muted-foreground">{category}</p>
+          </div>
           <div className="flex gap-2 mt-4">
               <Button asChild className="w-full">
                 <Link href={editUrl}>
                   <PenSquare className="mr-2 h-4 w-4" /> Use Template
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="w-full">
-                 <Link href="#">
-                    <Eye className="mr-2 h-4 w-4" /> Preview
-                </Link>
+              <Button variant="outline" className="w-full" onClick={() => onPreview(template)}>
+                <Eye className="mr-2 h-4 w-4" /> Preview
               </Button>
           </div>
         </div>
