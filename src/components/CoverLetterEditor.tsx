@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Download } from 'lucide-react';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
-import htmlToDocx from 'html-to-docx';
+import saveAs from 'html-to-docx';
 
 const CoverLetterPreview = React.forwardRef<HTMLDivElement, { formData: any }>(({ formData }, ref) => {
     return (
@@ -60,19 +60,7 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
   const handleDownload = async () => {
     const content = componentToPrintRef.current;
     if (content) {
-       const fileBuffer = await htmlToDocx(content.outerHTML);
-        const docxFileName = `${formData.fullName.replace(/ /g, '_')}_Cover_Letter.docx`;
-        
-        const blob = new Blob([fileBuffer], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = docxFileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+       await saveAs(content.outerHTML, `${formData.fullName.replace(/ /g, '_')}_Cover_Letter.docx`);
     }
   };
 

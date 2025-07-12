@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useRef } from 'react';
@@ -20,7 +19,7 @@ import { TimelineTemplate } from './templates/Timeline';
 import { TwoColumnTemplate } from './templates/TwoColumn';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
-import htmlToDocx from 'html-to-docx';
+import saveAs from 'html-to-docx';
 
 const templateComponents: { [key: string]: React.ComponentType<any> } = {
   professional: ProfessionalTemplate,
@@ -41,27 +40,13 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
 
 export default function ResumePreview() {
   const { resumeData, templateId } = useResume();
-  const { personalInfo } = resumeData;
-  const TemplateComponent = templateComponents[templateId];
   const componentToPrintRef = useRef<HTMLDivElement>(null);
 
   const handleDownload = async () => {
+    const { personalInfo } = resumeData;
     const content = componentToPrintRef.current;
     if (content) {
-       const fileBuffer = await htmlToDocx(content.outerHTML);
-
-        const docxFileName = `${personalInfo.name.replace(/ /g, '_')}_Resume.docx`;
-        
-        const blob = new Blob([fileBuffer], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = docxFileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+      await saveAs(content.outerHTML, `${personalInfo.name.replace(/ /g, '_')}_Resume.docx`);
     }
   };
 
