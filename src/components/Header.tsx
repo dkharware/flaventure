@@ -116,8 +116,12 @@ export default function Header() {
         </div>
         
         <div className="flex-1 flex justify-end gap-2">
-            <Button variant="ghost">Sign In</Button>
-            <Button>Sign Up</Button>
+            <Button variant="ghost" asChild>
+              <Link href="/login">Sign In</Link>
+            </Button>
+            <Button asChild>
+              <Link href="/signup">Sign Up</Link>
+            </Button>
         </div>
 
       </div>
