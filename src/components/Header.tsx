@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -96,8 +97,8 @@ export default function Header() {
                   <NavigationMenuTrigger>Resume Templates</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="grid grid-cols-3 gap-4 p-4 md:w-[650px] lg:w-[750px]">
-                      <ul className="col-span-2 grid grid-rows-2 gap-2">
-                        {featureLinks.map((component) => (
+                      <ul className="col-span-1 grid grid-rows-2 gap-2">
+                        {featureLinks.slice(0, 2).map((component) => (
                           <Link key={component.title} href={component.href} passHref>
                             <ListItem title={component.title} icon={component.icon}>
                               {component.description}
@@ -107,7 +108,16 @@ export default function Header() {
                       </ul>
                        <div className="col-span-1 flex flex-col justify-start space-y-2 py-3 px-2">
                         <h3 className="font-bold text-sm px-2">TEMPLATES</h3>
-                        {templateLinks.map((link) => (
+                        {templateLinks.slice(0, 3).map((link) => (
+                          <Link key={link.title} href={link.href} passHref>
+                              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-normal justify-start w-full hover:bg-accent/50")}>
+                                {link.title}
+                              </NavigationMenuLink>
+                          </Link>
+                        ))}
+                      </div>
+                       <div className="col-span-1 flex flex-col justify-start space-y-2 py-3 px-2 mt-[2.1rem]">
+                        {templateLinks.slice(3, 6).map((link) => (
                           <Link key={link.title} href={link.href} passHref>
                               <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "font-normal justify-start w-full hover:bg-accent/50")}>
                                 {link.title}
