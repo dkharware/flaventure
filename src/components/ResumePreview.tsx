@@ -41,6 +41,7 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
 export default function ResumePreview() {
   const { resumeData, templateId } = useResume();
   const componentToPrintRef = useRef<HTMLDivElement>(null);
+  const TemplateComponent = templateComponents[templateId];
 
   const handleDownload = async () => {
     const { personalInfo } = resumeData;
