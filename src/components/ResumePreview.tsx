@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { useResume } from './Editor';
-import { useReactToPrint } from 'react-to-print';
 import { Download } from 'lucide-react';
 import { ProfessionalTemplate } from './templates/Professional';
 import { CreativeTemplate } from './templates/Creative';
@@ -40,41 +39,53 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
 
 export default function ResumePreview() {
   const { templateId } = useResume();
-  const componentToPrintRef = useRef<HTMLDivElement>(null);
-
-  const handlePrint = useReactToPrint({
-    content: () => componentToPrintRef.current,
-    documentTitle: 'resume',
-  });
-
   const TemplateComponent = templateComponents[templateId];
 
-  return (
-    <div className="sticky top-0">
-      <div className="flex justify-end mb-4">
-        <button onClick={handlePrint} className={cn(buttonVariants())}>
-          <Download className="mr-2 h-4 w-4" />
-          Download PDF
-        </button>
-      </div>
+  const handlePrint = () => {
+    window.print();
+  };
 
-      {/* Hidden component for printing */}
-      <div className="absolute top-0 left-0 -z-10 opacity-0 pointer-events-none">
-        <div ref={componentToPrintRef}>
-             <div className="bg-white p-2">
-                <div className="w-[827px] h-[1170px] aspect-[210/297]">
-                    {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
-                </div>
-            </div>
+  return (
+    <>
+      <style jsx global>{`
+        @media print {
+          body * {
+            visibility: hidden;
+          }
+          #printable-resume, #printable-resume * {
+            visibility: visible;
+          }
+          #printable-resume {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            transform: scale(1);
+          }
+          .no-print {
+            display: none;
+          }
+        }
+      `}</style>
+      <div className="sticky top-0">
+        <div className="flex justify-end mb-4 no-print">
+          <button onClick={handlePrint} className={cn(buttonVariants())}>
+            <Download className="mr-2 h-4 w-4" />
+            Download PDF
+          </button>
+        </div>
+        
+        <div id="printable-resume" className="bg-white shadow-lg rounded-lg p-2">
+          <div className="w-full aspect-[210/297]">
+            {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+          </div>
         </div>
       </div>
-      
-      {/* Visible component for preview */}
-      <div className="bg-white shadow-lg rounded-lg p-2">
-        <div className="w-full aspect-[210/297]">
-          {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
