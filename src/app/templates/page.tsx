@@ -1,7 +1,12 @@
-
 import { TemplateCard } from '@/components/TemplateCard';
 import { TemplateFilters } from '@/components/TemplateFilters';
 import type { Template } from '@/lib/types';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Free Resume Templates & CV Letter Examples | EasyFreeCV',
+  description: 'Choose from a wide selection of professionally designed free resume templates and CV letter examples. Find the perfect design for your CV and get started in minutes.',
+};
 
 const templates: Template[] = [
   { id: 'professional', name: 'Professional', category: 'Corporate', imageUrl: '/images/templates/professional.png', hint: 'resume simple', color: 'blue' },
@@ -34,8 +39,8 @@ export default function TemplatesPage() {
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">Choose Your Template</h1>
-        <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Select a professionally designed template to start building your standout resume.</p>
+        <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">Choose Your CV Template</h1>
+        <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">Select a professionally designed template to start building your standout CV or free resume. We also have CV letter examples.</p>
       </div>
       
       <TemplateFilters templates={templates} categories={categories} colors={colors} />

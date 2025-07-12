@@ -56,20 +56,20 @@ const testimonials = [
 
 const faqs = [
   {
-    question: 'Is EasyFreeCV free to use?',
-    answer: 'Yes, our basic features, including access to all templates and the resume editor, are completely free. We believe everyone should have access to tools that help them succeed.',
+    question: 'Is EasyFreeCV free to use for creating a resume?',
+    answer: 'Yes, our basic features, including access to all free resume templates and the CV editor, are completely free. We believe everyone should have access to tools that help them succeed.',
   },
   {
-    question: 'How does the AI content suggestion work?',
-    answer: 'Our AI analyzes your job title and any information you provide to suggest relevant skills, summary descriptions, and even hobbies that align with your career profile and the template you\'ve chosen.',
+    question: 'How does the AI content suggestion work for my CV?',
+    answer: 'Our AI analyzes your job title and any information you provide to suggest relevant skills, summary descriptions, and even hobbies that align with your career profile and the CV template you\'ve chosen.',
   },
   {
     question: 'Can I download my resume as a PDF?',
-    answer: 'Absolutely! Once you are happy with your resume, you can easily download a high-quality PDF version with a single click, ready for you to send to recruiters.',
+    answer: 'Absolutely! Once you are happy with your free resume, you can easily download a high-quality PDF version with a single click, ready for you to send to recruiters.',
   },
   {
-    question: 'Are the templates customizable?',
-    answer: 'Yes, all content within the templates is fully customizable. You can add, edit, or remove sections to tailor the resume to your specific needs and personal brand.',
+    question: 'Are the CV letter templates customizable?',
+    answer: 'Yes, all content within the templates, including the CV letter example, is fully customizable. You can add, edit, or remove sections to tailor the document to your specific needs.',
   },
 ];
 
@@ -84,9 +84,9 @@ export default function Home() {
         <div className="container px-6 md:px-10">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Find the Perfect Template for Your Industry</h2>
+              <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Find the Perfect CV Template for Your Industry</h2>
               <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                We have a wide range of resume templates to suit any profession or style.
+                We have a wide range of CV and resume templates to suit any profession or style, including CV letter examples.
               </p>
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function Home() {
         <div className="container px-6 md:px-10">
           <h2 className="text-3xl font-bold font-headline tracking-tighter text-center sm:text-4xl">Loved by Professionals Worldwide</h2>
           <p className="mx-auto max-w-[700px] text-center text-muted-foreground md:text-xl/relaxed mt-2">
-            See what our users are saying about EasyFreeCV.
+            See what our users are saying about our free resume builder.
           </p>
           <div className="relative mt-12">
             <Carousel
