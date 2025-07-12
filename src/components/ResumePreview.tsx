@@ -51,10 +51,12 @@ export default function ResumePreview() {
   return (
     <div className="sticky top-0">
       <div className="flex justify-end mb-4">
-        <Button onClick={handlePrint}>
-          <Download className="mr-2 h-4 w-4" />
-          Download PDF
-        </Button>
+        <div onClick={handlePrint} className="cursor-pointer">
+          <Button>
+            <Download className="mr-2 h-4 w-4" />
+            Download PDF
+          </Button>
+        </div>
       </div>
       <div className="bg-white shadow-lg rounded-lg p-2">
         <div ref={componentRef} className="w-full aspect-[210/297]">
