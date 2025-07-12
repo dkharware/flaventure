@@ -12,6 +12,7 @@ export const initialData: ResumeData = {
   },
   summary:
     'Innovative and deadline-driven Software Engineer with 5+ years of experience designing and developing user-centered digital products from initial concept to final, polished deliverable.',
+  objective: 'To obtain an entry-level software engineering position where I can utilize my skills in web development and problem-solving to contribute to a dynamic team.',
   experience: [
     {
       id: 'exp1',
@@ -43,6 +44,14 @@ export const initialData: ResumeData = {
       startDate: '2017',
       endDate: '2019',
     },
+     {
+      id: 'edu2',
+      school: 'University of California, Berkeley',
+      degree: 'B.S. in Electrical Engineering & Computer Sciences',
+      location: 'Berkeley, CA',
+      startDate: '2013',
+      endDate: '2017',
+    },
   ],
   skills: [
     { id: 'skill1', name: 'React' },
@@ -50,10 +59,52 @@ export const initialData: ResumeData = {
     { id: 'skill3', name: 'Node.js' },
     { id: 'skill4', name: 'SQL' },
     { id: 'skill5', name: 'AWS' },
+    { id: 'skill6', name: 'Project Management' },
+    { id: 'skill7', name: 'Agile Methodologies' },
+    { id: 'skill8', name: 'Data Analysis' },
   ],
   hobbies: [
     { id: 'hobby1', name: 'Hiking' },
     { id: 'hobby2', name: 'Photography' },
     { id: 'hobby3', name: 'Playing Guitar' },
   ],
+  projects: [
+    {
+      id: 'proj1',
+      name: 'Personal Portfolio Website',
+      description: 'Designed and developed a responsive personal portfolio website using Next.js and Tailwind CSS to showcase my projects and skills.',
+      link: 'https://johndoe.com',
+    },
+    {
+      id: 'proj2',
+      name: 'E-commerce Store',
+      description: 'Built a full-stack e-commerce application with features like product catalog, shopping cart, and user authentication using the MERN stack.',
+      link: '',
+    },
+  ],
+  publications: [
+    { id: 'pub1', details: 'Doe, J. (2020). The Future of Machine Learning. Journal of Advanced AI, 15(2), 123-145.' },
+    { id: 'pub2', details: 'Doe, J., & Smith, A. (2019). A Novel Approach to Natural Language Processing. Proceedings of the International Conference on Computational Linguistics.' },
+  ],
+  presentations: [
+    { id: 'pres1', details: 'Keynote Speaker, "AI and Society", AI Summit 2021, Virtual.' },
+    { id: 'pres2', details: 'Presenter, "Deep Learning for Beginners", Tech Conference 2019, New York, NY.' },
+  ],
+  awards: [
+    { id: 'award1', details: 'Best Paper Award, International Conference on Machine Learning (2020)' },
+    { id: 'award2', details: 'Graduate Research Fellowship, National Science Foundation (2017-2019)' },
+  ],
+  languages: [
+    { id: 'lang1', name: 'English', level: 100 },
+    { id: 'lang2', name: 'Spanish', level: 75 },
+  ],
+  leadership: [
+    { id: 'lead1', details: 'Board Member, AI Ethics Council (2021-Present)' },
+    { id: 'lead2', details: 'President, University Coding Club (2016-2017)' },
+  ],
+  achievements: [
+    { id: 'achieve1', details: 'Exceeded sales targets by 150% in Q4 2022.' },
+    { id: 'achieve2', details: 'Secured a $1M+ contract with a key enterprise client.' },
+    { id: 'achieve3', details: 'Named "Salesperson of the Year" for 2021.' },
+  ]
 };

@@ -9,12 +9,32 @@ import { ProfessionalTemplate } from './templates/Professional';
 import { CreativeTemplate } from './templates/Creative';
 import { ModernTemplate } from './templates/Modern';
 import { MinimalistTemplate } from './templates/Minimalist';
+import { AcademicTemplate } from './templates/Academic';
+import { CompactTemplate } from './templates/Compact';
+import { DeveloperTemplate } from './templates/Developer';
+import { EntryLevelTemplate } from './templates/EntryLevel';
+import { ExecutiveTemplate } from './templates/Executive';
+import { InfographicTemplate } from './templates/Infographic';
+import { PortfolioTemplate } from './templates/Portfolio';
+import { SalesTemplate } from './templates/Sales';
+import { TimelineTemplate } from './templates/Timeline';
+import { TwoColumnTemplate } from './templates/TwoColumn';
 
 const templateComponents: { [key: string]: React.ComponentType } = {
   professional: ProfessionalTemplate,
   creative: CreativeTemplate,
   modern: ModernTemplate,
   minimalist: MinimalistTemplate,
+  academic: AcademicTemplate,
+  compact: CompactTemplate,
+  developer: DeveloperTemplate,
+  'entry-level': EntryLevelTemplate,
+  executive: ExecutiveTemplate,
+  infographic: InfographicTemplate,
+  portfolio: PortfolioTemplate,
+  sales: SalesTemplate,
+  timeline: TimelineTemplate,
+  'two-column': TwoColumnTemplate,
 };
 
 export default function ResumePreview() {

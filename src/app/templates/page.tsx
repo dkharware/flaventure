@@ -11,6 +11,16 @@ const templates: Template[] = [
   { id: 'classic', name: 'Classic', category: 'Corporate', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume classic' },
   { id: 'tech', name: 'Tech', category: 'Modern', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume tech' },
   { id: 'simple', name: 'Simple', category: 'Simple', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume basic' },
+  { id: 'academic', name: 'Academic', category: 'Academic', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume academic' },
+  { id: 'infographic', name: 'Infographic', category: 'Creative', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume visual' },
+  { id: 'entry-level', name: 'Entry-Level', category: 'Entry-Level', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume beginner' },
+  { id: 'executive', name: 'Executive', category: 'Corporate', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume executive' },
+  { id: 'developer', name: 'Developer', category: 'Technical', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume developer' },
+  { id: 'sales', name: 'Sales', category: 'Corporate', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume sales' },
+  { id: 'portfolio', name: 'Portfolio', category: 'Creative', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume portfolio' },
+  { id: 'two-column', name: 'Two Column', category: 'Modern', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume two column' },
+  { id: 'timeline', name: 'Timeline', category: 'Creative', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume timeline' },
+  { id: 'compact', name: 'Compact', category: 'Simple', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume compact' },
 ];
 
 export default function TemplatesPage() {
