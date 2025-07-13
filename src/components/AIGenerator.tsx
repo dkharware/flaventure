@@ -43,7 +43,8 @@ export function AIGenerator({ fieldName, onSuggestionSelect }: AIGeneratorProps)
   }, [state, toast]);
   
   const handleFormAction = (formData: FormData) => {
-    if (!textAreaRef.current?.value) {
+    const userInput = formData.get('userInput') as string;
+    if (!userInput) {
       toast({
         variant: 'destructive',
         title: 'Error',
