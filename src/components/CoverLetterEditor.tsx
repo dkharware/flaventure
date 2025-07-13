@@ -8,31 +8,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Download } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-
-const PrintStyles = memo(function PrintStyles() {
-  return (
-    <style jsx global>{`
-      @media print {
-        body * {
-          visibility: hidden;
-        }
-        #printable-cover-letter, #printable-cover-letter * {
-          visibility: visible;
-        }
-        #printable-cover-letter {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-        }
-        .no-print {
-          display: none !important;
-        }
-      }
-    `}</style>
-  );
-});
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { useToast } from '@/hooks/use-toast';
 
 
 const CoverLetterPreview = React.forwardRef<HTMLDivElement, { formData: any }>(({ formData }, ref) => {
@@ -77,8 +55,11 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     hiringManager: 'Jane Smith',
     companyName: 'Tech Innovations Inc.',
     companyAddress: '123 Tech Street, Silicon Valley, CA 94000',
-    letterBody: `Dear ${'Jane Smith'},\n\nI am writing to express my keen interest in the Software Engineer position at ${'Tech Innovations Inc.'}, which I saw advertised on LinkedIn. With my background in developing scalable web applications and my passion for innovative technology, I am confident that I would be a valuable asset to your team.\n\nThank you for considering my application. I have attached my resume for your review and look forward to the possibility of discussing this opportunity further.\n\nSincerely,\n${'John Doe'}`,
+    letterBody: `Dear Jane Smith,\n\nI am writing to express my keen interest in the Software Engineer position at Tech Innovations Inc., which I saw advertised on LinkedIn. With my background in developing scalable web applications and my passion for innovative technology, I am confident that I would be a valuable asset to your team.\n\nThank you for considering my application. I have attached my resume for your review and look forward to the possibility of discussing this opportunity further.\n\nSincerely,\nJohn Doe`,
   });
+  
+  const [isSaving, setIsSaving] = useState(false);
+  const { toast } = useToast();
 
   const componentToPrintRef = useRef<HTMLDivElement>(null);
 
@@ -87,13 +68,52 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     setFormData(prev => ({ ...prev, [name]: value }));
   }, []);
 
-  const handlePrint = () => {
-    window.print();
+  const handleDownload = async () => {
+    const input = componentToPrintRef.current;
+    if (!input) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Could not find the content to download.',
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    
+    try {
+      const canvas = await html2canvas(input, { scale: 2 });
+      const imgData = canvas.toDataURL('image/png');
+      
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height],
+      });
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      const fileName = `CoverLetter-${formData.fullName.replace(/\s/g, '_')}.pdf`;
+      pdf.save(fileName);
+
+      toast({
+        title: 'Success!',
+        description: 'Your cover letter has been downloaded.',
+      });
+
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Could not generate the PDF. Please try again.',
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
     <>
-      <PrintStyles />
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-81px)]">
         <div id="editor-form" className="p-6 border-r overflow-y-auto no-print">
           <Card>
@@ -135,11 +155,12 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
         <div id="preview-area" className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
            <div className="p-4 flex justify-center no-print">
             <button
-                onClick={handlePrint}
+                onClick={handleDownload}
+                disabled={isSaving}
                 className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
             >
                 <Download size={16} />
-                Download PDF
+                {isSaving ? 'Generating PDF...' : 'Download PDF'}
             </button>
           </div>
           <CoverLetterPreview formData={formData} ref={componentToPrintRef} />

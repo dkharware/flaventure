@@ -1,6 +1,6 @@
 'use client';
 
-import React,  { useRef } from 'react';
+import React,  { useRef, useState } from 'react';
 import { useResume } from './Editor';
 import { Download } from 'lucide-react';
 import { ProfessionalTemplate } from './templates/Professional';
@@ -19,6 +19,9 @@ import { TimelineTemplate } from './templates/Timeline';
 import { TwoColumnTemplate } from './templates/TwoColumn';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const templateComponents: { [key: string]: React.ComponentType<any> } = {
   professional: ProfessionalTemplate,
@@ -37,60 +40,80 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
   'two-column': TwoColumnTemplate,
 };
 
-function PrintStyles() {
-  return (
-    <style jsx global>{`
-      @media print {
-        body * {
-          visibility: hidden;
-        }
-        #printable-area, #printable-area * {
-          visibility: visible;
-        }
-        #printable-area {
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          transform-origin: top left;
-          transform: scale(1.18);
-        }
-         .no-print {
-          display: none !important;
-        }
-      }
-    `}</style>
-  );
-}
-
-
 export default function ResumePreview() {
   const { resumeData, templateId } = useResume();
+  const [isSaving, setIsSaving] = useState(false);
+  const { toast } = useToast();
   const componentToPrintRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = templateComponents[templateId];
 
-  const handlePrint = () => {
-    window.print();
+  const handleDownload = async () => {
+    const input = componentToPrintRef.current;
+    if (!input) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Could not find the resume content to download.',
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    
+    try {
+      const canvas = await html2canvas(input, {
+        scale: 2, // Higher scale for better quality
+        useCORS: true, 
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height],
+      });
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      const fileName = `Resume-${resumeData.personalInfo.name.replace(/\s/g, '_')}-${templateId}.pdf`;
+      pdf.save(fileName);
+
+      toast({
+        title: 'Success!',
+        description: 'Your resume has been downloaded.',
+      });
+
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Could not generate the PDF. Please try again.',
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
     <>
-      <PrintStyles />
       <div className="bg-gray-100 min-h-full" id="preview-area">
          <div className="p-4 flex justify-center no-print">
             <button
-                onClick={handlePrint}
+                onClick={handleDownload}
+                disabled={isSaving}
                 className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
             >
                 <Download size={16} />
-                Download PDF
+                {isSaving ? 'Generating PDF...' : 'Download PDF'}
             </button>
         </div>
         <div className="p-4 lg:p-8 pt-2">
             <div id="printable-area" className="bg-white shadow-lg rounded-lg overflow-hidden">
                 <div ref={componentToPrintRef} className="w-full aspect-[210/297]">
-                    {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+                    <div className="p-2">
+                        {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+                    </div>
                 </div>
             </div>
         </div>
