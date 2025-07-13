@@ -32,7 +32,7 @@ export default async function DashboardPage() {
     <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
       <div className="mb-8">
         <h1 className="text-3xl font-bold font-headline">My Dashboard</h1>
-        <p className="text-muted-foreground">Welcome back, {user.full_name}! View and manage your saved documents.</p>
+        <p className="text-muted-foreground">Welcome back, {user.full_name || 'User'}! View and manage your saved documents.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

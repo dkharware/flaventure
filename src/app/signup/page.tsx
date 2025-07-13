@@ -9,7 +9,7 @@ import { signup } from '@/app/actions/user';
 import { useToast } from '@/hooks/use-toast';
 
 export default function SignupPage() {
-  const [state, formAction] = useActionState(signup, { errors: {} });
+  const [state, formAction] = useActionState(signup, null);
   const { toast } = useToast();
 
    useEffect(() => {
