@@ -4,8 +4,18 @@ import { Button } from '@/components/ui/button';
 import { FileText, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { format } from 'date-fns';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export default async function DashboardPage() {
+  const cookieStore = cookies();
+  const userId = cookieStore.get('session')?.value;
+
+  if (!userId) {
+    redirect('/login');
+  }
+
+  // In a real app, you would filter resumes and cover letters by userId
   const resumes = await db.getResumes();
   const coverLetters = await db.getCoverLetters();
 

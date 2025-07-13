@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FileText, Crown, PenSquare, Palette, Sparkles, BookUser, Menu, LayoutDashboard } from 'lucide-react';
+import { FileText, Crown, PenSquare, Palette, Sparkles, BookUser, Menu, LayoutDashboard, LogOut } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,6 +24,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { logout } from '@/app/actions/user';
+import { usePathname } from 'next/navigation';
+import { useAuth } from '@/hooks/use-auth';
 
 
 const featureLinks: { title: string; href: string; description: string; icon: React.ReactElement }[] = [
@@ -79,7 +82,57 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
 );
 ListItem.displayName = 'ListItem';
 
+function AuthButtons() {
+    const { isAuthenticated } = useAuth();
+    
+    if (isAuthenticated) {
+        return (
+            <form action={logout}>
+                <Button variant="ghost" type="submit">Sign Out</Button>
+            </form>
+        );
+    }
+
+    return (
+        <>
+            <Button variant="ghost" asChild>
+                <Link href="/login">Sign In</Link>
+            </Button>
+            <Button asChild>
+                <Link href="/signup">Sign Up</Link>
+            </Button>
+        </>
+    );
+}
+
+function MobileAuthButtons() {
+    const { isAuthenticated } = useAuth();
+
+    if (isAuthenticated) {
+        return (
+             <form action={logout} className="w-full">
+                <Button variant="outline" className="w-full" type="submit">
+                    <LogOut className="mr-2 h-4 w-4" /> Sign Out
+                </Button>
+            </form>
+        )
+    }
+
+    return (
+        <>
+            <Button variant="outline" className="w-full" asChild>
+                <Link href="/login">Sign In</Link>
+            </Button>
+            <Button className="w-full" asChild>
+                <Link href="/signup">Sign Up</Link>
+            </Button>
+        </>
+    )
+}
+
 export default function Header() {
+    const { isAuthenticated } = useAuth();
+
   return (
     <header className="py-4 px-4 sm:px-6 md:px-10 bg-background text-foreground border-b sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
@@ -116,24 +169,19 @@ export default function Header() {
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
-                 <NavigationMenuItem>
+                 {isAuthenticated && <NavigationMenuItem>
                   <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                     <Link href="/dashboard">
                       Dashboard
                     </Link>
                   </NavigationMenuLink>
-                </NavigationMenuItem>
+                </NavigationMenuItem>}
               </NavigationMenuList>
             </NavigationMenu>
         </div>
         
         <div className="hidden md:flex items-center justify-end gap-2 flex-shrink-0">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Sign In</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/signup">Sign Up</Link>
-            </Button>
+            <AuthButtons />
         </div>
 
         <div className="md:hidden">
@@ -154,17 +202,12 @@ export default function Header() {
               </SheetHeader>
                <div className="flex flex-col space-y-2">
                  <Link href="/templates" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Palette className="mr-2 h-4 w-4" /> Templates</Link>
-                 <Link href="/dashboard" className={cn(navigationMenuTriggerStyle(), "justify-start")}><LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard</Link>
+                 {isAuthenticated && <Link href="/dashboard" className={cn(navigationMenuTriggerStyle(), "justify-start")}><LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard</Link>}
                  <Link href="/editor/professional" className={cn(navigationMenuTriggerStyle(), "justify-start")}><PenSquare className="mr-2 h-4 w-4" /> Create Resume</Link>
                   <Link href="/templates?category=Cover+Letter" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookUser className="mr-2 h-4 w-4" /> Cover Letters</Link>
               </div>
               <div className="mt-6 pt-6 border-t space-y-2">
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="/login">Sign In</Link>
-                </Button>
-                <Button className="w-full" asChild>
-                  <Link href="/signup">Sign Up</Link>
-                </Button>
+                <MobileAuthButtons />
               </div>
             </SheetContent>
           </Sheet>

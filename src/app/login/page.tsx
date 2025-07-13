@@ -1,10 +1,27 @@
+'use client';
+import { useActionState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { login } from '@/app/actions/user';
+import { useToast } from '@/hooks/use-toast';
 
 export default function LoginPage() {
+  const [state, formAction] = useActionState(login, undefined);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (state?.error) {
+      toast({
+        variant: 'destructive',
+        title: 'Login Failed',
+        description: state.error,
+      });
+    }
+  }, [state, toast]);
+
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-200px)] py-12 px-4">
       <Card className="w-full max-w-md">
@@ -13,10 +30,10 @@ export default function LoginPage() {
           <CardDescription>Sign in to access your account</CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
+          <form action={formAction} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="easyfreecv@gmail.com" required />
+              <Input id="email" name="email" type="email" placeholder="easyfreecv@gmail.com" required />
             </div>
             <div className="space-y-2">
               <div className="flex items-center">
@@ -25,7 +42,7 @@ export default function LoginPage() {
                   Forgot your password?
                 </Link>
               </div>
-              <Input id="password" type="password" required />
+              <Input id="password" name="password" type="password" required />
             </div>
             <Button type="submit" className="w-full">
               Sign In
