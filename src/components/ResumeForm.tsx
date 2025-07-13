@@ -13,15 +13,6 @@ import { useState, useCallback, memo } from 'react'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
 
-const steps = [
-  { id: 'personal-info', name: 'Personal Info', icon: User, Component: PersonalInfoForm },
-  { id: 'summary', name: 'Summary', icon: Briefcase, Component: SummaryForm },
-  { id: 'experience', name: 'Experience', icon: Briefcase, Component: ExperienceForm },
-  { id: 'education', name: 'Education', icon: GraduationCap, Component: EducationForm },
-  { id: 'skills', name: 'Skills', icon: Star, Component: SkillsForm },
-  { id: 'hobbies', name: 'Hobbies', icon: Heart, Component: HobbiesForm },
-];
-
 const PersonalInfoForm = memo(function PersonalInfoForm() {
   const { resumeData, setResumeData } = useResume();
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -234,6 +225,15 @@ const HobbiesForm = memo(function HobbiesForm() {
         </div>
     );
 });
+
+const steps = [
+  { id: 'personal-info', name: 'Personal Info', icon: User, Component: PersonalInfoForm },
+  { id: 'summary', name: 'Summary', icon: Briefcase, Component: SummaryForm },
+  { id: 'experience', name: 'Experience', icon: Briefcase, Component: ExperienceForm },
+  { id: 'education', name: 'Education', icon: GraduationCap, Component: EducationForm },
+  { id: 'skills', name: 'Skills', icon: Star, Component: SkillsForm },
+  { id: 'hobbies', name: 'Hobbies', icon: Heart, Component: HobbiesForm },
+];
 
 export default function ResumeForm() {
   const [currentStep, setCurrentStep] = useState(0);
