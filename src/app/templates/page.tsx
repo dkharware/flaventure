@@ -4,8 +4,8 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Free Resume Templates & CV Letter Examples | easyfreecv',
-  description: 'Choose from a wide selection of professionally designed free resume templates and CV letter examples. Find the perfect design for your CV and get started in minutes.',
+  title: 'Free Resume & CV Templates | easyfreecv Resume Builder',
+  description: 'Choose from a wide selection of professionally designed free resume templates and CV letter examples with our CV builder. Find the perfect design to create your resume.',
 };
 
 const templates: Template[] = [

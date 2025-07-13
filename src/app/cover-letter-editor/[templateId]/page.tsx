@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: { templateId: strin
   const templateName = params.templateId.replace('cover-letter-', '').replace('-', ' ');
   const titleCasedTemplateName = templateName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   return {
-    title: `CV Letter Editor - ${titleCasedTemplateName} | easyfreecv`,
-    description: `Create a professional CV letter using our ${titleCasedTemplateName} example template.`,
+    title: `CV Letter Builder - ${titleCasedTemplateName} Template | easyfreecv`,
+    description: `Create a professional CV letter for free using our ${titleCasedTemplateName} example template with the easyfreecv resume builder.`,
   };
 }
 

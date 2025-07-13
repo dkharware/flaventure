@@ -12,8 +12,8 @@ const availableTemplates = [
 export async function generateMetadata({ params }: { params: { templateId: string } }): Promise<Metadata> {
   const templateName = params.templateId.charAt(0).toUpperCase() + params.templateId.slice(1);
   return {
-    title: `Create Free Resume - ${templateName} Template | easyfreecv`,
-    description: `Use the ${templateName} template to build your free resume or CV. Our editor makes it easy to create a professional CV.`,
+    title: `Free Resume Builder - ${templateName} Template | easyfreecv`,
+    description: `Use the ${templateName} template with our free CV builder to create your professional resume. Our editor makes it easy to build a CV.`,
   };
 }
 

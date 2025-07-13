@@ -12,9 +12,25 @@ import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
 
 export const metadata: Metadata = {
-  title: 'easyfreecv - Free Resume & CV Builder',
-  description: 'Create your professional resume or CV for free with our easy-to-use builder. Choose from dozens of templates, including CV letter examples, to land your dream job.',
-  keywords: 'free resume, cv, cv letter, cv letter example, resume builder, free cv builder, easyfreecv',
+  title: 'easyfreecv: Free CV and Resume Builder',
+  description: 'Build a professional CV or resume for free with easyfreecv. Our free resume builder and CV maker offers professional templates to help you land your dream job. Create your CV in minutes.',
+  keywords: [
+    'resume builder', 
+    'cv builder', 
+    'free resume builder', 
+    'free cv builder', 
+    'easyfreecv', 
+    'cv maker', 
+    'resume maker', 
+    'online resume builder', 
+    'online cv builder',
+    'professional resume templates',
+    'cv templates',
+    'cv letter example'
+  ],
+  authors: [{ name: 'easyfreecv' }],
+  creator: 'easyfreecv',
+  publisher: 'easyfreecv',
 };
 
 export default async function RootLayout({
