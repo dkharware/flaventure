@@ -1,11 +1,10 @@
-
 import { TemplateFilters } from '@/components/TemplateFilters';
 import type { Template } from '@/lib/types';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Free Resume Templates & CV Letter Examples | EasyFreeCV',
+  title: 'Free Resume Templates & CV Letter Examples | ResumeFlow',
   description: 'Choose from a wide selection of professionally designed free resume templates and CV letter examples. Find the perfect design for your CV and get started in minutes.',
 };
 

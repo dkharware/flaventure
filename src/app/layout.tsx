@@ -12,9 +12,9 @@ import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
 
 export const metadata: Metadata = {
-  title: 'EasyFreeCV - Free Resume & CV Builder',
+  title: 'ResumeFlow - Free Resume & CV Builder',
   description: 'Create your professional resume or CV for free with our easy-to-use builder. Choose from dozens of templates, including CV letter examples, to land your dream job.',
-  keywords: 'free resume, cv, cv letter, cv letter example, resume builder, free cv builder',
+  keywords: 'free resume, cv, cv letter, cv letter example, resume builder, free cv builder, resumeflow',
 };
 
 export default async function RootLayout({

@@ -135,7 +135,7 @@ export default function Header() {
     <header className="py-4 px-4 sm:px-6 md:px-10 bg-background text-foreground border-b sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex-shrink-0">
-          <Link href="/" className="flex items-center gap-2" aria-label="EasyFreeCV Home">
+          <Link href="/" className="flex items-center gap-2" aria-label="ResumeFlow Home">
             <Logo />
           </Link>
         </div>
@@ -192,11 +192,11 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
-                 <Link href="/" className="flex items-center gap-2 mb-4" aria-label="EasyFreeCV Home">
+                 <Link href="/" className="flex items-center gap-2 mb-4" aria-label="ResumeFlow Home">
                     <Logo />
                 </Link>
                 <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
-                <SheetDescription className="sr-only">A list of navigation links for the EasyFreeCV website.</SheetDescription>
+                <SheetDescription className="sr-only">A list of navigation links for the ResumeFlow website.</SheetDescription>
               </SheetHeader>
                <div className="flex flex-col space-y-2">
                  <Link href="/templates" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Palette className="mr-2 h-4 w-4" /> Templates</Link>

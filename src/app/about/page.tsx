@@ -6,7 +6,7 @@ const useNewAboutPageTitle = createFeatureFlag("new_about_page_title", false);
 
 export default async function AboutPage() {
   const newTitleEnabled = await useNewAboutPageTitle();
-  const pageTitle = newTitleEnabled ? "About ResumeFlow" : "About EasyFreeCV";
+  const pageTitle = newTitleEnabled ? "About ResumeFlow" : "About ResumeFlow";
   const content = await db.getAboutContent();
 
   return (

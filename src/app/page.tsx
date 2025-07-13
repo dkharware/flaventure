@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -20,7 +19,7 @@ const testimonials = [
   {
     name: 'Priya S.',
     title: 'Marketing Head',
-    quote: 'EasyFreeCV made it incredibly simple to create a professional resume. The AI suggestions for my marketing profile were spot on!',
+    quote: 'ResumeFlow made it incredibly simple to create a professional resume. The AI suggestions for my marketing profile were spot on!',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'woman portrait',
   },
@@ -41,7 +40,7 @@ const testimonials = [
   {
     name: 'Aisha M.',
     title: 'B.Com Graduate',
-    quote: 'Being a recent graduate from Mumbai, I was unsure how to structure my resume. EasyFreeCV was a lifesaver!',
+    quote: 'Being a recent graduate from Mumbai, I was unsure how to structure my resume. ResumeFlow was a lifesaver!',
     avatar: 'https://placehold.co/100x100.png',
     hint: 'woman professional',
   },
@@ -63,7 +62,7 @@ const testimonials = [
 
 const faqs = [
   {
-    question: 'Is EasyFreeCV free to use for creating a resume?',
+    question: 'Is ResumeFlow free to use for creating a resume?',
     answer: 'Yes, our basic features, including access to all free resume templates and the CV editor, are completely free. We believe everyone should have access to tools that help them succeed.',
   },
   {

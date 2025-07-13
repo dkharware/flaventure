@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: { templateId: strin
   const templateName = params.templateId.replace('cover-letter-', '').replace('-', ' ');
   const titleCasedTemplateName = templateName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   return {
-    title: `CV Letter Editor - ${titleCasedTemplateName} | EasyFreeCV`,
+    title: `CV Letter Editor - ${titleCasedTemplateName} | ResumeFlow`,
     description: `Create a professional CV letter using our ${titleCasedTemplateName} example template.`,
   };
 }

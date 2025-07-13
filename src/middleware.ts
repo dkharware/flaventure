@@ -5,11 +5,15 @@ import type { NextRequest } from 'next/server'
  
 export async function middleware(request: NextRequest) {
   const session = request.cookies.get('session');
-  const requestHeaders = new Headers(request.headers);
-
-  if (session?.value) {
-    requestHeaders.set('x-user-id', session.value);
+  
+  // If there's no session, redirect to login page
+  if (!session) {
+    return NextResponse.redirect(new URL('/login', request.url))
   }
+
+  // Add user ID to request headers for use in server components
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-user-id', session.value);
 
   return NextResponse.next({
     request: {
@@ -20,13 +24,8 @@ export async function middleware(request: NextRequest) {
  
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/dashboard/:path*',
+    '/editor/:path*',
+    '/cover-letter-editor/:path*',
   ],
 }
