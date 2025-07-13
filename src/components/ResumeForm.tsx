@@ -11,6 +11,7 @@ import type { ChangeEvent } from 'react'
 import { AIGenerator } from './AIGenerator'
 import { useState, useCallback } from 'react'
 import { Progress } from '@/components/ui/progress'
+import { cn } from '@/lib/utils'
 
 const steps = [
   { id: 'personal-info', name: 'Personal Info', icon: User },
@@ -121,107 +122,97 @@ export default function ResumeForm() {
       </div>
 
       <div className="space-y-4">
-        {steps[currentStep].id === 'personal-info' && (
-           <div className="space-y-4 p-2">
-            <div><Label htmlFor="personalInfo.name">Full Name</Label><Input id="personalInfo.name" name="personalInfo.name" value={resumeData.personalInfo.name} onChange={handleChange} /></div>
-            <div><Label htmlFor="personalInfo.title">Title</Label><Input id="personalInfo.title" name="personalInfo.title" value={resumeData.personalInfo.title} onChange={handleChange} /></div>
-            <div><Label htmlFor="personalInfo.phone">Phone</Label><Input id="personalInfo.phone" name="personalInfo.phone" value={resumeData.personalInfo.phone} onChange={handleChange} /></div>
-            <div><Label htmlFor="personalInfo.email">Email</Label><Input id="personalInfo.email" name="personalInfo.email" value={resumeData.personalInfo.email} onChange={handleChange} /></div>
-            <div><Label htmlFor="personalInfo.location">Location</Label><Input id="personalInfo.location" name="personalInfo.location" value={resumeData.personalInfo.location} onChange={handleChange} /></div>
-            <div><Label htmlFor="personalInfo.linkedin">LinkedIn</Label><Input id="personalInfo.linkedin" name="personalInfo.linkedin" value={resumeData.personalInfo.linkedin} onChange={handleChange} /></div>
-            <div><Label htmlFor="personalInfo.website">Website</Label><Input id="personalInfo.website" name="personalInfo.website" value={resumeData.personalInfo.website} onChange={handleChange} /></div>
-          </div>
-        )}
-
-        {steps[currentStep].id === 'summary' && (
-          <div className="space-y-4 p-2">
-            <Label>Professional Summary</Label>
-            <Textarea name="summary" value={resumeData.summary} onChange={handleChange} rows={8} />
-            <AIGenerator
-                fieldName="summary"
-                onSuggestionSelect={onSummarySuggestionSelect}
-              />
-          </div>
-        )}
-
-        {steps[currentStep].id === 'experience' && (
-          <div className="space-y-4 p-2">
-            {resumeData.experience.map((exp, index) => (
-              <Card key={exp.id}>
-                <CardContent className="p-4 space-y-4 relative">
-                  <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeArrayItem('experience', index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                  <div><Label>Title</Label><Input name="title" value={exp.title} onChange={(e) => handleArrayChange('experience', index, e)} /></div>
-                  <div><Label>Company</Label><Input name="company" value={exp.company} onChange={(e) => handleArrayChange('experience', index, e)} /></div>
-                  <div><Label>Location</Label><Input name="location" value={exp.location} onChange={(e) => handleArrayChange('experience', index, e)} /></div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div><Label>Start Date</Label><Input name="startDate" value={exp.startDate} onChange={(e) => handleArrayChange('experience', index, e)} /></div>
-                    <div><Label>End Date</Label><Input name="endDate" value={exp.endDate} onChange={(e) => handleArrayChange('experience', index, e)} /></div>
-                  </div>
-                  <div><Label>Description</Label><Textarea name="description" value={exp.description} onChange={(e) => handleArrayChange('experience', index, e)} rows={4} /></div>
-                </CardContent>
-              </Card>
-            ))}
-            <Button variant="outline" onClick={() => addArrayItem('experience')}><PlusCircle className="mr-2 h-4 w-4" /> Add Experience</Button>
-          </div>
-        )}
-
-        {steps[currentStep].id === 'education' && (
-           <div className="space-y-4 p-2">
-            {resumeData.education.map((edu, index) => (
-              <Card key={edu.id}>
-                <CardContent className="p-4 space-y-4 relative">
-                  <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeArrayItem('education', index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
-                  <div><Label>School</Label><Input name="school" value={edu.school} onChange={(e) => handleArrayChange('education', index, e)} /></div>
-                  <div><Label>Degree</Label><Input name="degree" value={edu.degree} onChange={(e) => handleArrayChange('education', index, e)} /></div>
-                  <div><Label>Location</Label><Input name="location" value={edu.location} onChange={(e) => handleArrayChange('education', index, e)} /></div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div><Label>Start Date</Label><Input name="startDate" value={edu.startDate} onChange={(e) => handleArrayChange('education', index, e)} /></div>
-                    <div><Label>End Date</Label><Input name="endDate" value={edu.endDate} onChange={(e) => handleArrayChange('education', index, e)} /></div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-            <Button variant="outline" onClick={() => addArrayItem('education')}><PlusCircle className="mr-2 h-4 w-4" /> Add Education</Button>
-          </div>
-        )}
-
-        {steps[currentStep].id === 'skills' && (
-          <div className="space-y-4 p-2">
-            <Label>Skills</Label>
-            <div className="grid grid-cols-2 gap-4">
-            {resumeData.skills.map((skill, index) => (
-              <div key={skill.id} className="flex items-center gap-2">
-                <Input name="name" value={skill.name} onChange={(e) => handleArrayChange('skills', index, e)} />
-                <Button variant="ghost" size="icon" onClick={() => removeArrayItem('skills', index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+        {steps.map((step, index) => (
+          <div key={step.id} className={cn(currentStep !== index && 'hidden')}>
+            {step.id === 'personal-info' && (
+              <div className="space-y-4 p-2">
+                <div><Label htmlFor="personalInfo.name">Full Name</Label><Input id="personalInfo.name" name="personalInfo.name" value={resumeData.personalInfo.name} onChange={handleChange} /></div>
+                <div><Label htmlFor="personalInfo.title">Title</Label><Input id="personalInfo.title" name="personalInfo.title" value={resumeData.personalInfo.title} onChange={handleChange} /></div>
+                <div><Label htmlFor="personalInfo.phone">Phone</Label><Input id="personalInfo.phone" name="personalInfo.phone" value={resumeData.personalInfo.phone} onChange={handleChange} /></div>
+                <div><Label htmlFor="personalInfo.email">Email</Label><Input id="personalInfo.email" name="personalInfo.email" value={resumeData.personalInfo.email} onChange={handleChange} /></div>
+                <div><Label htmlFor="personalInfo.location">Location</Label><Input id="personalInfo.location" name="personalInfo.location" value={resumeData.personalInfo.location} onChange={handleChange} /></div>
+                <div><Label htmlFor="personalInfo.linkedin">LinkedIn</Label><Input id="personalInfo.linkedin" name="personalInfo.linkedin" value={resumeData.personalInfo.linkedin} onChange={handleChange} /></div>
+                <div><Label htmlFor="personalInfo.website">Website</Label><Input id="personalInfo.website" name="personalInfo.website" value={resumeData.personalInfo.website} onChange={handleChange} /></div>
               </div>
-            ))}
-            </div>
-            <Button variant="outline" onClick={() => addArrayItem('skills')}><PlusCircle className="mr-2 h-4 w-4" /> Add Skill</Button>
-            <AIGenerator
-                fieldName="skills"
-                onSuggestionSelect={onSkillsSuggestionSelect}
-              />
-          </div>
-        )}
-
-        {steps[currentStep].id === 'hobbies' && (
-          <div className="space-y-4 p-2">
-             <Label>Hobbies</Label>
-            <div className="grid grid-cols-2 gap-4">
-              {resumeData.hobbies.map((hobby, index) => (
-                <div key={hobby.id} className="flex items-center gap-2">
-                  <Input name="name" value={hobby.name} onChange={(e) => handleArrayChange('hobbies', index, e)} />
-                  <Button variant="ghost" size="icon" onClick={() => removeArrayItem('hobbies', index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+            )}
+            {step.id === 'summary' && (
+              <div className="space-y-4 p-2">
+                <Label>Professional Summary</Label>
+                <Textarea name="summary" value={resumeData.summary} onChange={handleChange} rows={8} />
+                <AIGenerator fieldName="summary" onSuggestionSelect={onSummarySuggestionSelect} />
+              </div>
+            )}
+            {step.id === 'experience' && (
+              <div className="space-y-4 p-2">
+                {resumeData.experience.map((exp, expIndex) => (
+                  <Card key={exp.id}>
+                    <CardContent className="p-4 space-y-4 relative">
+                      <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeArrayItem('experience', expIndex)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      <div><Label>Title</Label><Input name="title" value={exp.title} onChange={(e) => handleArrayChange('experience', expIndex, e)} /></div>
+                      <div><Label>Company</Label><Input name="company" value={exp.company} onChange={(e) => handleArrayChange('experience', expIndex, e)} /></div>
+                      <div><Label>Location</Label><Input name="location" value={exp.location} onChange={(e) => handleArrayChange('experience', expIndex, e)} /></div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div><Label>Start Date</Label><Input name="startDate" value={exp.startDate} onChange={(e) => handleArrayChange('experience', expIndex, e)} /></div>
+                        <div><Label>End Date</Label><Input name="endDate" value={exp.endDate} onChange={(e) => handleArrayChange('experience', expIndex, e)} /></div>
+                      </div>
+                      <div><Label>Description</Label><Textarea name="description" value={exp.description} onChange={(e) => handleArrayChange('experience', expIndex, e)} rows={4} /></div>
+                    </CardContent>
+                  </Card>
+                ))}
+                <Button variant="outline" onClick={() => addArrayItem('experience')}><PlusCircle className="mr-2 h-4 w-4" /> Add Experience</Button>
+              </div>
+            )}
+            {step.id === 'education' && (
+              <div className="space-y-4 p-2">
+                {resumeData.education.map((edu, eduIndex) => (
+                  <Card key={edu.id}>
+                    <CardContent className="p-4 space-y-4 relative">
+                      <Button variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeArrayItem('education', eduIndex)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      <div><Label>School</Label><Input name="school" value={edu.school} onChange={(e) => handleArrayChange('education', eduIndex, e)} /></div>
+                      <div><Label>Degree</Label><Input name="degree" value={edu.degree} onChange={(e) => handleArrayChange('education', eduIndex, e)} /></div>
+                      <div><Label>Location</Label><Input name="location" value={edu.location} onChange={(e) => handleArrayChange('education', eduIndex, e)} /></div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div><Label>Start Date</Label><Input name="startDate" value={edu.startDate} onChange={(e) => handleArrayChange('education', eduIndex, e)} /></div>
+                        <div><Label>End Date</Label><Input name="endDate" value={edu.endDate} onChange={(e) => handleArrayChange('education', eduIndex, e)} /></div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+                <Button variant="outline" onClick={() => addArrayItem('education')}><PlusCircle className="mr-2 h-4 w-4" /> Add Education</Button>
+              </div>
+            )}
+            {step.id === 'skills' && (
+              <div className="space-y-4 p-2">
+                <Label>Skills</Label>
+                <div className="grid grid-cols-2 gap-4">
+                  {resumeData.skills.map((skill, skillIndex) => (
+                    <div key={skill.id} className="flex items-center gap-2">
+                      <Input name="name" value={skill.name} onChange={(e) => handleArrayChange('skills', skillIndex, e)} />
+                      <Button variant="ghost" size="icon" onClick={() => removeArrayItem('skills', skillIndex)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <Button variant="outline" onClick={() => addArrayItem('hobbies')}><PlusCircle className="mr-2 h-4 w-4" /> Add Hobby</Button>
-             <AIGenerator
-                fieldName="hobbies"
-                onSuggestionSelect={onHobbiesSuggestionSelect}
-              />
+                <Button variant="outline" onClick={() => addArrayItem('skills')}><PlusCircle className="mr-2 h-4 w-4" /> Add Skill</Button>
+                <AIGenerator fieldName="skills" onSuggestionSelect={onSkillsSuggestionSelect} />
+              </div>
+            )}
+            {step.id === 'hobbies' && (
+              <div className="space-y-4 p-2">
+                <Label>Hobbies</Label>
+                <div className="grid grid-cols-2 gap-4">
+                  {resumeData.hobbies.map((hobby, hobbyIndex) => (
+                    <div key={hobby.id} className="flex items-center gap-2">
+                      <Input name="name" value={hobby.name} onChange={(e) => handleArrayChange('hobbies', hobbyIndex, e)} />
+                      <Button variant="ghost" size="icon" onClick={() => removeArrayItem('hobbies', hobbyIndex)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    </div>
+                  ))}
+                </div>
+                <Button variant="outline" onClick={() => addArrayItem('hobbies')}><PlusCircle className="mr-2 h-4 w-4" /> Add Hobby</Button>
+                <AIGenerator fieldName="hobbies" onSuggestionSelect={onHobbiesSuggestionSelect} />
+              </div>
+            )}
           </div>
-        )}
+        ))}
       </div>
 
       <div className="flex justify-between pt-4 border-t">
