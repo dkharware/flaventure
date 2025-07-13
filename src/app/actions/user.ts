@@ -43,6 +43,10 @@ export async function signup(prevState: SignupState, formData: FormData): Promis
     const passwordHash = await hash(password, 10);
     const user = await db.createUser({ fullName, email, passwordHash });
 
+    if (!user) {
+        return { errors: { general: 'Failed to create user. Please try again.' } };
+    }
+
     const sessionExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
     cookies().set('session', user.id, {
         httpOnly: true,

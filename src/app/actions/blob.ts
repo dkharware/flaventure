@@ -53,6 +53,10 @@ export async function uploadFile(type: 'resume' | 'cover_letter', fileContent: s
 
   } catch (error) {
     console.error('Error uploading file:', error);
-    return { error: 'Failed to upload file.' };
+    let message = 'Failed to upload file.';
+    if (error instanceof Error) {
+        message = error.message;
+    }
+    return { error: message };
   }
 }

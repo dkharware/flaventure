@@ -19,6 +19,10 @@ export async function adminLogin(prevState: AuthState, formData: FormData): Prom
   
   try {
     const passwordHash = await db.getAdminPasswordHash();
+    if (!passwordHash) {
+      return { error: 'Admin password not set.' };
+    }
+    
     const passwordMatch = await compare(password, passwordHash);
 
     if (passwordMatch) {

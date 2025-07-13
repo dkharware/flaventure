@@ -20,7 +20,7 @@ const PersonalInfoForm = memo(function PersonalInfoForm() {
     const keys = name.split('.');
     setResumeData(prev => ({
       ...prev,
-      [keys[0]]: { ...prev.personalInfo, [keys[1]]: value },
+      personalInfo: { ...prev.personalInfo, [keys[1]]: value },
     }));
   };
 

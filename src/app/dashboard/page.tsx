@@ -42,7 +42,7 @@ export default async function DashboardPage() {
             <CardDescription>All your saved resume documents.</CardDescription>
           </CardHeader>
           <CardContent>
-            {resumes.length > 0 ? (
+            {resumes && resumes.length > 0 ? (
               <ul className="space-y-4">
                 {resumes.map((resume: any, index: number) => (
                   <li key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
             <CardDescription>All your saved cover letter documents.</CardDescription>
           </CardHeader>
           <CardContent>
-            {coverLetters.length > 0 ? (
+            {coverLetters && coverLetters.length > 0 ? (
                <ul className="space-y-4">
                 {coverLetters.map((letter: any, index: number) => (
                   <li key={index} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">

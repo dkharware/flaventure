@@ -1,4 +1,3 @@
-
 import { supabase } from './supabase';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -32,16 +31,14 @@ export const db = {
     };
     const { data, error } = await supabase.from('users').insert(newUser).select().single();
     if (error) throw error;
-    // Map snake_case from db to camelCase for app consistency
-    return { ...data, fullName: data.full_name, passwordHash: data.password_hash };
+    return data;
   },
 
   // Resume methods
   getResumes: async (userId: string) => {
     const { data, error } = await supabase.from('resumes').select('*').eq('user_id', userId).order('created_at', { ascending: false });
     if (error) throw error;
-    // Map snake_case to camelCase
-    return data.map(r => ({...r, createdAt: r.created_at}));
+    return data;
   },
   addResume: async (resume: { url: string; name: string; userId: string }) => {
     const { data, error } = await supabase.from('resumes').insert({ ...resume, user_id: resume.userId });
@@ -53,8 +50,7 @@ export const db = {
   getCoverLetters: async (userId: string) => {
     const { data, error } = await supabase.from('cover_letters').select('*').eq('user_id', userId).order('created_at', { ascending: false });
     if (error) throw error;
-    // Map snake_case to camelCase
-    return data.map(cl => ({...cl, createdAt: cl.created_at}));
+    return data;
   },
   addCoverLetter: async (coverLetter: { url: string; name: string; userId: string }) => {
     const { data, error } = await supabase.from('cover_letters').insert({ ...coverLetter, user_id: coverLetter.userId });
