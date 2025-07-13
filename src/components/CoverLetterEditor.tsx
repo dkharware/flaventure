@@ -8,7 +8,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Download } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useToast } from '@/hooks/use-toast';
 import { uploadFile } from '@/app/actions/blob';
@@ -84,23 +83,23 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     
     try {
       const canvas = await html2canvas(input, { scale: 2 });
-      const imgData = canvas.toDataURL('image/png');
+      const imgDataUri = canvas.toDataURL('image/png');
       
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height],
-      });
+      const fileName = `CoverLetter-${formData.fullName.replace(/\s/g, '_')}.png`;
       
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      const fileName = `CoverLetter-${formData.fullName.replace(/\s/g, '_')}.pdf`;
-      
-      const uploadResult = await uploadFile('cover_letter', imgData, fileName);
+      const uploadResult = await uploadFile('cover_letter', imgDataUri, fileName);
       if (uploadResult?.error) {
         throw new Error(uploadResult.error);
       }
       
-      pdf.save(fileName);
+      // Trigger download
+      const link = document.createElement('a');
+      link.href = imgDataUri;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
       toast({
         title: 'Success!',
         description: 'Your cover letter has been saved and downloaded.',
@@ -111,7 +110,7 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Could not generate the PDF. Please try again.',
+        description: `Could not generate the file. ${error instanceof Error ? error.message : ''}`,
       });
     } finally {
       setIsSaving(false);
@@ -166,7 +165,7 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
                 className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
             >
                 <Download size={16} />
-                {isSaving ? 'Generating PDF...' : 'Save & Download PDF'}
+                {isSaving ? 'Generating...' : 'Save & Download'}
             </button>
           </div>
           <CoverLetterPreview formData={formData} ref={componentToPrintRef} />

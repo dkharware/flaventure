@@ -11,7 +11,6 @@ function dataURItoBlob(dataURI: string) {
     return new Blob([buffer], { type: mimeString });
 }
 
-
 export async function uploadFile(type: 'resume' | 'cover_letter', fileContent: string, fileName: string) {
   const cookieStore = cookies();
   const userId = cookieStore.get('session')?.value;
@@ -30,7 +29,7 @@ export async function uploadFile(type: 'resume' | 'cover_letter', fileContent: s
       .upload(filePath, blob, {
         cacheControl: '3600',
         upsert: true,
-        contentType: 'application/pdf',
+        contentType: 'image/png', // Saving as PNG from canvas
       });
 
     if (uploadError) {

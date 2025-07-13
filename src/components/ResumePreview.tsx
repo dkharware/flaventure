@@ -20,9 +20,8 @@ import { TwoColumnTemplate } from './templates/TwoColumn';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import { uploadFile } from '@/app/actions/blob';
+import html2canvas from 'html2canvas';
 
 const templateComponents: { [key: string]: React.ComponentType<any> } = {
   professional: ProfessionalTemplate,
@@ -62,26 +61,29 @@ export default function ResumePreview() {
 
     setIsSaving(true);
     try {
+      // Use html2canvas to capture the content as a data URI
       const canvas = await html2canvas(input, {
-        scale: 2,
+        scale: 2, // Higher scale for better quality
         useCORS: true,
       });
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height],
-      });
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      const fileName = `Resume-${resumeData.personalInfo.name.replace(/\s/g, '_')}-${templateId}.pdf`;
+      const imgDataUri = canvas.toDataURL('image/png');
       
-      const uploadResult = await uploadFile('resume', imgData, fileName);
+      const fileName = `Resume-${resumeData.personalInfo.name.replace(/\s/g, '_')}-${templateId}.png`;
+      
+      const uploadResult = await uploadFile('resume', imgDataUri, fileName);
 
       if (uploadResult?.error) {
         throw new Error(uploadResult.error);
       }
+      
+      // Trigger browser download
+      const link = document.createElement('a');
+      link.href = imgDataUri;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-      pdf.save(fileName);
       toast({
         title: 'Success!',
         description: 'Your resume has been saved and downloaded.',
@@ -92,7 +94,7 @@ export default function ResumePreview() {
        toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Could not save or download the PDF. Please try again.',
+        description: `Could not save or download. ${error instanceof Error ? error.message : ''}`,
       });
     } finally {
       setIsSaving(false);
@@ -109,7 +111,7 @@ export default function ResumePreview() {
                 className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
             >
                 <Download size={16} />
-                {isSaving ? 'Generating PDF...' : 'Save & Download PDF'}
+                {isSaving ? 'Generating...' : 'Save & Download'}
             </button>
         </div>
         <div className="p-4 lg:p-8 pt-2">
