@@ -1,6 +1,7 @@
 'use client';
 import { useResume } from '@/components/Editor';
 import { Mail, Phone, Linkedin, Globe, MapPin, Award, BookOpen, Mic } from 'lucide-react';
+import type { Publication, Presentation } from '@/lib/types';
 
 export function AcademicTemplate() {
   const { resumeData } = useResume();
@@ -57,7 +58,7 @@ export function AcademicTemplate() {
       {publications?.length > 0 && <section className="mb-4">
         <h2 className="text-sm font-bold border-b-2 border-gray-200 pb-1 mb-2 tracking-wider flex items-center gap-2"><BookOpen size={12} /> PUBLICATIONS</h2>
         <ul className="list-decimal list-inside space-y-1">
-          {publications.map(pub => (
+          {publications.map((pub: Publication) => (
             <li key={pub.id}>{pub.details}</li>
           ))}
         </ul>
@@ -66,7 +67,7 @@ export function AcademicTemplate() {
       {presentations?.length > 0 && <section className="mb-4">
         <h2 className="text-sm font-bold border-b-2 border-gray-200 pb-1 mb-2 tracking-wider flex items-center gap-2"><Mic size={12} /> PRESENTATIONS</h2>
         <ul className="list-decimal list-inside space-y-1">
-          {presentations.map(pres => (
+          {presentations.map((pres: Presentation) => (
             <li key={pres.id}>{pres.details}</li>
           ))}
         </ul>
@@ -75,7 +76,7 @@ export function AcademicTemplate() {
       {awards?.length > 0 && <section className="mb-4">
         <h2 className="text-sm font-bold border-b-2 border-gray-200 pb-1 mb-2 tracking-wider flex items-center gap-2"><Award size={12} /> AWARDS & HONORS</h2>
         <ul className="list-decimal list-inside space-y-1">
-          {awards.map(award => (
+          {awards.map((award: Award) => (
             <li key={award.id}>{award.details}</li>
           ))}
         </ul>

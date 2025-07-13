@@ -9,7 +9,7 @@ export interface ResumeData {
     linkedin: string;
     website: string;
   };
-  summary: string;
+  summary?: string;
   objective?: string;
   experience: Experience[];
   education: Education[];
