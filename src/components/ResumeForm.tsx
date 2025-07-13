@@ -227,12 +227,12 @@ const HobbiesForm = memo(function HobbiesForm() {
 });
 
 const steps = [
-  { id: 'personal-info', name: 'Personal Info', icon: User },
-  { id: 'summary', name: 'Summary', icon: Briefcase },
-  { id: 'experience', name: 'Experience', icon: Briefcase },
-  { id: 'education', name: 'Education', icon: GraduationCap },
-  { id: 'skills', name: 'Skills', icon: Star },
-  { id: 'hobbies', name: 'Hobbies', icon: Heart },
+  { id: 'personal-info', name: 'Personal Info', icon: User, Component: PersonalInfoForm },
+  { id: 'summary', name: 'Summary', icon: Briefcase, Component: SummaryForm },
+  { id: 'experience', name: 'Experience', icon: Briefcase, Component: ExperienceForm },
+  { id: 'education', name: 'Education', icon: GraduationCap, Component: EducationForm },
+  { id: 'skills', name: 'Skills', icon: Star, Component: SkillsForm },
+  { id: 'hobbies', name: 'Hobbies', icon: Heart, Component: HobbiesForm },
 ];
 
 export default function ResumeForm() {
@@ -251,26 +251,8 @@ export default function ResumeForm() {
   };
 
   const progress = ((currentStep + 1) / steps.length) * 100;
+  const CurrentStepComponent = steps[currentStep].Component;
   const CurrentIcon = steps[currentStep].icon;
-  
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 0:
-        return <PersonalInfoForm />;
-      case 1:
-        return <SummaryForm />;
-      case 2:
-        return <ExperienceForm />;
-      case 3:
-        return <EducationForm />;
-      case 4:
-        return <SkillsForm />;
-      case 5:
-        return <HobbiesForm />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <div className="p-6 space-y-6">
@@ -288,7 +270,7 @@ export default function ResumeForm() {
       </div>
 
       <div className="space-y-4">
-        {renderStepContent()}
+        <CurrentStepComponent />
       </div>
 
       <div className="flex justify-between pt-4 border-t">
