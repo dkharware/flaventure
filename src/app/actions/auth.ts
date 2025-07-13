@@ -25,18 +25,18 @@ export async function adminLogin(prevState: AuthState, formData: FormData): Prom
     
     const passwordMatch = await compare(password, passwordHash);
 
-    if (passwordMatch) {
-      const cookieStore = cookies();
-      cookieStore.set('admin-auth', 'true', {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 60 * 60 * 24, // 24 hours
-        path: '/',
-      });
-      // Redirect must be outside the try-catch block
-    } else {
+    if (!passwordMatch) {
       return { error: 'Invalid password.' };
     }
+
+    const cookieStore = cookies();
+    cookieStore.set('admin-auth', 'true', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24, // 24 hours
+      path: '/',
+    });
+    
   } catch (e) {
     console.error(e);
     return { error: 'An unexpected error occurred.' };
