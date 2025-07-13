@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useFormStatus } from 'react';
 import { getSuggestions } from '@/app/actions/ai';
 import { useResume } from './Editor';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,7 +26,7 @@ function SubmitButton() {
 }
 
 export function AIGenerator({ fieldName, onSuggestionSelect }: AIGeneratorProps) {
-  const [state, formAction] = useFormState(getSuggestions, null);
+  const [state, formAction] = useActionState(getSuggestions, null);
   const { templateId, resumeData } = useResume();
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
