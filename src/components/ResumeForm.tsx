@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Trash2, PlusCircle, User, Briefcase, GraduationCap, Star, Heart, ArrowLeft, ArrowRight } from 'lucide-react'
 import type { ChangeEvent } from 'react'
 import { AIGenerator } from './AIGenerator'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Progress } from '@/components/ui/progress'
 
 const steps = [
@@ -88,17 +88,19 @@ export default function ResumeForm() {
     }
   };
 
-  const handleSuggestionSelect = (fieldName: 'summary' | 'skills' | 'hobbies', suggestion: string) => {
-    if (fieldName === 'summary') {
-      setResumeData(prev => ({...prev, summary: suggestion}));
-    } else if (fieldName === 'skills') {
-      const newSkill = {id: `skill-${Date.now()}`, name: suggestion };
-      setResumeData(prev => ({...prev, skills: [...prev.skills, newSkill]}));
-    } else if (fieldName === 'hobbies') {
-      const newHobby = {id: `hobby-${Date.now()}`, name: suggestion };
-      setResumeData(prev => ({...prev, hobbies: [...prev.hobbies, newHobby]}));
-    }
-  };
+  const onSummarySuggestionSelect = useCallback((suggestion: string) => {
+    setResumeData(prev => ({...prev, summary: suggestion}));
+  }, [setResumeData]);
+
+  const onSkillsSuggestionSelect = useCallback((suggestion: string) => {
+    const newSkill = {id: `skill-${Date.now()}`, name: suggestion };
+    setResumeData(prev => ({...prev, skills: [...prev.skills, newSkill]}));
+  }, [setResumeData]);
+
+  const onHobbiesSuggestionSelect = useCallback((suggestion: string) => {
+    const newHobby = {id: `hobby-${Date.now()}`, name: suggestion };
+    setResumeData(prev => ({...prev, hobbies: [...prev.hobbies, newHobby]}));
+  }, [setResumeData]);
 
   const progress = ((currentStep + 1) / steps.length) * 100;
   const CurrentIcon = steps[currentStep].icon;
@@ -137,7 +139,7 @@ export default function ResumeForm() {
             <Textarea name="summary" value={resumeData.summary} onChange={handleChange} rows={8} />
             <AIGenerator
                 fieldName="summary"
-                onSuggestionSelect={(suggestion) => handleSuggestionSelect('summary', suggestion)}
+                onSuggestionSelect={onSummarySuggestionSelect}
               />
           </div>
         )}
@@ -197,7 +199,7 @@ export default function ResumeForm() {
             <Button variant="outline" onClick={() => addArrayItem('skills')}><PlusCircle className="mr-2 h-4 w-4" /> Add Skill</Button>
             <AIGenerator
                 fieldName="skills"
-                onSuggestionSelect={(suggestion) => handleSuggestionSelect('skills', suggestion)}
+                onSuggestionSelect={onSkillsSuggestionSelect}
               />
           </div>
         )}
@@ -216,7 +218,7 @@ export default function ResumeForm() {
             <Button variant="outline" onClick={() => addArrayItem('hobbies')}><PlusCircle className="mr-2 h-4 w-4" /> Add Hobby</Button>
              <AIGenerator
                 fieldName="hobbies"
-                onSuggestionSelect={(suggestion) => handleSuggestionSelect('hobbies', suggestion)}
+                onSuggestionSelect={onHobbiesSuggestionSelect}
               />
           </div>
         )}
