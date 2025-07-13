@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useResume } from './Editor'
@@ -226,17 +227,18 @@ const HobbiesForm = memo(function HobbiesForm() {
     );
 });
 
-const steps = [
-  { id: 'personal-info', name: 'Personal Info', icon: User, Component: PersonalInfoForm },
-  { id: 'summary', name: 'Summary', icon: Briefcase, Component: SummaryForm },
-  { id: 'experience', name: 'Experience', icon: Briefcase, Component: ExperienceForm },
-  { id: 'education', name: 'Education', icon: GraduationCap, Component: EducationForm },
-  { id: 'skills', name: 'Skills', icon: Star, Component: SkillsForm },
-  { id: 'hobbies', name: 'Hobbies', icon: Heart, Component: HobbiesForm },
-];
 
 export default function ResumeForm() {
   const [currentStep, setCurrentStep] = useState(0);
+
+  const steps = [
+    { id: 'personal-info', name: 'Personal Info', icon: User, Component: PersonalInfoForm },
+    { id: 'summary', name: 'Summary', icon: Briefcase, Component: SummaryForm },
+    { id: 'experience', name: 'Experience', icon: Briefcase, Component: ExperienceForm },
+    { id: 'education', name: 'Education', icon: GraduationCap, Component: EducationForm },
+    { id: 'skills', name: 'Skills', icon: Star, Component: SkillsForm },
+    { id: 'hobbies', name: 'Hobbies', icon: Heart, Component: HobbiesForm },
+  ];
 
   const nextStep = () => {
     if (currentStep < steps.length - 1) {
@@ -284,3 +286,5 @@ export default function ResumeForm() {
     </div>
   )
 }
+
+    
