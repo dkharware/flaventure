@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useRef } from 'react';
 import { useFormStatus } from 'react-dom';
 import { getSuggestions } from '@/app/actions/ai';
 import { useResume } from './Editor';
@@ -9,7 +9,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect, useRef } from 'react';
 import { Lightbulb, Plus } from 'lucide-react';
 
 interface AIGeneratorProps {
