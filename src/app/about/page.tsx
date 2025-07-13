@@ -1,12 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { createFeatureFlag } from '@/lib/flags';
 import { db } from '@/lib/db';
 
-const useNewAboutPageTitle = createFeatureFlag("new_about_page_title", false);
-
 export default async function AboutPage() {
-  const newTitleEnabled = await useNewAboutPageTitle();
-  const pageTitle = newTitleEnabled ? "About easyfreecv" : "About easyfreecv";
+  const pageTitle = "About easyfreecv";
   const content = await db.getAboutContent();
 
   return (
