@@ -38,7 +38,6 @@ export default function AdminLoginPage() {
             <Button type="submit" className="w-full">
               Login
             </Button>
-            {state?.error && <p className="text-sm text-destructive text-center">{state.error}</p>}
           </form>
         </CardContent>
       </Card>

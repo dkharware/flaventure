@@ -37,6 +37,34 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
   'two-column': TwoColumnTemplate,
 };
 
+function PrintStyles() {
+  return (
+    <style jsx global>{`
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        #printable-area, #printable-area * {
+          visibility: visible;
+        }
+        #printable-area {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          transform-origin: top left;
+          transform: scale(1.18);
+        }
+         .no-print {
+          display: none !important;
+        }
+      }
+    `}</style>
+  );
+}
+
+
 export default function ResumePreview() {
   const { resumeData, templateId } = useResume();
   const componentToPrintRef = useRef<HTMLDivElement>(null);
@@ -48,28 +76,7 @@ export default function ResumePreview() {
 
   return (
     <>
-       <style jsx global>{`
-        @media print {
-          body * {
-            visibility: hidden;
-          }
-          #printable-area, #printable-area * {
-            visibility: visible;
-          }
-          #printable-area {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            transform-origin: top left;
-            transform: scale(1.18);
-          }
-           .no-print {
-            display: none !important;
-          }
-        }
-      `}</style>
+      <PrintStyles />
       <div className="bg-gray-100 min-h-full" id="preview-area">
          <div className="p-4 flex justify-center no-print">
             <button

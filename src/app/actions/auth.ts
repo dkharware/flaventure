@@ -37,6 +37,7 @@ export async function adminLogin(prevState: AuthState, formData: FormData): Prom
         maxAge: 60 * 60 * 24, // 24 hours
         path: '/',
       });
+      // Redirect must be outside the try-catch block
     } else {
       return { error: 'Invalid password.' };
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback, memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -8,6 +8,32 @@ import { Textarea } from '@/components/ui/textarea';
 import { Download } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+
+const PrintStyles = memo(function PrintStyles() {
+  return (
+    <style jsx global>{`
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        #printable-cover-letter, #printable-cover-letter * {
+          visibility: visible;
+        }
+        #printable-cover-letter {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+    `}</style>
+  );
+});
+
 
 const CoverLetterPreview = React.forwardRef<HTMLDivElement, { formData: any }>(({ formData }, ref) => {
     return (
@@ -56,10 +82,10 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
 
   const componentToPrintRef = useRef<HTMLDivElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
   const handlePrint = () => {
     window.print();
@@ -67,26 +93,7 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
 
   return (
     <>
-      <style jsx global>{`
-        @media print {
-          body * {
-            visibility: hidden;
-          }
-          #printable-cover-letter, #printable-cover-letter * {
-            visibility: visible;
-          }
-          #printable-cover-letter {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-          }
-          .no-print {
-            display: none !important;
-          }
-        }
-      `}</style>
+      <PrintStyles />
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-81px)]">
         <div id="editor-form" className="p-6 border-r overflow-y-auto no-print">
           <Card>
