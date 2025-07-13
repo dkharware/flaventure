@@ -146,6 +146,8 @@ export default function Header() {
                  <Link href="/" className="flex items-center gap-2 mb-4" aria-label="EasyFreeCV Home">
                     <Logo />
                 </Link>
+                <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
+                <SheetDescription className="sr-only">A list of navigation links for the EasyFreeCV website.</SheetDescription>
               </SheetHeader>
                <div className="flex flex-col space-y-2">
                  <Link href="/templates" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Palette className="mr-2 h-4 w-4" /> Templates</Link>
