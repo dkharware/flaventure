@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -25,7 +24,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { logout } from '@/app/actions/user';
-import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
 
 
