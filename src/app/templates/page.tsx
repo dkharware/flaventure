@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Choose from a wide selection of professionally designed free resume templates and CV letter examples with our CV builder. Find the perfect design to create your resume.',
 };
 
-const templates: Template[] = [
+export const templates: Template[] = [
   { id: 'professional', name: 'Professional', category: 'Corporate', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume simple', color: 'blue' },
   { id: 'modern', name: 'Modern', category: 'Corporate', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume clean', color: 'black' },
   { id: 'creative', name: 'Creative', category: 'Creative', imageUrl: 'https://placehold.co/400x565.png', hint: 'resume color', isPremium: true, price: 50, color: 'orange' },

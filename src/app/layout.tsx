@@ -11,8 +11,14 @@ import { AuthProvider } from '@/hooks/use-auth';
 import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
+
 export const metadata: Metadata = {
-  title: 'easyfreecv: Free CV and Resume Builder',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'easyfreecv: Free CV and Resume Builder',
+    template: '%s | easyfreecv',
+  },
   description: 'Build a professional CV or resume for free with easyfreecv. Our free resume builder and CV maker offers professional templates to help you land your dream job. Create your CV in minutes.',
   keywords: [
     'resume builder', 
@@ -28,9 +34,37 @@ export const metadata: Metadata = {
     'cv templates',
     'cv letter example'
   ],
-  authors: [{ name: 'easyfreecv' }],
+  authors: [{ name: 'easyfreecv', url: siteUrl }],
   creator: 'easyfreecv',
   publisher: 'easyfreecv',
+  openGraph: {
+    title: 'easyfreecv: Free CV and Resume Builder',
+    description: 'Create a stunning, professional resume in minutes. Choose from a variety of free templates and get AI-powered suggestions.',
+    url: siteUrl,
+    siteName: 'easyfreecv',
+    images: [
+      {
+        url: '/og-image.png', // Assuming you'll add an og-image.png to your public folder
+        width: 1200,
+        height: 630,
+        alt: 'easyfreecv - Free Resume and CV Builder',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'easyfreecv: Free CV and Resume Builder',
+    description: 'Create a stunning, professional resume in minutes. Choose from a variety of free templates and get AI-powered suggestions.',
+    images: ['/og-image.png'], // Assuming you'll add an og-image.png to your public folder
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: `${siteUrl}/site.webmanifest`,
 };
 
 export default async function RootLayout({
