@@ -22,6 +22,7 @@ import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { uploadFile } from '@/app/actions/blob';
 
 const templateComponents: { [key: string]: React.ComponentType<any> } = {
   professional: ProfessionalTemplate,
@@ -67,21 +68,38 @@ export default function ResumePreview() {
       });
 
       const imgData = canvas.toDataURL('image/png');
-      
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'px',
         format: [canvas.width, canvas.height],
       });
-      
       pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
       const fileName = `Resume-${resumeData.personalInfo.name.replace(/\s/g, '_')}-${templateId}.pdf`;
-      pdf.save(fileName);
+      const pdfBlob = pdf.output('blob');
+
+      const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.error) {
+        throw new Error(result.error);
+      }
+      
+      await db.addResume({ url: result.url, name: fileName, createdAt: new Date() });
 
       toast({
         title: 'Success!',
-        description: 'Your resume has been downloaded.',
+        description: 'Your resume has been saved.',
       });
+      
+      pdf.save(fileName);
 
     } catch (error) {
       console.error(error);
@@ -95,17 +113,72 @@ export default function ResumePreview() {
     }
   };
 
+  async function handleSaveAndDownload() {
+    const input = componentToPrintRef.current;
+    if (!input) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Could not find the resume content to download.',
+      });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const canvas = await html2canvas(input, {
+        scale: 2,
+        useCORS: true,
+      });
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'px',
+        format: [canvas.width, canvas.height],
+      });
+      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+      const fileName = `Resume-${resumeData.personalInfo.name.replace(/\s/g, '_')}-${templateId}.pdf`;
+      const pdfBlob = pdf.output('blob');
+      
+      // Create a file object from the blob
+      const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+      
+      // Use FileReader to get base64 representation
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const base64data = reader.result as string;
+        await uploadFile('resume', base64data, fileName);
+        pdf.save(fileName);
+         toast({
+          title: 'Success!',
+          description: 'Your resume has been saved and downloaded.',
+        });
+      };
+
+    } catch (error) {
+      console.error('Failed to save or download resume:', error);
+       toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Could not save or download the PDF. Please try again.',
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
   return (
     <>
       <div className="bg-gray-100 min-h-full" id="preview-area">
          <div className="p-4 flex justify-center no-print">
             <button
-                onClick={handleDownload}
+                onClick={handleSaveAndDownload}
                 disabled={isSaving}
                 className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
             >
                 <Download size={16} />
-                {isSaving ? 'Generating PDF...' : 'Download PDF'}
+                {isSaving ? 'Generating PDF...' : 'Save & Download PDF'}
             </button>
         </div>
         <div className="p-4 lg:p-8 pt-2">

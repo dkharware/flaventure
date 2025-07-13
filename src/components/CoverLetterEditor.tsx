@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useToast } from '@/hooks/use-toast';
+import { uploadFile } from '@/app/actions/blob';
 
 
 const CoverLetterPreview = React.forwardRef<HTMLDivElement, { formData: any }>(({ formData }, ref) => {
@@ -68,7 +69,7 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     setFormData(prev => ({ ...prev, [name]: value }));
   }, []);
 
-  const handleDownload = async () => {
+  const handleSaveAndDownload = async () => {
     const input = componentToPrintRef.current;
     if (!input) {
       toast({
@@ -93,12 +94,20 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
       
       pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
       const fileName = `CoverLetter-${formData.fullName.replace(/\s/g, '_')}.pdf`;
-      pdf.save(fileName);
 
-      toast({
-        title: 'Success!',
-        description: 'Your cover letter has been downloaded.',
-      });
+      const pdfBlob = pdf.output('blob');
+      const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = async () => {
+        const base64data = reader.result as string;
+        await uploadFile('cover_letter', base64data, fileName);
+        pdf.save(fileName);
+         toast({
+          title: 'Success!',
+          description: 'Your cover letter has been saved and downloaded.',
+        });
+      };
 
     } catch (error) {
       console.error(error);
@@ -155,12 +164,12 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
         <div id="preview-area" className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
            <div className="p-4 flex justify-center no-print">
             <button
-                onClick={handleDownload}
+                onClick={handleSaveAndDownload}
                 disabled={isSaving}
                 className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
             >
                 <Download size={16} />
-                {isSaving ? 'Generating PDF...' : 'Download PDF'}
+                {isSaving ? 'Generating PDF...' : 'Save & Download PDF'}
             </button>
           </div>
           <CoverLetterPreview formData={formData} ref={componentToPrintRef} />
