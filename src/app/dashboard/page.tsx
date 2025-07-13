@@ -1,3 +1,4 @@
+
 import { db } from '@/lib/db';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,6 +19,7 @@ export default async function DashboardPage() {
   const user = await db.getUserById(userId);
 
   if (!user) {
+    // This can happen if the user was deleted but the cookie remains.
     redirect('/login');
   }
 
