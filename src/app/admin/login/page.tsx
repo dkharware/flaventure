@@ -1,16 +1,15 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState, useEffect } from 'react';
 import { adminLogin } from '@/app/actions/auth';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect } from 'react';
 
 export default function AdminLoginPage() {
-  const [state, formAction] = useFormState(adminLogin, null);
+  const [state, formAction] = useActionState(adminLogin, null);
   const { toast } = useToast();
 
   useEffect(() => {
