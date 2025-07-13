@@ -21,7 +21,7 @@ type SignupState = {
     general?: string;
   };
   success?: boolean;
-};
+} | null;
 
 export async function signup(prevState: SignupState, formData: FormData): Promise<SignupState> {
   const validatedFields = signupSchema.safeParse(Object.fromEntries(formData.entries()));
@@ -61,7 +61,7 @@ export async function signup(prevState: SignupState, formData: FormData): Promis
 
 type LoginState = {
   error?: string;
-};
+} | null;
 
 export async function login(prevState: LoginState, formData: FormData): Promise<LoginState> {
     const email = formData.get('email') as string;
@@ -73,7 +73,7 @@ export async function login(prevState: LoginState, formData: FormData): Promise<
 
     try {
         const user = await db.getUserByEmail(email);
-        if (!user) {
+        if (!user || !user.password_hash) {
             return { error: 'Invalid email or password.' };
         }
 
