@@ -31,7 +31,7 @@ export default async function RootLayout({
         user = await db.getUserById(userId);
     } catch (e) {
         console.error("Failed to fetch user:", e);
-        // User might have a stale cookie, treat as not logged in
+        // User might have a stale cookie or DB error, treat as not logged in
         user = null;
     }
   }

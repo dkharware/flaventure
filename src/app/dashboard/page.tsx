@@ -20,6 +20,8 @@ export default async function DashboardPage() {
 
   if (!user) {
     // This can happen if the user was deleted but the cookie remains.
+    // To be safe, we clear the cookie and redirect.
+    cookieStore.delete('session');
     redirect('/login');
   }
 
@@ -49,7 +51,7 @@ export default async function DashboardPage() {
                       <div>
                         <p className="font-semibold">{resume.name}</p>
                         <p className="text-sm text-muted-foreground">
-                          Created: {format(new Date(resume.createdAt), 'PPP')}
+                          Created: {format(new Date(resume.created_at), 'PPP')}
                         </p>
                       </div>
                     </div>
@@ -82,7 +84,7 @@ export default async function DashboardPage() {
                       <div>
                         <p className="font-semibold">{letter.name}</p>
                         <p className="text-sm text-muted-foreground">
-                          Created: {format(new Date(letter.createdAt), 'PPP')}
+                          Created: {format(new Date(letter.created_at), 'PPP')}
                         </p>
                       </div>
                     </div>
