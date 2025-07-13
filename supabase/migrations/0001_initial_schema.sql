@@ -1,18 +1,3 @@
-# Resume Builder Website Nextjs
-
-This is a Next.js application for building resumes. It uses Supabase for the database and storage.
-
-## Getting Started
-
-To get started, take a look at `src/app/page.tsx`.
-
-## Supabase Setup
-
-You need to run the following SQL in your Supabase project's SQL Editor to set up the necessary tables and storage buckets.
-
-### SQL Migration Script
-
-```sql
 -- Create Users Table
 CREATE TABLE users (
     id UUID PRIMARY KEY,
@@ -84,5 +69,3 @@ VALUES
         "passwordHash": "$2a$10$Y.wL9e/bM...your_own_secure_hash_here"
     }')
 ON CONFLICT (key) DO NOTHING;
-
-```
