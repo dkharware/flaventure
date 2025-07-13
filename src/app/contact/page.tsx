@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button';
 
 export default function ContactPage() {
   return (
-    <div className="container mx-auto py-12 px-6 md:px-10">
+    <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-3xl font-headline">Contact Us</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl font-headline">Contact Us</CardTitle>
           <CardDescription>
             Have a question or feedback? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.
           </CardDescription>

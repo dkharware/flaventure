@@ -8,10 +8,10 @@ export default async function AboutPage() {
   const pageTitle = newTitleEnabled ? "About ResumeFlow" : "About EasyFreeCV";
 
   return (
-    <div className="container mx-auto py-12 px-6 md:px-10">
+    <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
       <Card className="max-w-4xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-3xl font-headline">{pageTitle}</CardTitle>
+          <CardTitle className="text-2xl md:text-3xl font-headline">{pageTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-muted-foreground">
           <p>

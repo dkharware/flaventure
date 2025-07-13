@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FileText, Crown, PenSquare, Palette, Sparkles, BookUser } from 'lucide-react';
+import { FileText, Crown, PenSquare, Palette, Sparkles, BookUser, Menu } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,6 +16,15 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 import { Logo } from './Logo';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
 
 const featureLinks: { title: string; href: string; description: string; icon: React.ReactElement }[] = [
   {
@@ -44,7 +53,7 @@ const featureLinks: { title: string; href: string; description: string; icon: Re
   },
 ];
 
-const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'> & { icon: React.ReactElement }>(
+const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'> & { icon?: React.ReactElement }>(
   ({ className, title, children, icon, ...props }, ref) => {
     return (
       <li>
@@ -57,7 +66,7 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
             )}
             {...props}
           >
-            <div className="flex-shrink-0 w-10">{icon}</div>
+           {icon && <div className="flex-shrink-0 w-10">{icon}</div>}
             <div className="flex-grow">
               <div className="text-base font-bold leading-none">{title}</div>
               <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
@@ -72,15 +81,15 @@ ListItem.displayName = 'ListItem';
 
 export default function Header() {
   return (
-    <header className="py-4 px-6 md:px-10 bg-background text-foreground border-b sticky top-0 z-50">
-      <div className="container mx-auto flex items-center">
-        <div className="flex-1">
+    <header className="py-4 px-4 sm:px-6 md:px-10 bg-background text-foreground border-b sticky top-0 z-50">
+      <div className="container mx-auto flex items-center justify-between">
+        <div className="flex-shrink-0">
           <Link href="/" className="flex items-center gap-2" aria-label="EasyFreeCV Home">
             <Logo />
           </Link>
         </div>
 
-        <div className="flex-1 flex justify-center">
+        <div className="hidden md:flex flex-1 justify-center">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -115,7 +124,7 @@ export default function Header() {
             </NavigationMenu>
         </div>
         
-        <div className="flex-1 flex justify-end gap-2">
+        <div className="hidden md:flex items-center justify-end gap-2 flex-shrink-0">
             <Button variant="ghost" asChild>
               <Link href="/login">Sign In</Link>
             </Button>
@@ -124,6 +133,36 @@ export default function Header() {
             </Button>
         </div>
 
+        <div className="md:hidden">
+           <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Menu className="h-6 w-6" />
+                 <span className="sr-only">Open navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                 <Link href="/" className="flex items-center gap-2 mb-4" aria-label="EasyFreeCV Home">
+                    <Logo />
+                </Link>
+              </SheetHeader>
+               <div className="flex flex-col space-y-2">
+                 <Link href="/templates" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Palette className="mr-2 h-4 w-4" /> Templates</Link>
+                 <Link href="/editor/professional" className={cn(navigationMenuTriggerStyle(), "justify-start")}><PenSquare className="mr-2 h-4 w-4" /> Create Resume</Link>
+                  <Link href="/templates?category=Cover+Letter" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookUser className="mr-2 h-4 w-4" /> Cover Letters</Link>
+              </div>
+              <div className="mt-6 pt-6 border-t space-y-2">
+                <Button variant="outline" className="w-full" asChild>
+                  <Link href="/login">Sign In</Link>
+                </Button>
+                <Button className="w-full" asChild>
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );

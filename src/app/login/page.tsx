@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function LoginPage() {
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-200px)] py-12">
+    <div className="flex items-center justify-center min-h-[calc(100vh-200px)] py-12 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-headline">Welcome Back!</CardTitle>

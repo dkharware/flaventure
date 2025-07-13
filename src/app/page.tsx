@@ -88,7 +88,7 @@ export default function Home() {
 
       {/* Categories Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
-        <div className="container px-6 md:px-10">
+        <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Find the Perfect CV Template for Your Industry</h2>
@@ -116,7 +116,7 @@ export default function Home() {
 
       {/* Testimonials Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
-        <div className="container px-6 md:px-10">
+        <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline tracking-tighter text-center sm:text-4xl">Loved by Professionals Worldwide</h2>
           <p className="mx-auto max-w-[700px] text-center text-muted-foreground md:text-xl/relaxed mt-2">
             See what our users are saying about our free resume builder.
@@ -127,11 +127,11 @@ export default function Home() {
                 align: "start",
                 loop: true,
               }}
-              className="w-full max-w-4xl mx-auto"
+              className="w-full max-w-sm sm:max-w-xl md:max-w-3xl lg:max-w-4xl mx-auto"
             >
               <CarouselContent>
                 {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
                     <div className="p-1 h-full">
                       <Card className="h-full flex flex-col">
                         <CardContent className="p-6 flex flex-col items-center text-center flex-grow">
@@ -154,8 +154,8 @@ export default function Home() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="absolute left-[-50px] top-1/2 -translate-y-1/2" />
-              <CarouselNext className="absolute right-[-50px] top-1/2 -translate-y-1/2" />
+              <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 md:left-[-50px] hidden sm:flex" />
+              <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 md:right-[-50px] hidden sm:flex" />
             </Carousel>
           </div>
         </div>
@@ -163,7 +163,7 @@ export default function Home() {
 
       {/* FAQ Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
-        <div className="container px-6 md:px-10">
+        <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline tracking-tighter text-center sm:text-4xl">Frequently Asked Questions</h2>
           <div className="mx-auto mt-8 max-w-3xl">
             <Accordion type="single" collapsible className="w-full">
