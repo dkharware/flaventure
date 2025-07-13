@@ -17,7 +17,7 @@ import { PortfolioTemplate } from './templates/Portfolio';
 import { SalesTemplate } from './templates/Sales';
 import { TimelineTemplate } from './templates/Timeline';
 import { TwoColumnTemplate } from './templates/TwoColumn';
-import { buttonVariants } from './ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
