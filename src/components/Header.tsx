@@ -97,11 +97,14 @@ export default function Header() {
                   <NavigationMenuContent>
                     <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
                       {featureLinks.map((component) => (
-                        <Link key={component.title} href={component.href} passHref>
-                          <ListItem title={component.title} icon={component.icon}>
-                            {component.description}
-                          </ListItem>
-                        </Link>
+                        <ListItem
+                          key={component.title}
+                          title={component.title}
+                          href={component.href}
+                          icon={component.icon}
+                        >
+                          {component.description}
+                        </ListItem>
                       ))}
                     </ul>
                   </NavigationMenuContent>
