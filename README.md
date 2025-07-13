@@ -1,4 +1,4 @@
-# Resume Builder Website Nextjs
+# easyfreecv - Resume Builder Website Nextjs
 
 This is a Next.js application for building resumes. It uses Supabase for the database and storage.
 
@@ -75,10 +75,10 @@ CREATE POLICY "Authenticated users can upload cover letters" ON storage.objects 
 INSERT INTO site_content (key, content)
 VALUES
     ('about_page', '{
-        "paragraph1": "Welcome to ResumeFlow, your ultimate solution for crafting the perfect professional resume. Our mission is to empower job seekers by providing intuitive tools and stunning templates that make resume building a seamless and enjoyable experience.",
+        "paragraph1": "Welcome to easyfreecv, your ultimate solution for crafting the perfect professional resume. Our mission is to empower job seekers by providing intuitive tools and stunning templates that make resume building a seamless and enjoyable experience.",
         "paragraph2": "We believe that a great resume is more than just a document; it’s a personal brand statement. That''s why we''ve combined cutting-edge AI technology with elegant design to help you stand out from the crowd. Our AI assistant offers smart suggestions for skills, descriptions, and hobbies, tailored to your career profile.",
-        "paragraph3": "Whether you''re a recent graduate or a seasoned executive, ResumeFlow has the right tools for you. Choose from a diverse collection of templates, from modern and creative to professional and minimalist. Customize every detail to reflect your unique skills and experience.",
-        "paragraph4": "Join thousands of successful professionals who have landed their dream jobs with a resume created on ResumeFlow. Start building your future today—it''s fast, easy, and completely free."
+        "paragraph3": "Whether you''re a recent graduate or a seasoned executive, easyfreecv has the right tools for you. Choose from a diverse collection of templates, from modern and creative to professional and minimalist. Customize every detail to reflect your unique skills and experience.",
+        "paragraph4": "Join thousands of successful professionals who have landed their dream jobs with a resume created on easyfreecv. Start building your future today—it''s fast, easy, and completely free."
     }'),
     ('admin_password', '{
         "passwordHash": "$2a$10$Y.wL9e/bM...your_own_secure_hash_here"

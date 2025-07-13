@@ -27,7 +27,7 @@ export default function SignupPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-headline">Create an Account</CardTitle>
-          <CardDescription>Join ResumeFlow to build your professional resume in minutes.</CardDescription>
+          <CardDescription>Join easyfreecv to build your professional resume in minutes.</CardDescription>
         </CardHeader>
         <CardContent>
           <form action={formAction} className="space-y-4">
@@ -38,7 +38,7 @@ export default function SignupPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" placeholder="resumeflow@gmail.com" required />
+              <Input id="email" name="email" type="email" placeholder="contact@easyfreecv.com" required />
               {state?.errors?.email && <p className="text-sm text-destructive">{state.errors.email.join(', ')}</p>}
             </div>
             <div className="space-y-2">
