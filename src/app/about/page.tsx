@@ -1,11 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { createFeatureFlag } from '@/lib/flags';
+import { db } from '@/lib/db';
 
 const useNewAboutPageTitle = createFeatureFlag("new_about_page_title", false);
 
 export default async function AboutPage() {
   const newTitleEnabled = await useNewAboutPageTitle();
   const pageTitle = newTitleEnabled ? "About ResumeFlow" : "About EasyFreeCV";
+  const content = await db.getAboutContent();
 
   return (
     <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
@@ -14,18 +16,10 @@ export default async function AboutPage() {
           <CardTitle className="text-2xl md:text-3xl font-headline">{pageTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-muted-foreground">
-          <p>
-            Welcome to EasyFreeCV, your ultimate partner in crafting the perfect professional resume. Our mission is to empower job seekers by providing them with intuitive, powerful, and beautifully designed tools to create resumes that stand out and open doors to new opportunities.
-          </p>
-          <p>
-            We believe that everyone deserves a fair chance to showcase their skills and experience, regardless of their background or design expertise. That's why we've combined cutting-edge AI technology with a wide array of professionally designed templates. Whether you're a recent graduate, a seasoned executive, or a creative professional, EasyFreeCV has the right tools to help you build a resume that truly reflects your potential.
-          </p>
-          <p>
-            Our AI-powered content generator provides smart suggestions for skills, job descriptions, and even hobbies, tailored to your specific industry and the template you choose. This takes the guesswork out of resume writing and helps you articulate your strengths effectively.
-          </p>
-          <p>
-            Thank you for choosing EasyFreeCV. We're excited to be a part of your career journey!
-          </p>
+          <p>{content.paragraph1}</p>
+          <p>{content.paragraph2}</p>
+          <p>{content.paragraph3}</p>
+          <p>{content.paragraph4}</p>
         </CardContent>
       </Card>
     </div>
