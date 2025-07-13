@@ -48,70 +48,6 @@ export default function ResumePreview() {
   const componentToPrintRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = templateComponents[templateId];
 
-  const handleDownload = async () => {
-    const input = componentToPrintRef.current;
-    if (!input) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: 'Could not find the resume content to download.',
-      });
-      return;
-    }
-
-    setIsSaving(true);
-    
-    try {
-      const canvas = await html2canvas(input, {
-        scale: 2, // Higher scale for better quality
-        useCORS: true, 
-      });
-
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [canvas.width, canvas.height],
-      });
-      pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-      const fileName = `Resume-${resumeData.personalInfo.name.replace(/\s/g, '_')}-${templateId}.pdf`;
-      const pdfBlob = pdf.output('blob');
-
-      const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
-      const formData = new FormData();
-      formData.append('file', file);
-      
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (result.error) {
-        throw new Error(result.error);
-      }
-      
-      await db.addResume({ url: result.url, name: fileName, createdAt: new Date() });
-
-      toast({
-        title: 'Success!',
-        description: 'Your resume has been saved.',
-      });
-      
-      pdf.save(fileName);
-
-    } catch (error) {
-      console.error(error);
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: 'Could not generate the PDF. Please try again.',
-      });
-    } finally {
-      setIsSaving(false);
-    }
-  };
 
   async function handleSaveAndDownload() {
     const input = componentToPrintRef.current;
@@ -138,23 +74,18 @@ export default function ResumePreview() {
       });
       pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
       const fileName = `Resume-${resumeData.personalInfo.name.replace(/\s/g, '_')}-${templateId}.pdf`;
-      const pdfBlob = pdf.output('blob');
       
-      // Create a file object from the blob
-      const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
-      
-      // Use FileReader to get base64 representation
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = async () => {
-        const base64data = reader.result as string;
-        await uploadFile('resume', base64data, fileName);
-        pdf.save(fileName);
-         toast({
-          title: 'Success!',
-          description: 'Your resume has been saved and downloaded.',
-        });
-      };
+      const uploadResult = await uploadFile('resume', imgData, fileName);
+
+      if (uploadResult?.error) {
+        throw new Error(uploadResult.error);
+      }
+
+      pdf.save(fileName);
+      toast({
+        title: 'Success!',
+        description: 'Your resume has been saved and downloaded.',
+      });
 
     } catch (error) {
       console.error('Failed to save or download resume:', error);

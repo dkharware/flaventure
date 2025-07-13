@@ -35,10 +35,10 @@ export default async function RootLayout({
         user = null;
     }
   }
-
+  
   const authContextValue = {
     isAuthenticated: !!user,
-    user: user,
+    user: user ? { ...user, fullName: user.full_name } : null,
   };
 
   return (

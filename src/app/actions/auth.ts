@@ -3,20 +3,12 @@
 import { compare } from 'bcryptjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import fs from 'fs/promises';
-import path from 'path';
+import { db } from '@/lib/db';
 
 type AuthState = {
   error?: string;
   success?: boolean;
 } | null;
-
-const ADMIN_DB_PATH = path.join(process.cwd(), 'data/admin.json');
-
-async function getAdminData() {
-    const data = await fs.readFile(ADMIN_DB_PATH, 'utf-8');
-    return JSON.parse(data);
-}
 
 export async function adminLogin(prevState: AuthState, formData: FormData): Promise<AuthState> {
   const password = formData.get('password') as string;
@@ -26,8 +18,8 @@ export async function adminLogin(prevState: AuthState, formData: FormData): Prom
   }
   
   try {
-    const adminData = await getAdminData();
-    const passwordMatch = await compare(password, adminData.passwordHash);
+    const passwordHash = await db.getAdminPasswordHash();
+    const passwordMatch = await compare(password, passwordHash);
 
     if (passwordMatch) {
       const cookieStore = cookies();

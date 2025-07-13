@@ -94,20 +94,17 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
       
       pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
       const fileName = `CoverLetter-${formData.fullName.replace(/\s/g, '_')}.pdf`;
-
-      const pdfBlob = pdf.output('blob');
-      const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = async () => {
-        const base64data = reader.result as string;
-        await uploadFile('cover_letter', base64data, fileName);
-        pdf.save(fileName);
-         toast({
-          title: 'Success!',
-          description: 'Your cover letter has been saved and downloaded.',
-        });
-      };
+      
+      const uploadResult = await uploadFile('cover_letter', imgData, fileName);
+      if (uploadResult?.error) {
+        throw new Error(uploadResult.error);
+      }
+      
+      pdf.save(fileName);
+      toast({
+        title: 'Success!',
+        description: 'Your cover letter has been saved and downloaded.',
+      });
 
     } catch (error) {
       console.error(error);

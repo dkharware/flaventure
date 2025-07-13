@@ -77,7 +77,7 @@ export async function login(prevState: LoginState, formData: FormData): Promise<
             return { error: 'Invalid email or password.' };
         }
 
-        const passwordMatch = await compare(password, user.passwordHash);
+        const passwordMatch = await compare(password, user.password_hash);
         if (!passwordMatch) {
             return { error: 'Invalid email or password.' };
         }
