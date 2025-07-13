@@ -1,3 +1,4 @@
+
 import { TemplateFilters } from '@/components/TemplateFilters';
 import type { Template } from '@/lib/types';
 import type { Metadata } from 'next';
