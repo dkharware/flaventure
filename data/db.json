@@ -1,5 +1,12 @@
-
 {
   "resumes": [],
-  "cover_letters": []
+  "cover_letters": [],
+  "users": [
+    {
+      "id": "4ba025ea-dc42-4fce-aa81-f623e1b63c8f",
+      "fullName": "deepak",
+      "email": "dkharware@gmail.com",
+      "passwordHash": "$2a$10$P6D4/In1SW7cgzcm2V/xS.VMLbUc.qPs2CIsb7/LOnukAEZ6SqRSO"
+    }
+  ]
 }

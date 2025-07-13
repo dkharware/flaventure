@@ -1,6 +1,6 @@
 import { statsigAdapter, type StatsigUser } from "@flags-sdk/statsig";
-import { createFlags, dedupe } from "flags/next";
-import type { Identify } from "flags";
+import { createFlags, dedupe } from "flg/next";
+import type { Identify } from "flg";
 
 // In a real app, you would replace this with your own user identification logic
 export const identify: Identify<StatsigUser> = dedupe(async () => {
