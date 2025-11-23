@@ -1,8 +1,8 @@
 
-const endpoint = process.env.SHOPIFY_STOREFRONT_API_ENDPOINT;
-const accessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
+  const endpoint = process.env.SHOPIFY_STOREFRONT_API_ENDPOINT;
+  const accessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  
   try {
     if (!endpoint || !accessToken) {
         console.warn("Shopify API credentials are not configured. Blog posts will not be loaded.");
