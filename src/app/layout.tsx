@@ -8,6 +8,7 @@ import { LoaderProvider } from '@/context/LoaderContext';
 import { NavigationEvents } from '@/components/NavigationEvents';
 import { Suspense } from 'react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 import { AuthProvider } from '@/hooks/use-auth';
 import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
@@ -114,6 +115,7 @@ export default async function RootLayout({
           </LoaderProvider>
         </AuthProvider>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
