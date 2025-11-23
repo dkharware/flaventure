@@ -67,6 +67,9 @@
   .prose :not(pre) > code {
       @apply bg-muted text-primary px-1.5 py-0.5 rounded-md;
   }
+  .prose h2 {
+    @apply mt-[30px];
+  }
   .dark .prose pre {
     @apply bg-secondary/50 text-secondary-foreground;
   }
