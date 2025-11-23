@@ -6,7 +6,7 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   if (!process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT || 
       !accessToken ||
       process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT === 'your-store-name.myshopify.com') {
-    console.warn("Shopify API credentials are not configured. Blog posts will not be fetched.");
+    console.warn("Shopify API credentials are not configured. Blog posts will not be fetched. Please check your .env file.");
     return { data: null, errors: [{ message: "Shopify API credentials are not configured." }] };
   }
 
