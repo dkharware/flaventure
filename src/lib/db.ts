@@ -1,3 +1,4 @@
+
 import { supabase } from './supabase';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -61,8 +62,10 @@ export const db = {
   // Admin methods
   getAboutContent: async () => {
     const { data, error } = await supabase.from('site_content').select('content').eq('key', 'about_page').single();
-    if (error) throw error;
-    return data.content;
+    if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
+        throw error;
+    }
+    return data?.content || null;
   },
   updateAboutContent: async (newContent: any) => {
     const { data, error } = await supabase.from('site_content').update({ content: newContent }).eq('key', 'about_page');
@@ -72,7 +75,9 @@ export const db = {
   
   getAdminPasswordHash: async () => {
      const { data, error } = await supabase.from('site_content').select('content').eq('key', 'admin_password').single();
-     if (error) throw error;
-     return data.content.passwordHash;
+     if (error && error.code !== 'PGRST116') {
+        throw error;
+     }
+     return data?.content?.passwordHash;
   }
 };
