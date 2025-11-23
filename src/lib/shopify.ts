@@ -5,7 +5,7 @@ const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   if (!endpoint || !accessToken) {
     console.warn("Shopify API credentials are not configured. Blog posts will not be fetched.");
-    return { data: null, errors: null }; // Return a shape that won't break the app
+    return { data: null, errors: [{ message: "Shopify API credentials are not configured." }] };
   }
 
   try {
@@ -22,14 +22,12 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
     if (!response.ok) {
       const errorBody = await response.text();
       console.error(`Shopify API request failed with status ${response.status}:`, errorBody);
-      // Don't throw, just return an empty-like response
       return { data: null, errors: [{ message: `Shopify API request failed with status ${response.status}` }] };
     }
 
     const jsonResponse = await response.json();
     if (jsonResponse.errors) {
       console.error("Shopify API returned errors:", jsonResponse.errors);
-      // Don't throw, just return what we have
       return { data: jsonResponse.data, errors: jsonResponse.errors };
     }
 
@@ -43,51 +41,63 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
 
 const gql = String.raw;
 
+const ArticleFragment = gql`
+  fragment ArticleFragment on Article {
+    id
+    title
+    handle
+    excerptHtml
+    publishedAt
+    image {
+      url
+      altText
+    }
+    authorV2 {
+      name
+    }
+    tags
+  }
+`;
+
 const ARTICLES_QUERY = gql`
-  query GetArticles($first: Int!) {
-    articles(first: $first, sortKey: PUBLISHED_AT, reverse: true) {
+  query GetArticles($first: Int!, $query: String) {
+    articles(first: $first, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
       edges {
         node {
-          id
-          title
-          handle
-          excerptHtml
-          publishedAt
-          image {
-            url
-            altText
-          }
-          authorV2 {
-            name
-          }
+          ...ArticleFragment
         }
       }
     }
   }
+  ${ArticleFragment}
 `;
 
 const ARTICLE_QUERY = gql`
   query GetArticleByHandle($handle: String!) {
-    blog(handle: "news") { # You might need to make 'news' dynamic if you have multiple blogs
+    blog(handle: "news") {
       articleByHandle(handle: $handle) {
-        id
-        title
+        ...ArticleFragment
         contentHtml
-        publishedAt
-        image {
-          url
-          altText
-        }
-        authorV2 {
-          name
+      }
+    }
+  }
+   ${ArticleFragment}
+`;
+
+const ALL_TAGS_QUERY = gql`
+  query GetAllTags {
+    articles(first: 250) {
+      edges {
+        node {
+          tags
         }
       }
     }
   }
 `;
 
-export async function getArticles(count: number = 10) {
-    const response = await shopifyFetch(ARTICLES_QUERY, { first: count });
+export async function getArticles(count: number = 10, query?: string) {
+    const response = await shopifyFetch(ARTICLES_QUERY, { first: count, query });
     if (!response.data || !response.data.articles) {
         return [];
     }
@@ -100,4 +110,26 @@ export async function getArticleByHandle(handle: string) {
         return null;
     }
     return response.data.blog?.articleByHandle;
+}
+
+export async function getAllTags() {
+    const response = await shopifyFetch(ALL_TAGS_QUERY);
+    if (!response.data || !response.data.articles) {
+        return [];
+    }
+    const allTags = new Set<string>();
+    response.data.articles.edges.forEach((edge: { node: { tags: string[] } }) => {
+        edge.node.tags.forEach(tag => allTags.add(tag));
+    });
+    return Array.from(allTags);
+}
+
+export async function getRelatedArticles(handle: string, tags: string[]) {
+    if (tags.length === 0) {
+        const articles = await getArticles(4);
+        return articles.filter(a => a.handle !== handle).slice(0, 3);
+    }
+    const query = tags.map(tag => `tag:'${tag}'`).join(' OR ');
+    const articles = await getArticles(4, query);
+    return articles.filter(a => a.handle !== handle).slice(0, 3);
 }
