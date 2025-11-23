@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -6,7 +7,9 @@ import { ArrowRight, Star, FileText, Briefcase, UserCircle, LucideProps } from '
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HeroBanner } from '@/components/HeroBanner';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { getArticles } from '@/lib/shopify';
+import { format } from 'date-fns';
 
 const categories: { name: string; icon: React.FC<LucideProps>; bgColor: string; iconColor: string; borderColor: string; }[] = [
   { name: 'Modern', icon: Briefcase, bgColor: 'bg-blue-100/50', iconColor: 'text-blue-600', borderColor: 'border-blue-200' },
@@ -79,6 +82,62 @@ const faqs = [
   },
 ];
 
+async function BlogSection() {
+    const articles = await getArticles(3);
+
+    if (!articles || articles.length === 0) {
+        return null;
+    }
+
+    return (
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/20">
+            <div className="container px-4 md:px-6">
+                <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                    <div className="space-y-2">
+                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">From Our Blog</h2>
+                        <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
+                           Latest news, tips, and insights on resume building and career development.
+                        </p>
+                    </div>
+                </div>
+                <div className="mx-auto grid max-w-sm items-start gap-8 pt-12 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-3">
+                    {articles.map((article: any) => (
+                         <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
+                            <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                                {article.image && (
+                                     <div className="relative h-48 w-full overflow-hidden">
+                                        <Image
+                                        src={article.image.url}
+                                        alt={article.image.altText || article.title}
+                                        fill
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                    </div>
+                                )}
+                                <CardHeader>
+                                    <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-sm text-muted-foreground">
+                                        {format(new Date(article.publishedAt), 'PPP')}
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    ))}
+                </div>
+                 <div className="text-center mt-12">
+                    <Button asChild variant="outline">
+                        <Link href="/blog">
+                            Read More Articles <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                    </Button>
+                </div>
+            </div>
+        </section>
+    );
+}
+
 export default function Home() {
   return (
     <div className="w-full">
@@ -112,6 +171,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Blog Section */}
+      <BlogSection />
 
       {/* Testimonials Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white">

@@ -1,8 +1,9 @@
+
 'use client';
 
 import React from 'react';
 import Link from 'next/link';
-import { FileText, Crown, PenSquare, Palette, Sparkles, BookUser, Menu, LayoutDashboard, LogOut } from 'lucide-react';
+import { FileText, Crown, PenSquare, Palette, Sparkles, BookUser, Menu, LayoutDashboard, LogOut, Newspaper } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -167,6 +168,13 @@ export default function Header() {
                     </Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
+                 <NavigationMenuItem>
+                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <Link href="/blog">
+                      Blog
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
                  {isAuthenticated && <NavigationMenuItem>
                   <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                     <Link href="/dashboard">
@@ -200,6 +208,7 @@ export default function Header() {
               </SheetHeader>
                <div className="flex flex-col space-y-2">
                  <Link href="/templates" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Palette className="mr-2 h-4 w-4" /> Templates</Link>
+                 <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
                  {isAuthenticated && <Link href="/dashboard" className={cn(navigationMenuTriggerStyle(), "justify-start")}><LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard</Link>}
                  <Link href="/editor/professional" className={cn(navigationMenuTriggerStyle(), "justify-start")}><PenSquare className="mr-2 h-4 w-4" /> Create Resume</Link>
                   <Link href="/templates?category=Cover+Letter" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookUser className="mr-2 h-4 w-4" /> Cover Letters</Link>

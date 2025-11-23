@@ -1,3 +1,4 @@
+
 import { MetadataRoute } from 'next';
 import { templates } from './templates/page'; // Assuming templates are exported
 
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/login',
     '/signup',
     '/templates',
+    '/blog',
     '/privacy-policy',
     '/terms-and-conditions',
     '/site-map',
@@ -30,6 +32,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.8,
     } as const;
   });
+
+  // We won't pre-build blog post routes for the sitemap as they are dynamic from Shopify
+  // but you could fetch them here if you wanted them in your sitemap.xml
 
   return [...staticRoutes, ...templateRoutes];
 }
