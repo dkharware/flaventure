@@ -1,6 +1,6 @@
 
-const endpoint = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
-const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+const endpoint = process.env.SHOPIFY_STOREFRONT_API_ENDPOINT;
+const accessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   try {
