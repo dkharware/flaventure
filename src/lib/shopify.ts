@@ -1,11 +1,12 @@
 
-const endpoint = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT}/api/2023-10/graphql.json`;
+const endpoint = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
 const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   try {
-    if (!accessToken || !process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT) {
-        throw new Error("Shopify API credentials are not configured.");
+    if (!endpoint || !accessToken) {
+        console.warn("Shopify API credentials are not configured. Blog posts will not be loaded.");
+        return { data: null, errors: [{ message: `Shopify API credentials are not configured.` }] };
     }
 
     const response = await fetch(endpoint, {
