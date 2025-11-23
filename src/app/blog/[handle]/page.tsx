@@ -9,6 +9,7 @@ import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
+import { ArticleContent } from '@/components/ArticleContent';
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -92,10 +93,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     </div>
                     )}
 
-                    <div
-                    className="prose prose-lg dark:prose-invert max-w-none mx-auto"
-                    dangerouslySetInnerHTML={{ __html: article.contentHtml }}
-                    />
+                    <ArticleContent content={article.contentHtml} />
                 </article>
 
                 {relatedArticles.length > 0 && (

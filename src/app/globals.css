@@ -56,7 +56,7 @@
     @apply bg-background text-foreground;
   }
   .prose pre {
-    @apply bg-muted text-foreground p-4 rounded-lg shadow-inner overflow-x-auto;
+    @apply bg-muted text-foreground p-4 rounded-lg shadow-inner overflow-x-auto relative;
   }
   .prose code {
     @apply font-code text-sm;
