@@ -20,7 +20,6 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
         'X-Shopify-Storefront-Access-Token': accessToken,
       },
       body: JSON.stringify({ query, variables }),
-      cache: 'no-store',
     });
 
     if (!response.ok) {
