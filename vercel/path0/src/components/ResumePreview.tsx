@@ -17,11 +17,11 @@ import { PortfolioTemplate } from './templates/Portfolio';
 import { SalesTemplate } from './templates/Sales';
 import { TimelineTemplate } from './templates/Timeline';
 import { TwoColumnTemplate } from './templates/TwoColumn';
-import { buttonVariants } from './ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { uploadFile } from '@/app/actions/blob';
 import { useToast } from '@/hooks/use-toast';
-
+import { uploadFile } from '@/app/actions/blob';
+import html2canvas from 'html2canvas';
 
 const templateComponents: { [key: string]: React.ComponentType<any> } = {
   professional: ProfessionalTemplate,
@@ -47,80 +47,79 @@ export default function ResumePreview() {
   const componentToPrintRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = templateComponents[templateId];
 
-  const handleDownload = async () => {
-    setIsSaving(true);
-    const printableElement = document.getElementById('printable-area');
-    if (!printableElement) {
-        setIsSaving(false);
-        return;
+
+  async function handleSaveAndDownload() {
+    const input = componentToPrintRef.current;
+    if (!input) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Could not find the resume content to download.',
+      });
+      return;
     }
 
-    window.print();
+    setIsSaving(true);
+    try {
+      // Use html2canvas to capture the content as a data URI
+      const canvas = await html2canvas(input, {
+        scale: 2, // Higher scale for better quality
+        useCORS: true,
+      });
+      const imgDataUri = canvas.toDataURL('image/png');
+      
+      const fileName = `Resume-${resumeData.personalInfo.name.replace(/\s/g, '_')}-${templateId}.png`;
+      
+      const uploadResult = await uploadFile('resume', imgDataUri, fileName);
 
-    // The file upload needs to happen after the print dialog is closed.
-    // We can use a timeout to simulate this.
-    setTimeout(async () => {
-      try {
-        const fileContent = printableElement.outerHTML;
-        const fileName = `Resume-${resumeData.personalInfo.name.replace(/\s/g, '_')}-${Date.now()}.pdf`;
-        
-        await uploadFile('resume', fileContent, fileName);
-
-        toast({
-          title: 'Success!',
-          description: 'Your resume has been saved and is ready for download.',
-        });
-      } catch (error) {
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: 'Could not save your resume. Please try again.',
-        });
-      } finally {
-        setIsSaving(false);
+      if (uploadResult?.error) {
+        throw new Error(uploadResult.error);
       }
-    }, 1000); // 1 second delay
-  };
+      
+      // Trigger browser download
+      const link = document.createElement('a');
+      link.href = imgDataUri;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      toast({
+        title: 'Success!',
+        description: 'Your resume has been saved and downloaded.',
+      });
+
+    } catch (error) {
+      console.error('Failed to save or download resume:', error);
+       toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: `Could not save or download. ${error instanceof Error ? error.message : ''}`,
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  }
 
   return (
     <>
-       <style jsx global>{`
-        @media print {
-          body * {
-            visibility: hidden;
-          }
-          #printable-area, #printable-area * {
-            visibility: visible;
-          }
-          #printable-area {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            transform-origin: top left;
-            transform: scale(1.18);
-          }
-           .no-print {
-            display: none !important;
-          }
-        }
-      `}</style>
       <div className="bg-gray-100 min-h-full" id="preview-area">
          <div className="p-4 flex justify-center no-print">
             <button
-                onClick={handleDownload}
+                onClick={handleSaveAndDownload}
                 disabled={isSaving}
                 className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
             >
                 <Download size={16} />
-                {isSaving ? 'Saving...' : 'Save and Download PDF'}
+                {isSaving ? 'Generating...' : 'Save & Download'}
             </button>
         </div>
         <div className="p-4 lg:p-8 pt-2">
             <div id="printable-area" className="bg-white shadow-lg rounded-lg overflow-hidden">
                 <div ref={componentToPrintRef} className="w-full aspect-[210/297]">
-                    {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+                    <div className="p-2">
+                        {TemplateComponent ? <TemplateComponent /> : <div>Template not found</div>}
+                    </div>
                 </div>
             </div>
         </div>

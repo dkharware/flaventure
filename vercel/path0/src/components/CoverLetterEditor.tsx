@@ -1,15 +1,17 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Download } from 'lucide-react';
-import { buttonVariants } from './ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import html2canvas from 'html2canvas';
 import { useToast } from '@/hooks/use-toast';
 import { uploadFile } from '@/app/actions/blob';
+
 
 const CoverLetterPreview = React.forwardRef<HTMLDivElement, { formData: any }>(({ formData }, ref) => {
     return (
@@ -53,75 +55,70 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
     hiringManager: 'Jane Smith',
     companyName: 'Tech Innovations Inc.',
     companyAddress: '123 Tech Street, Silicon Valley, CA 94000',
-    letterBody: `Dear ${'Jane Smith'},\n\nI am writing to express my keen interest in the Software Engineer position at ${'Tech Innovations Inc.'}, which I saw advertised on LinkedIn. With my background in developing scalable web applications and my passion for innovative technology, I am confident that I would be a valuable asset to your team.\n\nThank you for considering my application. I have attached my resume for your review and look forward to the possibility of discussing this opportunity further.\n\nSincerely,\n${'John Doe'}`,
+    letterBody: `Dear Jane Smith,\n\nI am writing to express my keen interest in the Software Engineer position at Tech Innovations Inc., which I saw advertised on LinkedIn. With my background in developing scalable web applications and my passion for innovative technology, I am confident that I would be a valuable asset to your team.\n\nThank you for considering my application. I have attached my resume for your review and look forward to the possibility of discussing this opportunity further.\n\nSincerely,\nJohn Doe`,
   });
+  
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
   const componentToPrintRef = useRef<HTMLDivElement>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
-  const handleDownload = async () => {
-    setIsSaving(true);
-    const printableElement = document.getElementById('printable-cover-letter');
-    if (!printableElement) {
-        setIsSaving(false);
-        return;
+  const handleSaveAndDownload = async () => {
+    const input = componentToPrintRef.current;
+    if (!input) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Could not find the content to download.',
+      });
+      return;
     }
 
-    window.print();
-
-    // The file upload needs to happen after the print dialog is closed.
-    // We can use a timeout to simulate this.
-    setTimeout(async () => {
-      try {
-        const fileContent = printableElement.outerHTML;
-        const fileName = `CoverLetter-${formData.fullName.replace(/\s/g, '_')}-${Date.now()}.pdf`;
-        
-        await uploadFile('cover_letter', fileContent, fileName);
-
-        toast({
-          title: 'Success!',
-          description: 'Your cover letter has been saved and is ready for download.',
-        });
-      } catch (error) {
-        toast({
-          variant: 'destructive',
-          title: 'Error',
-          description: 'Could not save your cover letter. Please try again.',
-        });
-      } finally {
-        setIsSaving(false);
+    setIsSaving(true);
+    
+    try {
+      const canvas = await html2canvas(input, { scale: 2 });
+      const imgDataUri = canvas.toDataURL('image/png');
+      
+      const fileName = `CoverLetter-${formData.fullName.replace(/\s/g, '_')}.png`;
+      
+      const uploadResult = await uploadFile('cover_letter', imgDataUri, fileName);
+      if (uploadResult?.error) {
+        throw new Error(uploadResult.error);
       }
-    }, 1000); // 1 second delay
+      
+      // Trigger download
+      const link = document.createElement('a');
+      link.href = imgDataUri;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      toast({
+        title: 'Success!',
+        description: 'Your cover letter has been saved and downloaded.',
+      });
+
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: `Could not generate the file. ${error instanceof Error ? error.message : ''}`,
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
     <>
-      <style jsx global>{`
-        @media print {
-          body * {
-            visibility: hidden;
-          }
-          #printable-cover-letter, #printable-cover-letter * {
-            visibility: visible;
-          }
-          #printable-cover-letter {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-          }
-          .no-print {
-            display: none !important;
-          }
-        }
-      `}</style>
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-81px)]">
         <div id="editor-form" className="p-6 border-r overflow-y-auto no-print">
           <Card>
@@ -163,12 +160,12 @@ export default function CoverLetterEditor({ templateId }: { templateId: string }
         <div id="preview-area" className="p-4 lg:p-8 overflow-y-auto bg-gray-100">
            <div className="p-4 flex justify-center no-print">
             <button
-                onClick={handleDownload}
+                onClick={handleSaveAndDownload}
                 disabled={isSaving}
                 className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
             >
                 <Download size={16} />
-                {isSaving ? 'Saving...' : 'Save and Download PDF'}
+                {isSaving ? 'Generating...' : 'Save & Download'}
             </button>
           </div>
           <CoverLetterPreview formData={formData} ref={componentToPrintRef} />
