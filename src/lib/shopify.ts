@@ -28,7 +28,6 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
     const jsonResponse = await response.json();
     if (jsonResponse.errors) {
       console.error("Shopify API returned errors:", jsonResponse.errors);
-      return { data: jsonResponse.data, errors: jsonResponse.errors };
     }
 
     return jsonResponse;
@@ -98,23 +97,20 @@ const ALL_TAGS_QUERY = gql`
 
 export async function getArticles(count: number = 10, query?: string) {
     const response = await shopifyFetch(ARTICLES_QUERY, { first: count, query });
-    if (!response.data || !response.data.articles) {
+    if (!response.data?.articles?.edges) {
         return [];
     }
-    return response.data.articles.edges.map((edge: any) => edge.node) || [];
+    return response.data.articles.edges.map((edge: any) => edge.node);
 }
 
 export async function getArticleByHandle(handle: string) {
     const response = await shopifyFetch(ARTICLE_QUERY, { handle });
-    if (!response.data) {
-        return null;
-    }
-    return response.data.blog?.articleByHandle;
+    return response.data?.blog?.articleByHandle || null;
 }
 
 export async function getAllTags() {
     const response = await shopifyFetch(ALL_TAGS_QUERY);
-    if (!response.data || !response.data.articles) {
+    if (!response.data?.articles?.edges) {
         return [];
     }
     const allTags = new Set<string>();
