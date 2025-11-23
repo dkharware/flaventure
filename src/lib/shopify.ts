@@ -3,16 +3,11 @@ const endpoint = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPO
 const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
-  // Check if credentials are set and not placeholder values.
-  if (!process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT || 
-      !accessToken ||
-      process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT === 'your-store-name.myshopify.com'
-      ) {
-    console.warn("Shopify API credentials are not configured. Blog posts will not be fetched.");
-    return { data: null, errors: [{ message: "Shopify API credentials are not configured." }] };
-  }
-
   try {
+    if (!accessToken || !process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT) {
+        throw new Error("Shopify API credentials are not configured.");
+    }
+
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
