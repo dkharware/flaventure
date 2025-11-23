@@ -3,7 +3,9 @@ const endpoint = `https://${process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPO
 const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
-  if (!process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT || !accessToken) {
+  if (!process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT || 
+      !accessToken ||
+      process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT === 'your-store-name.myshopify.com') {
     console.warn("Shopify API credentials are not configured. Blog posts will not be fetched.");
     return { data: null, errors: [{ message: "Shopify API credentials are not configured." }] };
   }
@@ -105,7 +107,10 @@ export async function getArticles(count: number = 10, query?: string) {
 
 export async function getArticleByHandle(handle: string) {
     const response = await shopifyFetch(ARTICLE_QUERY, { handle });
-    return response.data?.blog?.articleByHandle || null;
+    if (!response.data?.blog?.articleByHandle) {
+        return null;
+    }
+    return response.data.blog.articleByHandle;
 }
 
 export async function getAllTags() {
@@ -123,9 +128,9 @@ export async function getAllTags() {
 export async function getRelatedArticles(handle: string, tags: string[]) {
     if (tags.length === 0) {
         const articles = await getArticles(4);
-        return articles.filter(a => a.handle !== handle).slice(0, 3);
+        return articles.filter((a: any) => a.handle !== handle).slice(0, 3);
     }
     const query = tags.map(tag => `tag:'${tag}'`).join(' OR ');
     const articles = await getArticles(4, query);
-    return articles.filter(a => a.handle !== handle).slice(0, 3);
+    return articles.filter((a: any) => a.handle !== handle).slice(0, 3);
 }
