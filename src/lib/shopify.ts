@@ -20,6 +20,7 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
         'X-Shopify-Storefront-Access-Token': accessToken,
       },
       body: JSON.stringify({ query, variables }),
+      next: { revalidate: 60 } // Use Next.js revalidation
     });
 
     if (!response.ok) {
