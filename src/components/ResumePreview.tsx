@@ -2,7 +2,7 @@
 
 import React,  { useRef, useState } from 'react';
 import { useResume } from './Editor';
-import { Download } from 'lucide-react';
+import { Download, Bot } from 'lucide-react';
 import { ProfessionalTemplate } from './templates/Professional';
 import { CreativeTemplate } from './templates/Creative';
 import { ModernTemplate } from './templates/Modern';
@@ -22,6 +22,20 @@ import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { uploadFile } from '@/app/actions/blob';
 import html2canvas from 'html2canvas';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Textarea } from './ui/textarea';
+import { Label } from './ui/label';
+import { Button } from './ui/button';
+import { getResumeAnalysis } from '@/app/actions/ai';
+import type { ResumeAnalysisOutput } from '@/ai/flows/analyze-resume';
+import { ResumeAnalysisSheet } from './ResumeAnalysisSheet';
 
 const templateComponents: { [key: string]: React.ComponentType<any> } = {
   professional: ProfessionalTemplate,
@@ -43,6 +57,12 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
 export default function ResumePreview() {
   const { resumeData, templateId } = useResume();
   const [isSaving, setIsSaving] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isAnalysisSheetOpen, setIsAnalysisSheetOpen] = useState(false);
+  const [isJdModalOpen, setIsJdModalOpen] = useState(false);
+  const [jobDescription, setJobDescription] = useState('');
+  const [analysisResult, setAnalysisResult] = useState<ResumeAnalysisOutput | null>(null);
+
   const { toast } = useToast();
   const componentToPrintRef = useRef<HTMLDivElement>(null);
   const TemplateComponent = templateComponents[templateId];
@@ -61,9 +81,8 @@ export default function ResumePreview() {
 
     setIsSaving(true);
     try {
-      // Use html2canvas to capture the content as a data URI
       const canvas = await html2canvas(input, {
-        scale: 2, // Higher scale for better quality
+        scale: 2,
         useCORS: true,
       });
       const imgDataUri = canvas.toDataURL('image/png');
@@ -76,7 +95,6 @@ export default function ResumePreview() {
         throw new Error(uploadResult.error);
       }
       
-      // Trigger browser download
       const link = document.createElement('a');
       link.href = imgDataUri;
       link.download = fileName;
@@ -101,18 +119,44 @@ export default function ResumePreview() {
     }
   }
 
+  async function handleAnalysis() {
+    setIsAnalyzing(true);
+    const result = await getResumeAnalysis(resumeData, jobDescription);
+    if (result?.analysis) {
+        setAnalysisResult(result.analysis);
+        setIsAnalysisSheetOpen(true);
+    } else {
+        toast({
+            variant: 'destructive',
+            title: 'Analysis Failed',
+            description: result?.error || 'An unknown error occurred.',
+        });
+    }
+    setIsJdModalOpen(false);
+    setIsAnalyzing(false);
+  }
+
   return (
     <>
       <div className="bg-gray-100 min-h-full" id="preview-area">
-         <div className="p-4 flex justify-center no-print">
-            <button
+         <div className="p-4 flex justify-center items-center gap-2 no-print">
+            <Button
                 onClick={handleSaveAndDownload}
                 disabled={isSaving}
-                className={cn(buttonVariants({ variant: 'default' }), 'gap-2')}
+                className="gap-2"
             >
                 <Download size={16} />
-                {isSaving ? 'Generating...' : 'Save & Download'}
-            </button>
+                {isSaving ? 'Saving...' : 'Save & Download'}
+            </Button>
+            <Button
+                variant="outline"
+                onClick={() => setIsJdModalOpen(true)}
+                disabled={isAnalyzing}
+                className="gap-2"
+            >
+                <Bot size={16} />
+                {isAnalyzing ? 'Analyzing...' : 'Analyze Resume'}
+            </Button>
         </div>
         <div className="p-4 lg:p-8 pt-2">
             <div id="printable-area" className="bg-white shadow-lg rounded-lg overflow-hidden">
@@ -124,6 +168,40 @@ export default function ResumePreview() {
             </div>
         </div>
       </div>
+      
+      <Dialog open={isJdModalOpen} onOpenChange={setIsJdModalOpen}>
+        <DialogContent>
+            <DialogHeader>
+                <DialogTitle>Analyze Resume Against Job Description</DialogTitle>
+                <DialogDescription>
+                    Paste the job description below to get an AI-powered analysis of how well your resume matches the role.
+                </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+                <div className="grid gap-2">
+                    <Label htmlFor="job-description">Job Description</Label>
+                    <Textarea
+                        id="job-description"
+                        value={jobDescription}
+                        onChange={(e) => setJobDescription(e.target.value)}
+                        placeholder="Paste the full job description here..."
+                        rows={12}
+                    />
+                </div>
+            </div>
+            <DialogFooter>
+                <Button onClick={handleAnalysis} disabled={isAnalyzing || !jobDescription}>
+                    {isAnalyzing ? "Analyzing..." : "Run Analysis"}
+                </Button>
+            </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      <ResumeAnalysisSheet 
+        analysis={analysisResult} 
+        isOpen={isAnalysisSheetOpen} 
+        onClose={() => setIsAnalysisSheetOpen(false)} 
+      />
     </>
   );
 }

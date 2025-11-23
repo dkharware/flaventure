@@ -1,6 +1,8 @@
 'use server';
 
 import { suggestResumeContent } from '@/ai/flows/suggest-resume-content';
+import { analyzeResume, type ResumeAnalysisOutput } from '@/ai/flows/analyze-resume';
+import type { ResumeData } from '@/lib/types';
 
 type SuggestionState = {
   suggestions?: {
@@ -25,5 +27,28 @@ export async function getSuggestions(prevState: SuggestionState, formData: FormD
   } catch (e) {
     console.error(e);
     return { error: 'Failed to get AI suggestions. Please try again.' };
+  }
+}
+
+
+type AnalysisState = {
+  analysis?: ResumeAnalysisOutput;
+  error?: string;
+} | null;
+
+export async function getResumeAnalysis(
+  resumeData: ResumeData, 
+  jobDescription: string
+): Promise<AnalysisState> {
+  if (!jobDescription) {
+    return { error: 'Please provide a job description for analysis.' };
+  }
+
+  try {
+    const analysis = await analyzeResume({ resumeData, jobDescription });
+    return { analysis };
+  } catch (e) {
+    console.error(e);
+    return { error: 'Failed to get AI analysis. Please try again.' };
   }
 }
