@@ -87,7 +87,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                          <Link key={featuredArticle.id} href={`/blog/${featuredArticle.handle}`} className="block group">
                             <Card className="h-full flex flex-col md:flex-row overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                                 {featuredArticle.image && (
-                                <div className="relative h-64 md:h-auto md:w-1/2 overflow-hidden">
+                                <div className="relative h-48 md:h-auto md:w-1/2 overflow-hidden">
                                     <Image
                                     src={featuredArticle.image.url}
                                     alt={featuredArticle.image.altText || featuredArticle.title}
@@ -119,12 +119,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                         </Link>
                       )}
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
                         {(searchQuery || tagQuery ? articles : otherArticles).map((article: any) => (
                             <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
                             <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                                 {article.image && (
-                                <div className="relative h-48 w-full overflow-hidden">
+                                <div className="relative h-40 w-full overflow-hidden">
                                     <Image
                                     src={article.image.url}
                                     alt={article.image.altText || article.title}
