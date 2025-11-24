@@ -23,7 +23,7 @@ type ArticlePageProps = {
 };
 
 export async function generateStaticParams() {
-  const articles = await getArticles(10); 
+  const { articles } = await getArticles(100); 
   return articles.map((article: any) => ({
     handle: article.handle,
   }));
@@ -62,7 +62,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   const allTags = await getAllTags();
-  const recentPosts = await getArticles(5);
+  const { articles: recentPosts } = await getArticles(5);
   const relatedArticles = await getRelatedArticles(article.handle, article.tags);
 
   const breadcrumbItems = [

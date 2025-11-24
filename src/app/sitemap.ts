@@ -1,9 +1,10 @@
 
 import { MetadataRoute } from 'next';
+import { getArticles } from '@/lib/shopify';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     '/',
     '/about',
@@ -15,10 +16,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
+    changeFrequency: 'monthly' as 'monthly',
+    priority: route === '/' ? 1.0 : 0.8,
   }));
 
-  // We won't pre-build blog post routes for the sitemap as they are dynamic from Shopify
-  // but you could fetch them here if you wanted them in your sitemap.xml
+  const { articles } = await getArticles(250);
 
-  return [...staticRoutes];
+  const blogRoutes = articles.map((article: any) => ({
+    url: `${siteUrl}/blog/${article.handle}`,
+    lastModified: new Date(article.publishedAt),
+    changeFrequency: 'weekly' as 'weekly',
+    priority: 0.9,
+  }));
+
+
+  return [...staticRoutes, ...blogRoutes];
 }
