@@ -17,6 +17,7 @@ import { SlidersHorizontal } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TableOfContents } from '@/components/TableOfContents';
+import { CommentSection } from '@/components/CommentSection';
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -131,6 +132,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       <ArticleContent content={article.contentHtml} />
                     </div>
                 </article>
+
+                <div className="mt-16 pt-12 border-t">
+                  <CommentSection />
+                </div>
+
 
                 {relatedArticles.length > 0 && (
                     <div className="mt-16 pt-12 border-t">
