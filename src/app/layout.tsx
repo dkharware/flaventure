@@ -12,6 +12,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { AuthProvider } from '@/hooks/use-auth';
 import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
+import { ChatWidget } from '@/components/ChatWidget';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
 
@@ -114,6 +115,7 @@ export default async function RootLayout({
               </Suspense>
           </LoaderProvider>
         </AuthProvider>
+        <ChatWidget />
         <SpeedInsights />
         <Analytics />
       </body>
