@@ -29,28 +29,32 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
       next: { revalidate: 60 } // Use Next.js revalidation
     });
 
+    const responseBody = await response.text();
+
     if (!response.ok) {
-      const errorBody = await response.text();
       // If the body is HTML, it's likely a misconfiguration error page.
-      if (errorBody.trim().startsWith('<!DOCTYPE html>')) {
+      if (responseBody.trim().startsWith('<!DOCTYPE html>')) {
           console.error(`Shopify API request failed with status ${response.status} and returned an HTML page. Please check your endpoint and access token.`);
           return { data: null, errors: [{ message: `Shopify API request returned an HTML page. Check your credentials.` }] };
       }
-      console.error(`Shopify API request failed with status ${response.status}:`, errorBody);
+      console.error(`Shopify API request failed with status ${response.status}:`, responseBody);
       return { data: null, errors: [{ message: `Shopify API request failed with status ${response.status}` }] };
     }
-
-    const jsonResponse = await response.json();
-    if (jsonResponse.errors) {
-      console.error("Shopify API returned errors:", jsonResponse.errors);
-    }
-
-    return jsonResponse;
-  } catch (error) {
-    if (error instanceof SyntaxError) {
-        console.error("Failed to parse JSON response from Shopify. The endpoint might be incorrect and returned HTML instead of JSON.", error);
+    
+    // Now that we have the text, try to parse it as JSON.
+    try {
+        const jsonResponse = JSON.parse(responseBody);
+        if (jsonResponse.errors) {
+          console.error("Shopify API returned errors:", jsonResponse.errors);
+        }
+        return jsonResponse;
+    } catch (e) {
+        // This will catch the "Unexpected token '<'" error.
+        console.error("Failed to parse JSON response from Shopify. The endpoint might be incorrect and returned HTML instead of JSON.", responseBody);
         return { data: null, errors: [{ message: "Failed to parse JSON response. Check Shopify endpoint." }] };
     }
+
+  } catch (error) {
     console.error("Failed to fetch from Shopify:", error);
     return { data: null, errors: [{ message: error instanceof Error ? error.message : "Unknown fetch error" }] };
   }
