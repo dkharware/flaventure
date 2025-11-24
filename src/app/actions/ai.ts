@@ -1,8 +1,9 @@
 'use server';
 
 import { suggestResumeContent } from '@/ai/flows/suggest-resume-content';
-import { analyzeResume, type ResumeAnalysisOutput } from '@/ai/flows/analyze-resume';
+import { analyzeResume } from '@/ai/flows/analyze-resume';
 import type { ResumeData } from '@/lib/types';
+import type { ResumeAnalysisOutput } from '@/lib/ai-schemas';
 
 type SuggestionState = {
   suggestions?: {

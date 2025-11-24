@@ -20,7 +20,7 @@ import {
   ResponsiveContainer,
 } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { type ResumeAnalysisOutput } from "@/ai/flows/analyze-resume";
+import { type ResumeAnalysisOutput } from "@/lib/ai-schemas";
 
 interface ResumeAnalysisSheetProps {
   analysis: ResumeAnalysisOutput | null;

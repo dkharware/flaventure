@@ -34,7 +34,7 @@ import { Textarea } from './ui/textarea';
 import { Label } from './ui/label';
 import { Button } from './ui/button';
 import { getResumeAnalysis } from '@/app/actions/ai';
-import type { ResumeAnalysisOutput } from '@/ai/flows/analyze-resume';
+import type { ResumeAnalysisOutput } from '@/lib/ai-schemas';
 import { ResumeAnalysisSheet } from './ResumeAnalysisSheet';
 
 const templateComponents: { [key: string]: React.ComponentType<any> } = {
