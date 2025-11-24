@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, Star, FileText, Briefcase, UserCircle, LucideProps } from 'lucide-react';
+import { ArrowRight, Star, FileText, Briefcase, UserCircle, LucideProps, Quote } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HeroBanner } from '@/components/HeroBanner';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
@@ -195,15 +195,8 @@ export default function Home() {
                   <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
                     <div className="p-1 h-full">
                       <Card className="h-full flex flex-col">
-                        <CardContent className="p-6 flex flex-col items-center text-center flex-grow">
-                          <Image
-                            src={testimonial.avatar}
-                            data-ai-hint={testimonial.hint}
-                            alt={`Avatar of ${testimonial.name}`}
-                            width={80}
-                            height={80}
-                            className="rounded-full mb-4"
-                          />
+                        <CardContent className="p-6 flex flex-col items-start text-left flex-grow">
+                          <Quote className="w-8 h-8 text-primary/30 mb-4" />
                            <p className="text-sm text-muted-foreground flex-grow">"{testimonial.quote}"</p>
                           <div className="mt-4">
                             <div className="font-semibold">{testimonial.name}</div>
