@@ -1,3 +1,4 @@
+
 'use client';
 import React from 'react';
 import {
@@ -28,17 +29,21 @@ export function FaqClient({ faqData }: FaqClientProps) {
   
       return (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-1 flex flex-row md:flex-col gap-2">
-                {faqData.map(item => (
-                    <Button 
-                        key={item.category}
-                        variant={activeCategory === item.category ? 'default' : 'outline'}
-                        onClick={() => setActiveCategory(item.category)}
-                        className="w-full justify-start"
-                    >
-                        {item.category}
-                    </Button>
-                ))}
+            <div className="md:col-span-1 md:flex md:flex-col md:gap-2">
+                <div className="w-full overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+                    <div className="flex flex-row md:flex-col gap-2">
+                        {faqData.map(item => (
+                            <Button 
+                                key={item.category}
+                                variant={activeCategory === item.category ? 'default' : 'outline'}
+                                onClick={() => setActiveCategory(item.category)}
+                                className="w-full justify-start shrink-0"
+                            >
+                                {item.category}
+                            </Button>
+                        ))}
+                    </div>
+                </div>
             </div>
             <div className="md:col-span-3">
                 <Accordion type="single" collapsible className="w-full">
