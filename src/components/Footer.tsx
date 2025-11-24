@@ -13,7 +13,7 @@ export default function Footer() {
               <Logo />
             </Link>
             <p className="text-sm">
-              Craft your professional resume in minutes with our AI-powered builder and beautiful templates.
+              Discover insightful articles, tutorials, and the latest trends in our industry.
             </p>
           </div>
           
@@ -22,6 +22,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li><Link href="/about" className="text-sm hover:text-primary transition-colors">About Us</Link></li>
               <li><Link href="/contact" className="text-sm hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link href="/blog" className="text-sm hover:text-primary transition-colors">Blog</Link></li>
             </ul>
           </div>
 

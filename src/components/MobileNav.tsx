@@ -3,15 +3,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Newspaper, Phone, MessageSquare } from 'lucide-react';
+import { Home, Newspaper, Phone, MessageSquare, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useChat } from '@/context/ChatContext';
-import { Button } from './ui/button';
 
 const navItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/blog', label: 'Blog', icon: Newspaper },
-  { href: '/contact', label: 'Contact', icon: Phone },
+  { href: '/about', label: 'About', icon: Info },
 ];
 
 export function MobileNav() {

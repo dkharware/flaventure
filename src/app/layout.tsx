@@ -9,9 +9,6 @@ import { NavigationEvents } from '@/components/NavigationEvents';
 import { Suspense } from 'react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
-import { AuthProvider } from '@/hooks/use-auth';
-import { cookies } from 'next/headers';
-import { db } from '@/lib/db';
 import { ChatWidget } from '@/components/ChatWidget';
 import { MobileNav } from '@/components/MobileNav';
 import { ChatProvider } from '@/context/ChatContext';
@@ -21,30 +18,23 @@ const siteUrl = 'https://easyfreecv.com';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'easyfreecv: Free CV and Resume Builder',
+    default: 'easyfreecv: A Modern Blog',
     template: '%s | easyfreecv',
   },
-  description: 'Build a professional CV or resume for free with easyfreecv. Our free resume builder and CV maker offers professional templates to help you land your dream job. Create your CV in minutes.',
+  description: 'A modern, stylish blog powered by Shopify and Next.js.',
   keywords: [
-    'resume builder', 
-    'cv builder', 
-    'free resume builder', 
-    'free cv builder', 
-    'easyfreecv', 
-    'cv maker', 
-    'resume maker', 
-    'online resume builder', 
-    'online cv builder',
-    'professional resume templates',
-    'cv templates',
-    'cv letter example'
+    'blog', 
+    'tech blog',
+    'shopify blog',
+    'next.js blog',
+    'easyfreecv'
   ],
   authors: [{ name: 'easyfreecv', url: siteUrl }],
   creator: 'easyfreecv',
   publisher: 'easyfreecv',
   openGraph: {
-    title: 'easyfreecv: Free CV and Resume Builder',
-    description: 'Create a stunning, professional resume in minutes. Choose from a variety of free templates and get AI-powered suggestions.',
+    title: 'easyfreecv: A Modern Blog',
+    description: 'A modern, stylish blog powered by Shopify and Next.js.',
     url: siteUrl,
     siteName: 'easyfreecv',
     images: [
@@ -52,7 +42,7 @@ export const metadata: Metadata = {
         url: '/og-image.png', // Assuming you'll add an og-image.png to your public folder
         width: 1200,
         height: 630,
-        alt: 'easyfreecv - Free Resume and CV Builder',
+        alt: 'easyfreecv Blog',
       },
     ],
     locale: 'en_US',
@@ -60,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'easyfreecv: Free CV and Resume Builder',
-    description: 'Create a stunning, professional resume in minutes. Choose from a variety of free templates and get AI-powered suggestions.',
+    title: 'easyfreecv: A Modern Blog',
+    description: 'A modern, stylish blog powered by Shopify and Next.js.',
     images: ['/og-image.png'], // Assuming you'll add an og-image.png to your public folder
   },
   icons: {
@@ -77,24 +67,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
-  const userId = cookieStore.get('session')?.value;
-  let user = null;
-
-  if (userId) {
-    try {
-        user = await db.getUserById(userId);
-    } catch (e) {
-        console.error("Failed to fetch user:", e);
-        // User might have a stale cookie or DB error, treat as not logged in
-        user = null;
-    }
-  }
-  
-  const authContextValue = {
-    isAuthenticated: !!user,
-    user: user ? { ...user, fullName: user.full_name } : null,
-  };
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -104,7 +76,6 @@ export default async function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <AuthProvider value={authContextValue}>
           <LoaderProvider>
             <ChatProvider>
               <div className="flex flex-col min-h-screen pb-16 md:pb-0">
@@ -120,7 +91,6 @@ export default async function RootLayout({
               <ChatWidget />
             </ChatProvider>
           </LoaderProvider>
-        </AuthProvider>
         <SpeedInsights />
         <Analytics />
       </body>
