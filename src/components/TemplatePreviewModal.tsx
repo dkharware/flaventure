@@ -18,9 +18,9 @@ import { ProfessionalTemplate } from './templates/Professional';
 import { CreativeTemplate } from './templates/Creative';
 import { ModernTemplate } from './templates/Modern';
 import { MinimalistTemplate } from './templates/Minimalist';
-import { ResumeData } from '@/lib/types';
+import type { ResumeData } from '@/lib/types';
 import { initialData } from '@/lib/initial-data';
-import { ResumeProvider } from './Editor';
+import { ResumeProvider, useResume as useEditorResume } from './Editor';
 
 const templateComponents: { [key: string]: React.ComponentType<any> } = {
   professional: ProfessionalTemplate,
@@ -29,6 +29,18 @@ const templateComponents: { [key: string]: React.ComponentType<any> } = {
   minimalist: MinimalistTemplate,
   // Add other templates here as needed for preview
 };
+
+const categoryIcons: { [key: string]: React.FC<LucideProps> } = {
+    'Corporate': Briefcase,
+    'Creative': Paintbrush,
+    'Simple': FileText,
+    'Modern': Sparkles,
+    'Academic': GraduationCap,
+    'Technical': Code,
+    'Developer': Code,
+    'Entry-Level': User,
+    'Cover Letter': Mail,
+  };
 
 interface TemplatePreviewModalProps {
   template: Template;
@@ -41,6 +53,7 @@ export function TemplatePreviewModal({ template, onClose }: TemplatePreviewModal
   const editUrl = isCoverLetter ? `/cover-letter-editor/${id}` : `/editor/${id}`;
   
   const PreviewComponent = templateComponents[id];
+  const Icon = categoryIcons[category] || FileText;
 
   const resumeContextValue = {
     resumeData: initialData,
@@ -64,7 +77,10 @@ export function TemplatePreviewModal({ template, onClose }: TemplatePreviewModal
              </ResumeProvider>
           ) : (
              <div className="w-full h-full flex items-center justify-center bg-muted">
-                <p className="text-muted-foreground">Live preview not available for this template.</p>
+                <div className="text-center text-muted-foreground">
+                    <Icon className="w-24 h-24 mx-auto text-primary/20" strokeWidth={1}/>
+                    <p className="mt-4">Live preview coming soon for this template.</p>
+                </div>
              </div>
           )}
         </div>
@@ -81,10 +97,5 @@ export function TemplatePreviewModal({ template, onClose }: TemplatePreviewModal
   );
 }
 
-// Minimal context provider for preview
-const ResumeContext = React.createContext<any>(null);
-const ResumeProvider = ({ children, value }: { children: React.ReactNode, value: any }) => (
-    <ResumeContext.Provider value={value}>{children}</ResumeContext.Provider>
-);
-// Minimal hook for preview components
-export const useResume = () => React.useContext(ResumeContext);
+// Minimal hook for preview components to avoid conflicts
+export const useResume = useEditorResume;
