@@ -116,6 +116,16 @@
         background-size: 40px 40px;
     }
     
+    .hide-scrollbar::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+    
+    .hide-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
     @keyframes float {
       0% {
         transform: translateY(0px) rotate(0deg);
