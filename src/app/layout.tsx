@@ -67,9 +67,9 @@ export const metadata: Metadata = {
     images: ['/og-image.png'], // Assuming you'll add an og-image.png to your public folder
   },
   icons: {
-    icon: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/easyfreecv.webp',
-    shortcut: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/easyfreecv.webp',
-    apple: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/easyfreecv.webp',
+    icon: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico',
+    shortcut: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico',
+    apple: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico',
   },
   manifest: `${siteUrl}/site.webmanifest`,
 };
