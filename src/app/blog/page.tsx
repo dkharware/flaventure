@@ -53,7 +53,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   ];
 
   return (
-    <div className="container mx-auto py-12 px-6 md:px-10">
+    <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
         <Breadcrumbs items={breadcrumbItems} />
         <div className="lg:hidden fixed bottom-24 right-4 z-40">
             <Sheet>
@@ -63,7 +63,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                         <span className="sr-only">Open Filters</span>
                     </Button>
                 </SheetTrigger>
-                <SheetContent>
+                <SheetContent className="hide-scrollbar">
                   <ScrollArea className="h-full pr-6">
                     <Suspense fallback={<div>Loading sidebar...</div>}>
                         <BlogSidebar tags={allTags} recentPosts={recentPosts} />

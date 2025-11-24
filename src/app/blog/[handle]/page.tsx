@@ -70,7 +70,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   ];
 
   return (
-    <div className="container mx-auto py-12 px-4 md:px-6">
+    <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
        <div className="lg:hidden fixed bottom-24 right-4 z-40">
           <Sheet>
               <SheetTrigger asChild>
@@ -79,7 +79,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       <span className="sr-only">Filters & Recent</span>
                   </Button>
               </SheetTrigger>
-              <SheetContent>
+              <SheetContent className="hide-scrollbar">
                 <ScrollArea className="h-full pr-6">
                   <Suspense fallback={<div>Loading sidebar...</div>}>
                       <BlogSidebar tags={allTags} recentPosts={recentPosts} />
@@ -96,7 +96,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                         <div className="mb-4 flex flex-wrap gap-2 justify-center">
                           {article.tags.map((tag: string) => (
                               <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
-                                  <Badge variant="secondary">{tag}</Badge>
+                                  <Badge variant="secondary" className="shadow-md">{tag}</Badge>
                               </Link>
                           ))}
                         </div>
@@ -118,7 +118,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     </div>
                     )}
 
-                    <div className="prose md:prose-base dark:prose-invert max-w-none mx-auto">
+                    <div className="prose dark:prose-invert max-w-none mx-auto">
                       <ArticleContent content={article.contentHtml} />
                     </div>
                 </article>
