@@ -41,7 +41,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const allTags = await getAllTags();
   const recentPosts = await getArticles(5);
 
-  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "From Our Blog");
+  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Resume & Career Advice Blog");
   const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on resume building, career advice, and industry trends.";
 
   const featuredArticle = articles && articles.length > 0 ? articles[0] : null;
