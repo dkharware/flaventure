@@ -18,7 +18,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="font-headline font-semibold text-foreground mb-4">Company</h3>
+            <h3 className="font-bold text-foreground mb-4">Company</h3>
             <ul className="space-y-2">
               <li><Link href="/about" className="text-sm hover:text-primary transition-colors">About Us</Link></li>
               <li><Link href="/contact" className="text-sm hover:text-primary transition-colors">Contact</Link></li>
@@ -26,7 +26,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-headline font-semibold text-foreground mb-4">Legal</h3>
+            <h3 className="font-bold text-foreground mb-4">Legal</h3>
             <ul className="space-y-2">
               <li><Link href="/terms-and-conditions" className="text-sm hover:text-primary transition-colors">Terms & Conditions</Link></li>
               <li><Link href="/privacy-policy" className="text-sm hover:text-primary transition-colors">Privacy Policy</Link></li>
@@ -35,7 +35,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-headline font-semibold text-foreground mb-4">Connect With Us</h3>
+            <h3 className="font-bold text-foreground mb-4">Connect With Us</h3>
             <div className="flex space-x-4">
               <Link href="#" aria-label="GitHub" className="hover:text-primary transition-all hover:-translate-y-1 block"><Github size={20} /></Link>
               <Link href="#" aria-label="Twitter" className="hover:text-primary transition-all hover:-translate-y-1 block"><Twitter size={20} /></Link>

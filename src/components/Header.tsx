@@ -132,7 +132,7 @@ export default function Header() {
     const { isAuthenticated } = useAuth();
 
   return (
-    <header className="py-3 px-4 sm:px-6 md:py-4 md:px-10 bg-background text-foreground border-b sticky top-0 z-50">
+    <header className="py-3 px-4 sm:px-6 md:py-4 md:px-10 bg-background/80 backdrop-blur-sm text-foreground border-b sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex-shrink-0">
           <Link href="/" className="flex items-center gap-2" aria-label="easyfreecv Home">

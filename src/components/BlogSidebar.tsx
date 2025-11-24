@@ -39,7 +39,7 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
     <div className="space-y-8 sticky top-28">
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl font-headline font-bold">Search</CardTitle>
+          <CardTitle className="text-xl font-bold">Search</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSearch} className="flex gap-2">
@@ -64,7 +64,7 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
       {tags.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-xl font-headline font-bold">Tags</CardTitle>
+            <CardTitle className="text-xl font-bold">Tags</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
@@ -83,7 +83,7 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
       {recentPosts.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-xl font-headline font-bold">Recent Posts</CardTitle>
+            <CardTitle className="text-xl font-bold">Recent Posts</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-4">

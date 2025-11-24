@@ -20,7 +20,7 @@ export default {
         '3xl': '1800px',
       },
       fontFamily: {
-        body: ['PT Sans', 'sans-serif'],
+        body: ['Poppins', 'sans-serif'],
         headline: ['Poppins', 'sans-serif'],
         code: ['monospace'],
       },
