@@ -18,6 +18,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TableOfContents } from '@/components/TableOfContents';
 import { CommentSection } from '@/components/CommentSection';
+import { ShareButtons } from '@/components/ShareButtons';
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -131,6 +132,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     <div className="prose dark:prose-invert max-w-none mx-auto">
                       <ArticleContent content={article.contentHtml} />
                     </div>
+
+                    <ShareButtons title={article.title} />
                 </article>
 
                 <div className="mt-16 pt-12 border-t">
