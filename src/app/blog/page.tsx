@@ -47,27 +47,27 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
+        <div className="lg:hidden fixed bottom-6 right-6 z-40">
+            <Sheet>
+                <SheetTrigger asChild>
+                    <Button size="icon" className="rounded-full shadow-lg w-14 h-14">
+                        <SlidersHorizontal className="h-6 w-6" />
+                        <span className="sr-only">Open Filters</span>
+                    </Button>
+                </SheetTrigger>
+                <SheetContent>
+                    <Suspense fallback={<div>Loading sidebar...</div>}>
+                        <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                    </Suspense>
+                </SheetContent>
+            </Sheet>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
-                 <div className="mb-8 flex justify-between items-start">
+                 <div className="mb-8">
                     <div>
                         <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
                         {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl">{pageDescription}</p>}
-                    </div>
-                     <div className="lg:hidden">
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button variant="outline" size="icon">
-                                    <SlidersHorizontal className="h-4 w-4" />
-                                    <span className="sr-only">Open Filters</span>
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent>
-                                <Suspense fallback={<div>Loading sidebar...</div>}>
-                                    <BlogSidebar tags={allTags} recentPosts={recentPosts} />
-                                </Suspense>
-                            </SheetContent>
-                        </Sheet>
                     </div>
                 </div>
 

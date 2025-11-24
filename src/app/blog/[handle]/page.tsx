@@ -63,6 +63,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
+       <div className="lg:hidden fixed bottom-6 right-6 z-40">
+          <Sheet>
+              <SheetTrigger asChild>
+                  <Button size="icon" className="rounded-full shadow-lg w-14 h-14">
+                      <SlidersHorizontal className="h-6 w-6" />
+                      <span className="sr-only">Filters & Recent</span>
+                  </Button>
+              </SheetTrigger>
+              <SheetContent>
+                  <Suspense fallback={<div>Loading sidebar...</div>}>
+                      <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                  </Suspense>
+              </SheetContent>
+          </Sheet>
+      </div>
        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
                 <article className="max-w-4xl mx-auto">
@@ -125,27 +140,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     </div>
                 )}
             </main>
-            <aside className="lg:col-span-1 relative">
-                <div className="lg:hidden flex justify-end mb-8">
-                    <Sheet>
-                        <SheetTrigger asChild>
-                            <Button variant="outline">
-                                <SlidersHorizontal className="mr-2 h-4 w-4" />
-                                Filters & Recent
-                            </Button>
-                        </SheetTrigger>
-                        <SheetContent>
-                            <Suspense fallback={<div>Loading sidebar...</div>}>
-                                <BlogSidebar tags={allTags} recentPosts={recentPosts} />
-                            </Suspense>
-                        </SheetContent>
-                    </Sheet>
-                </div>
-                 <div className="hidden lg:block">
-                    <Suspense fallback={<div>Loading sidebar...</div>}>
-                        <BlogSidebar tags={allTags} recentPosts={recentPosts} />
-                    </Suspense>
-                </div>
+            <aside className="lg:col-span-1 relative hidden lg:block">
+                <Suspense fallback={<div>Loading sidebar...</div>}>
+                    <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                </Suspense>
             </aside>
         </div>
     </div>
