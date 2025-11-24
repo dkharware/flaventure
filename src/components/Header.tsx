@@ -146,9 +146,6 @@ export default function Header() {
                             <div className="mb-2 mt-4 text-lg font-medium">
                               Shopify Topics
                             </div>
-                            <p className="text-sm leading-tight text-muted-foreground">
-                              Explore our deep dives into the Shopify ecosystem.
-                            </p>
                           </a>
                         </NavigationMenuLink>
                       </li>
