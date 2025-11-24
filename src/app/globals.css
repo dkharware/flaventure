@@ -55,6 +55,21 @@
   body {
     @apply bg-background text-foreground;
   }
+  .prose h2 {
+    @apply mt-12 mb-4 text-2xl font-bold font-headline;
+  }
+  .prose h3 {
+    @apply mt-8 mb-3 text-xl font-bold font-headline;
+  }
+  .prose p {
+    @apply leading-relaxed;
+  }
+  .prose a {
+    @apply text-primary hover:underline;
+  }
+  .prose blockquote {
+    @apply border-l-4 border-primary bg-muted/50 p-4 italic;
+  }
   .prose pre {
     @apply bg-muted text-foreground p-4 rounded-lg shadow-inner overflow-x-auto relative;
   }
@@ -75,6 +90,12 @@
   }
   .dark .prose :not(pre) > code {
       @apply bg-secondary text-primary;
+  }
+  .dark .prose a {
+      @apply text-primary;
+  }
+  .dark .prose blockquote {
+      @apply border-l-4 border-primary bg-secondary/40;
   }
 }
 

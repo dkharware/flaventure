@@ -10,6 +10,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
+import { UserCircle } from 'lucide-react';
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -63,26 +64,29 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
                 <article className="max-w-4xl mx-auto">
-                    <header className="mb-8">
-                    <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">{article.title}</h1>
-                    <div className="text-muted-foreground text-sm flex items-center gap-4">
-                        <p>By {article.authorV2.name}</p>
-                        <span>|</span>
-                        <p>{format(new Date(article.publishedAt), 'PPP')}</p>
-                    </div>
-                     {article.tags && article.tags.length > 0 && (
-                        <div className="mt-4 flex flex-wrap gap-2">
-                        {article.tags.map((tag: string) => (
-                            <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
-                                <Badge variant="secondary">{tag}</Badge>
-                            </Link>
-                        ))}
+                    <header className="mb-8 text-center">
+                        {article.tags && article.tags.length > 0 && (
+                            <div className="mb-4 flex flex-wrap gap-2 justify-center">
+                            {article.tags.map((tag: string) => (
+                                <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
+                                    <Badge variant="secondary">{tag}</Badge>
+                                </Link>
+                            ))}
+                            </div>
+                        )}
+                        <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">{article.title}</h1>
+                        <div className="text-muted-foreground text-sm flex items-center justify-center gap-4">
+                            <div className="flex items-center gap-2">
+                                <UserCircle className="h-5 w-5" />
+                                <span>{article.authorV2.name}</span>
+                            </div>
+                            <span>&bull;</span>
+                            <p>{format(new Date(article.publishedAt), 'PPP')}</p>
                         </div>
-                    )}
                     </header>
 
                     {article.image && (
-                    <div className="relative h-96 w-full rounded-lg overflow-hidden mb-8">
+                    <div className="relative h-64 md:h-96 w-full rounded-lg overflow-hidden mb-8 shadow-lg">
                         <Image
                         src={article.image.url}
                         alt={article.image.altText || article.title}
@@ -97,8 +101,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 </article>
 
                 {relatedArticles.length > 0 && (
-                    <div className="mt-16">
-                        <h2 className="text-3xl font-bold font-headline mb-8">Related Articles</h2>
+                    <div className="mt-16 pt-12 border-t">
+                        <h2 className="text-3xl font-bold font-headline mb-8 text-center">Related Articles</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {relatedArticles.map((related: any) => (
                                 <Link key={related.id} href={`/blog/${related.handle}`} className="block group">

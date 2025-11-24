@@ -7,6 +7,8 @@ import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
+import { ArrowRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 export const metadata: Metadata = {
   title: 'Blog | easyfreecv',
@@ -38,6 +40,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "From Our Blog");
   const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on resume building, career advice, and industry trends.";
 
+  const featuredArticle = articles && articles.length > 0 ? articles[0] : null;
+  const otherArticles = articles && articles.length > 1 ? articles.slice(1) : [];
+
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
@@ -48,39 +53,81 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 </div>
 
                 {articles && articles.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {articles.map((article: any) => (
-                        <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
-                        <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                            {article.image && (
-                            <div className="relative h-48 w-full overflow-hidden">
-                                <Image
-                                src={article.image.url}
-                                alt={article.image.altText || article.title}
-                                fill
-                                className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                />
-                            </div>
-                            )}
-                            <CardHeader>
-                                <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex-grow flex flex-col">
-                                <div
-                                    className="text-sm text-muted-foreground flex-grow"
-                                    dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
-                                />
-                                <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
-                                    <span>By {article.authorV2.name}</span> &bull; <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                    <div className="space-y-12">
+                      {featuredArticle && !searchQuery && !tagQuery && (
+                         <Link key={featuredArticle.id} href={`/blog/${featuredArticle.handle}`} className="block group">
+                            <Card className="h-full flex flex-col md:flex-row overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/20">
+                                {featuredArticle.image && (
+                                <div className="relative h-64 md:h-auto md:w-1/2 overflow-hidden">
+                                    <Image
+                                    src={featuredArticle.image.url}
+                                    alt={featuredArticle.image.altText || featuredArticle.title}
+                                    fill
+                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
                                 </div>
-                            </CardContent>
-                        </Card>
+                                )}
+                                <div className="flex-1 flex flex-col p-6">
+                                    <CardHeader className="p-0">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            {featuredArticle.tags?.slice(0, 1).map((tag: string) => (
+                                                <Badge key={tag} variant="secondary">{tag}</Badge>
+                                            ))}
+                                        </div>
+                                        <CardTitle className="text-2xl font-headline group-hover:text-primary transition-colors">{featuredArticle.title}</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="flex-grow flex flex-col p-0 mt-4">
+                                        <div
+                                            className="text-sm text-muted-foreground flex-grow"
+                                            dangerouslySetInnerHTML={{ __html: featuredArticle.excerptHtml }}
+                                        />
+                                        <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
+                                            <span>By {featuredArticle.authorV2.name}</span> &bull; <span>{format(new Date(featuredArticle.publishedAt), 'PPP')}</span>
+                                        </div>
+                                    </CardContent>
+                                </div>
+                            </Card>
                         </Link>
-                    ))}
+                      )}
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {(searchQuery || tagQuery ? articles : otherArticles).map((article: any) => (
+                            <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
+                            <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                                {article.image && (
+                                <div className="relative h-48 w-full overflow-hidden">
+                                    <Image
+                                    src={article.image.url}
+                                    alt={article.image.altText || article.title}
+                                    fill
+                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                </div>
+                                )}
+                                <CardHeader>
+                                    <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
+                                </CardHeader>
+                                <CardContent className="flex-grow flex flex-col">
+                                    <div
+                                        className="text-sm text-muted-foreground flex-grow"
+                                        dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
+                                    />
+                                    <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
+                                        <span>By {article.authorV2.name}</span> &bull; <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                            </Link>
+                        ))}
+                      </div>
                     </div>
                 ) : (
-                    <div className="text-center py-16">
-                        <p className="text-muted-foreground">No articles found. Please try another search or tag.</p>
+                    <div className="text-center py-16 border rounded-lg bg-muted/20">
+                        <h3 className="text-xl font-semibold">No Articles Found</h3>
+                        <p className="text-muted-foreground mt-2">Please try another search or tag, or check back later.</p>
+                        <Button asChild variant="outline" className="mt-4">
+                            <Link href="/blog">Back to Blog</Link>
+                        </Button>
                     </div>
                 )}
             </main>
