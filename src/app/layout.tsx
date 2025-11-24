@@ -27,10 +27,10 @@ const siteUrl = 'https://easyfreecv.com';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Expert Shopify & Resume Blog | Tips, Guides, & News | easyfreecv',
+    default: 'EasyFreeCV – Free CV Templates, Resume Tips & Shopify Expert Blogs',
     template: '%s | easyfreecv',
   },
-  description: 'Your go-to source for expert articles on Shopify development, headless commerce, and career advice. Get the latest insights on resume building, theme development, and the Storefront API.',
+  description: 'EasyFreeCV provides free CV templates, resume writing tips, and expert Shopify blogs covering development, headless Shopify, apps, and eCommerce insights.',
   keywords: [
     'Shopify blog', 
     'resume advice',
@@ -45,8 +45,8 @@ export const metadata: Metadata = {
   creator: 'easyfreecv',
   publisher: 'easyfreecv',
   openGraph: {
-    title: 'Expert Shopify & Resume Blog | easyfreecv',
-    description: 'Your go-to source for expert articles on Shopify development, headless commerce, and career advice.',
+    title: 'EasyFreeCV – Free CV Templates, Resume Tips & Shopify Expert Blogs',
+    description: 'EasyFreeCV provides free CV templates, resume writing tips, and expert Shopify blogs covering development, headless Shopify, apps, and eCommerce insights.',
     url: siteUrl,
     siteName: 'easyfreecv',
     images: [
@@ -62,8 +62,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Expert Shopify & Resume Blog | easyfreecv',
-    description: 'Your go-to source for expert articles on Shopify development, headless commerce, and career advice.',
+    title: 'EasyFreeCV – Free CV Templates, Resume Tips & Shopify Expert Blogs',
+    description: 'EasyFreeCV provides free CV templates, resume writing tips, and expert Shopify blogs covering development, headless Shopify, apps, and eCommerce insights.',
     images: ['/og-image.png'], // Assuming you'll add an og-image.png to your public folder
   },
   icons: {
