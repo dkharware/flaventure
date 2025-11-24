@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getArticles } from '@/lib/shopify';
+import { getArticles, getAllTags } from '@/lib/shopify';
 import { format } from 'date-fns';
 import {
   Carousel,
@@ -17,6 +17,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { FaqClient } from '@/components/FaqClient';
 import { Hero } from '@/components/Hero';
+import { BlogTags } from '@/components/BlogTags';
 
 async function WebStoriesSection() {
     const { articles } = await getArticles(8);
@@ -388,6 +389,12 @@ const faqData = [
 ];
 
 
+async function TagsSection() {
+    const tags = await getAllTags();
+    return <BlogTags tags={tags} />;
+}
+
+
 function FaqSection() {
     return (
         <section className="w-full py-12 md:py-24 lg:py-32 scroll-section">
@@ -412,6 +419,7 @@ export default function Home() {
   return (
     <div className="w-full">
       <Hero />
+      <TagsSection />
       <WebStoriesSection />
       <BlogSection />
       <FaqSection />
