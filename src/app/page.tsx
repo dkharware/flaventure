@@ -47,7 +47,7 @@ async function WebStoriesSection() {
             >
               <CarouselContent>
                 {articles.map((article: any) => (
-                  <CarouselItem key={article.id} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={article.id} className="basis-2/5 md:basis-1/2 lg:basis-1/3">
                      <Link href={`/blog/${article.handle}`} className="block group">
                         <div className="relative aspect-[4/5] w-full h-auto rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
                            {article.image && (
