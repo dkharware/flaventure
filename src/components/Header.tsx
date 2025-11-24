@@ -1,7 +1,7 @@
 
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Newspaper, Phone, Menu, Search } from 'lucide-react';
 import {
@@ -28,20 +28,36 @@ import { ListItem } from './ListItem';
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { Input } from './ui/input';
+import { LiveSearch } from './LiveSearch';
 
 export default function Header() {
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchWrapperRef = useRef<HTMLDivElement>(null);
 
-  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+  const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const searchQuery = formData.get('search') as string;
     if (searchQuery.trim()) {
         router.push(`/blog?query=${encodeURIComponent(searchQuery.trim())}`);
+        setSearchQuery('');
+        setIsSearchFocused(false);
     } else {
         router.push('/blog');
     }
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchWrapperRef.current && !searchWrapperRef.current.contains(event.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
 
   return (
@@ -58,19 +74,28 @@ export default function Header() {
           </Link>
         </div>
 
-        <div className="md:hidden flex-grow max-w-xs">
-          <form onSubmit={handleSearch} className="relative w-full">
+        <div className="md:hidden flex-grow max-w-xs relative" ref={searchWrapperRef}>
+          <form onSubmit={handleSearchSubmit} className="relative w-full">
               <Input 
                 type="search" 
                 name="search"
                 placeholder="Search articles..." 
                 className="h-9 pr-9 text-xs rounded-full bg-muted border-none focus-visible:ring-2 focus-visible:ring-ring"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
               />
               <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-9 w-9 rounded-full">
                 <Search className="h-4 w-4" />
                 <span className="sr-only">Search</span>
               </Button>
           </form>
+          {isSearchFocused && searchQuery && (
+             <LiveSearch 
+                query={searchQuery} 
+                onClose={() => setIsSearchFocused(false)} 
+             />
+          )}
         </div>
 
         <div className="hidden md:flex flex-1 justify-center">

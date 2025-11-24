@@ -185,3 +185,12 @@ export async function getRelatedArticles(handle: string, tags: string[]) {
     const { articles } = await getArticles(4, query);
     return articles.filter((a: any) => a.handle !== handle).slice(0, 3);
 }
+
+export async function getArticleSuggestions(searchTerm: string) {
+    if (!searchTerm) {
+        return [];
+    }
+    const query = `title:*${searchTerm}* OR body:*${searchTerm}*`;
+    const { articles } = await getArticles(5, query);
+    return articles;
+}
