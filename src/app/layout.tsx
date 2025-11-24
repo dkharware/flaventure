@@ -26,23 +26,26 @@ const siteUrl = 'https://easyfreecv.com';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'easyfreecv: A Modern Blog',
+    default: 'Expert Shopify & Resume Blog | Tips, Guides, & News | easyfreecv',
     template: '%s | easyfreecv',
   },
-  description: 'A modern, stylish blog powered by Shopify and Next.js.',
+  description: 'Your go-to source for expert articles on Shopify development, headless commerce, and career advice. Get the latest insights on resume building, theme development, and the Storefront API.',
   keywords: [
-    'blog', 
-    'tech blog',
-    'shopify blog',
-    'next.js blog',
+    'Shopify blog', 
+    'resume advice',
+    'career development',
+    'Shopify development',
+    'headless commerce',
+    'Storefront API',
+    'Next.js blog',
     'easyfreecv'
   ],
   authors: [{ name: 'easyfreecv', url: siteUrl }],
   creator: 'easyfreecv',
   publisher: 'easyfreecv',
   openGraph: {
-    title: 'easyfreecv: A Modern Blog',
-    description: 'A modern, stylish blog powered by Shopify and Next.js.',
+    title: 'Expert Shopify & Resume Blog | easyfreecv',
+    description: 'Your go-to source for expert articles on Shopify development, headless commerce, and career advice.',
     url: siteUrl,
     siteName: 'easyfreecv',
     images: [
@@ -58,8 +61,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'easyfreecv: A Modern Blog',
-    description: 'A modern, stylish blog powered by Shopify and Next.js.',
+    title: 'Expert Shopify & Resume Blog | easyfreecv',
+    description: 'Your go-to source for expert articles on Shopify development, headless commerce, and career advice.',
     images: ['/og-image.png'], // Assuming you'll add an og-image.png to your public folder
   },
   icons: {
