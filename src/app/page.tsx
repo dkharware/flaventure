@@ -1,4 +1,6 @@
 
+'use client';
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -10,6 +12,11 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getArticles } from '@/lib/shopify';
 import { format } from 'date-fns';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const categories: { name: string; icon: React.FC<LucideProps>; bgColor: string; iconColor: string; borderColor: string; }[] = [
   { name: 'Modern', icon: Briefcase, bgColor: 'bg-blue-100/50', iconColor: 'text-blue-600', borderColor: 'border-blue-200' },
@@ -82,15 +89,19 @@ const faqs = [
   },
 ];
 
-async function BlogSection() {
-    const articles = await getArticles(3);
+function BlogSection() {
+    const [articles, setArticles] = React.useState<any[]>([]);
+
+    React.useEffect(() => {
+        getArticles(3).then(setArticles);
+    }, []);
 
     if (!articles || articles.length === 0) {
         return null;
     }
 
     return (
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/20">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/20 scroll-section">
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
@@ -139,13 +150,32 @@ async function BlogSection() {
 }
 
 export default function Home() {
+
+  useGSAP(() => {
+    const sections = gsap.utils.toArray('.scroll-section');
+    sections.forEach((section: any) => {
+      gsap.from(section.children, {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+        },
+      });
+    });
+  }, []);
+
+
   return (
     <div className="w-full">
       {/* Hero Section */}
       <HeroBanner />
 
       {/* Categories Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white scroll-section">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -176,7 +206,7 @@ export default function Home() {
       <BlogSection />
 
       {/* Testimonials Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white scroll-section">
         <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline tracking-tighter text-center sm:text-4xl">Loved by Professionals Worldwide</h2>
           <p className="mx-auto max-w-[700px] text-center text-muted-foreground md:text-xl/relaxed mt-2">
@@ -216,7 +246,7 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-white scroll-section">
         <div className="container px-4 md:px-6">
           <h2 className="text-3xl font-bold font-headline tracking-tighter text-center sm:text-4xl">Frequently Asked Questions</h2>
           <div className="mx-auto mt-8 max-w-3xl">

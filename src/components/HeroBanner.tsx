@@ -4,8 +4,20 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, FileText, Briefcase, Star, Palette } from 'lucide-react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 
 export function HeroBanner() {
+  useGSAP(() => {
+    gsap.from('.hero-element', {
+      duration: 1,
+      opacity: 0,
+      y: 50,
+      stagger: 0.2,
+      ease: 'power3.out',
+    });
+  }, []);
+
   return (
     <section className="relative w-full py-20 md:py-32 lg:py-40 bg-background overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -22,13 +34,13 @@ export function HeroBanner() {
         </div>
         <div className="container px-6 md:px-10 relative z-10">
             <div className="flex flex-col items-center justify-center space-y-6 text-center">
-                <h1 className="text-4xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none text-foreground">
+                <h1 className="text-4xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none text-foreground hero-element">
                 Create Your Free Resume & CV, Fast.
                 </h1>
-                <p className="max-w-[700px] text-muted-foreground md:text-xl">
+                <p className="max-w-[700px] text-muted-foreground md:text-xl hero-element">
                 Choose from professional templates, get AI-powered suggestions for your CV or CV letter, and land your dream job. It's easy and free.
                 </p>
-                <div className="flex flex-col gap-4 sm:flex-row">
+                <div className="flex flex-col gap-4 sm:flex-row hero-element">
                 <Button asChild size="lg" variant="default">
                     <Link href="/templates">
                     Create Your Free Resume Now <ArrowRight className="ml-2 h-5 w-5" />
