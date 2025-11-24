@@ -16,7 +16,7 @@ import { ChatWidget } from '@/components/ChatWidget';
 import { MobileNav } from '@/components/MobileNav';
 import { ChatProvider } from '@/context/ChatContext';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
+const siteUrl = 'https://easyfreecv.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
