@@ -59,12 +59,17 @@ const ArticleFragment = gql`
 `;
 
 const ARTICLES_QUERY = gql`
-  query GetArticles($first: Int!, $query: String) {
-    articles(first: $first, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
+  query GetArticles($first: Int, $last: Int, $before: String, $after: String, $query: String) {
+    articles(first: $first, last: $last, before: $before, after: $after, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
       edges {
+        cursor
         node {
           ...ArticleFragment
         }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
       }
     }
   }
@@ -95,12 +100,40 @@ const ALL_TAGS_QUERY = gql`
   }
 `;
 
-export async function getArticles(count: number = 10, query?: string) {
-    const response = await shopifyFetch(ARTICLES_QUERY, { first: count, query });
-    if (!response.data?.articles?.edges) {
-        return [];
+export async function getArticles(
+    count: number = 10, 
+    query?: string, 
+    pagination: { before?: string; after?: string } = {}
+) {
+    const isPagingBackwards = !!pagination.before;
+
+    const variables: Record<string, any> = {
+        query: query || null,
+    };
+    if (isPagingBackwards) {
+        variables.last = count;
+        variables.before = pagination.before;
+    } else {
+        variables.first = count;
+        variables.after = pagination.after;
     }
-    return response.data.articles.edges.map((edge: any) => edge.node);
+
+    const response = await shopifyFetch(ARTICLES_QUERY, variables);
+    
+    if (!response.data?.articles?.edges) {
+        return { articles: [], pageInfo: { hasNextPage: false, hasPreviousPage: false } };
+    }
+
+    const articles = response.data.articles.edges.map((edge: any) => edge.node);
+    
+    // The cursors are on the edges, but we need them for the whole page.
+    const pageInfo = {
+        ...response.data.articles.pageInfo,
+        startCursor: response.data.articles.edges[0]?.cursor,
+        endCursor: response.data.articles.edges[response.data.articles.edges.length - 1]?.cursor,
+    };
+
+    return { articles, pageInfo };
 }
 
 export async function getArticleByHandle(handle: string) {
@@ -125,10 +158,10 @@ export async function getAllTags() {
 
 export async function getRelatedArticles(handle: string, tags: string[]) {
     if (tags.length === 0) {
-        const articles = await getArticles(4);
+        const { articles } = await getArticles(4);
         return articles.filter((a: any) => a.handle !== handle).slice(0, 3);
     }
     const query = tags.map(tag => `tag:'${tag}'`).join(' OR ');
-    const articles = await getArticles(4, query);
+    const { articles } = await getArticles(4, query);
     return articles.filter((a: any) => a.handle !== handle).slice(0, 3);
 }

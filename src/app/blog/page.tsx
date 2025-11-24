@@ -14,6 +14,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTr
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { Pagination } from '@/components/Pagination';
 
 export const metadata: Metadata = {
   title: 'Blog | easyfreecv',
@@ -24,12 +25,18 @@ interface BlogPageProps {
     searchParams?: {
         query?: string;
         tag?: string;
+        before?: string;
+        after?: string;
     };
 }
+
+const POSTS_PER_PAGE = 12;
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const searchQuery = searchParams?.query;
   const tagQuery = searchParams?.tag;
+  const before = searchParams?.before;
+  const after = searchParams?.after;
   
   let query;
   if (searchQuery) {
@@ -38,15 +45,15 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     query = `tag:'${tagQuery}'`;
   }
 
-  const articles = await getArticles(20, query);
+  const { articles, pageInfo } = await getArticles(POSTS_PER_PAGE, query, { before, after });
   const allTags = await getAllTags();
-  const recentPosts = await getArticles(5);
+  const { articles: recentPosts } = await getArticles(5);
 
   const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Resume & Career Advice Blog");
   const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on resume building, career advice, and industry trends.";
 
-  const featuredArticle = articles && articles.length > 0 ? articles[0] : null;
-  const otherArticles = articles && articles.length > 1 ? articles.slice(1) : [];
+  const featuredArticle = articles && articles.length > 0 && !before && !after && !searchQuery && !tagQuery ? articles[0] : null;
+  const otherArticles = articles && articles.length > 0 ? (featuredArticle ? articles.slice(1) : articles) : [];
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -88,7 +95,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
                 {articles && articles.length > 0 ? (
                     <div className="space-y-12">
-                      {featuredArticle && !searchQuery && !tagQuery && (
+                      {featuredArticle && (
                          <Link key={featuredArticle.id} href={`/blog/${featuredArticle.handle}`} className="block group md:block hidden">
                             <Card className="h-full flex flex-col md:flex-row overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                                 {featuredArticle.image && (
@@ -124,8 +131,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                         </Link>
                       )}
 
-                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-                        {(searchQuery || tagQuery || !featuredArticle ? articles : otherArticles).map((article: any) => (
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                        {otherArticles.map((article: any) => (
                             <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
                             <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                                 {article.image && (
@@ -159,6 +166,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                             </Link>
                         ))}
                       </div>
+                      <Pagination pageInfo={pageInfo} />
                     </div>
                 ) : (
                     <div className="text-center py-16 border rounded-lg bg-muted/20">
