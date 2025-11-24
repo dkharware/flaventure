@@ -51,8 +51,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <div className="lg:hidden fixed bottom-24 right-6 z-40">
             <Sheet>
                 <SheetTrigger asChild>
-                    <Button size="icon" className="rounded-full shadow-lg w-14 h-14">
-                        <SlidersHorizontal className="h-6 w-6" />
+                    <Button size="icon" className="rounded-full shadow-lg">
+                        <SlidersHorizontal className="h-5 w-5" />
                         <span className="sr-only">Open Filters</span>
                     </Button>
                 </SheetTrigger>
