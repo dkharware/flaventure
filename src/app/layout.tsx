@@ -80,8 +80,30 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "easyfreecv",
+    "url": siteUrl,
+    "description": metadata.description,
+    "publisher": {
+      "@type": "Organization",
+      "name": "easyfreecv",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/easyfreecv.webp"
+      }
+    }
+  };
+
   return (
     <html lang="en" suppressHydrationWarning className={`${poppins.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      </head>
       <body className="font-body antialiased">
           <LoaderProvider>
             <ChatProvider>
