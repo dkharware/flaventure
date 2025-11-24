@@ -84,7 +84,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 {articles && articles.length > 0 ? (
                     <div className="space-y-12">
                       {featuredArticle && !searchQuery && !tagQuery && (
-                         <Link key={featuredArticle.id} href={`/blog/${featuredArticle.handle}`} className="block group">
+                         <Link key={featuredArticle.id} href={`/blog/${featuredArticle.handle}`} className="block group md:block hidden">
                             <Card className="h-full flex flex-col md:flex-row overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                                 {featuredArticle.image && (
                                 <div className="relative h-48 md:h-auto md:w-1/2 overflow-hidden">
@@ -120,11 +120,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                       )}
 
                       <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
-                        {(searchQuery || tagQuery ? articles : otherArticles).map((article: any) => (
+                        {(searchQuery || tagQuery || !featuredArticle ? articles : (featuredArticle && !searchQuery && !tagQuery ? [featuredArticle, ...otherArticles] : otherArticles)).map((article: any) => (
                             <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
                             <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                                 {article.image && (
-                                <div className="relative h-40 w-full overflow-hidden">
+                                <div className="relative h-32 w-full overflow-hidden">
                                     <Image
                                     src={article.image.url}
                                     alt={article.image.altText || article.title}
@@ -139,7 +139,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                 </div>
                                 )}
                                 <CardHeader>
-                                    <CardTitle className="text-lg font-headline group-hover:text-primary transition-colors line-clamp-3">{article.title}</CardTitle>
+                                    <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-3">{article.title}</CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex-grow flex flex-col">
                                     <div
