@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -28,7 +29,7 @@ export default function ContactPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="contact@easyfreecv.com" />
+              <Input id="email" type="email" placeholder="contact@example.com" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="message">Message</Label>

@@ -1,3 +1,4 @@
+
 'use client';
 import { useActionState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -38,7 +39,7 @@ export default function SignupPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" placeholder="contact@easyfreecv.com" required />
+              <Input id="email" name="email" type="email" placeholder="contact@example.com" required />
               {state?.errors?.email && <p className="text-sm text-destructive">{state.errors.email.join(', ')}</p>}
             </div>
             <div className="space-y-2">

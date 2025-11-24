@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import sitemap from '../sitemap';
@@ -16,7 +17,7 @@ export default function SitemapPage() {
             {routes.map((route) => (
               <li key={route.url}>
                 <Link href={route.url} className="text-primary hover:underline">
-                  {route.url.replace('https://easyfreecv.com', '')}
+                  {new URL(route.url).pathname}
                 </Link>
               </li>
             ))}

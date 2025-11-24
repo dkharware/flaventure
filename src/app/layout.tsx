@@ -14,7 +14,7 @@ import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
 import { ChatWidget } from '@/components/ChatWidget';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
