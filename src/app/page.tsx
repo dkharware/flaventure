@@ -188,7 +188,7 @@ const faqData = [
         ]
     },
     {
-        category: "Shopify Theme Development",
+        category: "Theme & App",
         questions: [
             {
                 question: "What is Liquid?",
@@ -315,7 +315,7 @@ const faqData = [
                 answer: "The Headless channel is an app you can install in your Shopify admin. It provides a central place to manage your Storefront API access tokens and configure settings for your custom storefront."
             },
             {
-_question: "Can I still use Shopify Payments with a headless store?",
+                _question: "Can I still use Shopify Payments with a headless store?",
                 answer: "Yes. With a headless setup, you use the Storefront API to build a checkout and then redirect the customer to the Shopify checkout URL. They complete their payment on Shopify's secure, hosted checkout page, so you can use Shopify Payments."
             },
             {
