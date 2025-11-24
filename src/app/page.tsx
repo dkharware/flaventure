@@ -76,8 +76,8 @@ async function WebStoriesSection() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="bg-foreground text-background md:bg-transparent md:text-foreground" />
-              <CarouselNext className="bg-foreground text-background md:bg-transparent md:text-foreground" />
+              <CarouselPrevious className="h-8 w-8 bg-foreground text-background -left-4 md:bg-transparent md:text-foreground md:-left-12" />
+              <CarouselNext className="h-8 w-8 bg-foreground text-background -right-4 md:bg-transparent md:text-foreground md:-right-12" />
             </Carousel>
           </div>
         </div>
@@ -142,8 +142,8 @@ async function BlogSection() {
                            </CarouselItem>
                         ))}
                       </CarouselContent>
-                      <CarouselPrevious className="bg-foreground text-background md:bg-transparent md:text-foreground" />
-                      <CarouselNext className="bg-foreground text-background md:bg-transparent md:text-foreground" />
+                      <CarouselPrevious className="h-8 w-8 bg-foreground text-background -left-4 md:bg-transparent md:text-foreground md:-left-12" />
+                      <CarouselNext className="h-8 w-8 bg-foreground text-background -right-4 md:bg-transparent md:text-foreground md:-right-12" />
                     </Carousel>
                 </div>
                  <div className="text-center mt-12">
@@ -430,4 +430,5 @@ export default function Home() {
     
 
     
+
 
