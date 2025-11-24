@@ -59,8 +59,8 @@ async function WebStoriesSection() {
                               />
                            )}
                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                           <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end h-full">
-                              <h3 className="text-white font-bold text-xl leading-tight drop-shadow-md line-clamp-2">{article.title}</h3>
+                           <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 flex flex-col justify-end h-full">
+                              <h3 className="text-white font-bold text-lg md:text-xl leading-tight drop-shadow-md line-clamp-2">{article.title}</h3>
                               <div
                                 className="text-white/80 text-sm mt-2 line-clamp-2"
                                 dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
