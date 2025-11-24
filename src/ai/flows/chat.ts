@@ -54,16 +54,19 @@ const chatFlow = ai.defineFlow(
   },
   async (promptContent) => {
     const llmResponse = await ai.generate({
-      prompt: `You are a blog search assistant. Your ONLY job is to use the 'searchBlogArticles' tool with the user's query.
-
-      **CRITICAL INSTRUCTIONS:**
-      1.  If the tool finds articles, you **MUST** respond with ONLY a list of the articles in markdown link format (e.g., "[Article Title](/blog/article-handle)"). Do not add any other text, explanation, or conversation.
-      2.  If the tool returns no articles, you **MUST** respond with only this exact phrase: "No relevant articles found for that topic."
-      
-      User's query: "${promptContent}"
-      `,
+      prompt: `${promptContent}`,
+      tools: [searchBlogArticles],
     });
 
-    return llmResponse.text;
+    const toolResponse = llmResponse.toolRequest?.toolResponse;
+
+    if (toolResponse && toolResponse.length > 0 && toolResponse[0].output) {
+      const articles = toolResponse[0].output as { title: string; handle: string }[];
+      if (articles.length > 0) {
+        return articles.map(article => `[${article.title}](/blog/${article.handle})`).join('\n');
+      }
+    }
+
+    return "No relevant articles found for that topic.";
   }
 );
