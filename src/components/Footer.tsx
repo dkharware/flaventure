@@ -41,7 +41,7 @@ export default function Footer() {
               <Link href="#" aria-label="GitHub" className="hover:text-primary transition-all hover:-translate-y-1 block"><Github size={20} /></Link>
               <Link href="#" aria-label="Twitter" className="hover:text-primary transition-all hover:-translate-y-1 block"><Twitter size={20} /></Link>
               <Link href="#" aria-label="LinkedIn" className="hover:text-primary transition-all hover:-translate-y-1 block"><Linkedin size={20} /></Link>
-              <Link href="https://in.pinterest.com/easyfreecv/_pins/" aria-label="Pinterest" className="hover:text-primary transition-all hover:-translate-y-1 block">
+              <Link href="https://in.pinterest.com/easyfreecv/" aria-label="Pinterest" className="hover:text-primary transition-all hover:-translate-y-1 block">
                 <svg
                     width="20"
                     height="20"
