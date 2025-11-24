@@ -64,7 +64,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <div className="container mx-auto py-12 px-4 md:px-6">
-       <div className="lg:hidden fixed bottom-24 right-6 z-40">
+       <div className="lg:hidden fixed bottom-24 right-4 z-40">
           <Sheet>
               <SheetTrigger asChild>
                   <Button size="icon" className="rounded-full shadow-lg">
