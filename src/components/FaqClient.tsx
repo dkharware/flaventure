@@ -7,7 +7,6 @@ import {
     AccordionItem,
     AccordionTrigger,
   } from "@/components/ui/accordion";
-import { Button } from './ui/button';
 import {
   Carousel,
   CarouselContent,
@@ -15,7 +14,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card } from './ui/card';
+import { Card, CardContent } from './ui/card';
+import { cn } from '@/lib/utils';
+import { Briefcase, Code, FileText, GraduationCap, ShoppingCart } from 'lucide-react';
 
 interface Faq {
     question: string;
@@ -31,16 +32,23 @@ interface FaqClientProps {
     faqData: FaqCategory[];
 }
 
+const categoryIcons: { [key: string]: React.ReactNode } = {
+    "Shopify": <ShoppingCart className="h-6 w-6" />,
+    "Theme & App": <Code className="h-6 w-6" />,
+    "Storefront API": <FileText className="h-6 w-6" />,
+    "Headless Shopify": <Briefcase className="h-6 w-6" />,
+    "Resume and CV": <GraduationCap className="h-6 w-6" />,
+};
+
 export function FaqClient({ faqData }: FaqClientProps) {
     const [activeCategory, setActiveCategory] = React.useState(faqData[0].category);
     const activeFaqs = faqData.find(c => c.category === activeCategory)?.questions || [];
   
       return (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-1">
-                {/* Mobile view: Carousel */}
                 <div className="md:hidden -mx-4">
-                    <Carousel
+                     <Carousel
                         opts={{
                             align: "start",
                             dragFree: true,
@@ -49,40 +57,51 @@ export function FaqClient({ faqData }: FaqClientProps) {
                     >
                         <CarouselContent className="px-4">
                             {faqData.map(item => (
-                                <CarouselItem key={item.category} className="basis-auto">
-                                     <Button 
-                                        variant={activeCategory === item.category ? 'default' : 'outline'}
+                                <CarouselItem key={item.category} className="basis-auto pr-2">
+                                     <Card 
                                         onClick={() => setActiveCategory(item.category)}
-                                        className="w-full justify-start"
+                                        className={cn(
+                                            'cursor-pointer transition-all p-4 flex items-center gap-3',
+                                            activeCategory === item.category ? 'bg-primary text-primary-foreground shadow-lg' : 'bg-muted/50 hover:bg-muted'
+                                        )}
                                     >
-                                        {item.category}
-                                    </Button>
+                                        <div className={cn('transition-colors', activeCategory === item.category ? 'text-primary-foreground' : 'text-primary')}>
+                                            {categoryIcons[item.category]}
+                                        </div>
+                                        <h4 className="font-semibold text-sm">{item.category}</h4>
+                                    </Card>
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
                     </Carousel>
                 </div>
                 
-                {/* Desktop view: Vertical buttons */}
-                <div className="hidden md:flex md:flex-col md:gap-2">
+                <div className="hidden md:flex md:flex-col md:gap-3">
                     {faqData.map(item => (
-                        <Button 
+                        <Card 
                             key={item.category}
-                            variant={activeCategory === item.category ? 'default' : 'outline'}
                             onClick={() => setActiveCategory(item.category)}
-                            className="w-full justify-start"
+                            className={cn(
+                                'cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5',
+                                activeCategory === item.category ? 'bg-primary text-primary-foreground shadow-lg' : 'bg-card hover:bg-muted'
+                            )}
                         >
-                            {item.category}
-                        </Button>
+                           <CardContent className="p-4 flex items-center gap-4">
+                                <div className={cn('transition-colors', activeCategory === item.category ? 'text-primary-foreground' : 'text-primary')}>
+                                    {categoryIcons[item.category]}
+                                </div>
+                                <h4 className="font-semibold">{item.category}</h4>
+                           </CardContent>
+                        </Card>
                     ))}
                 </div>
             </div>
-            <div className="md:col-span-3 mt-4 md:mt-0">
+            <div className="md:col-span-2 mt-4 md:mt-0">
                 <Accordion type="single" collapsible className="w-full" defaultValue={activeFaqs[0]?.question}>
                     {activeFaqs.map((faq) => (
                         <AccordionItem value={faq.question} key={faq.question}>
-                            <AccordionTrigger>{faq.question}</AccordionTrigger>
-                            <AccordionContent>{faq.answer}</AccordionContent>
+                            <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                            <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
                         </AccordionItem>
                     ))}
                 </Accordion>
