@@ -87,14 +87,14 @@ export function ChatWidget() {
 
   return (
     <>
-      <div className={cn("hidden md:block fixed bottom-6 right-6 z-50 transition-all duration-300", isChatOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100')}>
-        <Button size="icon" onClick={toggleOpen} className="w-16 h-16 rounded-full shadow-lg">
-          <MessageSquare className="w-8 h-8" />
+      <div className={cn("hidden md:block fixed bottom-4 right-4 z-50 transition-all duration-300", isChatOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100')}>
+        <Button size="icon" onClick={toggleOpen} className="w-14 h-14 rounded-full shadow-lg">
+          <MessageSquare className="w-7 h-7" />
         </Button>
       </div>
 
       <div className={cn(
-        "fixed bottom-6 right-6 z-50 transition-all duration-300 ease-in-out",
+        "fixed bottom-4 right-4 z-50 transition-all duration-300 ease-in-out",
         isChatOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
       )}>
         <Card className="w-[350px] h-[500px] flex flex-col shadow-2xl rounded-2xl">

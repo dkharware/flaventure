@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -15,18 +16,18 @@ const navItems = [
 
 export function MobileNav() {
   const pathname = usePathname();
-  const { toggleChat } = useChat();
+  const { toggleChat, isChatOpen } = useChat();
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-background border-t z-50">
       <nav className="h-full">
-        <ul className="h-full flex justify-around items-center">
+        <ul className="h-full grid grid-cols-4 items-center">
           {navItems.map(({ href, label, icon: Icon }) => (
             <li key={href} className="h-full">
               <Link
                 href={href}
                 className={cn(
-                  'h-full flex flex-col items-center justify-center text-xs w-16 transition-colors',
+                  'h-full flex flex-col items-center justify-center text-xs w-full transition-colors',
                   pathname === href ? 'text-primary' : 'text-muted-foreground hover:text-primary'
                 )}
               >
@@ -38,7 +39,10 @@ export function MobileNav() {
            <li className="h-full">
               <button
                 onClick={toggleChat}
-                className='h-full flex flex-col items-center justify-center text-xs w-16 transition-colors text-muted-foreground hover:text-primary'
+                className={cn(
+                    'h-full flex flex-col items-center justify-center text-xs w-full transition-colors',
+                    isChatOpen ? 'text-primary' : 'text-muted-foreground hover:text-primary'
+                )}
               >
                 <MessageSquare className="w-5 h-5 mb-0.5" />
                 <span>Chat</span>
