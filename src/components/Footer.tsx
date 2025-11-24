@@ -1,10 +1,11 @@
+
 import Link from 'next/link';
 import { Github, Twitter, Linkedin } from 'lucide-react';
 import { Logo } from './Logo';
 
 export default function Footer() {
   return (
-    <footer className="bg-muted text-muted-foreground">
+    <footer className="bg-background text-muted-foreground border-t">
       <div className="container mx-auto py-12 px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
