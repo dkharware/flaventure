@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { ClipboardCopy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import ReactDOM from 'react-dom';
+import React from 'react';
 
 const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
   const [isCopied, setIsCopied] = React.useState(false);
@@ -80,7 +81,7 @@ export function ArticleContent({ content }: { content: string }) {
   return (
     <div
       ref={contentRef}
-      className="prose prose-lg dark:prose-invert max-w-none mx-auto"
+      className="prose md:prose-lg dark:prose-invert max-w-none mx-auto"
       dangerouslySetInnerHTML={{ __html: content }}
     />
   );

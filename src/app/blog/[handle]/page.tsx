@@ -63,7 +63,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const relatedArticles = await getRelatedArticles(article.handle, article.tags);
 
   return (
-    <div className="container mx-auto py-12 px-6 md:px-10">
+    <div className="container mx-auto py-12 px-4 md:px-6">
        <div className="lg:hidden fixed bottom-24 right-6 z-40">
           <Sheet>
               <SheetTrigger asChild>
