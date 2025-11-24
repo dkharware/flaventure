@@ -14,6 +14,7 @@ import { ChatWidget } from '@/components/ChatWidget';
 import { MobileNav } from '@/components/MobileNav';
 import { ChatProvider } from '@/context/ChatContext';
 import { GoogleAd } from '@/components/GoogleAd';
+import { CookieConsent } from '@/components/CookieConsent';
 
 const readexPro = Readex_Pro({
   subsets: ['latin'],
@@ -122,6 +123,7 @@ export default async function RootLayout({
                 <NavigationEvents />
               </Suspense>
               <ChatWidget />
+              <CookieConsent />
             </ChatProvider>
           </LoaderProvider>
         <SpeedInsights />
