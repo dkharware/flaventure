@@ -17,14 +17,14 @@ interface BlogTagsProps {
 }
 
 const gradients = [
-    'bg-gradient-to-br from-purple-500 to-indigo-600',
-    'bg-gradient-to-br from-green-400 to-blue-500',
-    'bg-gradient-to-br from-pink-500 to-rose-500',
-    'bg-gradient-to-br from-orange-400 to-red-500',
-    'bg-gradient-to-br from-teal-400 to-cyan-500',
-    'bg-gradient-to-br from-yellow-400 to-amber-500',
-    'bg-gradient-to-br from-lime-400 to-green-500',
-    'bg-gradient-to-br from-fuchsia-500 to-pink-600',
+    'bg-gradient-to-br from-purple-200 to-indigo-300',
+    'bg-gradient-to-br from-green-200 to-blue-300',
+    'bg-gradient-to-br from-pink-200 to-rose-300',
+    'bg-gradient-to-br from-orange-200 to-red-300',
+    'bg-gradient-to-br from-teal-200 to-cyan-300',
+    'bg-gradient-to-br from-yellow-200 to-amber-300',
+    'bg-gradient-to-br from-lime-200 to-green-300',
+    'bg-gradient-to-br from-fuchsia-200 to-pink-300',
 ];
 
 // Fisher-Yates shuffle algorithm
@@ -79,7 +79,7 @@ export function BlogTags({ tags }: BlogTagsProps) {
                                             "relative aspect-[3/1] w-full rounded-lg overflow-hidden shadow-md transition-transform duration-300 group-hover:scale-105 flex items-center justify-center p-2",
                                             gradients[index % gradients.length]
                                         )}>
-                                            <h3 className="text-white font-semibold text-base md:text-lg drop-shadow-md text-center">#{tag}</h3>
+                                            <h3 className="text-foreground font-semibold text-base md:text-lg drop-shadow-sm text-center">#{tag}</h3>
                                         </div>
                                     </Link>
                                 </CarouselItem>
