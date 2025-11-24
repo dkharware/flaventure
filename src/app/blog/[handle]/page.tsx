@@ -13,6 +13,7 @@ import { ArticleContent } from '@/components/ArticleContent';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { SlidersHorizontal } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -72,9 +73,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </Button>
               </SheetTrigger>
               <SheetContent>
+                <ScrollArea className="h-full pr-6">
                   <Suspense fallback={<div>Loading sidebar...</div>}>
                       <BlogSidebar tags={allTags} recentPosts={recentPosts} />
                   </Suspense>
+                </ScrollArea>
               </SheetContent>
           </Sheet>
       </div>

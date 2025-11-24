@@ -11,6 +11,7 @@ import { ArrowRight, SlidersHorizontal } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export const metadata: Metadata = {
   title: 'Blog | easyfreecv',
@@ -56,9 +57,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                     </Button>
                 </SheetTrigger>
                 <SheetContent>
+                  <ScrollArea className="h-full pr-6">
                     <Suspense fallback={<div>Loading sidebar...</div>}>
                         <BlogSidebar tags={allTags} recentPosts={recentPosts} />
                     </Suspense>
+                  </ScrollArea>
                 </SheetContent>
             </Sheet>
         </div>
