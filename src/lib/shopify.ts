@@ -2,15 +2,20 @@
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   let endpoint = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  const apiVersion = '2024-04'; // Or your desired API version
 
   if (!endpoint || !accessToken) {
     console.warn("Shopify API credentials are not configured. Blog posts will not be loaded.");
     return { data: null, errors: [{ message: `Shopify API credentials are not configured.` }] };
   }
 
-  // Ensure the endpoint is a full URL
+  // Ensure the endpoint is a full URL and points to the correct GraphQL path
   if (!endpoint.startsWith('https://')) {
     endpoint = `https://${endpoint}`;
+  }
+  
+  if (!endpoint.includes('/api/')) {
+    endpoint = `${endpoint.replace(/\/$/, '')}/api/${apiVersion}/graphql.json`;
   }
   
   try {
@@ -26,6 +31,11 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
 
     if (!response.ok) {
       const errorBody = await response.text();
+      // If the body is HTML, it's likely a misconfiguration error page.
+      if (errorBody.trim().startsWith('<!DOCTYPE html>')) {
+          console.error(`Shopify API request failed with status ${response.status} and returned an HTML page. Please check your endpoint and access token.`);
+          return { data: null, errors: [{ message: `Shopify API request returned an HTML page. Check your credentials.` }] };
+      }
       console.error(`Shopify API request failed with status ${response.status}:`, errorBody);
       return { data: null, errors: [{ message: `Shopify API request failed with status ${response.status}` }] };
     }
@@ -37,6 +47,10 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
 
     return jsonResponse;
   } catch (error) {
+    if (error instanceof SyntaxError) {
+        console.error("Failed to parse JSON response from Shopify. The endpoint might be incorrect and returned HTML instead of JSON.", error);
+        return { data: null, errors: [{ message: "Failed to parse JSON response. Check Shopify endpoint." }] };
+    }
     console.error("Failed to fetch from Shopify:", error);
     return { data: null, errors: [{ message: error instanceof Error ? error.message : "Unknown fetch error" }] };
   }
