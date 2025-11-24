@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'Blog | easyfreecv',
@@ -46,8 +47,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const featuredArticle = articles && articles.length > 0 ? articles[0] : null;
   const otherArticles = articles && articles.length > 1 ? articles.slice(1) : [];
 
+  const breadcrumbItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Blog' },
+  ];
+
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
+        <Breadcrumbs items={breadcrumbItems} />
         <div className="lg:hidden fixed bottom-24 right-4 z-40">
             <Sheet>
                 <SheetTrigger asChild>
@@ -67,7 +74,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
-                 <div className="mb-8">
+                 <div className="mb-8 pt-4">
                     <div>
                         <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
                         {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl">{pageDescription}</p>}

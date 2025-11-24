@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { SlidersHorizontal } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -62,6 +63,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const recentPosts = await getArticles(5);
   const relatedArticles = await getRelatedArticles(article.handle, article.tags);
 
+  const breadcrumbItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Blog', href: '/blog' },
+    { label: article.title },
+  ];
+
   return (
     <div className="container mx-auto py-12 px-4 md:px-6">
        <div className="lg:hidden fixed bottom-24 right-4 z-40">
@@ -84,7 +91,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
                 <article className="max-w-4xl mx-auto">
-                    <header className="mb-8 text-center">
+                    <Breadcrumbs items={breadcrumbItems} />
+                    <header className="mb-8 text-center pt-4">
                         <div className="mb-4 flex flex-wrap gap-2 justify-center">
                           {article.tags.map((tag: string) => (
                               <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
@@ -110,7 +118,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     </div>
                     )}
 
-                    <ArticleContent content={article.contentHtml} />
+                    <div className="prose md:prose-base dark:prose-invert max-w-none mx-auto">
+                      <ArticleContent content={article.contentHtml} />
+                    </div>
                 </article>
 
                 {relatedArticles.length > 0 && (
