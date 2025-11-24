@@ -86,7 +86,7 @@ async function WebStoriesSection() {
 
 
 async function BlogSection() {
-    const { articles } = await getArticles(6);
+    const { articles } = await getArticles(9);
 
     if (!articles || articles.length === 0) {
         return null;
@@ -103,31 +103,47 @@ async function BlogSection() {
                         </p>
                     </div>
                 </div>
-                <div className="mx-auto grid max-w-sm items-start gap-8 pt-12 sm:max-w-4xl sm:grid-cols-2 md:gap-12 lg:max-w-5xl lg:grid-cols-3">
-                    {articles.map((article: any) => (
-                         <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
-                            <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                                {article.image && (
-                                     <div className="relative h-48 w-full overflow-hidden">
-                                        <Image
-                                        src={article.image.url}
-                                        alt={article.image.altText || article.title}
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                        />
+                <div className="mx-auto max-w-5xl pt-12">
+                   <Carousel
+                      opts={{
+                        align: "start",
+                        loop: true,
+                      }}
+                      className="w-full"
+                    >
+                      <CarouselContent>
+                        {articles.map((article: any) => (
+                           <CarouselItem key={article.id} className="md:basis-1/2 lg:basis-1/3">
+                             <Link href={`/blog/${article.handle}`} className="block group h-full">
+                                <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                                    {article.image && (
+                                        <div className="relative h-48 w-full overflow-hidden">
+                                            <Image
+                                            src={article.image.url}
+                                            alt={article.image.altText || article.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                            />
+                                        </div>
+                                    )}
+                                    <div className="flex flex-col flex-grow">
+                                        <CardHeader>
+                                            <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
+                                        </CardHeader>
+                                        <CardContent className="flex-grow">
+                                            <p className="text-sm text-muted-foreground">
+                                                {format(new Date(article.publishedAt), 'PPP')}
+                                            </p>
+                                        </CardContent>
                                     </div>
-                                )}
-                                <CardHeader>
-                                    <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p className="text-sm text-muted-foreground">
-                                        {format(new Date(article.publishedAt), 'PPP')}
-                                    </p>
-                                </CardContent>
-                            </Card>
-                        </Link>
-                    ))}
+                                </Card>
+                            </Link>
+                           </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious className="hidden md:flex" />
+                      <CarouselNext className="hidden md:flex" />
+                    </Carousel>
                 </div>
                  <div className="text-center mt-12">
                     <Button asChild variant="outline">
@@ -402,3 +418,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
