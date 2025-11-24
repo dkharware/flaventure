@@ -109,7 +109,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                               </Link>
                           ))}
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">{article.title}</h1>
+                        <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4">{article.title}</h1>
                         <div className="text-muted-foreground text-sm flex items-center justify-center gap-4">
                             <p>{format(new Date(article.publishedAt), 'PPP')}</p>
                         </div>
