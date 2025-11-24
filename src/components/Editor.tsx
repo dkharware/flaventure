@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, createContext, useContext, useMemo } from 'react';
@@ -23,6 +24,14 @@ export const useResume = () => {
   return context;
 };
 
+export function ResumeProvider({ children, value }: { children: React.ReactNode, value: ResumeContextType }) {
+  return (
+    <ResumeContext.Provider value={value}>
+      {children}
+    </ResumeContext.Provider>
+  )
+}
+
 export default function Editor({ templateId }: { templateId: string }) {
   const [resumeData, setResumeData] = useState<ResumeData>(initialData);
 
@@ -33,13 +42,13 @@ export default function Editor({ templateId }: { templateId: string }) {
   }), [resumeData, setResumeData, templateId]);
 
   return (
-    <ResumeContext.Provider value={contextValue}>
+    <ResumeProvider value={contextValue}>
       <div className="grid grid-cols-1 md:grid-cols-[450px_1fr] xl:grid-cols-[500px_1fr] min-h-[calc(100vh-81px)]">
         <div className="bg-card border-r overflow-y-auto no-print" id="editor-form">
           <ResumeForm />
         </div>
         <ResumePreview />
       </div>
-    </ResumeContext.Provider>
+    </ResumeProvider>
   );
 }
