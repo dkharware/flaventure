@@ -48,7 +48,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
-        <div className="lg:hidden fixed bottom-6 right-6 z-40">
+        <div className="lg:hidden fixed bottom-24 right-6 z-40">
             <Sheet>
                 <SheetTrigger asChild>
                     <Button size="icon" className="rounded-full shadow-lg w-14 h-14">
