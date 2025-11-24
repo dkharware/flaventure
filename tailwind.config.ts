@@ -12,9 +12,13 @@ export default {
       center: true,
       screens: {
         '2xl': '80vw',
+        '3xl': '86vw',
       },
     },
     extend: {
+      screens: {
+        '3xl': '1800px',
+      },
       fontFamily: {
         body: ['PT Sans', 'sans-serif'],
         headline: ['Poppins', 'sans-serif'],
