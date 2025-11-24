@@ -1,5 +1,6 @@
 
 import type {Metadata} from 'next';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import Header from '@/components/Header';
@@ -12,6 +13,13 @@ import { Analytics } from "@vercel/analytics/next"
 import { ChatWidget } from '@/components/ChatWidget';
 import { MobileNav } from '@/components/MobileNav';
 import { ChatProvider } from '@/context/ChatContext';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-poppins',
+  weight: ['400', '500', '600', '700'],
+});
 
 const siteUrl = 'https://easyfreecv.com';
 
@@ -69,12 +77,7 @@ export default async function RootLayout({
 }>) {
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      </head>
+    <html lang="en" suppressHydrationWarning className={`${poppins.variable}`}>
       <body className="font-body antialiased">
           <LoaderProvider>
             <ChatProvider>
