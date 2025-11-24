@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Pagination } from '@/components/Pagination';
+import { BlogTags } from '@/components/BlogTags';
 
 export const metadata: Metadata = {
   title: 'Blog | easyfreecv',
@@ -84,15 +85,21 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 </SheetContent>
             </Sheet>
         </div>
+        <div className="mb-8 pt-4">
+            <div>
+                <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
+                {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl">{pageDescription}</p>}
+            </div>
+        </div>
+
+        {allTags && allTags.length > 0 && !searchQuery && !tagQuery && (
+          <div className="mb-12">
+            <BlogTags tags={allTags} />
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
-                 <div className="mb-8 pt-4">
-                    <div>
-                        <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
-                        {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl">{pageDescription}</p>}
-                    </div>
-                </div>
-
                 {articles && articles.length > 0 ? (
                     <div className="space-y-12">
                       {featuredArticle && (
@@ -178,7 +185,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                     </div>
                 )}
             </main>
-            <aside className="lg:col-span-1 lg:mt-24 hidden lg:block">
+            <aside className="lg:col-span-1 lg:mt-0 hidden lg:block">
                 <Suspense fallback={<div>Loading sidebar...</div>}>
                     <BlogSidebar tags={allTags} recentPosts={recentPosts} />
                 </Suspense>
