@@ -50,14 +50,14 @@ export function Hero() {
                       Unlock your potential with in-depth articles on Shopify development and career-defining resume strategies. Your go-to resource for expert tips and trends.
                     </p>
                     <div className="w-full max-w-lg hero-element">
-                      <form onSubmit={handleSearch} className="flex gap-2 bg-background/50 backdrop-blur-sm p-2 rounded-full border">
+                      <form onSubmit={handleSearch} className="flex gap-2 bg-card/50 backdrop-blur-sm p-2 rounded-full border">
                           <Input 
                             type="search" 
                             name="search"
                             placeholder="Search for articles on 'headless', 'themes', 'seo'..." 
                             className="flex-grow !bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                           />
-                          <Button type="submit" size="icon" variant="glow">
+                          <Button type="submit" size="icon" variant="glow" className="rounded-full">
                             <Search className="h-4 w-4" />
                             <span className="sr-only">Search</span>
                           </Button>
@@ -67,7 +67,7 @@ export function Hero() {
                     <Button asChild size="pill" variant="glow">
                         <Link href="/blog">
                          Explore All Articles
-                         <span className="ml-4 h-8 w-8 rounded-full bg-accent flex items-center justify-center text-primary group-hover:bg-primary-foreground transition-colors">
+                         <span className="ml-4 h-8 w-8 rounded-full bg-accent flex items-center justify-center text-accent-foreground group-hover:bg-primary-foreground group-hover:text-primary transition-colors">
                             <ArrowRight className="h-4 w-4" />
                          </span>
                         </Link>
