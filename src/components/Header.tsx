@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, ShoppingCart } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -128,6 +128,41 @@ export default function Header() {
                       </ListItem>
                        <ListItem href="/blog?tag=cv" title="CV Writing">
                         Guidance on writing a comprehensive Curriculum Vitae.
+                      </ListItem>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Shopify</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                      <li className="row-span-3">
+                        <NavigationMenuLink asChild>
+                          <a
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                            href="/blog?tag=Shopify"
+                          >
+                            <ShoppingCart className="h-6 w-6" />
+                            <div className="mb-2 mt-4 text-lg font-medium">
+                              Shopify Topics
+                            </div>
+                            <p className="text-sm leading-tight text-muted-foreground">
+                              Explore our deep dives into the Shopify ecosystem.
+                            </p>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+                      <ListItem href="/blog?query=headless" title="Headless">
+                        Learn about building custom storefronts with modern frameworks.
+                      </ListItem>
+                      <ListItem href="/blog?query=app%20bridge" title="App Bridge">
+                        Integrate your app seamlessly with the Shopify admin.
+                      </ListItem>
+                      <ListItem href="/blog?query=storefront%20api" title="Storefront API">
+                        Master the API for building unique shopping experiences.
+                      </ListItem>
+                      <ListItem href="/blog?query=theme%20development" title="Theme Development">
+                        Create beautiful and performant themes for Shopify.
                       </ListItem>
                     </ul>
                   </NavigationMenuContent>
