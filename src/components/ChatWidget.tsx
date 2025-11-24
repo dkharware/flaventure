@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { getChatResponse } from '@/app/actions/chat';
 import { ScrollArea } from './ui/scroll-area';
 import Link from 'next/link';
+import { useChat } from '@/context/ChatContext';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -39,15 +40,15 @@ const MarkdownContent = memo(({ content }: { content: string }) => {
 MarkdownContent.displayName = 'MarkdownContent';
 
 export function ChatWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isChatOpen, setIsChatOpen } = useChat();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const toggleOpen = () => {
-    setIsOpen(!isOpen);
-    if (!isOpen && messages.length === 0) {
+    setIsChatOpen(!isChatOpen);
+    if (!isChatOpen && messages.length === 0) {
       setMessages([
         { role: 'assistant', content: "Hello! I'm the easyfreecv assistant. How can I help you find an article?" }
       ]);
@@ -61,7 +62,7 @@ export function ChatWidget() {
             behavior: 'smooth'
         });
     }
-  }, [messages])
+  }, [messages]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,7 +87,7 @@ export function ChatWidget() {
 
   return (
     <>
-      <div className={cn("fixed bottom-6 right-6 z-50 transition-all duration-300", isOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100')}>
+      <div className={cn("hidden md:block fixed bottom-6 right-6 z-50 transition-all duration-300", isChatOpen ? 'opacity-0 scale-90' : 'opacity-100 scale-100')}>
         <Button size="icon" onClick={toggleOpen} className="w-16 h-16 rounded-full shadow-lg">
           <MessageSquare className="w-8 h-8" />
         </Button>
@@ -94,7 +95,7 @@ export function ChatWidget() {
 
       <div className={cn(
         "fixed bottom-6 right-6 z-50 transition-all duration-300 ease-in-out",
-        isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
+        isChatOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
       )}>
         <Card className="w-[350px] h-[500px] flex flex-col shadow-2xl rounded-2xl">
           <CardHeader className="flex flex-row items-center justify-between">

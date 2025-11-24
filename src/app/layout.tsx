@@ -14,6 +14,7 @@ import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
 import { ChatWidget } from '@/components/ChatWidget';
 import { MobileNav } from '@/components/MobileNav';
+import { ChatProvider } from '@/context/ChatContext';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
 
@@ -105,6 +106,7 @@ export default async function RootLayout({
       <body className="font-body antialiased">
         <AuthProvider value={authContextValue}>
           <LoaderProvider>
+            <ChatProvider>
               <div className="flex flex-col min-h-screen pb-16 md:pb-0">
                 <Header />
                 <main className="flex-grow">{children}</main>
@@ -115,9 +117,10 @@ export default async function RootLayout({
               <Suspense fallback={null}>
                 <NavigationEvents />
               </Suspense>
+              <ChatWidget />
+            </ChatProvider>
           </LoaderProvider>
         </AuthProvider>
-        <ChatWidget />
         <SpeedInsights />
         <Analytics />
       </body>
