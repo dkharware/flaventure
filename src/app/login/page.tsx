@@ -34,7 +34,7 @@ export default function LoginPage() {
           <form action={formAction} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" placeholder="contact@example.com" required />
+              <Input id="email" name="email" type="email" placeholder="contact@easyfreecv.com" required />
             </div>
             <div className="space-y-2">
               <div className="flex items-center">

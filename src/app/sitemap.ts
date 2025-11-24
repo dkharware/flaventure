@@ -2,7 +2,7 @@
 import { MetadataRoute } from 'next';
 import { templates } from './templates/page'; // Assuming templates are exported
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [

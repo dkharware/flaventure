@@ -14,10 +14,10 @@ import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
 import { ChatWidget } from '@/components/ChatWidget';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
 
 export const metadata: Metadata = {
-  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'easyfreecv: Free CV and Resume Builder',
     template: '%s | easyfreecv',
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     shortcut: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico',
     apple: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico',
   },
-  manifest: siteUrl ? `${siteUrl}/site.webmanifest` : '/site.webmanifest',
+  manifest: `${siteUrl}/site.webmanifest`,
 };
 
 export default async function RootLayout({
