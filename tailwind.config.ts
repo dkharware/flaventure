@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -19,8 +20,8 @@ export default {
         '3xl': '1800px',
       },
       fontFamily: {
-        body: ['var(--font-poppins)', 'sans-serif'],
-        headline: ['var(--font-poppins)', 'sans-serif'],
+        body: ['var(--font-readex-pro)', 'sans-serif'],
+        headline: ['var(--font-readex-pro)', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {

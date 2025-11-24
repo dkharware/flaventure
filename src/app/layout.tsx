@@ -1,6 +1,6 @@
 
 import type {Metadata} from 'next';
-import { Poppins } from 'next/font/google';
+import { Readex_Pro } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import Header from '@/components/Header';
@@ -15,10 +15,10 @@ import { MobileNav } from '@/components/MobileNav';
 import { ChatProvider } from '@/context/ChatContext';
 import { GoogleAd } from '@/components/GoogleAd';
 
-const poppins = Poppins({
+const readexPro = Readex_Pro({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-poppins',
+  variable: '--font-readex-pro',
   weight: ['400', '500', '600', '700'],
 });
 
@@ -97,7 +97,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${poppins.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${readexPro.variable}`}>
       <head>
         <script
           type="application/ld+json"
