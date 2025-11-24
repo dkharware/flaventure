@@ -1,11 +1,16 @@
 
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
-  const endpoint = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
+  let endpoint = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
   if (!endpoint || !accessToken) {
     console.warn("Shopify API credentials are not configured. Blog posts will not be loaded.");
     return { data: null, errors: [{ message: `Shopify API credentials are not configured.` }] };
+  }
+
+  // Ensure the endpoint is a full URL
+  if (!endpoint.startsWith('https://')) {
+    endpoint = `https://${endpoint}`;
   }
   
   try {
