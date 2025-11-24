@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Input } from '@/components/ui/input';
@@ -9,6 +10,7 @@ import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import type { FormEvent } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import Image from 'next/image';
 
 interface BlogSidebarProps {
   tags: string[];
@@ -89,9 +91,21 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
             <ul className="space-y-4">
               {recentPosts.map(post => (
                 <li key={post.id} className="border-b pb-4 last:border-b-0 last:pb-0">
-                  <Link href={`/blog/${post.handle}`} className="group">
-                    <p className="font-semibold group-hover:text-primary transition-colors">{post.title}</p>
-                    <p className="text-sm text-muted-foreground mt-1">{format(new Date(post.publishedAt), 'PPP')}</p>
+                  <Link href={`/blog/${post.handle}`} className="group flex items-center gap-4">
+                    {post.image && (
+                      <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-md">
+                        <Image 
+                          src={post.image.url}
+                          alt={post.image.altText || post.title}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+                    <div className="flex-grow">
+                      <p className="font-semibold group-hover:text-primary transition-colors line-clamp-2 text-sm">{post.title}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{format(new Date(post.publishedAt), 'PPP')}</p>
+                    </div>
                   </Link>
                 </li>
               ))}
