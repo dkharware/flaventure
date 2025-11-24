@@ -25,6 +25,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { Badge } from '@/components/ui/badge';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,9 +61,9 @@ function WebStoriesSection() {
             >
               <CarouselContent>
                 {articles.map((article: any) => (
-                  <CarouselItem key={article.id} className="md:basis-1/2 lg:basis-1/4">
+                  <CarouselItem key={article.id} className="md:basis-1/2 lg:basis-1/3">
                      <Link href={`/blog/${article.handle}`} className="block group">
-                        <div className="relative aspect-[9/16] w-full h-auto rounded-lg overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
+                        <div className="relative aspect-[4/5] w-full h-auto rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
                            {article.image && (
                               <Image
                                 src={article.image.url}
@@ -71,9 +72,18 @@ function WebStoriesSection() {
                                 className="object-cover"
                               />
                            )}
-                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                           <div className="absolute bottom-0 left-0 right-0 p-4">
-                              <h3 className="text-white font-bold text-lg leading-tight drop-shadow-md line-clamp-3">{article.title}</h3>
+                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                           <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end h-full">
+                              <h3 className="text-white font-bold text-2xl leading-tight drop-shadow-md line-clamp-3">{article.title}</h3>
+                              <div
+                                className="text-white/80 text-sm mt-2 line-clamp-2"
+                                dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
+                               />
+                               <div className="mt-4">
+                                  <Badge variant="secondary" className="bg-white/20 text-white backdrop-blur-sm border-none">
+                                    {format(new Date(article.publishedAt), 'PPP')}
+                                  </Badge>
+                               </div>
                            </div>
                         </div>
                      </Link>
