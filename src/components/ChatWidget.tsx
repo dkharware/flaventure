@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo } from 'react';
 import { Button } from './ui/button';
 import { MessageSquare, X, Send, Bot, User } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
@@ -9,11 +9,34 @@ import { Input } from './ui/input';
 import { cn } from '@/lib/utils';
 import { getChatResponse } from '@/app/actions/chat';
 import { ScrollArea } from './ui/scroll-area';
+import Link from 'next/link';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
 }
+
+const MarkdownContent = memo(({ content }: { content: string }) => {
+    const parts = content.split(/(\[.*?\]\(.*?\))/g);
+  
+    return (
+      <p>
+        {parts.map((part, i) => {
+          const match = part.match(/\[(.*?)\]\((.*?)\)/);
+          if (match) {
+            const [, text, href] = match;
+            return (
+              <Link key={i} href={href} className="text-primary underline hover:opacity-80">
+                {text}
+              </Link>
+            );
+          }
+          return part;
+        })}
+      </p>
+    );
+});
+MarkdownContent.displayName = 'MarkdownContent';
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +49,7 @@ export function ChatWidget() {
     setIsOpen(!isOpen);
     if (!isOpen && messages.length === 0) {
       setMessages([
-        { role: 'assistant', content: "Hello! I'm the easyfreecv assistant. How can I help you create the perfect resume today?" }
+        { role: 'assistant', content: "Hello! I'm the easyfreecv assistant. How can I help you find an article?" }
       ]);
     }
   };
@@ -100,7 +123,7 @@ export function ChatWidget() {
                           ? 'bg-primary text-primary-foreground' 
                           : 'bg-muted text-muted-foreground'
                       )}>
-                      {message.content}
+                       {message.role === 'assistant' ? <MarkdownContent content={message.content} /> : message.content}
                     </div>
                      {message.role === 'user' && <div className="p-2 bg-muted rounded-full self-start"><User className="w-5 h-5 text-muted-foreground" /></div>}
                   </div>
