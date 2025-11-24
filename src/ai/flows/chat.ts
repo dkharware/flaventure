@@ -26,13 +26,11 @@ export async function chat(input: ChatInput): Promise<ChatOutput> {
 
 const prompt = ai.definePrompt({
   name: 'chatPrompt',
-  input: { schema: ChatInputSchema },
-  output: { schema: ChatOutputSchema },
   prompt: `You are a friendly and helpful AI assistant for a website called easyfreecv, a free resume and CV builder. Your goal is to answer user questions about resume building, job searching, using the website, and related topics.
 
     Keep your answers concise and helpful. If you don't know an answer, say that you are an AI assistant with limited knowledge and can't answer that. Do not make up information.
 
-    User's question: {{{json input}}}
+    User's question: {{{prompt}}}
   `,
 });
 
@@ -42,8 +40,8 @@ const chatFlow = ai.defineFlow(
     inputSchema: ChatInputSchema,
     outputSchema: ChatOutputSchema,
   },
-  async (input) => {
-    const { output } = await prompt(input);
+  async (promptContent) => {
+    const { output } = await prompt(promptContent);
     return output!;
   }
 );
