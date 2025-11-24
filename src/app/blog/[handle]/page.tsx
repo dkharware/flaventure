@@ -10,7 +10,9 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
-import { UserCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { SlidersHorizontal } from 'lucide-react';
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -65,15 +67,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <main className="lg:col-span-3">
                 <article className="max-w-4xl mx-auto">
                     <header className="mb-8 text-center">
-                        {article.tags && article.tags.length > 0 && (
-                            <div className="mb-4 flex flex-wrap gap-2 justify-center">
-                            {article.tags.map((tag: string) => (
-                                <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
-                                    <Badge variant="secondary">{tag}</Badge>
-                                </Link>
-                            ))}
-                            </div>
-                        )}
+                        <div className="mb-4 flex flex-wrap gap-2 justify-center">
+                          {article.tags.map((tag: string) => (
+                              <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
+                                  <Badge variant="secondary">{tag}</Badge>
+                              </Link>
+                          ))}
+                        </div>
                         <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">{article.title}</h1>
                         <div className="text-muted-foreground text-sm flex items-center justify-center gap-4">
                             <p>{format(new Date(article.publishedAt), 'PPP')}</p>
@@ -125,10 +125,27 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     </div>
                 )}
             </main>
-            <aside className="lg:col-span-1">
-                 <Suspense fallback={<div>Loading sidebar...</div>}>
-                    <BlogSidebar tags={allTags} recentPosts={recentPosts} />
-                </Suspense>
+            <aside className="lg:col-span-1 relative">
+                <div className="lg:hidden flex justify-end mb-8">
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button variant="outline">
+                                <SlidersHorizontal className="mr-2 h-4 w-4" />
+                                Filters & Recent
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                            <Suspense fallback={<div>Loading sidebar...</div>}>
+                                <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                            </Suspense>
+                        </SheetContent>
+                    </Sheet>
+                </div>
+                 <div className="hidden lg:block">
+                    <Suspense fallback={<div>Loading sidebar...</div>}>
+                        <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                    </Suspense>
+                </div>
             </aside>
         </div>
     </div>

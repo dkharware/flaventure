@@ -7,8 +7,10 @@ import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, SlidersHorizontal } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'Blog | easyfreecv',
@@ -47,9 +49,26 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <div className="container mx-auto py-12 px-6 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
-                 <div className="mb-12">
-                    <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
-                    {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl">{pageDescription}</p>}
+                 <div className="mb-8 flex justify-between items-start">
+                    <div>
+                        <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
+                        {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl">{pageDescription}</p>}
+                    </div>
+                     <div className="lg:hidden">
+                        <Sheet>
+                            <SheetTrigger asChild>
+                                <Button variant="outline" size="icon">
+                                    <SlidersHorizontal className="h-4 w-4" />
+                                    <span className="sr-only">Open Filters</span>
+                                </Button>
+                            </SheetTrigger>
+                            <SheetContent>
+                                <Suspense fallback={<div>Loading sidebar...</div>}>
+                                    <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                                </Suspense>
+                            </SheetContent>
+                        </Sheet>
+                    </div>
                 </div>
 
                 {articles && articles.length > 0 ? (
@@ -136,7 +155,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                     </div>
                 )}
             </main>
-            <aside className="lg:col-span-1 lg:mt-24">
+            <aside className="lg:col-span-1 lg:mt-24 hidden lg:block">
                 <Suspense fallback={<div>Loading sidebar...</div>}>
                     <BlogSidebar tags={allTags} recentPosts={recentPosts} />
                 </Suspense>
