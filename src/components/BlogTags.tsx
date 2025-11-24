@@ -2,7 +2,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import {
   Carousel,
   CarouselContent,
@@ -10,14 +9,46 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { slugify } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 interface BlogTagsProps {
     tags: string[];
 }
 
+const colors = [
+    'bg-blue-500',
+    'bg-green-500',
+    'bg-purple-500',
+    'bg-orange-500',
+    'bg-red-500',
+    'bg-indigo-500',
+    'bg-pink-500',
+    'bg-teal-500',
+];
+
+// Fisher-Yates shuffle algorithm
+const shuffleArray = (array: string[]) => {
+    let currentIndex = array.length, randomIndex;
+    const newArray = [...array];
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [newArray[currentIndex], newArray[randomIndex]] = [
+            newArray[randomIndex], newArray[currentIndex]];
+    }
+    return newArray;
+};
+
+
 export function BlogTags({ tags }: BlogTagsProps) {
-    if (!tags || tags.length === 0) {
+    const [shuffledTags, setShuffledTags] = useState<string[]>([]);
+
+    useEffect(() => {
+        setShuffledTags(shuffleArray(tags));
+    }, [tags]);
+
+    if (!shuffledTags || shuffledTags.length === 0) {
         return null;
     }
 
@@ -41,19 +72,14 @@ export function BlogTags({ tags }: BlogTagsProps) {
                         className="w-full"
                     >
                         <CarouselContent>
-                            {tags.map((tag, index) => (
+                            {shuffledTags.map((tag, index) => (
                                 <CarouselItem key={tag} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6">
                                     <Link href={`/blog?tag=${encodeURIComponent(tag)}`} className="block group">
-                                        <div className="relative aspect-[3/1] w-full rounded-lg overflow-hidden shadow-md transition-transform duration-300 group-hover:scale-105">
-                                            <Image
-                                                src={`https://picsum.photos/seed/${slugify(tag)}/400/200`}
-                                                alt={`Image for tag ${tag}`}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                                                <h3 className="text-white font-semibold text-lg drop-shadow-md">#{tag}</h3>
-                                            </div>
+                                        <div className={cn(
+                                            "relative aspect-[3/1] w-full rounded-lg overflow-hidden shadow-md transition-transform duration-300 group-hover:scale-105 flex items-center justify-center",
+                                            colors[index % colors.length]
+                                        )}>
+                                            <h3 className="text-white font-semibold text-lg drop-shadow-md">#{tag}</h3>
                                         </div>
                                     </Link>
                                 </CarouselItem>
