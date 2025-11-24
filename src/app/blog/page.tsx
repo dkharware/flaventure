@@ -119,8 +119,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                         </Link>
                       )}
 
-                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
-                        {(searchQuery || tagQuery || !featuredArticle ? articles : (featuredArticle && !searchQuery && !tagQuery ? [featuredArticle, ...otherArticles] : otherArticles)).map((article: any) => (
+                      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                        {(searchQuery || tagQuery || !featuredArticle ? articles : otherArticles).map((article: any) => (
                             <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
                             <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                                 {article.image && (
@@ -138,10 +138,10 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                     </div>
                                 </div>
                                 )}
-                                <CardHeader>
+                                <CardHeader className="p-4">
                                     <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-3">{article.title}</CardTitle>
                                 </CardHeader>
-                                <CardContent className="flex-grow flex flex-col">
+                                <CardContent className="flex-grow flex flex-col p-4 pt-0">
                                     <div
                                         className="text-sm text-muted-foreground flex-grow line-clamp-2"
                                         dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
