@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -12,13 +13,18 @@ export function CookieConsent() {
   useEffect(() => {
     // We can't check localStorage on the server, so we do it in useEffect.
     const consent = localStorage.getItem('cookie_consent');
-    if (consent !== 'true') {
+    if (consent === null) {
       setShowConsent(true);
     }
   }, []);
 
   const handleAccept = () => {
     localStorage.setItem('cookie_consent', 'true');
+    setShowConsent(false);
+  };
+  
+  const handleReject = () => {
+    localStorage.setItem('cookie_consent', 'false');
     setShowConsent(false);
   };
 
@@ -44,9 +50,14 @@ export function CookieConsent() {
             .
           </p>
         </div>
-        <Button onClick={handleAccept} className="w-full md:w-auto flex-shrink-0">
-          Accept
-        </Button>
+        <div className="flex gap-2 w-full md:w-auto flex-shrink-0">
+            <Button onClick={handleAccept} className="w-full">
+              Accept
+            </Button>
+            <Button onClick={handleReject} variant="outline" className="w-full">
+              Reject
+            </Button>
+        </div>
       </div>
     </div>
   );
