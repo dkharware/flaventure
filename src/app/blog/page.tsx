@@ -70,7 +70,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                 <div className="flex-1 flex flex-col p-6">
                                     <CardHeader className="p-0">
                                         <div className="flex items-center gap-2 mb-2">
-                                            {featuredArticle.tags?.slice(0, 1).map((tag: string) => (
+                                            {featuredArticle.tags?.slice(0, 2).map((tag: string) => (
                                                 <Badge key={tag} variant="secondary">{tag}</Badge>
                                             ))}
                                         </div>
@@ -82,7 +82,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                             dangerouslySetInnerHTML={{ __html: featuredArticle.excerptHtml }}
                                         />
                                         <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
-                                            <span>By {featuredArticle.authorV2.name}</span> &bull; <span>{format(new Date(featuredArticle.publishedAt), 'PPP')}</span>
+                                            <span>{format(new Date(featuredArticle.publishedAt), 'PPP')}</span>
                                         </div>
                                     </CardContent>
                                 </div>
@@ -105,6 +105,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                 </div>
                                 )}
                                 <CardHeader>
+                                     <div className="flex items-center gap-2 mb-2">
+                                        {article.tags?.slice(0, 1).map((tag: string) => (
+                                            <Badge key={tag} variant="secondary">{tag}</Badge>
+                                        ))}
+                                    </div>
                                     <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex-grow flex flex-col">
@@ -113,7 +118,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                         dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
                                     />
                                     <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
-                                        <span>By {article.authorV2.name}</span> &bull; <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                                        <span>{format(new Date(article.publishedAt), 'PPP')}</span>
                                     </div>
                                 </CardContent>
                             </Card>

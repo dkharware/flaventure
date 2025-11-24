@@ -76,11 +76,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                         )}
                         <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">{article.title}</h1>
                         <div className="text-muted-foreground text-sm flex items-center justify-center gap-4">
-                            <div className="flex items-center gap-2">
-                                <UserCircle className="h-5 w-5" />
-                                <span>{article.authorV2.name}</span>
-                            </div>
-                            <span>&bull;</span>
                             <p>{format(new Date(article.publishedAt), 'PPP')}</p>
                         </div>
                     </header>
@@ -113,6 +108,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                                             </div>
                                         )}
                                         <CardHeader>
+                                            <div className="flex items-center gap-2 mb-2">
+                                                {related.tags?.slice(0, 1).map((tag: string) => (
+                                                    <Badge key={tag} variant="secondary">{tag}</Badge>
+                                                ))}
+                                            </div>
                                             <CardTitle className="text-lg font-headline group-hover:text-primary transition-colors">{related.title}</CardTitle>
                                         </CardHeader>
                                         <CardContent>
