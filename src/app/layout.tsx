@@ -13,6 +13,7 @@ import { AuthProvider } from '@/hooks/use-auth';
 import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
 import { ChatWidget } from '@/components/ChatWidget';
+import { MobileNav } from '@/components/MobileNav';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
 
@@ -104,12 +105,13 @@ export default async function RootLayout({
       <body className="font-body antialiased">
         <AuthProvider value={authContextValue}>
           <LoaderProvider>
-              <div className="flex flex-col min-h-screen">
+              <div className="flex flex-col min-h-screen pb-16 md:pb-0">
                 <Header />
                 <main className="flex-grow">{children}</main>
                 <Footer />
               </div>
               <Toaster />
+              <MobileNav />
               <Suspense fallback={null}>
                 <NavigationEvents />
               </Suspense>
