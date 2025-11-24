@@ -50,23 +50,26 @@ export function Hero() {
                       Unlock your potential with in-depth articles on Shopify development and career-defining resume strategies. Your go-to resource for expert tips and trends.
                     </p>
                     <div className="w-full max-w-lg hero-element">
-                      <form onSubmit={handleSearch} className="flex gap-2 bg-background/50 backdrop-blur-sm p-2 rounded-lg border">
+                      <form onSubmit={handleSearch} className="flex gap-2 bg-background/50 backdrop-blur-sm p-2 rounded-full border">
                           <Input 
                             type="search" 
                             name="search"
                             placeholder="Search for articles on 'headless', 'themes', 'seo'..." 
                             className="flex-grow !bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                           />
-                          <Button type="submit" size="icon" variant="default">
+                          <Button type="submit" size="icon" variant="glow">
                             <Search className="h-4 w-4" />
                             <span className="sr-only">Search</span>
                           </Button>
                       </form>
                     </div>
                     <div className="flex flex-col gap-4 sm:flex-row hero-element">
-                    <Button asChild size="lg" variant="outline">
+                    <Button asChild size="pill" variant="glow">
                         <Link href="/blog">
-                         Explore All Articles <ArrowRight className="ml-2 h-5 w-5" />
+                         Explore All Articles
+                         <span className="ml-4 h-8 w-8 rounded-full bg-accent flex items-center justify-center text-primary group-hover:bg-primary-foreground transition-colors">
+                            <ArrowRight className="h-4 w-4" />
+                         </span>
                         </Link>
                     </Button>
                     </div>
