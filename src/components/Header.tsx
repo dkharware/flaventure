@@ -6,9 +6,11 @@ import Link from 'next/link';
 import { Newspaper, Phone, Menu } from 'lucide-react';
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
@@ -22,6 +24,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { ListItem } from './ListItem';
 
 export default function Header() {
   return (
@@ -42,11 +45,35 @@ export default function Header() {
             <NavigationMenu>
               <NavigationMenuList>
                  <NavigationMenuItem>
-                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                    <Link href="/blog">
-                      Blog
-                    </Link>
-                  </NavigationMenuLink>
+                  <NavigationMenuTrigger>Blog</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                       <li className="row-span-3">
+                        <NavigationMenuLink asChild>
+                          <a
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                            href="/blog"
+                          >
+                            <div className="mb-2 mt-4 text-lg font-medium">
+                              All Articles
+                            </div>
+                            <p className="text-sm leading-tight text-muted-foreground">
+                              Browse all our latest posts on Shopify, resume building, and more.
+                            </p>
+                          </a>
+                        </NavigationMenuLink>
+                      </li>
+                      <ListItem href="/blog?tag=Shopify" title="Shopify">
+                        Articles on development, headless commerce, and apps.
+                      </ListItem>
+                      <ListItem href="/blog?tag=Resume" title="Resume & CV">
+                        Tips and tricks for creating the perfect resume.
+                      </ListItem>
+                       <ListItem href="/blog?tag=cv" title="CV Writing">
+                        Guidance on writing a comprehensive Curriculum Vitae.
+                      </ListItem>
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
