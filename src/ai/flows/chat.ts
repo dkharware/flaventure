@@ -39,7 +39,14 @@ const searchBlogArticles = ai.defineTool(
   },
   async ({ query }) => {
     console.log(`Searching articles with query: ${query}`);
-    const articles = await getArticles(3, `title:*${query}* OR body:*${query}*`);
+    
+    // If the query is a multi-word phrase, search for the exact phrase.
+    // Otherwise, use wildcards for a broader search.
+    const shopifyQuery = query.includes(' ') 
+      ? `title:"${query}" OR body:"${query}"`
+      : `title:*${query}* OR body:*${query}*`;
+
+    const articles = await getArticles(3, shopifyQuery);
     return articles.map((a: any) => ({ title: a.title, handle: a.handle }));
   }
 );
@@ -50,21 +57,36 @@ const chatFlow = ai.defineFlow(
     name: 'chatFlow',
     inputSchema: ChatInputSchema,
     outputSchema: ChatOutputSchema,
-    tools: [searchBlogArticles],
   },
   async (promptContent) => {
     const llmResponse = await ai.generate({
-      prompt: `${promptContent}`,
+      prompt: `You are a blog search assistant. Your ONLY job is to search for relevant blog articles using the provided tool based on the user's input. Do not answer questions directly or engage in conversation.
+
+      User's request: "${promptContent}"
+
+      - Immediately call the \`searchBlogArticles\` tool with a query derived from the user's request.
+      - Do not add any conversational text, greetings, or explanations.
+      - If the tool returns articles, respond ONLY with the list of markdown links.
+      - If the tool returns no articles, respond ONLY with the exact phrase "No relevant articles found for that topic."`,
       tools: [searchBlogArticles],
     });
+    
+    // Check for a tool request and process it.
+    if (llmResponse.toolRequest) {
+      const toolResponse = await llmResponse.toolRequest.callback();
+      const articles = toolResponse[0].output as { title: string; handle: string }[] | undefined;
 
-    const toolResponse = llmResponse.toolRequest?.toolResponse;
-
-    if (toolResponse && toolResponse.length > 0 && toolResponse[0].output) {
-      const articles = toolResponse[0].output as { title: string; handle: string }[];
-      if (articles.length > 0) {
+      if (articles && articles.length > 0) {
         return articles.map(article => `[${article.title}](/blog/${article.handle})`).join('\n');
+      } else {
+        return "No relevant articles found for that topic.";
       }
+    }
+    
+    // Fallback if the model doesn't use the tool (e.g., for "hi")
+    // or if the tool call fails in an unexpected way.
+    if (llmResponse.text) {
+        return llmResponse.text;
     }
 
     return "No relevant articles found for that topic.";
