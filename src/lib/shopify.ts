@@ -1,22 +1,22 @@
 
-async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
-  let endpoint = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
-  const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-  const apiVersion = '2024-04'; // Or your desired API version
 
-  if (!endpoint || !accessToken) {
+async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
+  const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
+  const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  const apiVersion = '2024-04';
+
+  if (!storeDomain || !accessToken) {
     console.warn("Shopify API credentials are not configured. Blog posts will not be loaded.");
     return { data: null, errors: [{ message: `Shopify API credentials are not configured.` }] };
   }
 
-  // Ensure the endpoint is a full URL and points to the correct GraphQL path
-  if (!endpoint.startsWith('https://')) {
-    endpoint = `https://${endpoint}`;
-  }
-  
-  if (!endpoint.includes('/api/')) {
-    endpoint = `${endpoint.replace(/\/$/, '')}/api/${apiVersion}/graphql.json`;
-  }
+  // Construct the endpoint robustly
+  // 1. Remove protocol if present
+  let cleanDomain = storeDomain.replace(/^https?:\/\//, '');
+  // 2. Remove any trailing paths or slashes
+  cleanDomain = cleanDomain.split('/')[0];
+  // 3. Construct the final correct endpoint
+  const endpoint = `https://${cleanDomain}/api/${apiVersion}/graphql.json`;
   
   try {
     const response = await fetch(endpoint, {
@@ -32,26 +32,23 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
     const responseBody = await response.text();
 
     if (!response.ok) {
-      // If the body is HTML, it's likely a misconfiguration error page.
       if (responseBody.trim().startsWith('<!DOCTYPE html>')) {
-          console.error(`Shopify API request failed with status ${response.status} and returned an HTML page. Please check your endpoint and access token.`);
-          return { data: null, errors: [{ message: `Shopify API request returned an HTML page. Check your credentials.` }] };
+          console.error(`Shopify API request failed with status ${response.status} and returned an HTML page. Please check your endpoint ('${storeDomain}') and access token.`);
+          return { data: null, errors: [{ message: `Shopify API request returned an HTML page. Check your store domain and access token.` }] };
       }
       console.error(`Shopify API request failed with status ${response.status}:`, responseBody);
       return { data: null, errors: [{ message: `Shopify API request failed with status ${response.status}` }] };
     }
     
-    // Now that we have the text, try to parse it as JSON.
     try {
         const jsonResponse = JSON.parse(responseBody);
         if (jsonResponse.errors) {
-          console.error("Shopify API returned errors:", jsonResponse.errors);
+          console.error("Shopify API returned GraphQL errors:", jsonResponse.errors);
         }
         return jsonResponse;
     } catch (e) {
-        // This will catch the "Unexpected token '<'" error.
         console.error("Failed to parse JSON response from Shopify. The endpoint might be incorrect and returned HTML instead of JSON.", responseBody);
-        return { data: null, errors: [{ message: "Failed to parse JSON response. Check Shopify endpoint." }] };
+        return { data: null, errors: [{ message: "Failed to parse JSON response from Shopify. Check the API endpoint configuration." }] };
     }
 
   } catch (error) {
