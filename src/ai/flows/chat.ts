@@ -30,7 +30,7 @@ export async function chat(input: ChatInput): Promise<ChatOutput> {
 const searchBlogArticles = ai.defineTool(
   {
     name: 'searchBlogArticles',
-    description: 'Searches for relevant blog articles based on a user query. Use this tool whenever a user asks for information, advice, or "how-to" instructions on any topic that might be covered in a blog post.',
+    description: 'Searches for relevant blog articles based on a user query. Use this tool for any user input.',
     inputSchema: z.object({ query: z.string().describe('A search query optimized for finding relevant blog posts, derived from the user\'s question.') }),
     outputSchema: z.array(z.object({
       title: z.string(),
@@ -54,15 +54,13 @@ const chatFlow = ai.defineFlow(
   },
   async (promptContent) => {
     const llmResponse = await ai.generate({
-      prompt: `You are a blog search assistant for a website called easyfreecv.
+      prompt: `You are a blog search assistant. Your ONLY job is to use the 'searchBlogArticles' tool with the user's query.
 
       **CRITICAL INSTRUCTIONS:**
-      1.  Your **ONLY** job is to use the 'searchBlogArticles' tool based on the user's question.
-      2.  If the tool finds articles, you **MUST** respond with ONLY a list of the articles in markdown link format (e.g., "[Article Title](/blog/article-handle)"). Do not add any other text, explanation, or conversation.
-      3.  If the tool returns no articles, you **MUST** respond with only this exact phrase: "I could not find any relevant articles for that topic."
-      4.  For simple greetings like "hi" or "hello", you can respond with a simple "Hello! How can I help you find an article?".
+      1.  If the tool finds articles, you **MUST** respond with ONLY a list of the articles in markdown link format (e.g., "[Article Title](/blog/article-handle)"). Do not add any other text, explanation, or conversation.
+      2.  If the tool returns no articles, you **MUST** respond with only this exact phrase: "No relevant articles found for that topic."
       
-      User's question: "${promptContent}"
+      User's query: "${promptContent}"
       `,
     });
 
