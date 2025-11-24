@@ -47,7 +47,7 @@ async function WebStoriesSection() {
             >
               <CarouselContent>
                 {articles.map((article: any) => (
-                  <CarouselItem key={article.id} className="basis-2/5 md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={article.id} className="basis-2/3 md:basis-1/2 lg:basis-1/3">
                      <Link href={`/blog/${article.handle}`} className="block group">
                         <div className="relative aspect-[4/5] w-full h-auto rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
                            {article.image && (
@@ -60,7 +60,7 @@ async function WebStoriesSection() {
                            )}
                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                            <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end h-full">
-                              <h3 className="text-white font-bold text-2xl leading-tight drop-shadow-md line-clamp-3">{article.title}</h3>
+                              <h3 className="text-white font-bold text-xl leading-tight drop-shadow-md line-clamp-2">{article.title}</h3>
                               <div
                                 className="text-white/80 text-sm mt-2 line-clamp-2"
                                 dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
@@ -426,5 +426,7 @@ export default function Home() {
     </div>
   );
 }
+
+    
 
     
