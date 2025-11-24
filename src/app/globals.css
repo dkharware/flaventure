@@ -76,7 +76,7 @@
     @apply leading-relaxed;
   }
   .prose ul {
-    @apply list-disc pl-5;
+    @apply list-disc pl-5 space-y-2;
   }
   .prose a {
     @apply text-primary hover:underline;
@@ -155,7 +155,7 @@
     }
 }
 
-@media (min-width: 86vw) {
+@media (width >= 86vw) {
     .container {
         max-width: 100vw;
     }
