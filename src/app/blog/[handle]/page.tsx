@@ -123,14 +123,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                                         {related.image && (
                                             <div className="relative h-40 w-full overflow-hidden">
                                                 <Image src={related.image.url} alt={related.image.altText || related.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                                                <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
+                                                    {related.tags?.slice(0, 2).map((tag: string) => (
+                                                        <Badge key={tag} variant="secondary" className="shadow-md">{tag}</Badge>
+                                                    ))}
+                                                </div>
                                             </div>
                                         )}
                                         <CardHeader>
-                                            <div className="flex items-center gap-2 mb-2">
-                                                {related.tags?.slice(0, 1).map((tag: string) => (
-                                                    <Badge key={tag} variant="secondary">{tag}</Badge>
-                                                ))}
-                                            </div>
                                             <CardTitle className="text-lg font-headline group-hover:text-primary transition-colors">{related.title}</CardTitle>
                                         </CardHeader>
                                         <CardContent>

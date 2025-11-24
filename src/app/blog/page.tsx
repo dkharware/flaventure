@@ -87,15 +87,15 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
+                                    <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
+                                        {featuredArticle.tags?.slice(0, 2).map((tag: string) => (
+                                            <Badge key={tag} variant="secondary" className="shadow-md">{tag}</Badge>
+                                        ))}
+                                    </div>
                                 </div>
                                 )}
                                 <div className="flex-1 flex flex-col p-6">
                                     <CardHeader className="p-0">
-                                        <div className="flex items-center gap-2 mb-2">
-                                            {featuredArticle.tags?.slice(0, 2).map((tag: string) => (
-                                                <Badge key={tag} variant="secondary">{tag}</Badge>
-                                            ))}
-                                        </div>
                                         <CardTitle className="text-2xl font-headline group-hover:text-primary transition-colors">{featuredArticle.title}</CardTitle>
                                     </CardHeader>
                                     <CardContent className="flex-grow flex flex-col p-0 mt-4">
@@ -124,14 +124,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
+                                    <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
+                                        {article.tags?.slice(0, 2).map((tag: string) => (
+                                            <Badge key={tag} variant="secondary" className="shadow-md">{tag}</Badge>
+                                        ))}
+                                    </div>
                                 </div>
                                 )}
                                 <CardHeader>
-                                     <div className="flex items-center gap-2 mb-2">
-                                        {article.tags?.slice(0, 1).map((tag: string) => (
-                                            <Badge key={tag} variant="secondary">{tag}</Badge>
-                                        ))}
-                                    </div>
                                     <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex-grow flex flex-col">
