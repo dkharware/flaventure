@@ -13,6 +13,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { ChatWidget } from '@/components/ChatWidget';
 import { MobileNav } from '@/components/MobileNav';
 import { ChatProvider } from '@/context/ChatContext';
+import { GoogleAd } from '@/components/GoogleAd';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -87,6 +88,7 @@ export default async function RootLayout({
               <div className="flex flex-col min-h-screen pb-16 md:pb-0">
                 <Header />
                 <main className="flex-grow">{children}</main>
+                <GoogleAd />
                 <Footer />
               </div>
               <Toaster />
