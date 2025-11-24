@@ -135,3 +135,9 @@
       animation: float 15s ease-in-out infinite;
     }
 }
+
+@media (min-width: 1800px) {
+    .container {
+        max-width: 86vw;
+    }
+}
