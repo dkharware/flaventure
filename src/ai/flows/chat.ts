@@ -30,8 +30,8 @@ export async function chat(input: ChatInput): Promise<ChatOutput> {
 const searchBlogArticles = ai.defineTool(
   {
     name: 'searchBlogArticles',
-    description: 'Searches for relevant blog articles based on a user query. Use this if the user is asking for tips, advice, or how to do something related to resumes, CVs, job searching, or careers.',
-    inputSchema: z.object({ query: z.string().describe('A search query optimized for finding relevant blog posts.') }),
+    description: 'Searches for relevant blog articles based on a user query. Use this tool whenever a user asks for information, advice, or "how-to" instructions on any topic that might be covered in a blog post.',
+    inputSchema: z.object({ query: z.string().describe('A search query optimized for finding relevant blog posts, derived from the user\'s question.') }),
     outputSchema: z.array(z.object({
       title: z.string(),
       handle: z.string(),
@@ -54,15 +54,15 @@ const chatFlow = ai.defineFlow(
   },
   async (promptContent) => {
     const llmResponse = await ai.generate({
-      prompt: `You are a friendly and helpful AI assistant for a website called easyfreecv, a free resume and CV builder. Your goal is to answer user questions about resume building, job searching, using the website, and related topics.
+      prompt: `You are a friendly and helpful AI assistant for a website called easyfreecv, a free resume and CV builder. Your goal is to answer user questions helpfully.
 
-      - If the user asks for advice, tips, or "how to" information, use the 'searchBlogArticles' tool to find relevant articles.
-      - If you find articles, list them in your response with links in markdown format (e.g., "[Article Title](/blog/article-handle)").
-      - If no relevant articles are found, simply answer the user's question directly and inform them that you couldn't find any specific blog posts on that topic.
-      - For all other questions, provide a concise and helpful answer.
-      - If you don't know an answer, say that you are an AI assistant with limited knowledge and can't answer that. Do not make up information.
+      - First, consider if the user's question is asking for information, advice, or "how-to" instructions. If so, you should use the 'searchBlogArticles' tool to find relevant articles from the website's blog.
+      - If you use the tool and find relevant articles, list them clearly in your response. Use markdown format for the links (e.g., "[Article Title](/blog/article-handle)").
+      - If the tool returns no articles, simply answer the user's question to the best of your ability and inform them that you couldn't find any specific blog posts on that topic.
+      - For general chit-chat or questions not seeking information, answer directly and concisely.
+      - If you genuinely don't know the answer to a question and cannot find an article, it's okay to say that you are an AI assistant with limited knowledge and can't answer. Do not make up information.
       
-      User's question: ${promptContent}
+      User's question: "${promptContent}"
       `,
     });
 
