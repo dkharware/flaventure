@@ -103,11 +103,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                 )}
                                 <div className="flex-1 flex flex-col p-6">
                                     <CardHeader className="p-0">
-                                        <CardTitle className="text-2xl font-headline group-hover:text-primary transition-colors">{featuredArticle.title}</CardTitle>
+                                        <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors line-clamp-3">{featuredArticle.title}</CardTitle>
                                     </CardHeader>
                                     <CardContent className="flex-grow flex flex-col p-0 mt-4">
                                         <div
-                                            className="text-sm text-muted-foreground flex-grow"
+                                            className="text-sm text-muted-foreground flex-grow line-clamp-2"
                                             dangerouslySetInnerHTML={{ __html: featuredArticle.excerptHtml }}
                                         />
                                         <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
@@ -139,11 +139,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                 </div>
                                 )}
                                 <CardHeader>
-                                    <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
+                                    <CardTitle className="text-lg font-headline group-hover:text-primary transition-colors line-clamp-3">{article.title}</CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex-grow flex flex-col">
                                     <div
-                                        className="text-sm text-muted-foreground flex-grow"
+                                        className="text-sm text-muted-foreground flex-grow line-clamp-2"
                                         dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
                                     />
                                     <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
