@@ -16,15 +16,15 @@ interface BlogTagsProps {
     tags: string[];
 }
 
-const colors = [
-    'bg-blue-500',
-    'bg-green-500',
-    'bg-purple-500',
-    'bg-orange-500',
-    'bg-red-500',
-    'bg-indigo-500',
-    'bg-pink-500',
-    'bg-teal-500',
+const gradients = [
+    'bg-gradient-to-br from-purple-500 to-indigo-600',
+    'bg-gradient-to-br from-green-400 to-blue-500',
+    'bg-gradient-to-br from-pink-500 to-rose-500',
+    'bg-gradient-to-br from-orange-400 to-red-500',
+    'bg-gradient-to-br from-teal-400 to-cyan-500',
+    'bg-gradient-to-br from-yellow-400 to-amber-500',
+    'bg-gradient-to-br from-lime-400 to-green-500',
+    'bg-gradient-to-br from-fuchsia-500 to-pink-600',
 ];
 
 // Fisher-Yates shuffle algorithm
@@ -53,7 +53,7 @@ export function BlogTags({ tags }: BlogTagsProps) {
     }
 
     return (
-        <section className="w-full py-8 bg-muted/30">
+        <section className="w-full py-8">
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
@@ -76,10 +76,10 @@ export function BlogTags({ tags }: BlogTagsProps) {
                                 <CarouselItem key={tag} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6">
                                     <Link href={`/blog?tag=${encodeURIComponent(tag)}`} className="block group">
                                         <div className={cn(
-                                            "relative aspect-[3/1] w-full rounded-lg overflow-hidden shadow-md transition-transform duration-300 group-hover:scale-105 flex items-center justify-center",
-                                            colors[index % colors.length]
+                                            "relative aspect-[3/1] w-full rounded-lg overflow-hidden shadow-md transition-transform duration-300 group-hover:scale-105 flex items-center justify-center p-2",
+                                            gradients[index % gradients.length]
                                         )}>
-                                            <h3 className="text-white font-semibold text-lg drop-shadow-md">#{tag}</h3>
+                                            <h3 className="text-white font-semibold text-base md:text-lg drop-shadow-md text-center">#{tag}</h3>
                                         </div>
                                     </Link>
                                 </CarouselItem>
