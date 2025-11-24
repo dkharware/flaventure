@@ -99,6 +99,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${readexPro.variable}`}>
       <head>
+        <meta name="google-adsense-account" content="ca-pub-5982137810610586" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
