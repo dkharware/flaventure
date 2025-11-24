@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useGSAP } from '@gsap/react';
@@ -27,10 +28,10 @@ export function Hero() {
             <div className="container px-6 md:px-10 relative z-10">
                 <div className="flex flex-col items-center justify-center space-y-6 text-center">
                     <h1 className="text-4xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none text-foreground hero-element">
-                      Welcome to Our Blog
+                      Expert Shopify & Resume Mastery
                     </h1>
                     <p className="max-w-[700px] text-muted-foreground md:text-xl hero-element">
-                      Discover insightful articles, tutorials, and the latest trends in our industry.
+                      Unlock your potential with in-depth articles on Shopify development and career-defining resume strategies. Your go-to resource for expert tips and trends.
                     </p>
                     <div className="flex flex-col gap-4 sm:flex-row hero-element">
                     <Button asChild size="lg" variant="default">
