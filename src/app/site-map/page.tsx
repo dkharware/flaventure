@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import sitemap from '../sitemap';
 
-export default function SitemapPage() {
-  const routes = sitemap();
+export default async function SitemapPage() {
+  const routes = await sitemap();
 
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
