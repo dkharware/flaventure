@@ -93,7 +93,7 @@ function BlogSection() {
     const [articles, setArticles] = React.useState<any[]>([]);
 
     React.useEffect(() => {
-        getArticles(3).then(setArticles);
+        getArticles(3).then(({ articles }) => setArticles(articles));
     }, []);
 
     if (!articles || articles.length === 0) {
