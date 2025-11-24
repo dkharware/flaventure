@@ -16,9 +16,78 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 gsap.registerPlugin(ScrollTrigger);
+
+function WebStoriesSection() {
+    const [articles, setArticles] = React.useState<any[]>([]);
+
+    React.useEffect(() => {
+        getArticles(8).then(({ articles }) => setArticles(articles));
+    }, []);
+
+    if (!articles || articles.length === 0) {
+        return null;
+    }
+    
+    return (
+      <section className="w-full py-12 md:py-24 scroll-section">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                  <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Web Stories</h2>
+                  <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
+                      Discover our latest articles in a visual, story-like format.
+                  </p>
+              </div>
+          </div>
+          <div className="mx-auto max-w-5xl pt-12">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {articles.map((article: any) => (
+                  <CarouselItem key={article.id} className="md:basis-1/2 lg:basis-1/4">
+                     <Link href={`/blog/${article.handle}`} className="block group">
+                        <div className="relative aspect-[9/16] w-full h-auto rounded-lg overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
+                           {article.image && (
+                              <Image
+                                src={article.image.url}
+                                alt={article.image.altText || article.title}
+                                fill
+                                className="object-cover"
+                              />
+                           )}
+                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                           <div className="absolute bottom-0 left-0 right-0 p-4">
+                              <h3 className="text-white font-bold text-lg leading-tight drop-shadow-md line-clamp-3">{article.title}</h3>
+                           </div>
+                        </div>
+                     </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
+          </div>
+        </div>
+      </section>
+    );
+}
+
 
 function BlogSection() {
     const [articles, setArticles] = React.useState<any[]>([]);
@@ -202,6 +271,7 @@ export default function Home() {
         </div>
     </section>
 
+      <WebStoriesSection />
       <BlogSection />
       <FaqSection />
     </div>
