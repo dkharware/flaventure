@@ -1,13 +1,6 @@
 
-import Image from 'next/image';
-
 export const Logo = () => (
-  <Image 
-    src="/logo.png" 
-    alt="easyfreecv logo" 
-    width={150} 
-    height={32} 
-    className="h-8 w-auto"
-    priority
-  />
+  <div className="text-2xl font-bold font-headline text-primary tracking-tight">
+    easyfreecv
+  </div>
 );
