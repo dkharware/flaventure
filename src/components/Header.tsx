@@ -3,7 +3,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -25,20 +25,52 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { ListItem } from './ListItem';
+import { useRouter } from 'next/navigation';
+import type { FormEvent } from 'react';
+import { Input } from './ui/input';
 
 export default function Header() {
+  const router = useRouter();
+
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const searchQuery = formData.get('search') as string;
+    if (searchQuery.trim()) {
+        router.push(`/blog?query=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+        router.push('/blog');
+    }
+  };
+
+
   return (
     <header className="py-3 px-4 sm:px-6 md:py-4 md:px-10 bg-background/80 backdrop-blur-sm text-foreground border-b sticky top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between gap-2 md:gap-4">
         <div className="flex-shrink-0">
           <Link href="/" className="flex items-center gap-2" aria-label="easyfreecv Home">
             <div className="md:hidden">
-              <Logo width={120} height={32} />
+              <Logo width={100} height={28} />
             </div>
             <div className="hidden md:block">
               <Logo />
             </div>
           </Link>
+        </div>
+
+        <div className="md:hidden flex-grow max-w-xs">
+          <form onSubmit={handleSearch} className="relative w-full">
+              <Input 
+                type="search" 
+                name="search"
+                placeholder="Search articles..." 
+                className="h-9 pr-9 text-xs rounded-full bg-muted border-none focus-visible:ring-2 focus-visible:ring-ring"
+              />
+              <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-9 w-9 rounded-full">
+                <Search className="h-4 w-4" />
+                <span className="sr-only">Search</span>
+              </Button>
+          </form>
         </div>
 
         <div className="hidden md:flex flex-1 justify-center">
@@ -101,11 +133,11 @@ export default function Header() {
             </Button>
         </div>
 
-        <div className="md:hidden">
+        <div className="md:hidden flex-shrink-0">
            <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
-                <Menu className="h-6 w-6" />
+                <Menu className="h-5 w-5" />
                  <span className="sr-only">Open navigation menu</span>
               </Button>
             </SheetTrigger>
