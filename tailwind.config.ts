@@ -11,8 +11,7 @@ export default {
     container: {
       center: true,
       screens: {
-        '2xl': '80vw',
-        '3xl': '86vw',
+        '2xl': '85vw',
       },
     },
     extend: {
