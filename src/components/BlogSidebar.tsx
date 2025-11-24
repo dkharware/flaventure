@@ -1,9 +1,8 @@
-
 'use client';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { format } from 'date-fns';
@@ -19,6 +18,7 @@ interface BlogSidebarProps {
 export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const isFilterActive = searchParams.has('query') || searchParams.has('tag');
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,6 +29,10 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
     } else {
         router.push('/blog');
     }
+  };
+
+  const clearFilters = () => {
+    router.push('/blog');
   };
 
   return (
@@ -49,6 +53,11 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
               <Search className="h-4 w-4" />
             </Button>
           </form>
+          {isFilterActive && (
+            <Button variant="ghost" className="w-full justify-start px-2 mt-2 text-sm text-muted-foreground" onClick={clearFilters}>
+              <X className="mr-2 h-4 w-4" /> Clear filter
+            </Button>
+          )}
         </CardContent>
       </Card>
 
