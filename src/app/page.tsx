@@ -76,8 +76,8 @@ async function WebStoriesSection() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="hidden md:flex" />
-              <CarouselNext className="hidden md:flex" />
+              <CarouselPrevious className="bg-foreground text-background md:bg-transparent md:text-foreground" />
+              <CarouselNext className="bg-foreground text-background md:bg-transparent md:text-foreground" />
             </Carousel>
           </div>
         </div>
@@ -142,8 +142,8 @@ async function BlogSection() {
                            </CarouselItem>
                         ))}
                       </CarouselContent>
-                      <CarouselPrevious className="hidden md:flex" />
-                      <CarouselNext className="hidden md:flex" />
+                      <CarouselPrevious className="bg-foreground text-background md:bg-transparent md:text-foreground" />
+                      <CarouselNext className="bg-foreground text-background md:bg-transparent md:text-foreground" />
                     </Carousel>
                 </div>
                  <div className="text-center mt-12">
@@ -430,3 +430,4 @@ export default function Home() {
     
 
     
+
