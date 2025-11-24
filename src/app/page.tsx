@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -12,6 +11,12 @@ import { format } from 'date-fns';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,6 +80,73 @@ function BlogSection() {
     );
 }
 
+const faqData = {
+    shopify: [
+        {
+            question: "What is Shopify and how can it help my business?",
+            answer: "Shopify is a complete e-commerce platform that lets you start, grow, and manage a business. It allows you to create an online store, sell in multiple places (web, mobile, social media), manage products and inventory, and process payments."
+        },
+        {
+            question: "How do I set up a blog on Shopify?",
+            answer: "Shopify comes with a built-in blogging engine. You can add a new blog from your Shopify admin under 'Online Store' > 'Blog Posts'. From there, you can create and manage your posts, which is a great way to improve SEO and engage with your customers."
+        },
+    ],
+    resumes: [
+        {
+            question: "What are the key components of a great resume?",
+            answer: "A great resume typically includes your contact information, a professional summary or objective, your work experience with measurable achievements, your education, and relevant skills. Tailoring it to the job you're applying for is crucial."
+        },
+        {
+            question: "How long should my resume be?",
+            answer: "For most professionals, a one-page resume is ideal. However, a two-page resume is acceptable if you have over 10 years of experience and your additional experience is relevant to the job. Always prioritize conciseness and relevance."
+        }
+    ]
+};
+
+
+function FaqSection() {
+    return (
+        <section className="w-full py-12 md:py-24 lg:py-32 scroll-section">
+            <div className="container px-4 md:px-6">
+                <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                    <div className="space-y-2">
+                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Frequently Asked Questions</h2>
+                        <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
+                           Find answers to common questions about Shopify and resume building.
+                        </p>
+                    </div>
+                </div>
+                <div className="mx-auto max-w-3xl pt-12">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
+                        <div>
+                            <h3 className="font-bold text-lg mb-4">Shopify</h3>
+                            <Accordion type="single" collapsible className="w-full">
+                                {faqData.shopify.map((item) => (
+                                    <AccordionItem value={item.question} key={item.question}>
+                                        <AccordionTrigger>{item.question}</AccordionTrigger>
+                                        <AccordionContent>{item.answer}</AccordionContent>
+                                    </AccordionItem>
+                                ))}
+                            </Accordion>
+                        </div>
+                        <div>
+                             <h3 className="font-bold text-lg mb-4">Resumes</h3>
+                             <Accordion type="single" collapsible className="w-full">
+                                {faqData.resumes.map((item) => (
+                                    <AccordionItem value={item.question} key={item.question}>
+                                        <AccordionTrigger>{item.question}</AccordionTrigger>
+                                        <AccordionContent>{item.answer}</AccordionContent>
+                                    </AccordionItem>
+                                ))}
+                            </Accordion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
 export default function Home() {
 
   useGSAP(() => {
@@ -131,6 +203,7 @@ export default function Home() {
     </section>
 
       <BlogSection />
+      <FaqSection />
     </div>
   );
 }
