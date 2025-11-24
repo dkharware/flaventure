@@ -120,6 +120,19 @@ const ALL_TAGS_QUERY = gql`
   }
 `;
 
+const ARTICLE_SUGGESTIONS_QUERY = gql`
+  query GetArticleSuggestions($first: Int, $query: String) {
+    articles(first: $first, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
+      edges {
+        node {
+          title
+          handle
+        }
+      }
+    }
+  }
+`;
+
 export async function getArticles(
     count: number = 10, 
     query?: string, 
@@ -191,6 +204,10 @@ export async function getArticleSuggestions(searchTerm: string) {
         return [];
     }
     const query = `title:*${searchTerm}* OR body:*${searchTerm}*`;
-    const { articles } = await getArticles(5, query);
-    return articles;
+    const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query });
+    
+    if (!response.data?.articles?.edges) {
+        return [];
+    }
+    return response.data.articles.edges.map((edge: any) => edge.node);
 }
