@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useRef } from 'react';
@@ -6,6 +7,7 @@ import { ClipboardCopy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { slugify } from '@/lib/utils';
 
 const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
   const [isCopied, setIsCopied] = React.useState(false);
@@ -50,8 +52,16 @@ export function ArticleContent({ content }: { content: string }) {
     const contentElement = contentRef.current;
     if (!contentElement) return;
 
-    const preElements = contentElement.querySelectorAll('pre');
+    // Add IDs to headings for ToC
+    const headingElements = contentElement.querySelectorAll('h2, h3');
+    headingElements.forEach(h => {
+        const text = h.textContent || '';
+        if (text) {
+            h.id = slugify(text);
+        }
+    });
 
+    const preElements = contentElement.querySelectorAll('pre');
     preElements.forEach((pre) => {
       const code = pre.querySelector('code');
       const textToCopy = code?.innerText || '';

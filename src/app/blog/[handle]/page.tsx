@@ -1,4 +1,5 @@
 
+
 import { getArticleByHandle, getArticles, getAllTags, getRelatedArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -15,6 +16,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { SlidersHorizontal } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { TableOfContents } from '@/components/TableOfContents';
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -88,9 +90,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </SheetContent>
           </Sheet>
       </div>
-       <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-            <main className="lg:col-span-3">
-                <article className="max-w-4xl mx-auto">
+       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <aside className="lg:col-span-3 hidden lg:block">
+                <TableOfContents content={article.contentHtml} />
+            </aside>
+            <main className="lg:col-span-6">
+                <article>
                     <Breadcrumbs items={breadcrumbItems} />
                     <header className="mb-8 text-center pt-4">
                         <div className="mb-4 flex flex-wrap gap-2 justify-center">
@@ -153,7 +158,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     </div>
                 )}
             </main>
-            <aside className="lg:col-span-1 relative hidden lg:block">
+            <aside className="lg:col-span-3 relative hidden lg:block">
                 <Suspense fallback={<div>Loading sidebar...</div>}>
                     <BlogSidebar tags={allTags} recentPosts={recentPosts} />
                 </Suspense>
