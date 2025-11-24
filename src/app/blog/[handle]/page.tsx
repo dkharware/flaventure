@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { SlidersHorizontal } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
@@ -82,6 +82,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   </Button>
               </SheetTrigger>
               <SheetContent className="hide-scrollbar">
+                <SheetHeader>
+                  <SheetTitle className="sr-only">Blog Sidebar</SheetTitle>
+                  <SheetDescription className="sr-only">Contains blog search, tags, and recent posts.</SheetDescription>
+                </SheetHeader>
                 <ScrollArea className="h-full pr-6">
                   <Suspense fallback={<div>Loading sidebar...</div>}>
                       <BlogSidebar tags={allTags} recentPosts={recentPosts} />
