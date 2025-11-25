@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, ShoppingCart } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, ShoppingCart, Info } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -29,6 +29,7 @@ import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { Input } from './ui/input';
 import { LiveSearch } from './LiveSearch';
+import { Separator } from './ui/separator';
 
 export default function Header() {
   const router = useRouter();
@@ -210,7 +211,7 @@ export default function Header() {
                  <span className="sr-only">Open navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className="overflow-y-auto">
               <SheetHeader>
                  <Link href="/" className="flex items-center gap-2 mb-4" aria-label="easyfreecv Home">
                     <Logo />
@@ -219,10 +220,25 @@ export default function Header() {
                 <SheetDescription className="sr-only">A list of navigation links for the easyfreecv website.</SheetDescription>
               </SheetHeader>
                <div className="flex flex-col space-y-2">
-                 <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
-                 <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> About</Link>
-                 <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
+                  <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
+                  <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
+                  <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
               </div>
+
+              <Separator className="my-4" />
+
+              <div className="flex flex-col space-y-2">
+                <h4 className="font-semibold text-sm px-4 py-2 flex items-center"><ShoppingCart className="mr-2 h-4 w-4" /> Shopify Topics</h4>
+                <Link href="/blog?query=headless" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Headless</Link>
+                <Link href="/blog?query=app%20bridge" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>App Bridge</Link>
+                <Link href="/blog?query=storefront%20api" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Storefront API</Link>
+                <Link href="/blog?query=theme%20development" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Theme Development</Link>
+                <Link href="/blog?query=admin%20api" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Admin API</Link>
+                <Link href="/blog?query=hydrogen" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Hydrogen</Link>
+                <Link href="/blog?query=oxygen" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Oxygen</Link>
+                <Link href="/blog?query=polaris" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Polaris</Link>
+              </div>
+
             </SheetContent>
           </Sheet>
         </div>
