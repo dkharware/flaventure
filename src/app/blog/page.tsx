@@ -28,6 +28,7 @@ interface BlogPageProps {
         tag?: string;
         before?: string;
         after?: string;
+        page?: string;
     };
 }
 
@@ -38,6 +39,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const tagQuery = searchParams?.tag;
   const before = searchParams?.before;
   const after = searchParams?.after;
+  const currentPage = parseInt(searchParams?.page || '1', 10);
   
   let query;
   if (searchQuery) {
@@ -187,7 +189,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                             </Link>
                         ))}
                       </div>
-                      <Pagination pageInfo={pageInfo} />
+                      <Pagination pageInfo={pageInfo} currentPage={currentPage} />
                     </div>
                 ) : (
                     <div className="text-center py-16 border rounded-lg bg-muted/20">
