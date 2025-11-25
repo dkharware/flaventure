@@ -87,9 +87,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         </div>
         <div className="relative overflow-hidden rounded-xl p-8 my-8 bg-background">
             <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-white to-orange-50/50 dark:from-purple-900/10 dark:via-background dark:to-orange-900/10"></div>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#d1eaff,transparent)] opacity-20 dark:opacity-5"></div>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_0%_0px,#ffd5d5,transparent)] opacity-20 dark:opacity-5"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-100/50 via-white to-pink-200/50 dark:from-yellow-900/10 dark:via-background dark:to-pink-900/10"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#fecaca,transparent)] opacity-20 dark:opacity-5"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_0%_0px,#fef9c3,transparent)] opacity-20 dark:opacity-5"></div>
             </div>
             <div className="relative z-10 text-center">
                 <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
