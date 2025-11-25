@@ -192,7 +192,7 @@ const faqData = [
             },
             {
                 question: "How can I improve my Shopify store's SEO?",
-                answer: "Shopify has built-in SEO features. To improve your ranking, use descriptive titles and meta descriptions, organize your site structure logically, add alt text to images, and create quality content for your blog."
+                answer: "Shopify has built-in SEO features. To improve your ranking, use descriptive titles and meta descriptions, organize your site structure logically, add alt text to images, and create quality content for your blog focusing on keywords like 'Shopify theme' or 'Shopify storefront'."
             },
             {
                 question: "What is the Shopify App Store?",
@@ -208,7 +208,7 @@ const faqData = [
         category: "Theme & App",
         questions: [
             {
-                question: "What is Liquid?",
+                question: "What is Liquid in Shopify theme development?",
                 answer: "Liquid is an open-source template language created by Shopify and written in Ruby. It is the backbone of Shopify themes and is used to load dynamic content to the pages of an online store."
             },
             {
@@ -220,19 +220,19 @@ const faqData = [
                 answer: "Sections are modular components of a theme that merchants can customize. Blocks are individual pieces of content within a section, such as an image, text, or a button, that can also be customized and reordered."
             },
             {
-                question: "How do I use the theme customizer?",
+                question: "How do I use the Shopify theme customizer?",
                 answer: "The Shopify theme customizer is a user-friendly interface in the Shopify admin that allows merchants to change the look and feel of their store without editing code. It works by modifying the settings defined in the theme's schema files."
             },
             {
-                question: "What is the Shopify Theme Kit?",
-                answer: "Theme Kit was the predecessor to the Shopify CLI for local theme development. While it's still functional, Shopify now recommends using the Shopify CLI for all new projects as it's more powerful and better integrated."
+                question: "What is Shopify App Bridge and when should I use it?",
+                answer: "Shopify App Bridge is a JavaScript library that allows your embedded app (loaded in an iframe in the Shopify admin) to communicate with the Shopify admin outside the iframe. You should use it for any app that needs to interact with native Shopify UI elements, like displaying a toast notification or opening a resource picker."
             },
             {
                 question: "How can I optimize a Shopify theme for performance?",
                 answer: "To optimize performance, you should minimize the use of large images, reduce the number of HTTP requests, minify CSS and JavaScript files, use lazy loading for images and videos, and avoid using too many third-party apps."
             },
             {
-                question: "What is the `schema` tag in a section file?",
+                question: "What is the `schema` tag in a Shopify section file?",
                 answer: "The `{% schema %}` tag contains a JSON object that defines the settings for a theme section. These settings appear in the theme customizer, allowing merchants to configure the section's content and appearance."
             },
 
@@ -241,7 +241,7 @@ const faqData = [
                 answer: "Dawn is Shopify's reference theme, built for performance, flexibility, and ease of use. It's a great starting point for custom theme development because it includes all of Shopify's latest features and best practices."
             },
             {
-                question: "How do theme app extensions work?",
+                question: "How do theme app extensions work in a Shopify theme?",
                 answer: "Theme app extensions allow apps to inject content into specific areas of a theme without modifying the theme code directly. This makes installations and uninstallations cleaner and reduces conflicts between apps."
             },
             {
@@ -255,19 +255,19 @@ const faqData = [
         questions: [
             {
                 question: "What is the Shopify Storefront API?",
-                answer: "The Storefront API gives you unauthenticated access to a shop’s data, allowing you to build custom storefronts on any platform (web, mobile, etc.). It provides read-only access to products, collections, and blogs, and supports checkout operations."
+                answer: "The Shopify Storefront API gives you unauthenticated access to a shop’s data, allowing you to build custom storefronts on any platform (web, mobile, etc.). It provides read-only access to products, collections, and blogs, and supports checkout operations."
             },
             {
                 question: "What's the difference between the Admin API and the Storefront API?",
-                answer: "The Admin API is used for building apps and integrations for the Shopify admin (e.g., managing products, orders). It requires authentication. The Storefront API is for building custom, public-facing shopping experiences and is largely unauthenticated."
+                answer: "The Admin API is for building apps for the Shopify admin (e.g., managing products, orders) and requires authentication. The Storefront API is for building custom, public-facing shopping experiences (a custom Shopify storefront) and is largely unauthenticated."
             },
             {
-                question: "How do I get a Storefront API access token?",
+                question: "How do I get a Shopify Storefront API access token?",
                 answer: "You can get an access token by creating a private app in your Shopify admin or by installing the Headless channel. You must grant the necessary permissions for the API scopes you need (e.g., `unauthenticated_read_product_listings`)."
             },
             {
-                question: "Is the Storefront API based on REST or GraphQL?",
-                answer: "The Storefront API is based on GraphQL. This allows you to request exactly the data you need in a single API call, making it more efficient than traditional REST APIs."
+                question: "Is the Shopify Storefront API based on REST or GraphQL?",
+                answer: "The Storefront API is based on GraphQL. This allows you to request exactly the data you need in a single API call, making it more efficient than traditional REST APIs for building a custom Shopify storefront."
             },
 
             {
@@ -276,7 +276,7 @@ const faqData = [
             },
             {
                 question: "Can I use the Storefront API to manage customer accounts?",
-                answer: "Yes, the Storefront API has mutations for creating customers, logging them in, and retrieving their information (like order history), allowing you to build a full-featured customer account section in your custom storefront."
+                answer: "Yes, the Storefront API has mutations for creating customers, logging them in, and retrieving their information (like order history), allowing you to build a full-featured customer account section in your custom Shopify storefront."
             },
             {
                 question: "Are there rate limits for the Storefront API?",
@@ -301,7 +301,7 @@ const faqData = [
         questions: [
             {
                 question: "What does 'headless commerce' mean?",
-                answer: "Headless commerce is an architecture where the frontend presentation layer (the 'head') is decoupled from the backend commerce functionality. This allows you to use a platform like Shopify for the backend while building a custom frontend with any technology you choose."
+                answer: "Headless commerce is an architecture where the frontend presentation layer (the 'head') is decoupled from the backend commerce functionality. This allows you to use a platform like Shopify for the backend while building a custom frontend (or 'Shopify storefront') with any technology you choose."
             },
             {
                 question: "Why would I choose a headless approach for Shopify?",
@@ -317,11 +317,11 @@ const faqData = [
             },
             {
                 question: "How does a headless setup affect Shopify apps?",
-                answer: "Many Shopify apps that modify the theme frontend will not work with a headless store. You will need to look for apps that are 'headless-compatible' or build the desired functionality yourself using the Storefront API."
+                answer: "Many Shopify apps that modify the theme frontend will not work with a headless store. You will need to look for apps that are 'headless-compatible' or build the desired functionality yourself using tools like Shopify App Bridge and the Storefront API."
             },
             {
                 question: "What are the challenges of a headless Shopify build?",
-                answer: "The challenges include increased development complexity, the need to reimplement features that are standard in themes (like cart management), and potential issues with third-party app compatibility. It's a trade-off for greater flexibility."
+                answer: "The challenges include increased development complexity, the need to reimplement features that are standard in Shopify themes (like cart management), and potential issues with third-party app compatibility. It's a trade-off for greater flexibility."
             },
             {
                 question: "How do I handle previews for content editors in a headless setup?",
@@ -337,7 +337,7 @@ const faqData = [
             },
             {
                 question: "Is headless more expensive than using a Shopify theme?",
-                answer: "The development and maintenance costs of a headless store are typically higher than using a pre-built theme due to the increased complexity. However, the Shopify plan costs remain the same."
+                answer: "The development and maintenance costs of a headless store are typically higher than using a pre-built Shopify theme due to the increased complexity. However, the Shopify plan costs remain the same."
             }
         ]
     },
@@ -430,5 +430,6 @@ export default function Home() {
     
 
     
+
 
 

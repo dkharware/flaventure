@@ -44,17 +44,17 @@ export function Hero() {
             <div className="container px-6 md:px-10 relative z-10">
                 <div className="flex flex-col items-center justify-center space-y-6 text-center">
                     <h1 className="text-4xl font-bold font-headline tracking-tighter sm:text-5xl xl:text-6xl/none text-foreground hero-element">
-                      Expert Shopify & Resume Mastery
+                      Master Shopify: Themes, App Bridge & Storefront API
                     </h1>
                     <p className="max-w-[700px] text-muted-foreground md:text-xl hero-element">
-                      Unlock your potential with in-depth articles on Shopify development and career-defining resume strategies. Your go-to resource for expert tips and trends.
+                      Your go-to resource for expert Shopify development. Unlock your potential with in-depth articles on Shopify themes, App Bridge, Storefront API, and headless solutions.
                     </p>
                     <div className="w-full max-w-lg hero-element">
                       <form onSubmit={handleSearch} className="flex gap-2 bg-card/50 backdrop-blur-sm p-2 rounded-full border">
                           <Input 
                             type="search" 
                             name="search"
-                            placeholder="Search for articles on 'headless', 'themes', 'seo'..." 
+                            placeholder="e.g. 'Shopify theme', 'app bridge', 'storefront api'..." 
                             className="flex-grow !bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                           />
                           <Button type="submit" size="icon" variant="glow" className="rounded-full">

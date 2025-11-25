@@ -29,26 +29,27 @@ const faviconUrl = "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asse
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'EasyFreeCV – Free CV Templates, Resume Tips & Shopify Expert Blogs',
+    default: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
     template: '%s | easyfreecv',
   },
-  description: 'EasyFreeCV provides free CV templates, resume writing tips, and expert Shopify blogs covering development, headless Shopify, apps, and eCommerce insights.',
+  description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, and resume building tips for Shopify developers.',
   keywords: [
-    'Shopify blog', 
-    'resume advice',
-    'career development',
+    'Shopify', 
+    'Shopify theme',
+    'Shopify app bridge',
+    'Shopify storefront',
     'Shopify development',
-    'headless commerce',
+    'headless Shopify',
     'Storefront API',
-    'Next.js blog',
+    'Shopify blog',
     'easyfreecv'
   ],
   authors: [{ name: 'easyfreecv', url: siteUrl }],
   creator: 'easyfreecv',
   publisher: 'easyfreecv',
   openGraph: {
-    title: 'EasyFreeCV – Free CV Templates, Resume Tips & Shopify Expert Blogs',
-    description: 'EasyFreeCV provides free CV templates, resume writing tips, and expert Shopify blogs covering development, headless Shopify, apps, and eCommerce insights.',
+    title: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
+    description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, and resume building tips for Shopify developers.',
     url: siteUrl,
     siteName: 'easyfreecv',
     images: [
@@ -64,8 +65,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'EasyFreeCV – Free CV Templates, Resume Tips & Shopify Expert Blogs',
-    description: 'EasyFreeCV provides free CV templates, resume writing tips, and expert Shopify blogs covering development, headless Shopify, apps, and eCommerce insights.',
+    title: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
+    description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, and resume building tips for Shopify developers.',
     images: ['/og-image.png'], // Assuming you'll add an og-image.png to your public folder
   },
   icons: {
@@ -118,6 +119,7 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
+        <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className="font-body antialiased">
           <LoaderProvider>
