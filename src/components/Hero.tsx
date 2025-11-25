@@ -9,6 +9,10 @@ import { ArrowRight, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { Input } from './ui/input';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 
 export function Hero() {
     const router = useRouter();
@@ -78,3 +82,5 @@ export function Hero() {
         </section>
     )
 }
+
+    

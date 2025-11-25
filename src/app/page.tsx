@@ -18,6 +18,7 @@ import { Badge } from '@/components/ui/badge';
 import { FaqClient } from '@/components/FaqClient';
 import { Hero } from '@/components/Hero';
 import { BlogTags } from '@/components/BlogTags';
+import { HomePageAnimations } from '@/components/HomePageAnimations';
 
 async function WebStoriesSection() {
     const { articles } = await getArticles(8);
@@ -391,7 +392,11 @@ const faqData = [
 
 async function TagsSection() {
     const tags = await getAllTags();
-    return <BlogTags tags={tags} />;
+    return (
+      <div className="scroll-section">
+        <BlogTags tags={tags} />
+      </div>
+    );
 }
 
 
@@ -418,6 +423,7 @@ function FaqSection() {
 export default function Home() {
   return (
     <div className="w-full">
+      <HomePageAnimations />
       <Hero />
       <TagsSection />
       <WebStoriesSection />
@@ -426,3 +432,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
