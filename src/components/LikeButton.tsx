@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -9,8 +9,13 @@ import { useToast } from '@/hooks/use-toast';
 
 export function LikeButton() {
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(Math.floor(Math.random() * 100) + 1);
+  const [likeCount, setLikeCount] = useState(0);
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Generate random count only on the client-side to avoid hydration mismatch
+    setLikeCount(Math.floor(Math.random() * 100) + 1);
+  }, []);
 
   const handleLike = () => {
     if (!liked) {
@@ -27,14 +32,16 @@ export function LikeButton() {
   };
 
   return (
-    <Button variant="outline" onClick={handleLike} className="group">
+    <Button variant="outline" onClick={handleLike} className="group" suppressHydrationWarning>
       <Heart
         className={cn(
           'h-5 w-5 mr-2 transition-all',
           liked ? 'fill-red-500 text-red-500' : 'text-muted-foreground group-hover:text-red-500'
         )}
       />
-      <span className={cn('font-medium', liked ? 'text-primary' : 'text-muted-foreground')}>{likeCount} Likes</span>
+      <span className={cn('font-medium', liked ? 'text-primary' : 'text-muted-foreground')}>
+        {likeCount > 0 ? `${likeCount} Likes` : 'Like'}
+      </span>
     </Button>
   );
 }
