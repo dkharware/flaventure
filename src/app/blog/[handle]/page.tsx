@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
-import { SlidersHorizontal, Eye } from 'lucide-react';
+import { SlidersHorizontal, Eye, Download } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TableOfContents } from '@/components/TableOfContents';
@@ -73,6 +73,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     { label: 'Blog', href: '/blog' },
     { label: article.title },
   ];
+  
+  const pdfUrl = article.pdf?.value;
 
   return (
     <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
@@ -113,14 +115,24 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                           ))}
                         </div>
                         <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4">{article.title}</h1>
-                        <div className="text-muted-foreground text-sm flex items-center justify-center gap-4">
+                        <div className="text-muted-foreground text-sm flex items-center justify-center flex-wrap gap-x-4 gap-y-2">
                             <p>{format(new Date(article.publishedAt), 'PPP')}</p>
-                            <span className="text-xs">•</span>
+                            <span className="text-xs hidden md:inline">•</span>
                             <div className="flex items-center gap-1">
                                 <Eye className="h-4 w-4" />
                                 <span>{article.viewCount.toLocaleString()} views</span>
                             </div>
                         </div>
+                        {pdfUrl && (
+                          <div className="mt-6 flex justify-center">
+                              <Button asChild>
+                                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer" download>
+                                      <Download className="mr-2 h-4 w-4" />
+                                      Download PDF
+                                  </a>
+                              </Button>
+                          </div>
+                        )}
                     </header>
 
                     {article.image && (

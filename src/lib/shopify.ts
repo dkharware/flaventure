@@ -113,6 +113,9 @@ const ARTICLE_QUERY = gql`
       articleByHandle(handle: $handle) {
         ...ArticleFragment
         contentHtml
+        pdf: metafield(namespace: "custom", key: "pdf_url") {
+          value
+        }
       }
     }
   }
@@ -214,7 +217,7 @@ export async function getRelatedArticles(handle: string, tags: string[]) {
     }
     const query = tags.map(tag => `tag:'${tag}'`).join(' OR ');
     const { articles } = await getArticles(4, query);
-    return articles.filter((a: any) => a.handle !== handle).slice(0, 3);
+    return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
 }
 
 export async function getArticleSuggestions(searchTerm: string) {
