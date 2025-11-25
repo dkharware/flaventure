@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -21,6 +21,25 @@ const mockComments: Comment[] = [
     { id: 1, author: 'Jane Doe', avatar: '/avatars/01.png', text: 'This was such a helpful article, thank you for sharing!', timestamp: new Date(Date.now() - 1000 * 60 * 15) },
     { id: 2, author: 'John Smith', avatar: '/avatars/02.png', text: 'Great insights on headless Shopify. I\'m planning to use Next.js for my next project.', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2) },
 ];
+
+const CommentTime = ({ timestamp }: { timestamp: Date }) => {
+  const [timeAgo, setTimeAgo] = useState('');
+
+  useEffect(() => {
+    // This code will only run on the client, after hydration
+    setTimeAgo(formatDistanceToNow(timestamp, { addSuffix: true }));
+  }, [timestamp]);
+  
+  if (!timeAgo) {
+      return null; // Or a placeholder
+  }
+
+  return (
+    <p className="text-xs text-muted-foreground">
+        {timeAgo}
+    </p>
+  );
+};
 
 
 export function CommentSection() {
@@ -92,9 +111,7 @@ export function CommentSection() {
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                     <p className="font-semibold">{comment.author}</p>
-                    <p className="text-xs text-muted-foreground">
-                        {formatDistanceToNow(comment.timestamp, { addSuffix: true })}
-                    </p>
+                    <CommentTime timestamp={comment.timestamp} />
                 </div>
                 <p className="text-muted-foreground mt-1">{comment.text}</p>
               </div>
