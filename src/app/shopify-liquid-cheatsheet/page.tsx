@@ -79,6 +79,21 @@ const liquidCheatsheetData = {
             description: "Refers to an order. Typically used on the Order Status page of the checkout. Common properties: .name, .total_price, .customer, .shipping_address, .line_items, .created_at",
             code: `<p>Order Number: {{ order.name }}</p>\n<p>Total: {{ order.total_price | money }}</p>`
         },
+        {
+            title: 'blog',
+            description: 'Refers to a blog on a blog page. Common properties: .title, .handle, .articles, .articles_count, .tags',
+            code: `<h1>{{ blog.title }}</h1>`
+        },
+        {
+            title: 'current_page',
+            description: 'Refers to the current page number when using pagination.',
+            code: `<p>You are on page {{ current_page }}</p>`
+        },
+        {
+            title: 'current_tags',
+            description: 'An array of tags currently being used to filter a collection or blog.',
+            code: `Current tags: {{ current_tags | join: ', ' }}`
+        },
     ],
     tags: [
         { title: '{% if %}', description: 'Used for conditional logic with `elsif` and `else`.', code: `{% if product.available %}\n  <p>In stock!</p>\n{% else %}\n  <p>Sold out.</p>\n{% endif %}`},
@@ -89,6 +104,8 @@ const liquidCheatsheetData = {
         { title: '{% paginate %}', description: 'Splits content (like products or articles) across multiple pages.', code: `{% paginate collection.products by 12 %}\n  ...\n{% endpaginate %}`},
         { title: '{% section %}', description: 'Renders a theme section from the `/sections` directory.', code: `{% section 'header' %}`},
         { title: '{% render %}', description: 'Renders a snippet from the `/snippets` directory and allows variables to be passed.', code: `{% render 'product-card', product: my_product %}`},
+        { title: '{% cycle %}', description: 'Cycles through a group of strings or variables each time it is called.', code: `{% for item in items %}\n <div class="{% cycle 'odd', 'even' %}">\n   {{ item.name }}\n </div>\n{% endfor %}` },
+        { title: '{% tablerow %}', description: 'Generates `<tr>` and `<td>` tags for a table, wrapping items from a for loop.', code: `<table>\n{% tablerow product in collection.products cols: 3 %}\n  {{ product.title }}\n{% endtablerow %}\n</table>` }
     ],
     filters: [
         { title: 'upcase', description: 'Converts a string to uppercase.', code: `{{ 'hello' | upcase }} -> HELLO`},
@@ -103,6 +120,12 @@ const liquidCheatsheetData = {
         { title: 'img_url', description: 'Returns the URL for a Shopify image, with an optional size parameter.', code: `{{ product.featured_image | img_url: '400x' }}`},
         { title: 'date', description: 'Formats a timestamp string using strftime-like format strings.', code: `{{ article.published_at | date: "%Y-%m-%d" }}`},
         { title: 'default', description: 'Returns a default value if the input is nil, false, or empty.', code: `{{ product.metafields.custom.title | default: "Default Title" }}`},
+        { title: 'append', description: 'Adds a string to the end of another string.', code: `{{ 'style' | append: '.css' }} -> style.css` },
+        { title: 'capitalize', description: 'Makes the first character of a string uppercase.', code: `{{ 'my title' | capitalize }} -> My title` },
+        { title: 'first', description: 'Returns the first item of an array.', code: `{{ product.tags | first }} -> "new"` },
+        { title: 'last', description: 'Returns the last item of an array.', code: `{{ product.tags | last }} -> "sale"` },
+        { title: 'asset_url', description: 'Returns the URL of a file in the "assets" folder of a theme.', code: `{{ 'styles.css' | asset_url }} -> //cdn.shopify.com/.../styles.css?v=123` },
+        { title: 'default_pagination', description: 'Generates pagination links.', code: `{{ paginate | default_pagination }}` }
     ],
 };
 
