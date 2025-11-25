@@ -101,6 +101,8 @@ const ARTICLES_QUERY = gql`
       pageInfo {
         hasNextPage
         hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
@@ -148,7 +150,7 @@ const ARTICLE_SUGGESTIONS_QUERY = gql`
 `;
 
 export async function getArticles(
-    count: number = 10, 
+    count: number = 12, 
     query?: string, 
     pagination: { before?: string; after?: string } = {}
 ) {
@@ -157,6 +159,7 @@ export async function getArticles(
     const variables: Record<string, any> = {
         query: query || null,
     };
+
     if (isPagingBackwards) {
         variables.last = count;
         variables.before = pagination.before;
@@ -176,12 +179,7 @@ export async function getArticles(
       viewCount: getDeterministicViewCount(edge.node.handle)
     }));
     
-    const edges = response.data.articles.edges;
-    const pageInfo = {
-        ...response.data.articles.pageInfo,
-        startCursor: edges.length > 0 ? edges[0].cursor : null,
-        endCursor: edges.length > 0 ? edges[edges.length - 1].cursor : null,
-    };
+    const pageInfo = response.data.articles.pageInfo;
 
     return { articles, pageInfo };
 }
@@ -194,7 +192,8 @@ export async function getArticleByHandle(handle: string) {
     const article = response.data.blog.articleByHandle;
     return {
         ...article,
-        viewCount: getDeterministicViewCount(article.handle)
+        viewCount: getDeterministicViewCount(article.handle),
+        pdf: article.pdf
     };
 }
 
@@ -212,11 +211,11 @@ export async function getAllTags() {
 
 export async function getRelatedArticles(handle: string, tags: string[]) {
     if (tags.length === 0) {
-        const { articles } = await getArticles(4);
-        return articles.filter((a: any) => a.handle !== handle).slice(0, 3);
+        const { articles } = await getArticles(3);
+        return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
     }
     const query = tags.map(tag => `tag:'${tag}'`).join(' OR ');
-    const { articles } = await getArticles(4, query);
+    const { articles } = await getArticles(3, query);
     return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
 }
 

@@ -28,35 +28,40 @@ interface BlogPageProps {
         tag?: string;
         before?: string;
         after?: string;
-        page?: string;
     };
 }
 
-const POSTS_PER_PAGE = 12;
+const POSTS_PER_PAGE = 11; // 1 for featured, 10 for grid on first page
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const searchQuery = searchParams?.query;
   const tagQuery = searchParams?.tag;
   const before = searchParams?.before;
   const after = searchParams?.after;
-  const currentPage = parseInt(searchParams?.page || '1', 10);
-  
+
   let query;
   if (searchQuery) {
     query = `title:*${searchQuery}* OR body:*${searchQuery}*`;
   } else if (tagQuery) {
     query = `tag:'${tagQuery}'`;
   }
+  
+  const isFirstPage = !before && !after;
 
-  const { articles, pageInfo } = await getArticles(POSTS_PER_PAGE, query, { before, after });
+  const { articles, pageInfo } = await getArticles(
+      isFirstPage ? POSTS_PER_PAGE + 1 : POSTS_PER_PAGE, 
+      query, 
+      { before, after }
+  );
+  
   const allTags = await getAllTags();
   const { articles: recentPosts } = await getArticles(5);
 
   const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Resume & Career Advice Blog");
   const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on resume building, career advice, and industry trends.";
 
-  const featuredArticle = articles && articles.length > 0 && !before && !after && !searchQuery && !tagQuery ? articles[0] : null;
-  const otherArticles = articles && articles.length > 0 ? (featuredArticle ? articles.slice(1) : articles) : [];
+  const featuredArticle = isFirstPage && articles.length > 0 ? articles[0] : null;
+  const otherArticles = isFirstPage ? articles.slice(1) : articles;
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -189,7 +194,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                             </Link>
                         ))}
                       </div>
-                      <Pagination pageInfo={pageInfo} currentPage={currentPage} />
+                      <Pagination pageInfo={pageInfo} />
                     </div>
                 ) : (
                     <div className="text-center py-16 border rounded-lg bg-muted/20">
