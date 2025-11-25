@@ -101,7 +101,8 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${readexPro.variable}`}>
       <head>
         <meta name="google-adsense-account" content="ca-pub-5982137810610586" />
-        <script async src="https://fundingchoicesmessages.google.com/i/pub-5982137810610586/pub-5982137810610586.js"></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5982137810610586" crossOrigin="anonymous"></script>
+        <script async src="https://fundingchoicesmessages.google.com/i/pub-5982137810610586?ers=1" nonce="pS_Qv_zWbJ90P3-2g156-A"></script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

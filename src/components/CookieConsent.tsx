@@ -11,20 +11,32 @@ export function CookieConsent() {
   const [showConsent, setShowConsent] = useState(false);
 
   useEffect(() => {
-    // We can't check localStorage on the server, so we do it in useEffect.
-    const consent = localStorage.getItem('cookie_consent');
-    if (consent === null) {
-      setShowConsent(true);
+    try {
+      const consent = localStorage.getItem('cookie_consent');
+      if (consent === null) {
+        setShowConsent(true);
+      }
+    } catch (e) {
+      // localStorage is not available
+      return;
     }
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem('cookie_consent', 'true');
+    try {
+      localStorage.setItem('cookie_consent', 'true');
+    } catch(e) {
+      // localStorage is not available
+    }
     setShowConsent(false);
   };
   
   const handleReject = () => {
-    localStorage.setItem('cookie_consent', 'false');
+    try {
+      localStorage.setItem('cookie_consent', 'false');
+    } catch(e) {
+      // localStorage is not available
+    }
     setShowConsent(false);
   };
 
