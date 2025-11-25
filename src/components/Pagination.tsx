@@ -19,7 +19,6 @@ interface PaginationProps {
 
 export function Pagination({ pageInfo }: PaginationProps) {
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('page') || 1);
 
   const createPageURL = (cursor: string, direction: 'before' | 'after'): string => {
     const currentParams = new URLSearchParams(Array.from(searchParams.entries()));
@@ -29,10 +28,8 @@ export function Pagination({ pageInfo }: PaginationProps) {
     
     if (direction === 'after') {
       currentParams.set('after', cursor);
-      currentParams.set('page', String(currentPage + 1));
     } else if (direction === 'before') {
       currentParams.set('before', cursor);
-      currentParams.set('page', String(currentPage - 1));
     }
     
     const queryString = currentParams.toString();
@@ -59,12 +56,6 @@ export function Pagination({ pageInfo }: PaginationProps) {
           Previous
         </Link>
       </Button>
-
-      {currentPage > 0 && 
-        <span className="text-sm font-medium text-muted-foreground">
-          Page {currentPage}
-        </span>
-      }
 
       <Button asChild variant="outline" disabled={!pageInfo.hasNextPage}>
         <Link href={nextPageUrl} aria-disabled={!pageInfo.hasNextPage}>

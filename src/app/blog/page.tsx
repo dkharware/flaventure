@@ -3,19 +3,19 @@
 import { getArticles, getAllTags } from '@/lib/shopify';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
-import { ArrowRight, SlidersHorizontal, Eye } from 'lucide-react';
+import { SlidersHorizontal, Eye } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
-import { Pagination } from '@/components/Pagination';
 import { BlogTags } from '@/components/BlogTags';
+import { ArticleList } from '@/components/ArticleList';
 
 export const metadata: Metadata = {
   title: 'Blog | easyfreecv',
@@ -26,8 +26,6 @@ interface BlogPageProps {
     searchParams?: {
         query?: string;
         tag?: string;
-        before?: string;
-        after?: string;
     };
 }
 
@@ -36,8 +34,6 @@ const POSTS_PER_PAGE = 11; // 1 for featured, 10 for grid on first page
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const searchQuery = searchParams?.query;
   const tagQuery = searchParams?.tag;
-  const before = searchParams?.before;
-  const after = searchParams?.after;
 
   let query;
   if (searchQuery) {
@@ -46,12 +42,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     query = `tag:'${tagQuery}'`;
   }
   
-  const isFirstPage = !before && !after;
-
   const { articles, pageInfo } = await getArticles(
-      isFirstPage ? POSTS_PER_PAGE + 1 : POSTS_PER_PAGE, 
-      query, 
-      { before, after }
+      POSTS_PER_PAGE + 1, 
+      query
   );
   
   const allTags = await getAllTags();
@@ -60,8 +53,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Resume & Career Advice Blog");
   const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on resume building, career advice, and industry trends.";
 
-  const featuredArticle = isFirstPage && articles.length > 0 ? articles[0] : null;
-  const otherArticles = isFirstPage ? articles.slice(1) : articles;
+  const featuredArticle = articles.length > 0 ? articles[0] : null;
+  const initialArticles = articles.slice(1);
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -155,46 +148,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                         </Link>
                       )}
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-                        {otherArticles.map((article: any) => (
-                            <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
-                            <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                                {article.image && (
-                                <div className="relative h-32 w-full overflow-hidden">
-                                    <Image
-                                    src={article.image.url}
-                                    alt={article.image.altText || article.title}
-                                    fill
-                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                    />
-                                    <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
-                                        {article.tags?.slice(0, 2).map((tag: string) => (
-                                            <Badge key={tag} variant="secondary" className="shadow-md">{tag}</Badge>
-                                        ))}
-                                    </div>
-                                </div>
-                                )}
-                                <CardHeader className="p-4">
-                                    <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-3">{article.title}</CardTitle>
-                                </CardHeader>
-                                <CardContent className="flex-grow flex flex-col p-4 pt-0">
-                                    <div
-                                        className="text-sm text-muted-foreground flex-grow line-clamp-2"
-                                        dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
-                                    />
-                                    <div className="text-xs text-muted-foreground mt-4 pt-4 border-t flex items-center justify-between">
-                                        <span>{format(new Date(article.publishedAt), 'PPP')}</span>
-                                        <div className="flex items-center gap-1">
-                                            <Eye className="h-3 w-3" />
-                                            <span>{article.viewCount.toLocaleString()}</span>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                            </Link>
-                        ))}
-                      </div>
-                      <Pagination pageInfo={pageInfo} />
+                      <ArticleList 
+                        initialArticles={initialArticles} 
+                        initialPageInfo={pageInfo} 
+                        query={query} 
+                      />
+                      
                     </div>
                 ) : (
                     <div className="text-center py-16 border rounded-lg bg-muted/20">
