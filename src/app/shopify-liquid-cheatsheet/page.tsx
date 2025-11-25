@@ -9,7 +9,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import type { Metadata } from 'next';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
-import { Code, Cuboid, Filter, LayoutTemplate, SquareBrackets } from 'lucide-react';
+import { Code, Cuboid, Filter, LayoutTemplate } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -187,5 +187,3 @@ export default function ShopifyLiquidCheatsheetPage() {
     </div>
   );
 }
-
-    
