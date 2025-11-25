@@ -14,6 +14,7 @@ export default function ShopifyLiquidCheatsheetPage() {
         { label: 'Blog', href: '/blog' },
         { label: 'Shopify Liquid Cheatsheet' },
     ];
+
   return (
     <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
         <div className="max-w-4xl mx-auto prose dark:prose-invert">
@@ -30,7 +31,7 @@ export default function ShopifyLiquidCheatsheetPage() {
                 <div className="mt-4 space-y-4">
                     <div>
                         <h3 className="font-semibold">Syntax</h3>
-                        <p>Liquid has two types of delimiters: Double curly braces `{{ ... }}` for outputs, and curly braces with percentages `{% ... %}` for logic.</p>
+                        <p>Liquid has two types of delimiters: Double curly braces `{{ '{{' }} ... }} ` for outputs, and curly braces with percentages `{% '{%' %} ... %}` for logic.</p>
                     </div>
                     <div>
                         <h3 className="font-semibold">Truthy and Falsy</h3>
@@ -56,14 +57,14 @@ export default function ShopifyLiquidCheatsheetPage() {
             <section id="tags" className="mb-12">
                 <h2 className="text-2xl font-bold font-headline">Tags</h2>
                 <div className="mt-4 space-y-4">
-                    <div><h3 className="font-semibold">{'{% if %}'}</h3><p>Used for conditional logic with `if`, `elsif`, and `else`.</p></div>
-                    <div><h3 className="font-semibold">{'{% unless %}'}</h3><p>The opposite of `if`. The code block executes if the condition is false.</p></div>
-                    <div><h3 className="font-semibold">{'{% case %}'}</h3><p>Creates a switch statement to compare a variable against different values using `when`.</p></div>
-                    <div><h3 className="font-semibold">{'{% for %}'}</h3><p>Loops over items in an array.</p></div>
-                    <div><h3 className="font-semibold">{'{% form %}'}</h3><p>Renders an HTML form tag with the necessary Shopify attributes.</p></div>
-                    <div><h3 className="font-semibold">{'{% paginate %}'}</h3><p>Used to split content across multiple pages.</p></div>
-                    <div><h3 className="font-semibold">{'{% section %}'}</h3><p>Renders a theme section from the /sections directory.</p></div>
-                    <div><h3 className="font-semibold">{'{% render %}'}</h3><p>Renders a snippet from the /snippets directory, allowing variables to be passed.</p></div>
+                    <div><h3 className="font-semibold">{`{% if %}`}</h3><p>Used for conditional logic with `if`, `elsif`, and `else`.</p></div>
+                    <div><h3 className="font-semibold">{`{% unless %}`}</h3><p>The opposite of `if`. The code block executes if the condition is false.</p></div>
+                    <div><h3 className="font-semibold">{`{% case %}`}</h3><p>Creates a switch statement to compare a variable against different values using `when`.</p></div>
+                    <div><h3 className="font-semibold">{`{% for %}`}</h3><p>Loops over items in an array.</p></div>
+                    <div><h3 className="font-semibold">{`{% form %}`}</h3><p>Renders an HTML form tag with the necessary Shopify attributes.</p></div>
+                    <div><h3 className="font-semibold">{`{% paginate %}`}</h3><p>Used to split content across multiple pages.</p></div>
+                    <div><h3 className="font-semibold">{`{% section %}`}</h3><p>Renders a theme section from the /sections directory.</p></div>
+                    <div><h3 className="font-semibold">{`{% render %}`}</h3><p>Renders a snippet from the /snippets directory, allowing variables to be passed.</p></div>
                 </div>
             </section>
 
