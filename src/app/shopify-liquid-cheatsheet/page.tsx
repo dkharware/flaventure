@@ -121,26 +121,26 @@ export default function ShopifyLiquidCheatsheetPage() {
                         <CheatSheetCard title="Control Flow">
                             <p className="text-muted-foreground mb-4">Used for conditional logic.</p>
                             <Accordion type="single" collapsible>
-                                <AccordionItem value="if"><AccordionTrigger>{% if %}</AccordionTrigger><AccordionContent><pre><code className="text-xs">{`{% if product.available %}\n  In stock!\n{% elsif product.tags contains 'pre-order' %}\n  Pre-order now!\n{% else %}\n  Sold out.\n{% endif %}`}</code></pre></AccordionContent></AccordionItem>
-                                <AccordionItem value="unless"><AccordionTrigger>{% unless %}</AccordionTrigger><AccordionContent>The opposite of `if`. The code block executes if the condition is false. <pre><code className="text-xs">{`{% unless product.available %}\n  Sold Out\n{% endunless %}`}</code></pre></AccordionContent></AccordionItem>
-                                <AccordionItem value="case"><AccordionTrigger>{% case %}</AccordionTrigger><AccordionContent>Creates a switch statement to compare a variable against different values. <pre><code className="text-xs">{`{% case product.type %}\n{% when 'Shirt' %}\n  This is a shirt.\n{% when 'Pants' %}\n  These are pants.\n{% else %}\n  Another type of product.\n{% endcase %}`}</code></pre></AccordionContent></AccordionItem>
+                                <AccordionItem value="if"><AccordionTrigger>{'{% if %}'}</AccordionTrigger><AccordionContent><pre><code className="text-xs">{`{% if product.available %}\n  In stock!\n{% elsif product.tags contains 'pre-order' %}\n  Pre-order now!\n{% else %}\n  Sold out.\n{% endif %}`}</code></pre></AccordionContent></AccordionItem>
+                                <AccordionItem value="unless"><AccordionTrigger>{'{% unless %}'}</AccordionTrigger><AccordionContent>The opposite of `if`. The code block executes if the condition is false. <pre><code className="text-xs">{`{% unless product.available %}\n  Sold Out\n{% endunless %}`}</code></pre></AccordionContent></AccordionItem>
+                                <AccordionItem value="case"><AccordionTrigger>{'{% case %}'}</AccordionTrigger><AccordionContent>Creates a switch statement to compare a variable against different values. <pre><code className="text-xs">{`{% case product.type %}\n{% when 'Shirt' %}\n  This is a shirt.\n{% when 'Pants' %}\n  These are pants.\n{% else %}\n  Another type of product.\n{% endcase %}`}</code></pre></AccordionContent></AccordionItem>
                             </Accordion>
                         </CheatSheetCard>
                         <CheatSheetCard title="Iteration">
                              <p className="text-muted-foreground mb-4">Iterates over an array of items.</p>
                              <Accordion type="single" collapsible>
-                                <AccordionItem value="for"><AccordionTrigger>{% for %}</AccordionTrigger><AccordionContent>Loops over items in an array. <pre><code className="text-xs">{`{% for product in collection.products %}\n  <p>{{ product.title }}</p>\n{% endfor %}`}</code></pre></AccordionContent></AccordionItem>
-                                <AccordionItem value="for-else"><AccordionTrigger>{% else %} for a for loop</AccordionTrigger><AccordionContent>A for loop can take an optional `else` block that executes if the array is empty. <pre><code className="text-xs">{`{% for product in collection.products %}\n  <p>{{ product.title }}</p>\n{% else %}\n  <p>No products in this collection.</p>\n{% endfor %}`}</code></pre></AccordionContent></AccordionItem>
+                                <AccordionItem value="for"><AccordionTrigger>{'{% for %}'}</AccordionTrigger><AccordionContent>Loops over items in an array. <pre><code className="text-xs">{`{% for product in collection.products %}\n  <p>{{ product.title }}</p>\n{% endfor %}`}</code></pre></AccordionContent></AccordionItem>
+                                <AccordionItem value="for-else"><AccordionTrigger>{'{% else %} for a for loop'}</AccordionTrigger><AccordionContent>A for loop can take an optional `else` block that executes if the array is empty. <pre><code className="text-xs">{`{% for product in collection.products %}\n  <p>{{ product.title }}</p>\n{% else %}\n  <p>No products in this collection.</p>\n{% endfor %}`}</code></pre></AccordionContent></AccordionItem>
                                 <AccordionItem value="limit-offset"><AccordionTrigger>limit & offset</AccordionTrigger><AccordionContent>Control the number of items and starting point in a loop. <pre><code className="text-xs">{`{% for product in collection.products limit: 5 offset: 10 %}`}</code></pre></AccordionContent></AccordionItem>
                              </Accordion>
                         </CheatSheetCard>
                         <CheatSheetCard title="Theme Tags">
                             <p className="text-muted-foreground mb-4">Tags specific to Shopify theme structure.</p>
                             <Accordion type="single" collapsible>
-                                <AccordionItem value="form"><AccordionTrigger>{% form %}</AccordionTrigger><AccordionContent>Renders an HTML `&lt;form&gt;` tag with the necessary Shopify attributes. Example: `{% form 'product', product %}`</AccordionContent></AccordionItem>
-                                <AccordionItem value="paginate"><AccordionTrigger>{% paginate %}</AccordionTrigger><AccordionContent>Used to split content across multiple pages. Must be closed with `{% endpaginate %}`. The `{{ paginate | default_pagination }}` object renders pagination links.</AccordionContent></AccordionItem>
-                                <AccordionItem value="section"><AccordionTrigger>{% section %}</AccordionTrigger><AccordionContent>Renders a theme section from the `/sections` directory. Example: `{% section 'header' %}`</AccordionContent></AccordionItem>
-                                <AccordionItem value="render"><AccordionTrigger>{% render %}</AccordionTrigger><AccordionContent>Renders a snippet from the `/snippets` directory, allowing variables to be passed. Example: `{% render 'my-snippet', my_variable: 'hello' %}`</AccordionContent></AccordionItem>
+                                <AccordionItem value="form"><AccordionTrigger>{'{% form %}'}</AccordionTrigger><AccordionContent>Renders an HTML `&lt;form&gt;` tag with the necessary Shopify attributes. Example: `{% form 'product', product %}`</AccordionContent></AccordionItem>
+                                <AccordionItem value="paginate"><AccordionTrigger>{'{% paginate %}'}</AccordionTrigger><AccordionContent>Used to split content across multiple pages. Must be closed with `{% endpaginate %}`. The `{{ paginate | default_pagination }}` object renders pagination links.</AccordionContent></AccordionItem>
+                                <AccordionItem value="section"><AccordionTrigger>{'{% section %}'}</AccordionTrigger><AccordionContent>Renders a theme section from the `/sections` directory. Example: `{% section 'header' %}`</AccordionContent></AccordionItem>
+                                <AccordionItem value="render"><AccordionTrigger>{'{% render %}'}</AccordionTrigger><AccordionContent>Renders a snippet from the `/snippets` directory, allowing variables to be passed. Example: `{% render 'my-snippet', my_variable: 'hello' %}`</AccordionContent></AccordionItem>
                             </Accordion>
                         </CheatSheetCard>
                      </CheatSheetSection>
@@ -177,7 +177,7 @@ export default function ShopifyLiquidCheatsheetPage() {
                           <CheatSheetCard title="URL Filters">
                             <Accordion type="single" collapsible>
                              <AccordionItem value="img_url"><AccordionTrigger>img_url</AccordionTrigger><AccordionContent>Returns the URL for a Shopify image. Can take a size parameter, e.g., `{{ product.featured_image | image_url: width: 500 }}`.</AccordionContent></AccordionItem>
-                             <AccordionItem value="link_to_tag"><AccordionTrigger>link_to_tag</AccordionTrigger><AccordionContent>Creates an `<a>` tag that links to a collection page filtered by a tag. `{{ 'Shopify' | link_to_tag: 'Shopify' }}`.</AccordionContent></AccordionItem>
+                             <AccordionItem value="link_to_tag"><AccordionTrigger>link_to_tag</AccordionTrigger><AccordionContent>Creates an `&lt;a&gt;` tag that links to a collection page filtered by a tag. `{{ 'Shopify' | link_to_tag: 'Shopify' }}`.</AccordionContent></AccordionItem>
                            </Accordion>
                          </CheatSheetCard>
                      </CheatSheetSection>
@@ -187,3 +187,5 @@ export default function ShopifyLiquidCheatsheetPage() {
     </div>
   );
 }
+
+    
