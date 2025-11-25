@@ -32,6 +32,49 @@ import { LiveSearch } from './LiveSearch';
 import { Separator } from './ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
+const shopifyComponents = [
+    {
+      title: "Headless",
+      href: "/blog?query=headless",
+      description: "Learn about building custom storefronts with modern frameworks.",
+    },
+    {
+      title: "App Bridge",
+      href: "/blog?query=app%20bridge",
+      description: "Integrate your app seamlessly with the Shopify admin.",
+    },
+    {
+        title: "Theme Development",
+        href: "/blog?query=theme%20development",
+        description: "Create beautiful and performant themes for the online store.",
+    },
+    {
+        title: "Storefront API",
+        href: "/blog?query=storefront%20api",
+        description: "Master the API for building unique shopping experiences.",
+    },
+    {
+        title: "Admin API",
+        href: "/blog?query=admin%20api",
+        description: "Manage your store programmatically.",
+    },
+    {
+        title: "Hydrogen",
+        href: "/blog?query=hydrogen",
+        description: "Build fast, custom storefronts with React.",
+    },
+    {
+        title: "Oxygen",
+        href: "/blog?query=oxygen",
+        description: "Deploy and host your Hydrogen storefronts.",
+    },
+    {
+        title: "Polaris",
+        href: "/blog?query=polaris",
+        description: "Use Shopify's design system for your apps.",
+    },
+];
+
 export default function Header() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
@@ -137,33 +180,44 @@ export default function Header() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Shopify</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <a
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                            href="/shopify-liquid-cheatsheet"
-                          >
-                            <BookCopy className="h-6 w-6" />
-                            <div className="mb-2 mt-4 text-lg font-medium">
-                              Liquid Cheatsheet
-                            </div>
-                            <p className="text-sm leading-tight text-muted-foreground">
-                              Your quick reference guide for Shopify Liquid objects, tags, and filters.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <ListItem href="/blog?query=headless" title="Headless">
-                        Learn about building custom storefronts with modern frameworks.
-                      </ListItem>
-                      <ListItem href="/blog?query=app%20bridge" title="App Bridge">
-                        Integrate your app seamlessly with the Shopify admin.
-                      </ListItem>
-                      <ListItem href="/blog?query=storefront%20api" title="Storefront API">
-                        Master the API for building unique shopping experiences.
-                      </ListItem>
-                    </ul>
+                     <ul className="grid gap-3 p-4 md:w-[550px] md:grid-cols-[.75fr_1fr]">
+                        <li className="row-span-4">
+                            <NavigationMenuLink asChild>
+                            <a
+                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                href="/blog?tag=Shopify"
+                            >
+                                <ShoppingCart className="h-6 w-6" />
+                                <div className="mb-2 mt-4 text-lg font-medium">Shopify Topics</div>
+                                <p className="text-sm leading-tight text-muted-foreground">
+                                    Explore all our articles related to the Shopify ecosystem.
+                                </p>
+                            </a>
+                            </NavigationMenuLink>
+                        </li>
+                        <div className="grid grid-cols-2 gap-3">
+                            {shopifyComponents.slice(0, 4).map((component) => (
+                                <ListItem
+                                    key={component.title}
+                                    title={component.title}
+                                    href={component.href}
+                                >
+                                    {component.description}
+                                </ListItem>
+                            ))}
+                        </div>
+                        <li className="col-span-1 grid grid-cols-2 gap-3">
+                            {shopifyComponents.slice(4).map((component) => (
+                                <ListItem
+                                    key={component.title}
+                                    title={component.title}
+                                    href={component.href}
+                                >
+                                    {component.description}
+                                </ListItem>
+                            ))}
+                        </li>
+                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
@@ -254,5 +308,7 @@ export default function Header() {
     </header>
   );
 }
+
+    
 
     
