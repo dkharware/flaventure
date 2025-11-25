@@ -24,6 +24,7 @@ const readexPro = Readex_Pro({
 });
 
 const siteUrl = 'https://easyfreecv.com';
+const faviconUrl = "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico?v=2";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -68,9 +69,9 @@ export const metadata: Metadata = {
     images: ['/og-image.png'], // Assuming you'll add an og-image.png to your public folder
   },
   icons: {
-    icon: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico',
-    shortcut: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico',
-    apple: 'https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico',
+    icon: faviconUrl,
+    shortcut: faviconUrl,
+    apple: faviconUrl,
   },
   manifest: `${siteUrl}/site.webmanifest`,
 };
@@ -107,7 +108,7 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-         <link rel="icon" href="https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico" type="image/x-icon" sizes="16x16"/>
+         <link rel="icon" href={faviconUrl} type="image/x-icon" sizes="16x16"/>
       </head>
       <body className="font-body antialiased">
           <LoaderProvider>
