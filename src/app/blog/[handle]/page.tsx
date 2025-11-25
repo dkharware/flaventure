@@ -77,8 +77,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const pdfUrl = article.pdf?.value;
 
   return (
-    <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
-        <Breadcrumbs items={breadcrumbItems} className="mb-8" />
+    <>
+      <div className="border-b">
+        <div className="container mx-auto px-3 md:px-6">
+          <Breadcrumbs items={breadcrumbItems} className="py-4" />
+        </div>
+      </div>
+      <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <div className="lg:hidden fixed bottom-24 right-4 z-40">
           <Sheet>
               <SheetTrigger asChild>
@@ -199,5 +204,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </aside>
         </div>
     </div>
+    </>
   );
 }
