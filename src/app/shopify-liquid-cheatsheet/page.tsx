@@ -1,11 +1,134 @@
 
 import type { Metadata } from 'next';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+  } from "@/components/ui/accordion";
+import { Card, CardContent } from '@/components/ui/card';
+import { Code } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Shopify Liquid Cheatsheet: Objects, Tags & Filters',
   description: 'A comprehensive Shopify Liquid tutorial and cheatsheet covering all major global objects, control flow tags, and common filters for Shopify theme development.',
   keywords: ['Shopify Liquid', 'Liquid cheatsheet', 'Shopify theme development', 'Liquid objects', 'Liquid filters', 'Liquid tags', 'Shopify tutorial'],
+};
+
+const liquidCheatsheetData = {
+    basics: [
+        {
+            title: 'Output Syntax',
+            description: "Use double curly braces `{{ ... }}` to output dynamic content. The content inside is evaluated and displayed.",
+            code: `<h1>{{ product.title }}</h1>`
+        },
+        {
+            title: 'Tag Syntax',
+            description: "Use curly braces with percentages `{% ... %}` for logic and control flow, like loops or conditionals.",
+            code: `{% for product in collection.products %}\n  <p>{{ product.title }}</p>\n{% endfor %}`
+        },
+        {
+            title: 'Truthy and Falsy',
+            description: "In Liquid, only `false` and `nil` are considered 'falsy'. Everything else, including `0` and empty strings, is 'truthy'.",
+            code: `{% assign empty_string = "" %}\n{% if empty_string %}\n  This will be rendered.\n{% endif %}`
+        }
+    ],
+    objects: [
+        {
+            title: 'product',
+            description: 'Refers to the product on a product page. Contains details like title, price, and images.',
+            code: `<p>Price: {{ product.price | money }}</p>`
+        },
+        {
+            title: 'collection',
+            description: 'Refers to the collection on a collection page. Provides access to collection details and its products.',
+            code: `<h2>{{ collection.title }}</h2>\n\n<ul>\n{% for product in collection.products %}\n  <li>{{ product.title }}</li>\n{% endfor %}\n</ul>`
+        },
+        {
+            title: 'cart',
+            description: "Contains information about the customer's shopping cart, like total price and item count.",
+            code: `<p>You have {{ cart.item_count }} items in your cart.</p>`
+        },
+        {
+            title: 'customer',
+            description: 'Refers to the currently logged-in customer. It is `nil` if the user is not logged in.',
+            code: `{% if customer %}\n  <p>Welcome, {{ customer.first_name }}!</p>\n{% else %}\n  <a href="/account/login">Login</a>\n{% endif %}`
+        },
+        {
+            title: 'shop',
+            description: 'Holds global information about the store, such as name, currency, and domain.',
+            code: `<p>&copy; {{ "now" | date: "%Y" }} {{ shop.name }}</p>`
+        },
+        {
+            title: 'linklists',
+            description: 'Allows access to all navigation menus created in the admin. Use handles to access specific menus.',
+            code: `{% for link in linklists.main-menu.links %}\n  <a href="{{ link.url }}">{{ link.title }}</a>\n{% endfor %}`
+        },
+        {
+            title: 'page',
+            description: 'Refers to the content of a standard page created in the Shopify admin (Online Store > Pages).',
+            code: `<h1>{{ page.title }}</h1>\n<div>{{ page.content }}</div>`
+        },
+        {
+            title: 'article',
+            description: 'Refers to a blog article on an article page.',
+            code: `<h1>{{ article.title }}</h1>\n<p>By {{ article.authorV2.name }}</p>`
+        },
+        {
+            title: 'order',
+            description: "Refers to an order. Typically used on the Order Status page of the checkout.",
+            code: `<p>Order Number: {{ order.name }}</p>\n<p>Total: {{ order.total_price | money }}</p>`
+        },
+    ],
+    tags: [
+        { title: '{% if %}', description: 'Used for conditional logic with `if`, `elsif`, and `else`.', code: `{% if product.available %}\n  <p>In stock!</p>\n{% else %}\n  <p>Sold out.</p>\n{% endif %}`},
+        { title: '{% unless %}', description: 'The opposite of `if`. Executes code if the condition is false.', code: `{% unless product.available %}\n  <p>This product is currently unavailable.</p>\n{% endunless %}`},
+        { title: '{% case %}', description: 'Creates a switch statement to compare a variable against different values.', code: `{% case product.type %}\n  {% when "Shirt" %}\n    <p>This is a shirt.</p>\n  {% when "Pants" %}\n    <p>These are pants.</p>\n  {% else %}\n    <p>Other product type.</p>\n{% endcase %}`},
+        { title: '{% for %}', description: 'Loops over items in an array. Can be used with `limit` and `offset`.', code: `{% for tag in product.tags %}\n  <span>{{ tag }}</span>\n{% endfor %}`},
+        { title: '{% form %}', description: 'Renders an HTML `<form>` tag with the necessary Shopify attributes.', code: `{% form 'product', product %}\n  ...\n{% endform %}`},
+        { title: '{% paginate %}', description: 'Splits content (like products or articles) across multiple pages.', code: `{% paginate collection.products by 12 %}\n  ...\n{% endpaginate %}`},
+        { title: '{% section %}', description: 'Renders a theme section from the `/sections` directory.', code: `{% section 'header' %}`},
+        { title: '{% render %}', description: 'Renders a snippet from the `/snippets` directory and allows variables to be passed.', code: `{% render 'product-card', product: my_product %}`},
+    ],
+    filters: [
+        { title: 'upcase', description: 'Converts a string to uppercase.', code: `{{ 'hello' | upcase }} -> HELLO`},
+        { title: 'truncate', description: 'Shortens a string to a specific length, appending "...".', code: `{{ 'Hello world' | truncate: 8 }} -> Hello...`},
+        { title: 'strip_html', description: 'Removes all HTML tags from a string.', code: `{{ '<h1>Title</h1>' | strip_html }} -> Title`},
+        { title: 'handleize', description: 'Converts a string into a URL-friendly handle.', code: `{{ "My Awesome Page" | handleize }} -> my-awesome-page`},
+        { title: 'money', description: "Formats a price according to the store's currency settings.", code: `{{ 1999 | money }} -> $19.99`},
+        { title: 'times', description: 'Multiplies a number.', code: `{{ 5 | times: 3 }} -> 15`},
+        { title: 'join', description: 'Combines array elements into a single string, separated by a specified delimiter.', code: `{% assign tags = "one, two, three" | split: ", " %}\n{{ tags | join: ' & ' }} -> one & two & three`},
+        { title: 'size', description: 'Returns the number of items in an array or characters in a string.', code: `{{ product.tags | size }} -> 3`},
+        { title: 'where', description: 'Filters an array to only include items that have a given value for a property.', code: `{% assign available_products = collection.products | where: "available", true %}`},
+        { title: 'img_url', description: 'Returns the URL for a Shopify image, with an optional size parameter.', code: `{{ product.featured_image | img_url: '400x' }}`},
+        { title: 'date', description: 'Formats a timestamp string using strftime-like format strings.', code: `{{ article.published_at | date: "%Y-%m-%d" }}`},
+        { title: 'default', description: 'Returns a default value if the input is nil, false, or empty.', code: `{{ product.metafields.custom.title | default: "Default Title" }}`},
+    ],
+};
+
+const CheatSheetCard = ({ title, description, code }: { title: string, description: string, code: string }) => {
+    return (
+        <Card className="flex flex-col">
+            <CardContent className="p-0">
+                <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value={title} className="border-none">
+                        <AccordionTrigger className="p-4 font-semibold text-left hover:no-underline">
+                           {title}
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-4">
+                            <p className="text-sm text-muted-foreground mb-4">{description}</p>
+                            <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto">
+                                <code>
+                                    {code}
+                                </code>
+                            </pre>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            </CardContent>
+        </Card>
+    );
 };
 
 export default function ShopifyLiquidCheatsheetPage() {
@@ -18,70 +141,40 @@ export default function ShopifyLiquidCheatsheetPage() {
   return (
     <>
       <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
-          <div className="max-w-4xl mx-auto prose dark:prose-invert">
+          <div className="max-w-7xl mx-auto">
               <Breadcrumbs items={breadcrumbItems} className="mb-8" />
               <div className="text-center mb-12">
                   <h1 className="text-4xl md:text-5xl font-headline font-bold">Shopify Liquid Cheatsheet</h1>
-                  <p className="text-lg text-muted-foreground mt-2">
-                      Your quick reference guide for Shopify Liquid objects, filters, and tags.
+                  <p className="text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
+                      Your quick reference guide for Shopify Liquid. Click on any item to see a description and code example.
                   </p>
               </div>
 
               <section id="basics" className="mb-12">
-                  <h2 className="text-2xl font-bold font-headline">Basics</h2>
-                  <div className="mt-4 space-y-4">
-                      <div>
-                          <h3 className="font-semibold">Syntax</h3>
-                          <p>Liquid has two types of delimiters: Double curly braces <code>{`{{ ... }}`}</code> for outputs, and curly braces with percentages <code>{`{% ... %}`}</code> for logic.</p>
-                      </div>
-                      <div>
-                          <h3 className="font-semibold">Truthy and Falsy</h3>
-                          <p>In Liquid, only `false` and `nil` are falsy. Everything else is truthy, including 0, empty strings, and empty arrays.</p>
-                      </div>
+                  <h2 className="text-2xl font-bold font-headline mb-6">Basics</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {liquidCheatsheetData.basics.map((item) => <CheatSheetCard key={item.title} {...item} />)}
                   </div>
               </section>
 
               <section id="objects" className="mb-12">
-                  <h2 className="text-2xl font-bold font-headline">Objects</h2>
-                  <div className="mt-4 space-y-4">
-                      <div><h3 className="font-semibold">product</h3><p>The product object on a product page. Contains all details like `.title`, `.price`, `.images`, etc.</p></div>
-                      <div><h3 className="font-semibold">collection</h3><p>The collection object on a collection page. Provides access to collection details and its products via `collection.products`.</p></div>
-                      <div><h3 className="font-semibold">cart</h3><p>Contains all items in the customer's cart, `.total_price`, and `.item_count`.</p></div>
-                      <div><h3 className="font-semibold">customer</h3><p>The currently logged-in customer. It's `nil` if the customer is not logged in.</p></div>
-                      <div><h3 className="font-semibold">shop</h3><p>Holds global information about the store, such as `.name`, `.currency`, and `.domain`.</p></div>
-                      <div><h3 className="font-semibold">linklists</h3><p>Allows access to all navigation menus. Example: `linklists.main-menu.links`.</p></div>
-                      <div><h3 className="font-semibold">page</h3><p>The currently viewed page (created in Online Store &gt; Pages).</p></div>
-                      <div><h3 className="font-semibold">article</h3><p>The currently viewed blog article on an article page.</p></div>
+                  <h2 className="text-2xl font-bold font-headline mb-6">Objects</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {liquidCheatsheetData.objects.map((item) => <CheatSheetCard key={item.title} {...item} />)}
                   </div>
               </section>
 
               <section id="tags" className="mb-12">
-                  <h2 className="text-2xl font-bold font-headline">Tags</h2>
-                  <div className="mt-4 space-y-4">
-                      <div><h3 className="font-semibold"><code>{`{% if %}`}</code></h3><p>Used for conditional logic with `if`, `elsif`, and `else`.</p></div>
-                      <div><h3 className="font-semibold"><code>{`{% unless %}`}</code></h3><p>The opposite of `if`. The code block executes if the condition is false.</p></div>
-                      <div><h3 className="font-semibold"><code>{`{% case %}`}</code></h3><p>Creates a switch statement to compare a variable against different values using `when`.</p></div>
-                      <div><h3 className="font-semibold"><code>{`{% for %}`}</code></h3><p>Loops over items in an array.</p></div>
-                      <div><h3 className="font-semibold"><code>{`{% form %}`}</code></h3><p>Renders an HTML form tag with the necessary Shopify attributes.</p></div>
-                      <div><h3 className="font-semibold"><code>{`{% paginate %}`}</code></h3><p>Used to split content across multiple pages.</p></div>
-                      <div><h3 className="font-semibold"><code>{`{% section %}`}</code></h3><p>Renders a theme section from the /sections directory.</p></div>
-                      <div><h3 className="font-semibold"><code>{`{% render %}`}</code></h3><p>Renders a snippet from the /snippets directory, allowing variables to be passed.</p></div>
+                  <h2 className="text-2xl font-bold font-headline mb-6">Tags</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {liquidCheatsheetData.tags.map((item) => <CheatSheetCard key={item.title} {...item} />)}
                   </div>
               </section>
 
               <section id="filters" className="mb-12">
-                  <h2 className="text-2xl font-bold font-headline">Filters</h2>
-                  <div className="mt-4 space-y-4">
-                      <div><h3 className="font-semibold">upcase</h3><p>Converts a string to uppercase.</p></div>
-                      <div><h3 className="font-semibold">truncate</h3><p>Shortens a string to a specific length.</p></div>
-                      <div><h3 className="font-semibold">strip_html</h3><p>Removes all HTML tags from a string.</p></div>
-                      <div><h3 className="font-semibold">handleize</h3><p>Converts a string into a URL-friendly handle.</p></div>
-                      <div><h3 className="font-semibold">money</h3><p>Formats a price according to the store's currency settings.</p></div>
-                      <div><h3 className="font-semibold">times</h3><p>Multiplies by a number.</p></div>
-                      <div><h3 className="font-semibold">join</h3><p>Combines array elements into a string.</p></div>
-                      <div><h3 className="font-semibold">size</h3><p>Returns the number of items in an array or characters in a string.</p></div>
-                      <div><h3 className="font-semibold">where</h3><p>Filters an array to only items that have a given value for a property.</p></div>
-                      <div><h3 className="font-semibold">img_url</h3><p>Returns the URL for a Shopify image. Can take a size parameter, e.g., `_500x`.</p></div>
+                  <h2 className="text-2xl font-bold font-headline mb-6">Filters</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {liquidCheatsheetData.filters.map((item) => <CheatSheetCard key={item.title} {...item} />)}
                   </div>
               </section>
           </div>
