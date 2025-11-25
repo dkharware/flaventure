@@ -137,8 +137,8 @@ export default function Header() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Shopify</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[600px] md:grid-cols-2 lg:w-[700px] ">
-                      <li>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                      <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <a
                             className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
@@ -149,7 +149,7 @@ export default function Header() {
                               Liquid Cheatsheet
                             </div>
                             <p className="text-sm leading-tight text-muted-foreground">
-                              Your quick reference guide for Shopify Liquid.
+                              Your quick reference guide for Shopify Liquid objects, tags, and filters.
                             </p>
                           </a>
                         </NavigationMenuLink>
@@ -162,21 +162,6 @@ export default function Header() {
                       </ListItem>
                       <ListItem href="/blog?query=storefront%20api" title="Storefront API">
                         Master the API for building unique shopping experiences.
-                      </ListItem>
-                      <ListItem href="/blog?query=theme%20development" title="Theme Development">
-                        Create beautiful and performant themes for Shopify.
-                      </ListItem>
-                      <ListItem href="/blog?query=admin%20api" title="Admin API">
-                        Manage your store programmatically.
-                      </ListItem>
-                      <ListItem href="/blog?query=hydrogen" title="Hydrogen">
-                        Build fast, custom storefronts with React.
-                      </ListItem>
-                      <ListItem href="/blog?query=oxygen" title="Oxygen">
-                        Deploy and host your Hydrogen storefronts.
-                      </ListItem>
-                      <ListItem href="/blog?query=polaris" title="Polaris">
-                        Use Shopify's design system for your apps.
                       </ListItem>
                     </ul>
                   </NavigationMenuContent>
@@ -201,8 +186,8 @@ export default function Header() {
         
         <div className="hidden md:flex items-center justify-end gap-2 flex-shrink-0">
            <Button asChild>
-                <Link href="/blog">
-                    Explore Articles
+                <Link href="/shopify-liquid-cheatsheet">
+                    Liquid Cheatsheet
                 </Link>
             </Button>
         </div>
