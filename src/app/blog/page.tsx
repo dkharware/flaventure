@@ -109,7 +109,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 {articles && articles.length > 0 ? (
                     <div className="space-y-12">
                       {featuredArticle && (
-                         <Link key={featuredArticle.id} href={`/blog/${featuredArticle.handle}`} className="block group md:block hidden">
+                         <Link key={featuredArticle.id} href={`/blog/${featuredArticle.handle}`} className="block group">
                             <Card className="h-full flex flex-col md:flex-row overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                                 {featuredArticle.image && (
                                 <div className="relative h-48 md:h-auto md:w-1/2 overflow-hidden">

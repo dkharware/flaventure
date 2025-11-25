@@ -119,7 +119,7 @@ export default function Header() {
           </Link>
         </div>
 
-        <div className="md:hidden flex-grow max-w-xs relative" ref={searchWrapperRef}>
+        <div className="md:hidden max-w-xs relative" ref={searchWrapperRef}>
           <form onSubmit={handleSearchSubmit} className="relative w-full">
               <Input 
                 type="search" 
