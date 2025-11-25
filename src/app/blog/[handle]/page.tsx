@@ -76,7 +76,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
-       <div className="lg:hidden fixed bottom-24 right-4 z-40">
+        <Breadcrumbs items={breadcrumbItems} className="mb-8" />
+        <div className="lg:hidden fixed bottom-24 right-4 z-40">
           <Sheet>
               <SheetTrigger asChild>
                   <Button size="icon" className="rounded-full shadow-lg">
@@ -96,14 +97,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 </ScrollArea>
               </SheetContent>
           </Sheet>
-      </div>
+        </div>
        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <aside className="lg:col-span-3 hidden lg:block">
                 <TableOfContents content={article.contentHtml} />
             </aside>
             <main className="lg:col-span-6">
                 <article>
-                    <Breadcrumbs items={breadcrumbItems} />
                     <header className="mb-8 text-center pt-4">
                         <div className="mb-4 flex flex-wrap gap-2 justify-center">
                           {article.tags.map((tag: string) => (
