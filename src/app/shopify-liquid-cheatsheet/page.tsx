@@ -8,7 +8,6 @@ import {
     AccordionTrigger,
   } from "@/components/ui/accordion";
 import { Card, CardContent } from '@/components/ui/card';
-import { Code } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Shopify Liquid Cheatsheet: Objects, Tags & Filters',
@@ -37,52 +36,52 @@ const liquidCheatsheetData = {
     objects: [
         {
             title: 'product',
-            description: 'Refers to the product on a product page. Contains details like title, price, and images.',
+            description: 'Refers to the product on a product page. Contains details like title, price, and images. Common properties: .title, .handle, .price, .compare_at_price, .variants, .images, .featured_image, .description, .collections, .tags, .available',
             code: `<p>Price: {{ product.price | money }}</p>`
         },
         {
             title: 'collection',
-            description: 'Refers to the collection on a collection page. Provides access to collection details and its products.',
+            description: 'Refers to the collection on a collection page. Provides access to collection details and its products. Common properties: .title, .handle, .description, .image, .products, .all_tags, .products_count',
             code: `<h2>{{ collection.title }}</h2>\n\n<ul>\n{% for product in collection.products %}\n  <li>{{ product.title }}</li>\n{% endfor %}\n</ul>`
         },
         {
             title: 'cart',
-            description: "Contains information about the customer's shopping cart, like total price and item count.",
+            description: "Contains information about the customer's shopping cart. Common properties: .item_count, .total_price, .items, .note, .attributes, .original_total_price",
             code: `<p>You have {{ cart.item_count }} items in your cart.</p>`
         },
         {
             title: 'customer',
-            description: 'Refers to the currently logged-in customer. It is `nil` if the user is not logged in.',
+            description: 'Refers to the currently logged-in customer. It is `nil` if the user is not logged in. Common properties: .first_name, .last_name, .email, .orders, .last_order, .default_address, .addresses, .tags',
             code: `{% if customer %}\n  <p>Welcome, {{ customer.first_name }}!</p>\n{% else %}\n  <a href="/account/login">Login</a>\n{% endif %}`
         },
         {
             title: 'shop',
-            description: 'Holds global information about the store, such as name, currency, and domain.',
+            description: 'Holds global information about the store. Common properties: .name, .currency, .domain, .url, .money_format, .permanent_domain, .email',
             code: `<p>&copy; {{ "now" | date: "%Y" }} {{ shop.name }}</p>`
         },
         {
             title: 'linklists',
-            description: 'Allows access to all navigation menus created in the admin. Use handles to access specific menus.',
+            description: 'Allows access to all navigation menus (link lists) created in the admin. Use handles to access specific menus. A link has: .title, .url, .active, .links (for nested menus)',
             code: `{% for link in linklists.main-menu.links %}\n  <a href="{{ link.url }}">{{ link.title }}</a>\n{% endfor %}`
         },
         {
             title: 'page',
-            description: 'Refers to the content of a standard page created in the Shopify admin (Online Store > Pages).',
+            description: 'Refers to the content of a standard page created in the Shopify admin. Common properties: .title, .content, .author, .published_at',
             code: `<h1>{{ page.title }}</h1>\n<div>{{ page.content }}</div>`
         },
         {
             title: 'article',
-            description: 'Refers to a blog article on an article page.',
+            description: 'Refers to a blog article on an article page. Common properties: .title, .content, .excerpt, .image, .authorV2, .published_at, .tags',
             code: `<h1>{{ article.title }}</h1>\n<p>By {{ article.authorV2.name }}</p>`
         },
         {
             title: 'order',
-            description: "Refers to an order. Typically used on the Order Status page of the checkout.",
+            description: "Refers to an order. Typically used on the Order Status page of the checkout. Common properties: .name, .total_price, .customer, .shipping_address, .line_items, .created_at",
             code: `<p>Order Number: {{ order.name }}</p>\n<p>Total: {{ order.total_price | money }}</p>`
         },
     ],
     tags: [
-        { title: '{% if %}', description: 'Used for conditional logic with `if`, `elsif`, and `else`.', code: `{% if product.available %}\n  <p>In stock!</p>\n{% else %}\n  <p>Sold out.</p>\n{% endif %}`},
+        { title: '{% if %}', description: 'Used for conditional logic with `elsif` and `else`.', code: `{% if product.available %}\n  <p>In stock!</p>\n{% else %}\n  <p>Sold out.</p>\n{% endif %}`},
         { title: '{% unless %}', description: 'The opposite of `if`. Executes code if the condition is false.', code: `{% unless product.available %}\n  <p>This product is currently unavailable.</p>\n{% endunless %}`},
         { title: '{% case %}', description: 'Creates a switch statement to compare a variable against different values.', code: `{% case product.type %}\n  {% when "Shirt" %}\n    <p>This is a shirt.</p>\n  {% when "Pants" %}\n    <p>These are pants.</p>\n  {% else %}\n    <p>Other product type.</p>\n{% endcase %}`},
         { title: '{% for %}', description: 'Loops over items in an array. Can be used with `limit` and `offset`.', code: `{% for tag in product.tags %}\n  <span>{{ tag }}</span>\n{% endfor %}`},
