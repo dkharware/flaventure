@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -142,12 +142,15 @@ export default function Header() {
                         <NavigationMenuLink asChild>
                           <a
                             className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                            href="/blog?tag=Shopify"
+                            href="/shopify-liquid-cheatsheet"
                           >
-                            <ShoppingCart className="h-6 w-6" />
+                            <BookCopy className="h-6 w-6" />
                             <div className="mb-2 mt-4 text-lg font-medium">
-                              Shopify Topics
+                              Liquid Cheatsheet
                             </div>
+                            <p className="text-sm leading-tight text-muted-foreground">
+                              Your quick reference guide for Shopify Liquid.
+                            </p>
                           </a>
                         </NavigationMenuLink>
                       </li>
@@ -240,6 +243,7 @@ export default function Header() {
                       </AccordionTrigger>
                       <AccordionContent className="pl-4 pb-1">
                           <div className="flex flex-col space-y-2">
+                            <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Liquid Cheatsheet</Link>
                             <Link href="/blog?query=headless" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Headless</Link>
                             <Link href="/blog?query=app%20bridge" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>App Bridge</Link>
                             <Link href="/blog?query=storefront%20api" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Storefront API</Link>
@@ -265,3 +269,5 @@ export default function Header() {
     </header>
   );
 }
+
+    
