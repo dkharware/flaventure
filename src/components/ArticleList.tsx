@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
-import { Eye, Loader2 } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 
 interface Article {
@@ -73,6 +73,23 @@ function ArticleCard({ article }: { article: Article }) {
     );
 }
 
+function ArticleCardSkeleton() {
+    return (
+        <div className="flex flex-col space-y-3">
+            <Skeleton className="h-32 w-full rounded-lg" />
+            <div className="space-y-2 p-4">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+                <Skeleton className="h-4 w-3/4" />
+            </div>
+            <div className="p-4 pt-0 space-y-2">
+                 <Skeleton className="h-4 w-full" />
+                 <Skeleton className="h-4 w-1/2" />
+            </div>
+        </div>
+    )
+}
+
 
 export function ArticleList({ initialArticles, initialPageInfo, query }: ArticleListProps) {
   const [articles, setArticles] = useState(initialArticles);
@@ -123,15 +140,15 @@ export function ArticleList({ initialArticles, initialPageInfo, query }: Article
             {articles.map((article) => (
                 <ArticleCard key={article.id} article={article} />
             ))}
-        </div>
-        <div ref={loaderRef} className="col-span-full h-16 flex justify-center items-center">
             {isLoading && (
-                <div className="flex items-center text-muted-foreground">
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    <span>Loading more articles...</span>
-                </div>
+              <>
+                <ArticleCardSkeleton />
+                <ArticleCardSkeleton />
+                <ArticleCardSkeleton />
+              </>
             )}
         </div>
+        <div ref={loaderRef} className="col-span-full h-1" />
     </>
   );
 }
