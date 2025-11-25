@@ -85,12 +85,18 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 </SheetContent>
             </Sheet>
         </div>
-        <div className="mb-8 pt-4">
-            <div>
+        <div className="relative overflow-hidden rounded-xl p-8 my-8 bg-background">
+            <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-white to-orange-50/50 dark:from-purple-900/10 dark:via-background dark:to-orange-900/10"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#d1eaff,transparent)] opacity-20 dark:opacity-5"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_0%_0px,#ffd5d5,transparent)] opacity-20 dark:opacity-5"></div>
+            </div>
+            <div className="relative z-10 text-center">
                 <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
-                {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl">{pageDescription}</p>}
+                {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>}
             </div>
         </div>
+
 
         {allTags && allTags.length > 0 && !searchQuery && !tagQuery && (
           <div className="mb-12">
