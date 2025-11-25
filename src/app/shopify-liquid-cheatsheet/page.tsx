@@ -35,8 +35,8 @@ export default function ShopifyLiquidCheatsheetPage() {
           
           <h2 id="syntax">Syntax Basics</h2>
           <ul>
-            <li><strong>Objects:</strong> <Badge variant="secondary" as="span">`{{ '...' }}`</Badge> - Used to output data. Example: `{{ product.title }}`.</li>
-            <li><strong>Tags:</strong> <Badge variant="secondary" as="span">`{% '...' %}`</Badge> - Used for logic and control flow. Example: `{% if product.available %}`.</li>
+            <li><strong>Objects:</strong> <Badge variant="secondary">{`{{ '...' }}`}</Badge> - Used to output data. Example: `{{ product.title }}`.</li>
+            <li><strong>Tags:</strong> <Badge variant="secondary">{`{% '...' %}`}</Badge> - Used for logic and control flow. Example: `{% if product.available %}`.</li>
           </ul>
 
           <h2 id="global-objects">Global Objects</h2>
@@ -89,7 +89,7 @@ export default function ShopifyLiquidCheatsheetPage() {
           </Table>
 
           <h2 id="common-filters">Common Filters</h2>
-          <p>Filters are methods that modify the output of numbers, strings, objects, and variables. They are used within an output tag `{{ }}` and are separated by a `|`.</p>
+          <p>Filters are methods that modify the output of numbers, strings, objects, and variables. They are used within an output tag `{{ '{{' }} }}` and are separated by a `|`.</p>
           
           <h3>String Filters</h3>
           <ul>
@@ -98,16 +98,16 @@ export default function ShopifyLiquidCheatsheetPage() {
             <li>`strip_html`: Removes all HTML tags from a string.</li>
             <li>`handleize`: Converts a string into a URL-friendly handle.</li>
           </ul>
-          <pre><code>{{ 'Hello World' | upcase }}
-&lt;!-- Renders: HELLO WORLD --&gt;</code></pre>
+          <pre><code>{`{{ 'Hello World' | upcase }}
+<!-- Renders: HELLO WORLD -->`}</code></pre>
 
           <h3>Number Filters</h3>
           <ul>
             <li>`money`: Formats a price according to the store's currency settings. The best way to display prices.</li>
             <li>`plus: 5` / `minus: 2` / `times: 3` / `divided_by: 4`: Basic math operations.</li>
           </ul>
-           <pre><code>{{ product.price | money }}
-&lt;!-- Renders: $19.99 (depending on currency settings) --&gt;</code></pre>
+           <pre><code>{`{{ product.price | money }}
+<!-- Renders: $19.99 (depending on currency settings) -->`}</code></pre>
 
           <h3>Array Filters</h3>
           <ul>
@@ -115,66 +115,66 @@ export default function ShopifyLiquidCheatsheetPage() {
             <li>`first` / `last`: Returns the first or last item of an array.</li>
             <li>`size`: Returns the number of items in an array.</li>
           </ul>
-           <pre><code>{{ product.tags | join: ', ' }}
-&lt;!-- Renders: tag1, tag2, tag3 --&gt;</code></pre>
+           <pre><code>{`{{ product.tags | join: ', ' }}
+<!-- Renders: tag1, tag2, tag3 -->`}</code></pre>
 
           <h2 id="control-flow-tags">Control Flow Tags</h2>
           <p>Tags add logic and control to your templates.</p>
           
           <h3>If / Else / Unless</h3>
           <p>Used for conditional logic.</p>
-          <pre><code>{% if product.available %}
-  &lt;p&gt;In stock!&lt;/p&gt;
+          <pre><code>{`{% if product.available %}
+  <p>In stock!</p>
 {% else %}
-  &lt;p&gt;Sold out.&lt;/p&gt;
+  <p>Sold out.</p>
 {% endif %}
 
 {% unless product.tags contains 'new' %}
-  &lt;p&gt;This is not a new product.&lt;/p&gt;
-{% endunless %}</code></pre>
+  <p>This is not a new product.</p>
+{% endunless %}`}</code></pre>
 
           <h3>For Loop</h3>
           <p>Iterates over an array of items, like products in a collection or line items in a cart.</p>
-          <pre><code>{% for product in collection.products %}
-  &lt;h3&gt;{{ product.title }}&lt;/h3&gt;
-{% endfor %}</code></pre>
+          <pre><code>{`{% for product in collection.products %}
+  <h3>{{ product.title }}</h3>
+{% endfor %}`}</code></pre>
           <p>You can also use `else` with a for loop, and control the loop with `limit` and `offset`.</p>
-          <pre><code>{% for product in collection.products limit: 5 %}
-  &lt;p&gt;{{ product.title }}&lt;/p&gt;
+          <pre><code>{`{% for product in collection.products limit: 5 %}
+  <p>{{ product.title }}</p>
 {% else %}
-  &lt;p&gt;This collection has no products.&lt;/p&gt;
-{% endfor %}</code></pre>
+  <p>This collection has no products.</p>
+{% endfor %}`}</code></pre>
 
           <h3>Case Statement</h3>
           <p>Creates a switch statement to compare a variable against different values.</p>
-          <pre><code>{% case product.type %}
+          <pre><code>{`{% case product.type %}
   {% when 'Shirt' %}
-    &lt;p&gt;This is a shirt.&lt;/p&gt;
+    <p>This is a shirt.</p>
   {% when 'Pants' %}
-    &lt;p&gt;These are pants.&lt;/p&gt;
+    <p>These are pants.</p>
   {% else %}
-    &lt;p&gt;This is another type of product.&lt;/p&gt;
-{% endcase %}</code></pre>
+    <p>This is another type of product.</p>
+{% endcase %}`}</code></pre>
 
           <h2 id="theme-tags">Theme Tags</h2>
            <p>Tags specific to Shopify theme structure.</p>
            
            <h3>form</h3>
-           <p>Renders an HTML `<form>` element with the necessary inputs for adding products to the cart, signing up for a newsletter, etc.</p>
-           <pre><code>{% form 'product', product %}
-  &lt;!-- Add to cart button and variant selectors go here --&gt;
-  &lt;button type="submit"&gt;Add to Cart&lt;/button&gt;
-{% endform %}</code></pre>
+           <p>Renders an HTML `&lt;form&gt;` element with the necessary inputs for adding products to the cart, signing up for a newsletter, etc.</p>
+           <pre><code>{`{% form 'product', product %}
+  <!-- Add to cart button and variant selectors go here -->
+  <button type="submit">Add to Cart</button>
+{% endform %}`}</code></pre>
 
            <h3>paginate</h3>
            <p>Used to split content across multiple pages, like products in a collection or articles in a blog.</p>
-           <pre><code>{% paginate collection.products by 12 %}
+           <pre><code>{`{% paginate collection.products by 12 %}
   {% for product in collection.products %}
-    &lt;!-- Product card HTML --&gt;
+    <!-- Product card HTML -->
   {% endfor %}
   
   {{ paginate | default_pagination }}
-{% endpaginate %}</code></pre>
+{% endpaginate %}`}</code></pre>
 
            <h3>section</h3>
            <p>Renders a theme section from the `/sections` directory. This is the foundation of modern Shopify themes.</p>
