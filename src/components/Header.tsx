@@ -165,15 +165,21 @@ export default function Header() {
                           </a>
                         </NavigationMenuLink>
                       </li>
-                      <ListItem href="/blog?tag=Shopify" title="Shopify">
-                        Articles on development, headless commerce, and apps.
-                      </ListItem>
-                      <ListItem href="/blog?tag=Resume" title="Resume & CV">
-                        Tips and tricks for creating the perfect resume.
-                      </ListItem>
-                       <ListItem href="/blog?tag=cv" title="CV Writing">
-                        Guidance on writing a comprehensive Curriculum Vitae.
-                      </ListItem>
+                      <li>
+                        <ListItem href="/blog?tag=Shopify" title="Shopify">
+                          Articles on development, headless commerce, and apps.
+                        </ListItem>
+                      </li>
+                      <li>
+                        <ListItem href="/blog?tag=Resume" title="Resume & CV">
+                          Tips and tricks for creating the perfect resume.
+                        </ListItem>
+                      </li>
+                      <li>
+                        <ListItem href="/blog?tag=cv" title="CV Writing">
+                          Guidance on writing a comprehensive Curriculum Vitae.
+                        </ListItem>
+                      </li>
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -197,26 +203,28 @@ export default function Header() {
                         </li>
                         <div className="grid grid-cols-2 gap-3">
                             {shopifyComponents.slice(0, 2).map((component) => (
+                                <li key={component.title}>
                                 <ListItem
-                                    key={component.title}
                                     title={component.title}
                                     href={component.href}
                                 >
                                     {component.description}
                                 </ListItem>
+                                </li>
                             ))}
                         </div>
-                        <li className="col-span-1 grid grid-cols-2 gap-3">
+                        <div className="col-span-1 grid grid-cols-2 gap-3">
                             {shopifyComponents.slice(2).map((component) => (
+                                <li key={component.title}>
                                 <ListItem
-                                    key={component.title}
                                     title={component.title}
                                     href={component.href}
                                 >
                                     {component.description}
                                 </ListItem>
+                                </li>
                             ))}
-                        </li>
+                        </div>
                      </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
