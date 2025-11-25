@@ -14,6 +14,12 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 
+export const metadata: Metadata = {
+    title: 'The Ultimate Shopify Liquid Cheatsheet',
+    description: 'Your complete quick reference guide for Shopify Liquid. Find syntax, objects, tags, and filters for Shopify theme development, including code examples for products, collections, cart, and more.',
+    keywords: ['Shopify Liquid', 'Liquid cheatsheet', 'Shopify Liquid syntax', 'Shopify theme development', 'Liquid objects', 'Liquid tags', 'Liquid filters', 'Shopify theming', 'Liquid tutorial'],
+};
+
 const liquidCheatsheetData = {
     basics: [
         {
@@ -244,3 +250,5 @@ export default function ShopifyLiquidCheatsheetPage() {
     </>
   );
 }
+
+    
