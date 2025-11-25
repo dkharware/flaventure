@@ -108,7 +108,6 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-         <link rel="icon" href={faviconUrl} type="image/x-icon" sizes="16x16"/>
       </head>
       <body className="font-body antialiased">
           <LoaderProvider>
