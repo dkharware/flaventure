@@ -153,7 +153,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 {relatedArticles.length > 0 && (
                     <div className="mt-16 pt-12 border-t">
                         <h2 className="text-3xl font-bold font-headline mb-8 text-center">Related Articles</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {relatedArticles.map((related: any) => (
                                 <Link key={related.id} href={`/blog/${related.handle}`} className="block group">
                                     <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
