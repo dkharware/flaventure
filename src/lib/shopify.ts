@@ -168,7 +168,7 @@ export async function getArticles(
     const response = await shopifyFetch(ARTICLES_QUERY, variables);
     
     if (!response.data?.articles?.edges) {
-        return { articles: [], pageInfo: { hasNextPage: false, hasPreviousPage: false } };
+        return { articles: [], pageInfo: { hasNextPage: false, hasPreviousPage: false, startCursor: null, endCursor: null } };
     }
 
     const articles = response.data.articles.edges.map((edge: any) => ({
@@ -176,11 +176,11 @@ export async function getArticles(
       viewCount: getDeterministicViewCount(edge.node.handle)
     }));
     
-    // The cursors are on the edges, but we need them for the whole page.
+    const edges = response.data.articles.edges;
     const pageInfo = {
         ...response.data.articles.pageInfo,
-        startCursor: response.data.articles.edges[0]?.cursor,
-        endCursor: response.data.articles.edges[response.data.articles.edges.length - 1]?.cursor,
+        startCursor: edges.length > 0 ? edges[0].cursor : null,
+        endCursor: edges.length > 0 ? edges[edges.length - 1].cursor : null,
     };
 
     return { articles, pageInfo };

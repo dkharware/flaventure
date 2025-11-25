@@ -10,8 +10,8 @@ import { cn } from '@/lib/utils';
 interface PageInfo {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
-  startCursor?: string;
-  endCursor?: string;
+  startCursor?: string | null;
+  endCursor?: string | null;
 }
 
 interface PaginationProps {
