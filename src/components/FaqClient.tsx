@@ -21,6 +21,7 @@ import { Briefcase, Code, FileText, GraduationCap, ShoppingCart } from 'lucide-r
 interface Faq {
     question: string;
     answer: string;
+    _question?: string; // To handle the one case in data
 }
 
 interface FaqCategory {
@@ -99,8 +100,8 @@ export function FaqClient({ faqData }: FaqClientProps) {
             <div className="md:col-span-2 mt-4 md:mt-0">
                 <Accordion type="single" collapsible className="w-full" defaultValue={activeFaqs[0]?.question}>
                     {activeFaqs.map((faq) => (
-                        <AccordionItem value={faq.question} key={faq.question}>
-                            <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                        <AccordionItem value={faq.question || faq._question || ''} key={faq.question || faq._question}>
+                            <AccordionTrigger className="text-left">{faq.question || faq._question}</AccordionTrigger>
                             <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
                         </AccordionItem>
                     ))}
