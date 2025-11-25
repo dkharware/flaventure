@@ -13,12 +13,13 @@ import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
-import { SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal, Eye } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TableOfContents } from '@/components/TableOfContents';
 import { CommentSection } from '@/components/CommentSection';
 import { ShareButtons } from '@/components/ShareButtons';
+import { LikeButton } from '@/components/LikeButton';
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -114,6 +115,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                         <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4">{article.title}</h1>
                         <div className="text-muted-foreground text-sm flex items-center justify-center gap-4">
                             <p>{format(new Date(article.publishedAt), 'PPP')}</p>
+                            <span className="text-xs">•</span>
+                            <div className="flex items-center gap-1">
+                                <Eye className="h-4 w-4" />
+                                <span>{article.viewCount.toLocaleString()} views</span>
+                            </div>
                         </div>
                     </header>
 
@@ -133,7 +139,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                       <ArticleContent content={article.contentHtml} />
                     </div>
 
-                    <ShareButtons title={article.title} />
+                    <div className="flex items-center justify-center mt-8 space-x-4">
+                      <LikeButton />
+                      <ShareButtons title={article.title} />
+                    </div>
                 </article>
 
                 <div className="mt-16 pt-12 border-t">

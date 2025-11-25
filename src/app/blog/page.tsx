@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
-import { ArrowRight, SlidersHorizontal } from 'lucide-react';
+import { ArrowRight, SlidersHorizontal, Eye } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -129,8 +129,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                             className="text-sm text-muted-foreground flex-grow line-clamp-2"
                                             dangerouslySetInnerHTML={{ __html: featuredArticle.excerptHtml }}
                                         />
-                                        <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
+                                        <div className="text-xs text-muted-foreground mt-4 pt-4 border-t flex items-center justify-between">
                                             <span>{format(new Date(featuredArticle.publishedAt), 'PPP')}</span>
+                                            <div className="flex items-center gap-1">
+                                                <Eye className="h-3 w-3" />
+                                                <span>{featuredArticle.viewCount.toLocaleString()} views</span>
+                                            </div>
                                         </div>
                                     </CardContent>
                                 </div>
@@ -165,8 +169,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                         className="text-sm text-muted-foreground flex-grow line-clamp-2"
                                         dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
                                     />
-                                    <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
+                                    <div className="text-xs text-muted-foreground mt-4 pt-4 border-t flex items-center justify-between">
                                         <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                                        <div className="flex items-center gap-1">
+                                            <Eye className="h-3 w-3" />
+                                            <span>{article.viewCount.toLocaleString()}</span>
+                                        </div>
                                     </div>
                                 </CardContent>
                             </Card>

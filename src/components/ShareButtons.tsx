@@ -6,7 +6,6 @@ import { Button } from './ui/button';
 import { Twitter, Linkedin, Facebook, Link as LinkIcon, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
 interface ShareButtonsProps {
   title: string;
@@ -58,24 +57,18 @@ export function ShareButtons({ title }: ShareButtonsProps) {
   };
 
   return (
-    <Card className="mt-12">
-        <CardHeader className="text-center">
-            <CardTitle className="font-headline text-2xl">Share this Article</CardTitle>
-        </CardHeader>
-        <CardContent>
-            <div className="flex justify-center items-center gap-4">
-            {shareOptions.map((option) => (
-                <Button key={option.name} variant="outline" size="icon" asChild>
-                    <a href={option.url} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${option.name}`}>
-                        {option.icon}
-                    </a>
-                </Button>
-            ))}
-            <Button variant="outline" size="icon" onClick={handleCopyLink} aria-label="Copy link">
-                {isCopied ? <Check className="h-5 w-5 text-green-500" /> : <LinkIcon className="h-5 w-5" />}
-            </Button>
-            </div>
-        </CardContent>
-    </Card>
+    <div className="flex justify-center items-center gap-2">
+      <span className="text-sm font-medium text-muted-foreground mr-2">Share:</span>
+      {shareOptions.map((option) => (
+        <Button key={option.name} variant="outline" size="icon" asChild>
+          <a href={option.url} target="_blank" rel="noopener noreferrer" aria-label={`Share on ${option.name}`}>
+            {option.icon}
+          </a>
+        </Button>
+      ))}
+      <Button variant="outline" size="icon" onClick={handleCopyLink} aria-label="Copy link">
+        {isCopied ? <Check className="h-5 w-5 text-green-500" /> : <LinkIcon className="h-5 w-5" />}
+      </Button>
+    </div>
   );
 }

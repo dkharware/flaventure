@@ -57,6 +57,17 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   }
 }
 
+// Simple deterministic hash function for generating view counts
+const getDeterministicViewCount = (handle: string) => {
+    let hash = 0;
+    for (let i = 0; i < handle.length; i++) {
+        const char = handle.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return Math.abs(hash % 2000) + 150; // Generate a number between 150 and 2150
+};
+
 
 const gql = String.raw;
 
@@ -157,7 +168,10 @@ export async function getArticles(
         return { articles: [], pageInfo: { hasNextPage: false, hasPreviousPage: false } };
     }
 
-    const articles = response.data.articles.edges.map((edge: any) => edge.node);
+    const articles = response.data.articles.edges.map((edge: any) => ({
+      ...edge.node,
+      viewCount: getDeterministicViewCount(edge.node.handle)
+    }));
     
     // The cursors are on the edges, but we need them for the whole page.
     const pageInfo = {
@@ -174,7 +188,11 @@ export async function getArticleByHandle(handle: string) {
     if (!response.data?.blog?.articleByHandle) {
         return null;
     }
-    return response.data.blog.articleByHandle;
+    const article = response.data.blog.articleByHandle;
+    return {
+        ...article,
+        viewCount: getDeterministicViewCount(article.handle)
+    };
 }
 
 export async function getAllTags() {
