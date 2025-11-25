@@ -1,4 +1,6 @@
 
+'use client';
+
 import type { Metadata } from 'next';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import {
@@ -8,12 +10,9 @@ import {
     AccordionTrigger,
   } from "@/components/ui/accordion";
 import { Card, CardContent } from '@/components/ui/card';
-
-export const metadata: Metadata = {
-  title: 'Shopify Liquid Cheatsheet: Objects, Tags & Filters',
-  description: 'A comprehensive Shopify Liquid tutorial and cheatsheet covering all major global objects, control flow tags, and common filters for Shopify theme development.',
-  keywords: ['Shopify Liquid', 'Liquid cheatsheet', 'Shopify theme development', 'Liquid objects', 'Liquid filters', 'Liquid tags', 'Shopify tutorial'],
-};
+import React from 'react';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
 
 const liquidCheatsheetData = {
     basics: [
@@ -36,7 +35,7 @@ const liquidCheatsheetData = {
     objects: [
         {
             title: 'product',
-            description: 'Refers to the product on a product page. Contains details like title, price, and images. Common properties: .title, .handle, .price, .compare_at_price, .variants, .images, .featured_image, .description, .collections, .tags, .available',
+            description: 'Refers to the product on a product page. Common properties: .title, .handle, .price, .compare_at_price, .variants, .images, .featured_image, .description, .collections, .tags, .available',
             code: `<p>Price: {{ product.price | money }}</p>`
         },
         {
@@ -154,11 +153,33 @@ const CheatSheetCard = ({ title, description, code }: { title: string, descripti
 };
 
 export default function ShopifyLiquidCheatsheetPage() {
+    const [searchTerm, setSearchTerm] = React.useState('');
     const breadcrumbItems = [
         { label: 'Home', href: '/' },
         { label: 'Blog', href: '/blog' },
         { label: 'Shopify Liquid Cheatsheet' },
     ];
+
+    const filteredData = React.useMemo(() => {
+        if (!searchTerm) {
+            return liquidCheatsheetData;
+        }
+
+        const lowercasedFilter = searchTerm.toLowerCase();
+        
+        const filterItems = (items: any[]) => 
+            items.filter(item => 
+                item.title.toLowerCase().includes(lowercasedFilter) ||
+                item.description.toLowerCase().includes(lowercasedFilter)
+            );
+
+        return {
+            basics: filterItems(liquidCheatsheetData.basics),
+            objects: filterItems(liquidCheatsheetData.objects),
+            tags: filterItems(liquidCheatsheetData.tags),
+            filters: filterItems(liquidCheatsheetData.filters),
+        };
+    }, [searchTerm]);
 
   return (
     <>
@@ -172,33 +193,52 @@ export default function ShopifyLiquidCheatsheetPage() {
                   </p>
               </div>
 
-              <section id="basics" className="mb-12">
-                  <h2 className="text-2xl font-bold font-headline mb-6">Basics</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {liquidCheatsheetData.basics.map((item) => <CheatSheetCard key={item.title} {...item} />)}
-                  </div>
-              </section>
+              <div className="relative mb-12 max-w-lg mx-auto">
+                <Input 
+                    type="text"
+                    placeholder="Search cheatsheet..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 h-11"
+                />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              </div>
 
-              <section id="objects" className="mb-12">
-                  <h2 className="text-2xl font-bold font-headline mb-6">Objects</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {liquidCheatsheetData.objects.map((item) => <CheatSheetCard key={item.title} {...item} />)}
-                  </div>
-              </section>
+              {filteredData.basics.length > 0 && (
+                <section id="basics" className="mb-12">
+                    <h2 className="text-2xl font-bold font-headline mb-6">Basics</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+                        {filteredData.basics.map((item) => <CheatSheetCard key={item.title} {...item} />)}
+                    </div>
+                </section>
+              )}
 
-              <section id="tags" className="mb-12">
-                  <h2 className="text-2xl font-bold font-headline mb-6">Tags</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {liquidCheatsheetData.tags.map((item) => <CheatSheetCard key={item.title} {...item} />)}
-                  </div>
-              </section>
+              {filteredData.objects.length > 0 && (
+                <section id="objects" className="mb-12">
+                    <h2 className="text-2xl font-bold font-headline mb-6">Objects</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+                        {filteredData.objects.map((item) => <CheatSheetCard key={item.title} {...item} />)}
+                    </div>
+                </section>
+              )}
 
-              <section id="filters" className="mb-12">
-                  <h2 className="text-2xl font-bold font-headline mb-6">Filters</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {liquidCheatsheetData.filters.map((item) => <CheatSheetCard key={item.title} {...item} />)}
-                  </div>
-              </section>
+              {filteredData.tags.length > 0 && (
+                <section id="tags" className="mb-12">
+                    <h2 className="text-2xl font-bold font-headline mb-6">Tags</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+                        {filteredData.tags.map((item) => <CheatSheetCard key={item.title} {...item} />)}
+                    </div>
+                </section>
+              )}
+
+              {filteredData.filters.length > 0 && (
+                <section id="filters" className="mb-12">
+                    <h2 className="text-2xl font-bold font-headline mb-6">Filters</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+                        {filteredData.filters.map((item) => <CheatSheetCard key={item.title} {...item} />)}
+                    </div>
+                </section>
+              )}
           </div>
       </div>
     </>
