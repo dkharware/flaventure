@@ -88,12 +88,22 @@ export default async function RootLayout({
     "name": "easyfreecv",
     "url": siteUrl,
     "description": metadata.description,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${siteUrl}/blog?query={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    },
     "publisher": {
       "@type": "Organization",
       "name": "easyfreecv",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/easyfreecv.webp"
+        "url": "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/easyfreecv.webp",
+        "width": 150,
+        "height": 40
       }
     }
   };

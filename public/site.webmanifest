@@ -1,21 +1,21 @@
 {
-  "name": "easyfreecv: Free CV and Resume Builder",
+  "name": "easyfreecv",
   "short_name": "easyfreecv",
-  "description": "Build a professional CV or resume for free with easyfreecv. Our free resume builder and CV maker offers professional templates to help you land your dream job.",
+  "description": "EasyFreeCV provides free CV templates, resume writing tips, and expert Shopify blogs covering development, headless Shopify, apps, and eCommerce insights.",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone",
-  "start_url": "/"
+  "start_url": "/",
+  "display": "standalone"
 }
