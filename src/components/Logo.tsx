@@ -11,6 +11,5 @@ export const Logo = ({ width = 150, height = 40 }: LogoProps) => (
     alt="shopifydevguide logo"
     width={width} 
     height={height}
-    priority
   />
 );
