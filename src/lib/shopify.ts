@@ -111,7 +111,7 @@ const ARTICLES_QUERY = gql`
 
 const ARTICLE_QUERY = gql`
   query GetArticleByHandle($handle: String!) {
-    blog(handle: "news") {
+    blog(handle: "shopifydevguide") {
       articleByHandle(handle: $handle) {
         ...ArticleFragment
         contentHtml
