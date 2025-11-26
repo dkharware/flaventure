@@ -13,7 +13,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/privacy-policy',
     '/terms-and-conditions',
     '/site-map',
-    '/shopify-liquid-cheatsheet'
+    '/shopify-liquid-cheatsheet',
+    '/tutorials/shopify-api-guide'
   ].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
