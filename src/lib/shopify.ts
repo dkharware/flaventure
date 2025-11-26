@@ -110,7 +110,7 @@ const ARTICLES_QUERY = gql`
 
 const ARTICLE_QUERY = gql`
   query GetArticleByHandle($handle: String!) {
-    blog(handle: "shopifydevguide") {
+    blog(handle: "news") {
       articleByHandle(handle: $handle) {
         ...ArticleFragment
         contentHtml
@@ -124,8 +124,8 @@ const ARTICLE_QUERY = gql`
 `;
 
 const ALL_TAGS_QUERY = gql`
-  query GetAllTags($query: String) {
-    articles(first: 250, query: $query) {
+  query GetAllTags {
+    articles(first: 250) {
       edges {
         node {
           tags
@@ -155,11 +155,8 @@ export async function getArticles(
 ) {
     const isPagingBackwards = !!pagination.before;
 
-    const blogQuery = "blog_handle:'shopifydevguide'";
-    const combinedQuery = query ? `(${query}) AND ${blogQuery}` : blogQuery;
-
     const variables: Record<string, any> = {
-        query: combinedQuery,
+        query: query,
     };
 
     if (isPagingBackwards) {
@@ -202,7 +199,7 @@ export async function getArticleByHandle(handle: string) {
 }
 
 export async function getAllTags() {
-    const response = await shopifyFetch(ALL_TAGS_QUERY, { query: "blog_handle:'shopifydevguide'" });
+    const response = await shopifyFetch(ALL_TAGS_QUERY);
     if (!response.data?.articles?.edges) {
         return [];
     }
