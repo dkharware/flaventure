@@ -18,8 +18,8 @@ import { BlogTags } from '@/components/BlogTags';
 import { ArticleList } from '@/components/ArticleList';
 
 export const metadata: Metadata = {
-  title: 'E-commerce & Web Dev Blog | easyfreecv',
-  description: 'Read the latest articles on Shopify, Webflow, headless commerce, and modern web development from the easyfreecv team.',
+  title: 'E-commerce & Web Dev Blog | shopifydevguide',
+  description: 'Read the latest articles on Shopify, Webflow, headless commerce, and modern web development from the shopifydevguide team.',
 };
 
 interface BlogPageProps {
