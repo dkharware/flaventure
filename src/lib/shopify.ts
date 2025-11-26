@@ -106,22 +106,22 @@ const ARTICLES_QUERY = gql`
       }
     }
   }
-  ${ArticleFragment}
+  ${'${ArticleFragment}'}
 `;
 
 const ARTICLE_QUERY = gql`
-  query GetArticleByHandle($handle: String!, $blogHandle: String!) {
-    blog(handle: $blogHandle) {
-      articleByHandle(handle: $handle) {
-        ...ArticleFragment
-        contentHtml
-        pdf: metafield(namespace: "custom", key: "pdf_url") {
-          value
+  query GetArticleByHandle($handle: String!) {
+    blog(handle: "shopifydevguide") {
+        articleByHandle(handle: $handle) {
+            ...ArticleFragment
+            contentHtml
+            pdf: metafield(namespace: "custom", key: "pdf_url") {
+            value
+            }
         }
-      }
     }
   }
-   ${ArticleFragment}
+   ${'${ArticleFragment}'}
 `;
 
 const ALL_TAGS_QUERY = gql`
@@ -149,8 +149,6 @@ const ARTICLE_SUGGESTIONS_QUERY = gql`
   }
 `;
 
-export const BLOG_FILTER = "blog_handle:'shopifydevguide'";
-
 export async function getArticles(
     count: number = 12, 
     query?: string, 
@@ -158,7 +156,8 @@ export async function getArticles(
 ) {
     const isPagingBackwards = !!pagination.before;
 
-    const combinedQuery = [BLOG_FILTER, query].filter(Boolean).join(" AND ");
+    const blogQuery = "blog_handle:'shopifydevguide'";
+    const combinedQuery = query ? `(${query}) AND ${blogQuery}` : blogQuery;
 
     const variables: Record<string, any> = {
         query: combinedQuery,
@@ -189,7 +188,7 @@ export async function getArticles(
 }
 
 export async function getArticleByHandle(handle: string) {
-    const response = await shopifyFetch(ARTICLE_QUERY, { handle: handle, blogHandle: "shopifydevguide" });
+    const response = await shopifyFetch(ARTICLE_QUERY, { handle: handle });
     const articleNode = response.data?.blog?.articleByHandle;
 
     if (!articleNode) {
@@ -204,7 +203,7 @@ export async function getArticleByHandle(handle: string) {
 }
 
 export async function getAllTags() {
-    const response = await shopifyFetch(ALL_TAGS_QUERY, { query: BLOG_FILTER });
+    const response = await shopifyFetch(ALL_TAGS_QUERY, { query: "blog_handle:'shopifydevguide'" });
     if (!response.data?.articles?.edges) {
         return [];
     }
@@ -217,11 +216,11 @@ export async function getAllTags() {
 
 export async function getRelatedArticles(handle: string, tags: string[]) {
     if (tags.length === 0) {
-        const { articles } = await getArticles(3, BLOG_FILTER);
+        const { articles } = await getArticles(3);
         return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
     }
     const tagsQuery = tags.map(tag => `tag:'${tag}'`).join(' OR ');
-    const { articles } = await getArticles(3, `(${tagsQuery}) AND ${BLOG_FILTER}`);
+    const { articles } = await getArticles(3, `(${tagsQuery})`);
     return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
 }
 
@@ -230,12 +229,11 @@ export async function getArticleSuggestions(searchTerm: string) {
         return [];
     }
     const searchQuery = `(title:*${searchTerm}* OR body:*${searchTerm}*)`;
-    const combinedQuery = [BLOG_FILTER, searchQuery].join(" AND ");
-
-    const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: combinedQuery });
     
-    if (!response.data?.articles?.edges) {
-        return [];
-    }
-    return response.data.articles.edges.map((edge: any) => edge.node);
+    const response = await getArticles(5, searchQuery);
+    
+    return response.articles.map((article: any) => ({
+      title: article.title,
+      handle: article.handle,
+    }));
 }
