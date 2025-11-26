@@ -125,8 +125,8 @@ const ARTICLE_QUERY = gql`
 `;
 
 const ALL_TAGS_QUERY = gql`
-  query GetAllTags {
-    articles(first: 250) {
+  query GetAllTags($query: String) {
+    articles(first: 250, query: $query) {
       edges {
         node {
           tags
@@ -149,6 +149,8 @@ const ARTICLE_SUGGESTIONS_QUERY = gql`
   }
 `;
 
+const BLOG_FILTER = "blog_handle:shopifydevguide";
+
 export async function getArticles(
     count: number = 12, 
     query?: string, 
@@ -156,8 +158,10 @@ export async function getArticles(
 ) {
     const isPagingBackwards = !!pagination.before;
 
+    const combinedQuery = [BLOG_FILTER, query].filter(Boolean).join(" AND ");
+
     const variables: Record<string, any> = {
-        query: query || null,
+        query: combinedQuery,
     };
 
     if (isPagingBackwards) {
@@ -198,7 +202,7 @@ export async function getArticleByHandle(handle: string) {
 }
 
 export async function getAllTags() {
-    const response = await shopifyFetch(ALL_TAGS_QUERY);
+    const response = await shopifyFetch(ALL_TAGS_QUERY, { query: BLOG_FILTER });
     if (!response.data?.articles?.edges) {
         return [];
     }
@@ -214,8 +218,8 @@ export async function getRelatedArticles(handle: string, tags: string[]) {
         const { articles } = await getArticles(3);
         return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
     }
-    const query = tags.map(tag => `tag:'${tag}'`).join(' OR ');
-    const { articles } = await getArticles(3, query);
+    const tagsQuery = tags.map(tag => `tag:'${tag}'`).join(' OR ');
+    const { articles } = await getArticles(3, `(${tagsQuery})`);
     return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
 }
 
@@ -223,8 +227,10 @@ export async function getArticleSuggestions(searchTerm: string) {
     if (!searchTerm) {
         return [];
     }
-    const query = `title:*${searchTerm}* OR body:*${searchTerm}*`;
-    const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query });
+    const searchQuery = `(title:*${searchTerm}* OR body:*${searchTerm}*)`;
+    const combinedQuery = [BLOG_FILTER, searchQuery].join(" AND ");
+
+    const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: combinedQuery });
     
     if (!response.data?.articles?.edges) {
         return [];
