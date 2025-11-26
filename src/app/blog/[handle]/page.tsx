@@ -107,7 +107,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         </div>
        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <aside className="lg:col-span-3 hidden lg:block">
+              <div className="sticky top-28">
                 <TableOfContents content={article.contentHtml} />
+              </div>
             </aside>
             <main className="lg:col-span-6">
                 <article>
