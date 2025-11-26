@@ -105,7 +105,7 @@ export default async function RootLayout({
       "name": "shopifydevguide",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/shopifydevlogo.webp",
+        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/shopifydevlog.webp",
         "width": 150,
         "height": 40
       }
