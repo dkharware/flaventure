@@ -239,5 +239,3 @@ export async function getArticleSuggestions(searchTerm: string) {
     }
     return response.data.articles.edges.map((edge: any) => edge.node);
 }
-
-    
