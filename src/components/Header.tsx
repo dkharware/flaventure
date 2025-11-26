@@ -109,7 +109,7 @@ export default function Header() {
     <header className="py-3 px-4 sm:px-6 md:py-4 md:px-10 bg-background/80 backdrop-blur-sm text-foreground border-b sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between gap-2 md:gap-4">
         <div className="flex-shrink-0">
-          <Link href="/" className="flex items-center gap-2" aria-label="easyfreecv Home">
+          <Link href="/" className="flex items-center gap-2" aria-label="shopifydevguide Home">
             <div className="md:hidden">
               <Logo width={100} height={28} />
             </div>
@@ -269,11 +269,11 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent className="overflow-y-auto">
               <SheetHeader>
-                 <Link href="/" className="flex items-center gap-2 mb-4" aria-label="easyfreecv Home">
+                 <Link href="/" className="flex items-center gap-2 mb-4" aria-label="shopifydevguide Home">
                     <Logo />
                 </Link>
                 <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
-                <SheetDescription className="sr-only">A list of navigation links for the easyfreecv website.</SheetDescription>
+                <SheetDescription className="sr-only">A list of navigation links for the shopifydevguide website.</SheetDescription>
               </SheetHeader>
                <Accordion type="single" collapsible className="w-full">
                   <AccordionItem value="blog" className="border-b-0">

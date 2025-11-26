@@ -2,7 +2,7 @@
 'use server';
 
 /**
- * @fileOverview An AI agent that provides helpful chat responses for the easyfreecv website.
+ * @fileOverview An AI agent that provides helpful chat responses for the shopifydevguide website.
  * It can also search for and suggest relevant blog articles.
  *
  * - chat - A function that handles the chat interaction.
@@ -46,7 +46,7 @@ const searchBlogArticles = ai.defineTool(
       ? `title:"${query}" OR body:"${query}"`
       : `title:*${query}* OR body:*${query}*`;
 
-    const articles = await getArticles(3, shopifyQuery);
+    const { articles } = await getArticles(3, shopifyQuery);
     return articles.map((a: any) => ({ title: a.title, handle: a.handle }));
   }
 );

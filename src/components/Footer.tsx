@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="container mx-auto py-12 px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2" aria-label="easyfreecv Home">
+            <Link href="/" className="flex items-center gap-2" aria-label="shopifydevguide Home">
               <Logo />
             </Link>
             <p className="text-sm">
@@ -59,7 +59,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-border/50 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} easyfreecv. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} shopifydevguide. All rights reserved.</p>
         </div>
       </div>
     </footer>

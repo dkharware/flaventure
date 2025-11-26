@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
-    template: '%s | easyfreecv',
+    template: '%s | shopifydevguide',
   },
   description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
   keywords: [
@@ -42,25 +42,25 @@ export const metadata: Metadata = {
     'headless Shopify',
     'Storefront API',
     'Shopify blog',
-    'easyfreecv',
+    'shopifydevguide',
     'Webflow',
     'WooCommerce',
     'Shopify Page Builders'
   ],
-  authors: [{ name: 'easyfreecv', url: siteUrl }],
-  creator: 'easyfreecv',
-  publisher: 'easyfreecv',
+  authors: [{ name: 'shopifydevguide', url: siteUrl }],
+  creator: 'shopifydevguide',
+  publisher: 'shopifydevguide',
   openGraph: {
     title: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
     description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
     url: siteUrl,
-    siteName: 'easyfreecv',
+    siteName: 'shopifydevguide',
     images: [
       {
         url: '/og-image.png', // Assuming you'll add an og-image.png to your public folder
         width: 1200,
         height: 630,
-        alt: 'easyfreecv Blog',
+        alt: 'shopifydevguide Blog',
       },
     ],
     locale: 'en_US',
@@ -89,7 +89,7 @@ export default async function RootLayout({
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "easyfreecv",
+    "name": "shopifydevguide",
     "url": siteUrl,
     "description": metadata.description,
     "potentialAction": {
@@ -102,10 +102,10 @@ export default async function RootLayout({
     },
     "publisher": {
       "@type": "Organization",
-      "name": "easyfreecv",
+      "name": "shopifydevguide",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/easyfreecv.webp",
+        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/shopifydevguide.webp",
         "width": 150,
         "height": 40
       }

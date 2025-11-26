@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const pageContent = {
-    paragraph1: "Welcome to easyfreecv, your source for insightful articles on career development, technology, and design. Our mission is to provide high-quality content that informs, inspires, and empowers our readers.",
+    paragraph1: "Welcome to shopifydevguide, your source for insightful articles on career development, technology, and design. Our mission is to provide high-quality content that informs, inspires, and empowers our readers.",
     paragraph2: "We believe that knowledge should be accessible to everyone. That's why we've created this platform to share our expertise and connect with a community of curious and ambitious individuals.",
     paragraph3: "Our blog covers a wide range of topics, from in-depth tutorials on the latest software development trends to practical advice on navigating the modern workplace. We strive to create content that is not only informative but also engaging and easy to digest.",
     paragraph4: "Thank you for visiting. We hope you'll find our articles helpful and thought-provoking. Feel free to reach out with any questions or feedback!"

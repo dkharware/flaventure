@@ -11,7 +11,7 @@ export default function PrivacyPolicyPage() {
           <p>Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
           
           <p>
-            easyfreecv ("us", "we", or "our") operates the easyfreecv website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
+            shopifydevguide ("us", "we", or "our") operates the shopifydevguide website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
           </p>
 
           <h3 className="text-xl font-headline text-foreground">Information Collection and Use</h3>

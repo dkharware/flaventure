@@ -1,4 +1,4 @@
-# easyfreecv - A Modern Blogging Platform
+# shopifydevguide - A Modern Blogging Platform
 
 This is a Next.js application that serves as a modern, stylish blogging platform. It uses Shopify as a headless CMS to manage and deliver blog content.
 

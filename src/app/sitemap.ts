@@ -2,7 +2,7 @@
 import { MetadataRoute } from 'next';
 import { getArticles } from '@/lib/shopify';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://easyfreecv.com';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://shopifydevguide.com';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [

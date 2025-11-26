@@ -50,7 +50,7 @@ export function ChatWidget() {
     setIsChatOpen(!isChatOpen);
     if (!isChatOpen && messages.length === 0) {
       setMessages([
-        { role: 'assistant', content: "Hello! I'm the easyfreecv assistant. How can I help you find an article?" }
+        { role: 'assistant', content: "Hello! I'm the shopifydevguide assistant. How can I help you find an article?" }
       ]);
     }
   };
