@@ -24,7 +24,7 @@ const readexPro = Readex_Pro({
 });
 
 const siteUrl = 'https://easyfreecv.com';
-const faviconUrl = "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon.ico?v=2";
+const faviconUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/favicon.ico";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
