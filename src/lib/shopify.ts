@@ -111,17 +111,19 @@ const ARTICLES_QUERY = gql`
 
 const ARTICLE_QUERY = gql`
   query GetArticleByHandle($handle: String!) {
-    blog(handle: "shopifydevguide") {
-        articleByHandle(handle: $handle) {
-            ...ArticleFragment
-            contentHtml
-            pdf: metafield(namespace: "custom", key: "pdf_url") {
+    articles(first: 1, query: $handle) {
+      edges {
+        node {
+          ...ArticleFragment
+          contentHtml
+          pdf: metafield(namespace: "custom", key: "pdf_url") {
             value
-            }
+          }
         }
+      }
     }
   }
-   ${ArticleFragment}
+  ${ArticleFragment}
 `;
 
 const ALL_TAGS_QUERY = gql`
@@ -188,13 +190,15 @@ export async function getArticles(
 }
 
 export async function getArticleByHandle(handle: string) {
-    const response = await shopifyFetch(ARTICLE_QUERY, { handle: handle });
-    const articleNode = response.data?.blog?.articleByHandle;
+    const query = `handle:${handle} AND blog_handle:shopifydevguide`;
+    const response = await shopifyFetch(ARTICLE_QUERY, { handle: query });
+    const articleEdge = response.data?.articles?.edges?.[0];
 
-    if (!articleNode) {
+    if (!articleEdge) {
         return null;
     }
 
+    const articleNode = articleEdge.node;
     return {
         ...articleNode,
         viewCount: getDeterministicViewCount(articleNode.handle),
