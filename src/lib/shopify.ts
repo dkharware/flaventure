@@ -1,5 +1,4 @@
 
-
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
@@ -111,14 +110,12 @@ const ARTICLES_QUERY = gql`
 
 const ARTICLE_QUERY = gql`
   query GetArticleByHandle($handle: String!) {
-    articles(first: 1, query: $handle) {
-      edges {
-        node {
-          ...ArticleFragment
-          contentHtml
-          pdf: metafield(namespace: "custom", key: "pdf_url") {
-            value
-          }
+    blog(handle: "shopifydevguide") {
+      articleByHandle(handle: $handle) {
+        ...ArticleFragment
+        contentHtml
+        pdf: metafield(namespace: "custom", key: "pdf_url") {
+          value
         }
       }
     }
@@ -190,15 +187,13 @@ export async function getArticles(
 }
 
 export async function getArticleByHandle(handle: string) {
-    const query = `handle:${handle} AND blog_handle:shopifydevguide`;
-    const response = await shopifyFetch(ARTICLE_QUERY, { handle: query });
-    const articleEdge = response.data?.articles?.edges?.[0];
+    const response = await shopifyFetch(ARTICLE_QUERY, { handle });
+    const articleNode = response.data?.blog?.articleByHandle;
 
-    if (!articleEdge) {
+    if (!articleNode) {
         return null;
     }
 
-    const articleNode = articleEdge.node;
     return {
         ...articleNode,
         viewCount: getDeterministicViewCount(articleNode.handle),
