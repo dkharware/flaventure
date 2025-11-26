@@ -160,7 +160,7 @@ export default function Header() {
                               All Articles
                             </div>
                             <p className="text-sm leading-tight text-muted-foreground">
-                              Browse all our latest posts on Shopify, resume building, and more.
+                              Browse all our latest posts on Shopify, Webflow, and more.
                             </p>
                           </a>
                         </NavigationMenuLink>
@@ -171,13 +171,18 @@ export default function Header() {
                         </ListItem>
                       </li>
                       <li>
-                        <ListItem href="/blog?tag=Resume" title="Resume & CV">
-                          Tips and tricks for creating the perfect resume.
+                        <ListItem href="/blog?tag=Webflow" title="Webflow">
+                          Insights and tutorials for the Webflow platform.
                         </ListItem>
                       </li>
-                      <li>
-                        <ListItem href="/blog?tag=cv" title="CV Writing">
-                          Guidance on writing a comprehensive Curriculum Vitae.
+                       <li>
+                        <ListItem href="/blog?tag=Shopify%20Page%20Builders" title="Shopify Page Builders">
+                          Reviews and guides on top Shopify page builders.
+                        </ListItem>
+                      </li>
+                       <li>
+                        <ListItem href="/blog?tag=WooCommerce" title="WooCommerce">
+                          Tips and tricks for the WordPress e-commerce plugin.
                         </ListItem>
                       </li>
                     </ul>
@@ -279,8 +284,9 @@ export default function Header() {
                           <div className="flex flex-col space-y-2">
                              <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>All Articles</Link>
                              <Link href="/blog?tag=Shopify" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Shopify</Link>
-                             <Link href="/blog?tag=Resume" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Resume & CV</Link>
-                             <Link href="/blog?tag=cv" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>CV Writing</Link>
+                             <Link href="/blog?tag=Webflow" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Webflow</Link>
+                             <Link href="/blog?tag=Shopify%20Page%20Builders" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Shopify Page Builders</Link>
+                             <Link href="/blog?tag=WooCommerce" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>WooCommerce</Link>
                           </div>
                       </AccordionContent>
                   </AccordionItem>

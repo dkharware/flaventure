@@ -341,51 +341,6 @@ const faqData = [
                 answer: "The development and maintenance costs of a headless store are typically higher than using a pre-built Shopify theme due to the increased complexity. However, the Shopify plan costs remain the same."
             }
         ]
-    },
-    {
-        category: "Resume and CV",
-        questions: [
-            {
-                question: "What's the difference between a resume and a CV?",
-                answer: "A resume is a concise, one-to-two-page summary of your skills and experience, tailored to a specific job. A Curriculum Vitae (CV) is more detailed, often multiple pages long, and includes a comprehensive history of your academic and professional background. CVs are more common in academia."
-            },
-            {
-                question: "How long should my resume be?",
-                answer: "For most professionals, a one-page resume is ideal. A two-page resume is acceptable if you have over 10 years of relevant experience. Always prioritize conciseness."
-            },
-            {
-                question: "What is an ATS and how do I optimize my resume for it?",
-                answer: "An Applicant Tracking System (ATS) is software used by recruiters to scan resumes for keywords. To optimize for ATS, use a clean format, include keywords from the job description, and use standard section headings like 'Work Experience'."
-            },
-            {
-                question: "Should I include a cover letter with my application?",
-                answer: "Yes, you should almost always include a cover letter unless the application specifically says not to. It's your opportunity to explain why you're a great fit for the role and show your personality beyond your resume."
-            },
-            {
-                question: "How do I quantify my achievements on a resume?",
-                answer: "Quantify achievements by using numbers, percentages, and data. For example, instead of saying 'Improved sales,' say 'Increased quarterly sales by 15%.' This provides concrete evidence of your impact."
-            },
-            {
-                question: "What are 'soft skills' and which ones should I include?",
-                answer: "Soft skills are non-technical skills like communication, teamwork, and problem-solving. Include a few that are most relevant to the job description and be prepared to give examples."
-            },
-            {
-                question: "Should I include a professional summary or an objective?",
-                answer: "A professional summary is generally preferred. It's a brief, 2-3 sentence overview of your key skills and experience. An objective, which states your career goals, can be seen as outdated unless you are making a significant career change."
-            },
-            {
-                question: "What file format should I use to send my resume?",
-                answer: "PDF is the best format. It preserves your formatting across all devices and is not easily editable. Avoid using Word documents (.doc/.docx) unless specifically requested."
-            },
-            {
-                question: "Is it okay to have a gap in my work history?",
-                answer: "Yes, employment gaps are common. Be prepared to explain it honestly and briefly. You can focus on what you did during that time, such as professional development, volunteering, or personal projects."
-            },
-            {
-                question: "Should I put my address on my resume?",
-                answer: "It's no longer necessary to include your full street address. Your city, state, and zip code are sufficient. For remote jobs, you might just list your state or 'Remote'."
-            }
-        ]
     }
 ];
 
@@ -408,7 +363,7 @@ function FaqSection() {
                     <div className="space-y-2">
                         <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Frequently Asked Questions</h2>
                         <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                           Find answers to common questions about Shopify and resume building.
+                           Find answers to common questions about Shopify and e-commerce development.
                         </p>
                     </div>
                 </div>

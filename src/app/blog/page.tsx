@@ -18,8 +18,8 @@ import { BlogTags } from '@/components/BlogTags';
 import { ArticleList } from '@/components/ArticleList';
 
 export const metadata: Metadata = {
-  title: 'Blog | easyfreecv',
-  description: 'Read the latest articles and tips on resume building, career advice, and job searching from the easyfreecv team.',
+  title: 'E-commerce & Web Dev Blog | easyfreecv',
+  description: 'Read the latest articles on Shopify, Webflow, headless commerce, and modern web development from the easyfreecv team.',
 };
 
 interface BlogPageProps {
@@ -50,8 +50,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const allTags = await getAllTags();
   const { articles: recentPosts } = await getArticles(5);
 
-  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Resume & Career Advice Blog");
-  const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on resume building, career advice, and industry trends.";
+  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "E-commerce & Web Dev Blog");
+  const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on Shopify, headless commerce, and industry trends.";
 
   const featuredArticle = articles.length > 0 ? articles[0] : null;
   const initialArticles = articles.slice(1);

@@ -38,7 +38,6 @@ const categoryIcons: { [key: string]: React.ReactNode } = {
     "Theme & App": <Code className="h-6 w-6" />,
     "Storefront API": <FileText className="h-6 w-6" />,
     "Headless Shopify": <Briefcase className="h-6 w-6" />,
-    "Resume and CV": <GraduationCap className="h-6 w-6" />,
 };
 
 export function FaqClient({ faqData }: FaqClientProps) {

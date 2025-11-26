@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     default: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
     template: '%s | easyfreecv',
   },
-  description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, and resume building tips for Shopify developers.',
+  description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
   keywords: [
     'Shopify', 
     'Shopify theme',
@@ -42,14 +42,17 @@ export const metadata: Metadata = {
     'headless Shopify',
     'Storefront API',
     'Shopify blog',
-    'easyfreecv'
+    'easyfreecv',
+    'Webflow',
+    'WooCommerce',
+    'Shopify Page Builders'
   ],
   authors: [{ name: 'easyfreecv', url: siteUrl }],
   creator: 'easyfreecv',
   publisher: 'easyfreecv',
   openGraph: {
     title: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
-    description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, and resume building tips for Shopify developers.',
+    description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
     url: siteUrl,
     siteName: 'easyfreecv',
     images: [
@@ -66,7 +69,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
-    description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, and resume building tips for Shopify developers.',
+    description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
     images: ['/og-image.png'], // Assuming you'll add an og-image.png to your public folder
   },
   icons: {
