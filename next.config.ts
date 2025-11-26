@@ -1,3 +1,4 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
@@ -7,6 +8,12 @@ const nextConfig: NextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  experimental: {
+    // This is required to allow requests from the development environment (cloud workstation).
+    allowedDevOrigins: [
+      "https://*.cloudworkstations.dev",
+    ]
   },
   images: {
     remotePatterns: [
