@@ -13,7 +13,7 @@ export default function Footer() {
               <Logo />
             </Link>
             <p className="text-sm">
-              Discover insightful articles, tutorials, and the latest trends in our industry.
+              Explore in-depth articles and expert tutorials on Shopify themes, headless commerce, and e-commerce development to stay ahead of the latest industry trends.
             </p>
           </div>
           
