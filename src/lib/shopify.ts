@@ -149,7 +149,7 @@ const ARTICLE_SUGGESTIONS_QUERY = gql`
   }
 `;
 
-export const BLOG_FILTER = "blog_handle:shopifydevguide";
+export const BLOG_FILTER = "blog_handle:'shopifydevguide'";
 
 export async function getArticles(
     count: number = 12, 
