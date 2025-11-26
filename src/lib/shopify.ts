@@ -106,7 +106,7 @@ const ARTICLES_QUERY = gql`
       }
     }
   }
-  ${'${ArticleFragment}'}
+  ${ArticleFragment}
 `;
 
 const ARTICLE_QUERY = gql`
@@ -121,7 +121,7 @@ const ARTICLE_QUERY = gql`
         }
     }
   }
-   ${'${ArticleFragment}'}
+   ${ArticleFragment}
 `;
 
 const ALL_TAGS_QUERY = gql`
