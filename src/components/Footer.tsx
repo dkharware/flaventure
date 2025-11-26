@@ -23,7 +23,7 @@ export default function Footer() {
               <li><Link href="/about" className="text-sm hover:text-primary transition-colors">About Us</Link></li>
               <li><Link href="/contact" className="text-sm hover:text-primary transition-colors">Contact</Link></li>
               <li><Link href="/blog" className="text-sm hover:text-primary transition-colors">Blog</Link></li>
-              <li><Link href="/blog?tag=Shopify" className="text-sm hover:text-primary transition-colors">Shopify Blog</Link></li>
+              <li><Link href="/blog?tag=Shopify" className="text-sm hover:text-primary transition-colors">Shopify</Link></li>
             </ul>
           </div>
 
