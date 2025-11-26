@@ -20,13 +20,14 @@ import { TableOfContents } from '@/components/TableOfContents';
 import { CommentSection } from '@/components/CommentSection';
 import { ShareButtons } from '@/components/ShareButtons';
 import { LikeButton } from '@/components/LikeButton';
+import { BLOG_FILTER } from '@/lib/shopify';
 
 type ArticlePageProps = {
   params: { handle: string };
 };
 
 export async function generateStaticParams() {
-  const { articles } = await getArticles(100); 
+  const { articles } = await getArticles(100, BLOG_FILTER); 
   return articles.map((article: any) => ({
     handle: article.handle,
   }));
@@ -207,3 +208,5 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     </>
   );
 }
+
+    

@@ -1,4 +1,5 @@
 
+
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
@@ -109,8 +110,8 @@ const ARTICLES_QUERY = gql`
 `;
 
 const ARTICLE_QUERY = gql`
-  query GetArticleByHandle($handle: String!) {
-    blog(handle: "shopifydevguide") {
+  query GetArticleByHandle($handle: String!, $blogHandle: String!) {
+    blog(handle: $blogHandle) {
       articleByHandle(handle: $handle) {
         ...ArticleFragment
         contentHtml
@@ -148,7 +149,7 @@ const ARTICLE_SUGGESTIONS_QUERY = gql`
   }
 `;
 
-const BLOG_FILTER = "blog_handle:shopifydevguide";
+export const BLOG_FILTER = "blog_handle:shopifydevguide";
 
 export async function getArticles(
     count: number = 12, 
@@ -188,7 +189,7 @@ export async function getArticles(
 }
 
 export async function getArticleByHandle(handle: string) {
-    const response = await shopifyFetch(ARTICLE_QUERY, { handle });
+    const response = await shopifyFetch(ARTICLE_QUERY, { handle: handle, blogHandle: "shopifydevguide" });
     const articleNode = response.data?.blog?.articleByHandle;
 
     if (!articleNode) {
@@ -216,11 +217,11 @@ export async function getAllTags() {
 
 export async function getRelatedArticles(handle: string, tags: string[]) {
     if (tags.length === 0) {
-        const { articles } = await getArticles(3);
+        const { articles } = await getArticles(3, BLOG_FILTER);
         return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
     }
     const tagsQuery = tags.map(tag => `tag:'${tag}'`).join(' OR ');
-    const { articles } = await getArticles(3, `(${tagsQuery})`);
+    const { articles } = await getArticles(3, `(${tagsQuery}) AND ${BLOG_FILTER}`);
     return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
 }
 
@@ -238,3 +239,5 @@ export async function getArticleSuggestions(searchTerm: string) {
     }
     return response.data.articles.edges.map((edge: any) => edge.node);
 }
+
+    
