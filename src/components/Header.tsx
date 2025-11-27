@@ -110,10 +110,10 @@ export default function Header() {
       <div className="container mx-auto flex items-center justify-between gap-2 md:gap-4">
         <div className="flex-shrink-0">
           <Link href="/" className="flex items-center gap-2" aria-label="shopifydevguide Home">
-            <div className="md:hidden">
+            <div className="md:hidden" style={{ width: 100, height: 28 }}>
               <Logo width={100} height={28} />
             </div>
-            <div className="hidden md:block">
+            <div className="hidden md:block" style={{ width: 150, height: 40 }}>
               <Logo />
             </div>
           </Link>
