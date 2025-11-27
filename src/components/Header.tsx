@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -31,6 +31,7 @@ import { Input } from './ui/input';
 import { LiveSearch } from './LiveSearch';
 import { Separator } from './ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
+import { useChat } from '@/context/ChatContext';
 
 const shopifyComponents = [
     {
@@ -80,6 +81,7 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchWrapperRef = useRef<HTMLDivElement>(null);
+  const { toggleChat } = useChat();
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -114,33 +116,9 @@ export default function Header() {
               <Logo width={150} height={40} />
             </div>
             <div className="hidden md:block">
-              <Logo width={124} height={51} />
+              <Logo width={136} height={51} />
             </div>
           </Link>
-        </div>
-
-        <div className="md:hidden max-w-xs relative" ref={searchWrapperRef}>
-          <form onSubmit={handleSearchSubmit} className="relative w-full">
-              <Input 
-                type="search" 
-                name="search"
-                placeholder="Search articles..." 
-                className="h-9 pr-9 text-xs rounded-full bg-muted border-none focus-visible:ring-2 focus-visible:ring-ring"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onFocus={() => setIsSearchFocused(true)}
-              />
-              <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-9 w-9 rounded-full">
-                <Search className="h-4 w-4" />
-                <span className="sr-only">Search</span>
-              </Button>
-          </form>
-          {isSearchFocused && searchQuery && (
-             <LiveSearch 
-                query={searchQuery} 
-                onClose={() => setIsSearchFocused(false)} 
-             />
-          )}
         </div>
 
         <div className="hidden md:flex flex-1 justify-center">
@@ -251,7 +229,30 @@ export default function Header() {
             </NavigationMenu>
         </div>
         
-        <div className="hidden md:flex items-center justify-end gap-2 flex-shrink-0">
+        <div className="hidden md:flex items-center justify-end gap-4 flex-shrink-0">
+           <div className="relative" ref={searchWrapperRef}>
+             <form onSubmit={handleSearchSubmit} className="relative w-full">
+                 <Input 
+                   type="search" 
+                   name="search"
+                   placeholder="Search articles..." 
+                   className="h-10 pr-10 bg-muted/50 border-none focus-visible:ring-2 focus-visible:ring-ring"
+                   value={searchQuery}
+                   onChange={(e) => setSearchQuery(e.target.value)}
+                   onFocus={() => setIsSearchFocused(true)}
+                 />
+                 <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-10 w-10">
+                   <Search className="h-4 w-4" />
+                   <span className="sr-only">Search</span>
+                 </Button>
+             </form>
+             {isSearchFocused && searchQuery && (
+                <LiveSearch 
+                   query={searchQuery} 
+                   onClose={() => setIsSearchFocused(false)} 
+                />
+             )}
+           </div>
            <Button asChild>
                 <Link href="/shopify-liquid-cheatsheet">
                     Liquid Cheatsheet
@@ -267,17 +268,33 @@ export default function Header() {
                  <span className="sr-only">Open navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent className="overflow-y-auto">
+            <SheetContent className="overflow-y-auto w-full max-w-xs">
               <SheetHeader>
                  <Link href="/" className="flex items-center gap-2 mb-4" aria-label="shopifydevguide Home">
-                    <Logo />
+                    <Logo width={150} height={40}/>
                 </Link>
                 <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
                 <SheetDescription className="sr-only">A list of navigation links for the shopifydevguide website.</SheetDescription>
               </SheetHeader>
-               <Accordion type="single" collapsible className="w-full">
+              <div className="mt-4">
+                  <form onSubmit={handleSearchSubmit} className="relative w-full">
+                      <Input 
+                        type="search" 
+                        name="search"
+                        placeholder="Search articles..." 
+                        className="h-10 pr-10"
+                        defaultValue={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                      <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-10 w-10">
+                        <Search className="h-4 w-4" />
+                        <span className="sr-only">Search</span>
+                      </Button>
+                  </form>
+              </div>
+               <Accordion type="single" collapsible className="w-full mt-4">
                   <AccordionItem value="blog" className="border-b-0">
-                      <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between")}>
+                      <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full")}>
                         <span className="flex items-center"><Newspaper className="mr-2 h-4 w-4" /> Blog</span>
                       </AccordionTrigger>
                       <AccordionContent className="pl-4 pb-1">
@@ -291,7 +308,7 @@ export default function Header() {
                       </AccordionContent>
                   </AccordionItem>
                    <AccordionItem value="shopify" className="border-b-0">
-                      <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between")}>
+                      <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full")}>
                         <span className="flex items-center"><ShoppingCart className="mr-2 h-4 w-4" /> Shopify</span>
                       </AccordionTrigger>
                       <AccordionContent className="pl-4 pb-1">
@@ -310,9 +327,11 @@ export default function Header() {
                   </AccordionItem>
               </Accordion>
               
-               <div className="flex flex-col space-y-2 mt-1">
+               <div className="flex flex-col space-y-1 mt-1 border-t pt-2">
+                  <Link href="/" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Home className="mr-2 h-4 w-4" /> Home</Link>
                   <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
                   <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
+                  <button onClick={toggleChat} className={cn(navigationMenuTriggerStyle(), "justify-start")}><MessageSquare className="mr-2 h-4 w-4" /> Chat</button>
               </div>
 
             </SheetContent>
