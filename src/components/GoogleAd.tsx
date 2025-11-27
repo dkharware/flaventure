@@ -16,16 +16,5 @@ export function GoogleAd() {
     // (window.adsbygoogle = window.adsbygoogle || []).push({});
   }, []);
 
-  return (
-    <div className="container mx-auto py-4 px-4 md:px-6">
-        <Card className="bg-muted/30">
-            <CardContent className="p-4 flex items-center justify-center min-h-[100px]">
-                <div className="text-center text-muted-foreground text-sm">
-                    <p className="font-semibold">Advertisement</p>
-                    <p>Your Google Ad will be displayed here.</p>
-                </div>
-            </CardContent>
-        </Card>
-    </div>
-  );
+  return null;
 }

@@ -12,7 +12,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
 import { ChatWidget } from '@/components/ChatWidget';
 import { ChatProvider } from '@/context/ChatContext';
-import { GoogleAd } from '@/components/GoogleAd';
 import { CookieConsent } from '@/components/CookieConsent';
 
 const readexPro = Readex_Pro({
@@ -114,9 +113,6 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${readexPro.variable}`}>
       <head>
-        <meta name="google-adsense-account" content="ca-pub-5982137810610586" />
-        <script async defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5982137810610586" crossOrigin="anonymous"></script>
-        <script async defer src="https://fundingchoicesmessages.google.com/i/pub-5982137810610586?ers=1" nonce="pS_Qv_zWbJ90P3-2g156-A"></script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
@@ -129,7 +125,6 @@ export default async function RootLayout({
               <div className="flex flex-col min-h-screen">
                 <Header />
                 <main className="flex-grow">{children}</main>
-                <GoogleAd />
                 <Footer />
               </div>
               <Toaster />
