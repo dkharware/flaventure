@@ -16,6 +16,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import placeholderArticles from '@/lib/placeholder-articles.json';
+import { Skeleton } from './ui/skeleton';
 
 interface Article {
     id: string;
@@ -28,20 +30,53 @@ interface Article {
     };
 }
 
+const ArticleCard = ({ article }: { article: Article }) => (
+    <Link href={article.handle === '#' ? '/blog' : `/blog/${article.handle}`} className="block group h-full">
+        <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+            {article.image && (
+                <div className="relative h-48 w-full overflow-hidden">
+                    <Image
+                    src={article.image.url}
+                    alt={article.image.altText || article.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                </div>
+            )}
+            <div className="flex flex-col flex-grow">
+                <CardHeader>
+                    <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                    <p className="text-sm text-muted-foreground">
+                        {format(new Date(article.publishedAt), 'PPP')}
+                    </p>
+                </CardContent>
+            </div>
+        </Card>
+    </Link>
+);
+
+
 export default function BlogSection() {
-    const [articles, setArticles] = useState<Article[]>([]);
+    const [articles, setArticles] = useState<Article[]>(placeholderArticles as Article[]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchArticles = async () => {
-            const { articles: fetchedArticles } = await getArticles(9);
-            setArticles(fetchedArticles);
+            try {
+                const { articles: fetchedArticles } = await getArticles(9);
+                if (fetchedArticles.length > 0) {
+                    setArticles(fetchedArticles);
+                }
+            } catch (error) {
+                console.error("Failed to fetch articles, using placeholders.", error);
+            } finally {
+                setIsLoading(false);
+            }
         };
         fetchArticles();
     }, []);
-
-    if (articles.length === 0) {
-        return null;
-    }
 
     return (
         <section className="w-full py-12 md:py-24 lg:py-32 bg-muted/20">
@@ -65,30 +100,17 @@ export default function BlogSection() {
                       <CarouselContent>
                         {articles.map((article: any) => (
                            <CarouselItem key={article.id} className="md:basis-1/2 lg:basis-1/3">
-                             <Link href={`/blog/${article.handle}`} className="block group h-full">
-                                <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                                    {article.image && (
-                                        <div className="relative h-48 w-full overflow-hidden">
-                                            <Image
-                                            src={article.image.url}
-                                            alt={article.image.altText || article.title}
-                                            fill
-                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                            />
-                                        </div>
-                                    )}
-                                    <div className="flex flex-col flex-grow">
-                                        <CardHeader>
-                                            <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors">{article.title}</CardTitle>
-                                        </CardHeader>
-                                        <CardContent className="flex-grow">
-                                            <p className="text-sm text-muted-foreground">
-                                                {format(new Date(article.publishedAt), 'PPP')}
-                                            </p>
-                                        </CardContent>
+                            {isLoading && article.id.startsWith('placeholder') ? (
+                                <div className="space-y-3">
+                                    <Skeleton className="h-48 w-full" />
+                                    <div className="space-y-2 p-2">
+                                        <Skeleton className="h-6 w-5/6" />
+                                        <Skeleton className="h-4 w-1/2" />
                                     </div>
-                                </Card>
-                            </Link>
+                                </div>
+                            ) : (
+                                <ArticleCard article={article} />
+                            )}
                            </CarouselItem>
                         ))}
                       </CarouselContent>

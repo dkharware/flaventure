@@ -1,0 +1,36 @@
+
+[
+    {
+      "id": "placeholder-1",
+      "handle": "#",
+      "title": "Optimizing Your Shopify Store for Maximum Performance",
+      "publishedAt": "2024-05-15T10:00:00Z",
+      "excerptHtml": "<p>Discover key strategies to speed up your Shopify site, from image optimization to app management.</p>",
+      "image": {
+        "url": "https://picsum.photos/seed/s1/600/400",
+        "altText": "A computer screen showing performance metrics"
+      }
+    },
+    {
+      "id": "placeholder-2",
+      "handle": "#",
+      "title": "A Guide to Headless Commerce with Shopify and Next.js",
+      "publishedAt": "2024-05-14T11:30:00Z",
+      "excerptHtml": "<p>Learn how to decouple your frontend from Shopify's backend to create blazing-fast, custom shopping experiences.</p>",
+      "image": {
+        "url": "https://picsum.photos/seed/s2/600/400",
+        "altText": "Code on a screen representing a headless architecture"
+      }
+    },
+    {
+      "id": "placeholder-3",
+      "handle": "#",
+      "title": "Mastering the Shopify Storefront API for Custom Apps",
+      "publishedAt": "2024-05-13T09:00:00Z",
+      "excerptHtml": "<p>A deep dive into the Storefront API, with examples for building unique features for your e-commerce site.</p>",
+      "image": {
+        "url": "https://picsum.photos/seed/s3/600/400",
+        "altText": "A diagram of API connections"
+      }
+    }
+]  
