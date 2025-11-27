@@ -23,17 +23,8 @@ const mockComments: Comment[] = [
 ];
 
 const CommentTime = ({ timestamp }: { timestamp: Date }) => {
-  const [timeAgo, setTimeAgo] = useState('');
-
-  useEffect(() => {
-    // This code will only run on the client, after hydration
-    setTimeAgo(formatDistanceToNow(timestamp, { addSuffix: true }));
-  }, [timestamp]);
+  const timeAgo = formatDistanceToNow(timestamp, { addSuffix: true });
   
-  if (!timeAgo) {
-      return null; // Or a placeholder
-  }
-
   return (
     <p className="text-xs text-muted-foreground">
         {timeAgo}

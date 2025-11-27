@@ -124,7 +124,7 @@ export default async function RootLayout({
         />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className="font-body antialiased">
+      <body className={`${readexPro.className} font-body antialiased`}>
           <LoaderProvider>
             <ChatProvider>
               <div className="flex flex-col min-h-screen pb-16 md:pb-0">

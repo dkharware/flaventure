@@ -143,7 +143,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     </header>
 
                     {article.image && (
-                    <div className="relative h-64 md:h-96 w-full rounded-lg overflow-hidden mb-8 shadow-lg">
+                    <div className="relative aspect-video w-full rounded-lg overflow-hidden mb-8 shadow-lg">
                         <Image
                         src={article.image.url}
                         alt={article.image.altText || article.title}
