@@ -38,7 +38,7 @@ function ArticleCard({ article }: { article: Article }) {
         <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
         <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
             {article.image && (
-            <div className="relative h-32 w-full overflow-hidden">
+            <div className="relative h-48 w-full overflow-hidden">
                 <Image
                 src={article.image.url}
                 alt={article.image.altText || article.title}
@@ -73,20 +73,22 @@ function ArticleCard({ article }: { article: Article }) {
     );
 }
 
-function ArticleCardSkeleton() {
+export function ArticleCardSkeleton() {
     return (
-        <div className="flex flex-col space-y-3">
-            <Skeleton className="h-32 w-full rounded-lg" />
-            <div className="space-y-2 p-4">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-5/6" />
-                <Skeleton className="h-4 w-3/4" />
+        <Card className="h-full flex flex-col overflow-hidden">
+            <Skeleton className="h-48 w-full" />
+            <div className="p-4 flex-grow flex flex-col">
+                <Skeleton className="h-4 w-5/6 mb-4" />
+                <div className="flex-grow space-y-2">
+                    <Skeleton className="h-3 w-full" />
+                    <Skeleton className="h-3 w-full" />
+                </div>
+                <div className="mt-4 pt-4 border-t flex items-center justify-between">
+                    <Skeleton className="h-3 w-1/4" />
+                    <Skeleton className="h-3 w-1/4" />
+                </div>
             </div>
-            <div className="p-4 pt-0 space-y-2">
-                 <Skeleton className="h-4 w-full" />
-                 <Skeleton className="h-4 w-1/2" />
-            </div>
-        </div>
+        </Card>
     )
 }
 
@@ -142,6 +144,7 @@ export function ArticleList({ initialArticles, initialPageInfo, query }: Article
             ))}
             {isLoading && (
               <>
+                <ArticleCardSkeleton />
                 <ArticleCardSkeleton />
                 <ArticleCardSkeleton />
                 <ArticleCardSkeleton />

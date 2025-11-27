@@ -15,7 +15,8 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { BlogTags } from '@/components/BlogTags';
-import { ArticleList } from '@/components/ArticleList';
+import { ArticleList, ArticleCardSkeleton } from '@/components/ArticleList';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export const metadata: Metadata = {
   title: 'E-commerce & Web Dev Blog | shopifydevguide',
@@ -30,6 +31,26 @@ interface BlogPageProps {
 }
 
 const POSTS_PER_PAGE = 11; // 1 for featured, 10 for grid on first page
+
+function FeaturedArticleSkeleton() {
+    return (
+        <Card className="h-full flex flex-col md:flex-row overflow-hidden">
+            <Skeleton className="h-48 md:h-auto md:w-1/2" />
+            <div className="flex-1 flex flex-col p-6 space-y-4">
+                <Skeleton className="h-6 w-3/4" />
+                <div className="space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
+                </div>
+                <div className="flex items-center justify-between pt-4 border-t">
+                    <Skeleton className="h-4 w-1/4" />
+                    <Skeleton className="h-4 w-1/4" />
+                </div>
+            </div>
+        </Card>
+    );
+}
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const searchQuery = searchParams?.query;
@@ -106,6 +127,17 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
+              <Suspense fallback={
+                <div className="space-y-12">
+                    <FeaturedArticleSkeleton />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                        <ArticleCardSkeleton />
+                        <ArticleCardSkeleton />
+                        <ArticleCardSkeleton />
+                        <ArticleCardSkeleton />
+                    </div>
+                </div>
+              }>
                 {articles && articles.length > 0 ? (
                     <div className="space-y-12">
                       {featuredArticle && (
@@ -164,6 +196,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                         </Button>
                     </div>
                 )}
+              </Suspense>
             </main>
             <aside className="lg:col-span-1 lg:mt-0 hidden lg:block">
                 <Suspense fallback={<div>Loading sidebar...</div>}>
