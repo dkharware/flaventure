@@ -11,15 +11,40 @@ import { Badge } from '@/components/ui/badge';
 import type { FormEvent } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { getAllTags, getArticles } from '@/lib/shopify';
+import { Skeleton } from './ui/skeleton';
 
 interface BlogSidebarProps {
-  tags: string[];
-  recentPosts: any[];
+  // Props are no longer needed as the component fetches its own data
 }
 
-export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
+export function BlogSidebar({}: BlogSidebarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [tags, setTags] = useState<string[]>([]);
+  const [recentPosts, setRecentPosts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      try {
+        const [tagsData, recentPostsData] = await Promise.all([
+          getAllTags(),
+          getArticles(5).then(res => res.articles)
+        ]);
+        setTags(tagsData);
+        setRecentPosts(recentPostsData);
+      } catch (error) {
+        console.error("Failed to fetch sidebar data", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
   const isFilterActive = searchParams.has('query') || searchParams.has('tag');
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
@@ -63,56 +88,79 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
         </CardContent>
       </Card>
 
-      {tags.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl font-bold">Tags</CardTitle>
-          </CardHeader>
-          <CardContent>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl font-bold">Tags</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
             <div className="flex flex-wrap gap-2">
-              {tags.map(tag => (
-                <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
-                  <Badge variant={searchParams.get('tag') === tag ? 'default' : 'secondary'} className="hover:bg-primary hover:text-primary-foreground transition-colors text-sm">
-                    {tag}
-                  </Badge>
-                </Link>
-              ))}
+              <Skeleton className="h-6 w-16 rounded-full" />
+              <Skeleton className="h-6 w-20 rounded-full" />
+              <Skeleton className="h-6 w-12 rounded-full" />
+              <Skeleton className="h-6 w-24 rounded-full" />
             </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {recentPosts.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl font-bold">Recent Posts</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-4">
-              {recentPosts.map(post => (
-                <li key={post.id} className="border-b pb-4 last:border-b-0 last:pb-0">
-                  <Link href={`/blog/${post.handle}`} className="group flex items-center gap-4">
-                    {post.image && (
-                      <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-md">
-                        <Image 
-                          src={post.image.url}
-                          alt={post.image.altText || post.title}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                      </div>
-                    )}
-                    <div className="flex-grow">
-                      <p className="font-semibold group-hover:text-primary transition-colors line-clamp-2 text-sm">{post.title}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{format(new Date(post.publishedAt), 'PPP')}</p>
-                    </div>
+          ) : (
+            tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {tags.map(tag => (
+                  <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
+                    <Badge variant={searchParams.get('tag') === tag ? 'default' : 'secondary'} className="hover:bg-primary hover:text-primary-foreground transition-colors text-sm">
+                      {tag}
+                    </Badge>
                   </Link>
+                ))}
+              </div>
+            )
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl font-bold">Recent Posts</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
+            <ul className="space-y-4">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <li key={i} className="flex items-center gap-4 border-b pb-4 last:border-b-0 last:pb-0">
+                  <Skeleton className="h-14 w-14 rounded-md" />
+                  <div className="flex-grow space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-3 w-1/2" />
+                  </div>
                 </li>
               ))}
             </ul>
-          </CardContent>
-        </Card>
-      )}
+          ) : (
+            recentPosts.length > 0 && (
+              <ul className="space-y-4">
+                {recentPosts.map(post => (
+                  <li key={post.id} className="border-b pb-4 last:border-b-0 last:pb-0">
+                    <Link href={`/blog/${post.handle}`} className="group flex items-center gap-4">
+                      {post.image && (
+                        <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-md">
+                          <Image 
+                            src={post.image.url}
+                            alt={post.image.altText || post.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-grow">
+                        <p className="font-semibold group-hover:text-primary transition-colors line-clamp-2 text-sm">{post.title}</p>
+                        <p className="text-xs text-muted-foreground mt-1">{format(new Date(post.publishedAt), 'PPP')}</p>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

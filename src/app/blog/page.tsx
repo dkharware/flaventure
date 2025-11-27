@@ -63,13 +63,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     query = `tag:'${tagQuery}'`;
   }
   
+  // We only fetch articles now, sidebar data is fetched on the client.
   const { articles, pageInfo } = await getArticles(
       POSTS_PER_PAGE + 1, 
       query
   );
   
+  // All tags are still needed for the main tag explorer on the blog page.
   const allTags = await getAllTags();
-  const { articles: recentPosts } = await getArticles(5);
 
   const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "E-commerce & Web Dev Blog");
   const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on Shopify, headless commerce, and industry trends.";
@@ -99,8 +100,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                     <SheetDescription className="sr-only">Contains blog search, tags, and recent posts.</SheetDescription>
                   </SheetHeader>
                   <ScrollArea className="h-full pr-6">
-                    <Suspense fallback={<div>Loading sidebar...</div>}>
-                        <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                    <Suspense fallback={
+                       <div className="space-y-8">
+                          <Skeleton className="h-24 w-full" />
+                          <Skeleton className="h-48 w-full" />
+                          <Skeleton className="h-64 w-full" />
+                       </div>
+                    }>
+                        <BlogSidebar />
                     </Suspense>
                   </ScrollArea>
                 </SheetContent>
@@ -199,8 +206,14 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               </Suspense>
             </main>
             <aside className="lg:col-span-1 lg:mt-0 hidden lg:block">
-                <Suspense fallback={<div>Loading sidebar...</div>}>
-                    <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                 <Suspense fallback={
+                    <div className="space-y-8">
+                        <Skeleton className="h-24 w-full" />
+                        <Skeleton className="h-48 w-full" />
+                        <Skeleton className="h-64 w-full" />
+                    </div>
+                 }>
+                    <BlogSidebar />
                 </Suspense>
             </aside>
         </div>

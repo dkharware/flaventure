@@ -68,8 +68,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound();
   }
 
-  const allTags = await getAllTags();
-  const { articles: recentPosts } = await getArticles(5);
   const relatedArticles = await getRelatedArticles(article.handle, article.tags);
 
   const breadcrumbItems = [
@@ -102,8 +100,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   <SheetDescription className="sr-only">Contains blog search, tags, and recent posts.</SheetDescription>
                 </SheetHeader>
                 <ScrollArea className="h-full pr-6">
-                  <Suspense fallback={<div>Loading sidebar...</div>}>
-                      <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                  <Suspense fallback={
+                     <div className="space-y-8">
+                        <Skeleton className="h-24 w-full" />
+                        <Skeleton className="h-48 w-full" />
+                        <Skeleton className="h-64 w-full" />
+                     </div>
+                  }>
+                      <BlogSidebar />
                   </Suspense>
                 </ScrollArea>
               </SheetContent>
@@ -197,8 +201,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 )}
             </main>
             <aside className="lg:col-span-3 relative hidden lg:block">
-                <Suspense fallback={<div>Loading sidebar...</div>}>
-                    <BlogSidebar tags={allTags} recentPosts={recentPosts} />
+                <Suspense fallback={
+                   <div className="space-y-8">
+                      <Skeleton className="h-24 w-full" />
+                      <Skeleton className="h-48 w-full" />
+                      <Skeleton className="h-64 w-full" />
+                   </div>
+                }>
+                    <BlogSidebar />
                 </Suspense>
             </aside>
         </div>
