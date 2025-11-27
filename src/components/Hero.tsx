@@ -1,31 +1,15 @@
 
 'use client';
 
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { ArrowRight, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { Input } from './ui/input';
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
 
 export function Hero() {
     const router = useRouter();
-    
-    useGSAP(() => {
-        gsap.from('.hero-element', {
-          duration: 1,
-          opacity: 0,
-          y: 50,
-          stagger: 0.2,
-          ease: 'power3.out',
-        });
-    }, []);
     
     const handleSearch = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -82,5 +66,7 @@ export function Hero() {
         </section>
     )
 }
+
+    
 
     
