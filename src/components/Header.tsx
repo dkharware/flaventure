@@ -113,8 +113,8 @@ export default function Header() {
             <div className="md:hidden" style={{ width: 100, height: 28 }}>
               <Logo width={100} height={28} />
             </div>
-            <div className="hidden md:block" style={{ width: 150, height: 40 }}>
-              <Logo />
+            <div className="hidden md:block" style={{ width: 210, height: 56 }}>
+              <Logo width={210} height={56} />
             </div>
           </Link>
         </div>
