@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -313,43 +314,11 @@ export default function Header() {
                       </Button>
                   </form>
               </div>
-               <Accordion type="single" collapsible className="w-full mt-4">
-                  <AccordionItem value="blog" className="border-b-0">
-                      <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full")}>
-                        <span className="flex items-center"><Newspaper className="mr-2 h-4 w-4" /> Blog</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="pl-4 pb-1">
-                          <div className="flex flex-col space-y-2">
-                             <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>All Articles</Link>
-                             <Link href="/blog?tag=Shopify" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Shopify</Link>
-                             <Link href="/blog?tag=Webflow" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Webflow</Link>
-                             <Link href="/blog?tag=Shopify%20Page%20Builders" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Shopify Page Builders</Link>
-                             <Link href="/blog?tag=WooCommerce" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>WooCommerce</Link>
-                          </div>
-                      </AccordionContent>
-                  </AccordionItem>
-                   <AccordionItem value="shopify" className="border-b-0">
-                      <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full")}>
-                        <span className="flex items-center"><ShoppingCart className="mr-2 h-4 w-4" /> Shopify</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="pl-4 pb-1">
-                          <div className="flex flex-col space-y-2">
-                            <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Liquid Cheatsheet</Link>
-                            <Link href="/blog?query=headless" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Headless</Link>
-                            <Link href="/blog?query=app%20bridge" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>App Bridge</Link>
-                            <Link href="/blog?query=storefront%20api" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Storefront API</Link>
-                            <Link href="/blog?query=theme%20development" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Theme Development</Link>
-                            <Link href="/blog?query=admin%20api" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Admin API</Link>
-                            <Link href="/blog?query=hydrogen" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Hydrogen</Link>
-                            <Link href="/blog?query=oxygen" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Oxygen</Link>
-                            <Link href="/blog?query=polaris" className={cn(navigationMenuTriggerStyle(), "justify-start font-normal text-muted-foreground")}>Polaris</Link>
-                          </div>
-                      </AccordionContent>
-                  </AccordionItem>
-              </Accordion>
               
-               <div className="flex flex-col space-y-1 mt-1 border-t pt-2">
+               <div className="flex flex-col space-y-1 mt-4 border-t pt-2">
                   <Link href="/" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Home className="mr-2 h-4 w-4" /> Home</Link>
+                  <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
+                  <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Cheatsheet</Link>
                   <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
                   <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
                   <button onClick={toggleChat} className={cn(navigationMenuTriggerStyle(), "justify-start")}><MessageSquare className="mr-2 h-4 w-4" /> Chat</button>

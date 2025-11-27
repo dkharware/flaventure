@@ -23,7 +23,7 @@ export function Hero() {
     };
 
     return (
-        <section className="relative w-full py-20 md:py-32 lg:py-40 bg-background overflow-hidden">
+        <section className="relative w-full py-20 md:py-32 lg:py-40 bg-background overflow-hidden min-h-[60vh]">
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white to-red-50/50 dark:from-blue-900/10 dark:via-background dark:to-red-900/10"></div>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#d1eaff,transparent)] opacity-30 dark:opacity-10"></div>
@@ -42,7 +42,7 @@ export function Hero() {
                           <Input 
                             type="search" 
                             name="search"
-                            placeholder="e.g. 'Shopify theme', 'app bridge', 'storefront api'..." 
+                            placeholder="e.g. 'Shopify theme', 'app bridge'..." 
                             className="flex-grow !bg-transparent border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                           />
                           <Button type="submit" size="icon" variant="glow" className="rounded-full">
@@ -66,7 +66,3 @@ export function Hero() {
         </section>
     )
 }
-
-    
-
-    
