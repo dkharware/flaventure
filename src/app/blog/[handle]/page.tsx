@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
-import { Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
@@ -17,9 +17,13 @@ import { SlidersHorizontal, Eye, Download } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TableOfContents } from '@/components/TableOfContents';
-import { CommentSection } from '@/components/CommentSection';
 import { ShareButtons } from '@/components/ShareButtons';
 import { LikeButton } from '@/components/LikeButton';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const CommentSection = lazy(() => import('@/components/CommentSection').then(module => ({ default: module.CommentSection })));
+const RelatedArticles = lazy(() => import('@/components/RelatedArticles').then(module => ({ default: module.RelatedArticles })));
+
 
 type ArticlePageProps = {
   params: { handle: string };
@@ -143,7 +147,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     </header>
 
                     {article.image && (
-                    <div className="relative aspect-video w-full rounded-lg overflow-hidden mb-8 shadow-lg">
+                    <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden mb-8 shadow-lg">
                         <Image
                         src={article.image.url}
                         alt={article.image.altText || article.title}
@@ -164,39 +168,32 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                     </div>
                 </article>
 
-                <div className="mt-16 pt-12 border-t">
-                  <CommentSection />
-                </div>
-
+                <Suspense fallback={
+                    <div className="mt-16 pt-12 border-t space-y-4">
+                        <Skeleton className="h-8 w-1/2 mx-auto" />
+                        <Skeleton className="h-24 w-full" />
+                    </div>
+                }>
+                    <div className="mt-16 pt-12 border-t">
+                        <CommentSection />
+                    </div>
+                </Suspense>
 
                 {relatedArticles.length > 0 && (
-                    <div className="mt-16 pt-12 border-t">
-                        <h2 className="text-3xl font-bold font-headline mb-8 text-center">Related Articles</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {relatedArticles.map((related: any) => (
-                                <Link key={related.id} href={`/blog/${related.handle}`} className="block group">
-                                    <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                                        {related.image && (
-                                            <div className="relative h-40 w-full overflow-hidden">
-                                                <Image src={related.image.url} alt={related.image.altText || related.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                                                <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
-                                                    {related.tags?.slice(0, 2).map((tag: string) => (
-                                                        <Badge key={tag} variant="secondary" className="shadow-md">{tag}</Badge>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-                                        <CardHeader>
-                                            <CardTitle className="text-lg font-headline group-hover:text-primary transition-colors">{related.title}</CardTitle>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p className="text-xs text-muted-foreground">{format(new Date(related.publishedAt), 'PPP')}</p>
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-                            ))}
+                     <Suspense fallback={
+                        <div className="mt-16 pt-12 border-t space-y-8">
+                            <Skeleton className="h-8 w-1/3 mx-auto" />
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <Skeleton className="h-64 w-full" />
+                                <Skeleton className="h-64 w-full" />
+                            </div>
                         </div>
-                    </div>
+                     }>
+                        <div className="mt-16 pt-12 border-t">
+                            <h2 className="text-3xl font-bold font-headline mb-8 text-center">Related Articles</h2>
+                            <RelatedArticles articles={relatedArticles} />
+                        </div>
+                     </Suspense>
                 )}
             </main>
             <aside className="lg:col-span-3 relative hidden lg:block">
