@@ -13,6 +13,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { ChatWidget } from '@/components/ChatWidget';
 import { ChatProvider } from '@/context/ChatContext';
 import { CookieConsent } from '@/components/CookieConsent';
+import Script from 'next/script';
 
 const readexPro = Readex_Pro({
   subsets: ['latin'],
@@ -113,6 +114,18 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${readexPro.variable}`}>
       <head>
+        <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-0H420BHZNW"
+            strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+            {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-0H420BHZNW');
+            `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
