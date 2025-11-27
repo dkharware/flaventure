@@ -15,6 +15,7 @@ export const Logo = ({ width, height, className }: LogoProps) => {
             width={width} 
             height={height}
             className={`object-contain ${className || ''}`}
+            priority
         />
     );
 };
