@@ -4,7 +4,7 @@ export function PageLoader() {
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center bg-background/80 backdrop-blur-sm">
       <div className="animate-pulse">
-        <Logo />
+        <Logo width={136} height={51} />
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2" aria-label="shopifydevguide Home">
-              <Logo />
+              <Logo width={136} height={51} />
             </Link>
             <p className="text-sm">
               Explore in-depth articles on Shopify themes, headless commerce, and e-commerce development.
