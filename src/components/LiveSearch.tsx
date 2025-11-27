@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -10,6 +9,7 @@ import { debounce } from 'lodash';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import { ArrowRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface Article {
   handle: string;
@@ -19,9 +19,10 @@ interface Article {
 interface LiveSearchProps {
   query: string;
   onClose: () => void;
+  className?: string;
 }
 
-export function LiveSearch({ query, onClose }: LiveSearchProps) {
+export function LiveSearch({ query, onClose, className }: LiveSearchProps) {
   const [results, setResults] = useState<Article[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -56,7 +57,7 @@ export function LiveSearch({ query, onClose }: LiveSearchProps) {
   }
 
   return (
-    <Card className="absolute top-full mt-2 w-full shadow-lg z-50">
+    <Card className={cn("absolute top-full mt-2 w-full shadow-lg z-50", className)}>
       <CardContent className="p-2">
         <div className="max-h-80 overflow-y-auto">
           {isLoading && (

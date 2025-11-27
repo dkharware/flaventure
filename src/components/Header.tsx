@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -24,6 +23,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { ListItem } from './ListItem';
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
@@ -79,8 +86,8 @@ const shopifyComponents = [
 export default function Header() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const searchWrapperRef = useRef<HTMLDivElement>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { toggleChat } = useChat();
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -88,23 +95,19 @@ export default function Header() {
     if (searchQuery.trim()) {
         router.push(`/blog?query=${encodeURIComponent(searchQuery.trim())}`);
         setSearchQuery('');
-        setIsSearchFocused(false);
+        setIsSearchOpen(false);
     } else {
         router.push('/blog');
     }
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchWrapperRef.current && !searchWrapperRef.current.contains(event.target as Node)) {
-        setIsSearchFocused(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+    if (isSearchOpen) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [isSearchOpen]);
 
 
   return (
@@ -230,29 +233,47 @@ export default function Header() {
         </div>
         
         <div className="hidden md:flex items-center justify-end gap-4 flex-shrink-0">
-           <div className="relative" ref={searchWrapperRef}>
-             <form onSubmit={handleSearchSubmit} className="relative w-full">
-                 <Input 
-                   type="search" 
-                   name="search"
-                   placeholder="Search articles..." 
-                   className="h-10 pr-10 bg-muted/50 border-none focus-visible:ring-2 focus-visible:ring-ring"
-                   value={searchQuery}
-                   onChange={(e) => setSearchQuery(e.target.value)}
-                   onFocus={() => setIsSearchFocused(true)}
-                 />
-                 <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-10 w-10">
-                   <Search className="h-4 w-4" />
-                   <span className="sr-only">Search</span>
-                 </Button>
-             </form>
-             {isSearchFocused && searchQuery && (
-                <LiveSearch 
-                   query={searchQuery} 
-                   onClose={() => setIsSearchFocused(false)} 
-                />
-             )}
-           </div>
+          <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+            <DialogTrigger asChild>
+                <Button variant="outline" size="icon">
+                    <Search className="h-4 w-4" />
+                    <span className="sr-only">Open Search</span>
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="top-1/4">
+                <DialogHeader>
+                  <DialogTitle>Search Articles</DialogTitle>
+                  <DialogDescription>
+                    Find articles about Shopify, headless, and more.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="relative">
+                  <form onSubmit={handleSearchSubmit} className="relative w-full">
+                      <Input 
+                        ref={inputRef}
+                        type="search" 
+                        name="search"
+                        placeholder="e.g. 'Shopify theme', 'app bridge'..." 
+                        className="h-10 pr-10 bg-muted/50"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                      <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-10 w-10">
+                        <Search className="h-4 w-4" />
+                        <span className="sr-only">Search</span>
+                      </Button>
+                  </form>
+                  {searchQuery && (
+                    <LiveSearch 
+                      query={searchQuery} 
+                      onClose={() => setIsSearchOpen(false)}
+                      className="top-12"
+                    />
+                  )}
+                </div>
+            </DialogContent>
+           </Dialog>
+           
            <Button asChild>
                 <Link href="/shopify-liquid-cheatsheet">
                     Liquid Cheatsheet
