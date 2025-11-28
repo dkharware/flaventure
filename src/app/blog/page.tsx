@@ -157,6 +157,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                     alt={featuredArticle.image.altText || featuredArticle.title}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    priority
                                     />
                                     <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
                                         {featuredArticle.tags?.slice(0, 2).map((tag: string) => (
