@@ -91,7 +91,6 @@ export function ArticleContent({ content }: { content: string }) {
   return (
     <div
       ref={contentRef}
-      className="prose md:prose-lg dark:prose-invert max-w-none mx-auto"
       dangerouslySetInnerHTML={{ __html: content }}
     />
   );
