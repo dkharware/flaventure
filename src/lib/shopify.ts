@@ -203,11 +203,19 @@ export async function getAllTags() {
     if (!response.data?.articles?.edges) {
         return [];
     }
-    const allTags = new Set<string>();
+    const tagCounts: { [key: string]: number } = {};
     response.data.articles.edges.forEach((edge: { node: { tags: string[] } }) => {
-        edge.node.tags.forEach(tag => allTags.add(tag));
+        edge.node.tags.forEach(tag => {
+            if (tagCounts[tag]) {
+                tagCounts[tag]++;
+            } else {
+                tagCounts[tag] = 1;
+            }
+        });
     });
-    return Array.from(allTags);
+
+    return Object.entries(tagCounts).map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count);
 }
 
 export async function getRelatedArticles(handle: string, tags: string[]) {

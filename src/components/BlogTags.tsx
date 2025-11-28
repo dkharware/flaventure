@@ -12,8 +12,12 @@ import {
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 
+interface Tag {
+    name: string;
+    count: number;
+}
 interface BlogTagsProps {
-    tags: string[];
+    tags: Tag[];
 }
 
 const gradients = [
@@ -28,7 +32,7 @@ const gradients = [
 ];
 
 // Fisher-Yates shuffle algorithm
-const shuffleArray = (array: string[]) => {
+const shuffleArray = (array: Tag[]) => {
     let currentIndex = array.length, randomIndex;
     const newArray = [...array];
     while (currentIndex !== 0) {
@@ -42,7 +46,7 @@ const shuffleArray = (array: string[]) => {
 
 
 export function BlogTags({ tags }: BlogTagsProps) {
-    const [shuffledTags, setShuffledTags] = useState<string[]>([]);
+    const [shuffledTags, setShuffledTags] = useState<Tag[]>([]);
 
     useEffect(() => {
         setShuffledTags(shuffleArray(tags));
@@ -73,13 +77,13 @@ export function BlogTags({ tags }: BlogTagsProps) {
                     >
                         <CarouselContent>
                             {shuffledTags.map((tag, index) => (
-                                <CarouselItem key={tag} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6">
-                                    <Link href={`/blog?tag=${encodeURIComponent(tag)}`} className="block group">
+                                <CarouselItem key={tag.name} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+                                    <Link href={`/blog?tag=${encodeURIComponent(tag.name)}`} className="block group">
                                         <div className={cn(
                                             "relative aspect-[3/1] w-full rounded-lg overflow-hidden shadow-md transition-transform duration-300 group-hover:scale-105 flex items-center justify-center p-2",
                                             gradients[index % gradients.length]
                                         )}>
-                                            <h3 className="text-foreground font-semibold text-base md:text-lg drop-shadow-sm text-center">#{tag}</h3>
+                                            <h3 className="text-foreground font-semibold text-base md:text-lg drop-shadow-sm text-center">#{tag.name} ({tag.count})</h3>
                                         </div>
                                     </Link>
                                 </CarouselItem>

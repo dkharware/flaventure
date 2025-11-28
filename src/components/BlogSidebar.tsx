@@ -15,6 +15,10 @@ import { useState, useEffect } from 'react';
 import { getAllTags, getArticles } from '@/lib/shopify';
 import { Skeleton } from './ui/skeleton';
 
+interface Tag {
+  name: string;
+  count: number;
+}
 interface BlogSidebarProps {
   // Props are no longer needed as the component fetches its own data
 }
@@ -22,7 +26,7 @@ interface BlogSidebarProps {
 export function BlogSidebar({}: BlogSidebarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [recentPosts, setRecentPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -104,9 +108,9 @@ export function BlogSidebar({}: BlogSidebarProps) {
             tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {tags.map(tag => (
-                  <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
-                    <Badge variant={searchParams.get('tag') === tag ? 'default' : 'secondary'} className="hover:bg-primary hover:text-primary-foreground transition-colors text-sm">
-                      {tag}
+                  <Link key={tag.name} href={`/blog?tag=${encodeURIComponent(tag.name)}`}>
+                    <Badge variant={searchParams.get('tag') === tag.name ? 'default' : 'secondary'} className="hover:bg-primary hover:text-primary-foreground transition-colors text-sm">
+                      {tag.name} ({tag.count})
                     </Badge>
                   </Link>
                 ))}
