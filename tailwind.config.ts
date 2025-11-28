@@ -19,6 +19,15 @@ export default {
       screens: {
         '3xl': '1800px',
       },
+      typography: (theme: (arg0: string) => any) => ({
+        DEFAULT: {
+          css: {
+            pre: {
+              'white-space': 'pre-wrap',
+            },
+          },
+        },
+      }),
       fontFamily: {
         body: ['var(--font-readex-pro)', 'sans-serif'],
         headline: ['var(--font-readex-pro)', 'sans-serif'],
@@ -95,5 +104,5 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 } satisfies Config;
