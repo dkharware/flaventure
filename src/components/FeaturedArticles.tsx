@@ -7,6 +7,7 @@ import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 interface Article {
     id: string;
@@ -24,8 +25,8 @@ interface Article {
     tags: string[];
 }
 
-const AuthorInfo = ({ article }: { article: Article }) => (
-    <div className="flex items-center gap-2 mt-3">
+const AuthorInfo = ({ article, className }: { article: Article, className?: string }) => (
+    <div className={cn("flex items-center gap-2", className)}>
         <Avatar className="h-6 w-6">
             <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={article.authorV2.name} />
             <AvatarFallback>{article.authorV2.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
@@ -33,18 +34,14 @@ const AuthorInfo = ({ article }: { article: Article }) => (
         <p className="font-semibold text-xs text-muted-foreground">{article.authorV2.name}</p>
         <span className="text-muted-foreground text-xs">•</span>
         <p className="text-xs text-muted-foreground">{format(new Date(article.publishedAt), 'dd.MM.yyyy')}</p>
-        <span className="text-muted-foreground text-xs">•</span>
-        {article.tags.slice(0, 1).map(tag => (
-            <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
-        ))}
     </div>
 );
 
 const LargeHeroCard = ({ article }: { article: Article }) => (
     <Link href={`/blog/${article.handle}`} className="block group col-span-2">
-        <Card className="h-full overflow-hidden border-none shadow-none bg-transparent">
+        <Card className="h-full overflow-hidden rounded-lg bg-muted/20 p-6 flex flex-col">
              {article.image && (
-                <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-4">
+                <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-6">
                      <Image
                         src={article.image.url}
                         alt={article.image.altText || article.title}
@@ -54,13 +51,20 @@ const LargeHeroCard = ({ article }: { article: Article }) => (
                     />
                 </div>
              )}
-             <div className="flex flex-col p-1">
+             <div className="flex flex-col flex-grow p-1">
                 <AuthorInfo article={article} />
-                <h2 className="text-xl md:text-2xl font-bold font-headline mt-3 group-hover:text-primary transition-colors">{article.title}</h2>
+                <h2 className="text-xl md:text-2xl font-bold font-headline mt-4 group-hover:text-primary transition-colors line-clamp-3">{article.title}</h2>
                 <div 
                     className="text-muted-foreground text-sm mt-2 line-clamp-2"
                     dangerouslySetInnerHTML={{ __html: article.excerptHtml }} 
                 />
+                <div className="mt-4 flex flex-wrap gap-2">
+                    {article.tags.slice(0, 3).map(tag => (
+                         <Badge key={tag} variant="secondary" asChild>
+                            <Link href={`/blog?tag=${encodeURIComponent(tag)}`}>{tag}</Link>
+                         </Badge>
+                    ))}
+                </div>
              </div>
         </Card>
     </Link>
@@ -69,7 +73,7 @@ const LargeHeroCard = ({ article }: { article: Article }) => (
 
 const StandardCard = ({ article }: { article: Article }) => (
     <Link href={`/blog/${article.handle}`} className="block group">
-        <Card className="h-full overflow-hidden border-none shadow-none bg-transparent">
+        <Card className="h-full overflow-hidden rounded-lg bg-muted/20 p-4 flex flex-col">
              {article.image && (
                 <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-4">
                      <Image
@@ -80,13 +84,9 @@ const StandardCard = ({ article }: { article: Article }) => (
                     />
                 </div>
              )}
-             <div className="flex flex-col p-1">
-                <AuthorInfo article={article} />
-                <h3 className="text-lg font-bold font-headline mt-3 group-hover:text-primary transition-colors">{article.title}</h3>
-                <div 
-                    className="text-muted-foreground text-sm mt-2 line-clamp-2"
-                    dangerouslySetInnerHTML={{ __html: article.excerptHtml }} 
-                />
+             <div className="flex flex-col flex-grow p-1">
+                <h3 className="text-base font-bold font-headline mt-1 group-hover:text-primary transition-colors line-clamp-2 flex-grow">{article.title}</h3>
+                <AuthorInfo article={article} className="mt-3" />
              </div>
         </Card>
     </Link>
@@ -94,10 +94,10 @@ const StandardCard = ({ article }: { article: Article }) => (
 
 const ListItemCard = ({ article }: { article: Article }) => (
     <Link href={`/blog/${article.handle}`} className="block group">
-        <Card className="h-full overflow-hidden border-none shadow-none bg-transparent">
+        <Card className="h-full overflow-hidden border-b rounded-none p-0 pb-4 bg-transparent shadow-none">
             <div className="flex gap-4 items-center">
                 {article.image && (
-                    <div className="relative w-24 h-24 aspect-square rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="relative w-20 h-20 aspect-square rounded-lg overflow-hidden flex-shrink-0">
                         <Image
                             src={article.image.url}
                             alt={article.image.altText || article.title}
@@ -106,8 +106,9 @@ const ListItemCard = ({ article }: { article: Article }) => (
                         />
                     </div>
                 )}
-                <div className="flex flex-col p-1">
-                     <div className="flex items-center gap-2">
+                <div className="flex flex-col flex-grow">
+                    <h3 className="text-sm font-bold font-headline group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
+                     <div className="flex items-center gap-2 mt-1.5">
                         <Avatar className="h-5 w-5">
                             <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={article.authorV2.name} />
                             <AvatarFallback>{article.authorV2.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
@@ -116,7 +117,6 @@ const ListItemCard = ({ article }: { article: Article }) => (
                         <span className="text-muted-foreground text-xs">•</span>
                         <p className="text-xs text-muted-foreground">{format(new Date(article.publishedAt), 'dd.MM.yyyy')}</p>
                     </div>
-                    <h3 className="text-base font-bold font-headline mt-1.5 group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
                 </div>
             </div>
         </Card>
@@ -126,13 +126,13 @@ const ListItemCard = ({ article }: { article: Article }) => (
 
 export function FeaturedArticles({ articles }: { articles: Article[] }) {
     if (articles.length < 7) {
-        return <div className="container py-12 text-center">Not enough articles to display this section.</div>
+        return null;
     }
     
     const [
         mainArticle,
-        bottomArticle1,
-        bottomArticle2,
+        standardArticle1,
+        standardArticle2,
         sideArticle1,
         sideArticle2,
         sideArticle3,
@@ -143,16 +143,16 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
         <section className="container">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12">
                 {/* Left Side */}
-                <div className="lg:col-span-2 space-y-12">
+                <div className="lg:col-span-2 space-y-8">
                     {mainArticle && <LargeHeroCard article={mainArticle} />}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {bottomArticle1 && <StandardCard article={bottomArticle1} />}
-                        {bottomArticle2 && <StandardCard article={bottomArticle2} />}
+                        {standardArticle1 && <StandardCard article={standardArticle1} />}
+                        {standardArticle2 && <StandardCard article={standardArticle2} />}
                     </div>
                 </div>
 
                 {/* Right Side */}
-                <div className="lg:col-span-1 space-y-8">
+                <div className="lg:col-span-1 space-y-4">
                     {sideArticle1 && <ListItemCard article={sideArticle1} />}
                     {sideArticle2 && <ListItemCard article={sideArticle2} />}
                     {sideArticle3 && <ListItemCard article={sideArticle3} />}
