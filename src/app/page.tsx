@@ -14,7 +14,7 @@ const FaqSection = lazy(() => import('@/components/FaqSection'));
 
 
 export default async function Home() {
-    const { articles } = await getArticles(6);
+    const { articles } = await getArticles(7);
     const tags = await getAllTags();
 
   return (
