@@ -2,13 +2,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Mail, Linkedin, Github } from 'lucide-react';
+import { Mail, Linkedin, Github, Download } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function AboutPage() {
   const authorName = "Deepak Kharware";
   const authorTitle = "Front-End Developer | Shopify Specialist | Headless Commerce Expert | Team Lead";
   const authorEmail = "dkharware@gmail.com";
+  const resumeUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/Resume.pdf";
 
   return (
     <div className="container mx-auto py-12 px-4 md:px-6">
@@ -29,6 +30,14 @@ export default async function AboutPage() {
               </Button>
                <Button variant="outline" size="icon" asChild>
                   <a href="https://github.com/DesignerDeepakR" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github className="h-4 w-4" /></a>
+              </Button>
+          </div>
+           <div className="mt-6 flex justify-center">
+              <Button asChild>
+                  <a href={resumeUrl} target="_blank" rel="noopener noreferrer" download>
+                      <Download className="mr-2 h-4 w-4" />
+                      Download Resume
+                  </a>
               </Button>
           </div>
         </CardHeader>
