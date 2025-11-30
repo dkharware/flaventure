@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Card, CardContent } from './ui/card';
+import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { format } from 'date-fns';
@@ -33,15 +33,15 @@ const AuthorInfo = ({ article, className }: { article: Article, className?: stri
         </Avatar>
         <p className="font-semibold text-xs text-muted-foreground">{article.authorV2.name}</p>
         <span className="text-muted-foreground text-xs">•</span>
-        <p className="text-xs text-muted-foreground">{format(new Date(article.publishedAt), 'dd.MM.yyyy')}</p>
+        <p className="text-xs text-muted-foreground">{format(new Date(article.publishedAt), 'dd MMM, yyyy')}</p>
     </div>
 );
 
 const LargeHeroCard = ({ article }: { article: Article }) => (
     <Link href={`/blog/${article.handle}`} className="block group col-span-2">
-        <Card className="h-full overflow-hidden rounded-lg bg-muted/20 p-6 flex flex-col">
+        <Card className="h-full overflow-hidden rounded-lg bg-muted/20 p-6 flex flex-col md:flex-row gap-6">
              {article.image && (
-                <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-6">
+                <div className="relative w-full md:w-1/2 aspect-[16/9] rounded-lg overflow-hidden">
                      <Image
                         src={article.image.url}
                         alt={article.image.altText || article.title}
@@ -51,7 +51,7 @@ const LargeHeroCard = ({ article }: { article: Article }) => (
                     />
                 </div>
              )}
-             <div className="flex flex-col flex-grow p-1">
+             <div className="flex flex-col flex-grow p-1 md:w-1/2">
                 <AuthorInfo article={article} />
                 <h2 className="text-xl md:text-2xl font-bold font-headline mt-4 group-hover:text-primary transition-colors line-clamp-3">{article.title}</h2>
                 <div 
@@ -60,8 +60,8 @@ const LargeHeroCard = ({ article }: { article: Article }) => (
                 />
                 <div className="mt-4 flex flex-wrap gap-2">
                     {article.tags.slice(0, 3).map(tag => (
-                         <Badge key={tag} variant="secondary" asChild>
-                            <Link href={`/blog?tag=${encodeURIComponent(tag)}`}>{tag}</Link>
+                         <Badge key={tag} variant="secondary">
+                            {tag}
                          </Badge>
                     ))}
                 </div>
@@ -153,6 +153,7 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
 
                 {/* Right Side */}
                 <div className="lg:col-span-1 space-y-4">
+                    <h3 className="font-bold font-headline text-lg">Latest Articles</h3>
                     {sideArticle1 && <ListItemCard article={sideArticle1} />}
                     {sideArticle2 && <ListItemCard article={sideArticle2} />}
                     {sideArticle3 && <ListItemCard article={sideArticle3} />}
