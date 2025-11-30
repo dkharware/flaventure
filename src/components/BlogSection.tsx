@@ -11,6 +11,7 @@ import { getArticles } from '@/lib/shopify';
 import { format } from 'date-fns';
 import placeholderArticles from '@/lib/placeholder-articles.json';
 import { Skeleton } from './ui/skeleton';
+import { cn } from '@/lib/utils';
 
 interface Article {
     id: string;
@@ -73,8 +74,8 @@ export default function BlogSection() {
         fetchArticles();
     }, []);
 
-    const ArticleCardSkeleton = () => (
-         <div className="space-y-3">
+    const ArticleCardSkeleton = ({ className }: { className?: string }) => (
+         <div className={cn("space-y-3", className)}>
             <Skeleton className="h-48 w-full" />
             <div className="space-y-2 p-2">
                 <Skeleton className="h-6 w-5/6" />
@@ -97,10 +98,19 @@ export default function BlogSection() {
                 <div className="mx-auto max-w-5xl pt-8">
                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                         {isLoading ? (
-                            Array.from({ length: 3 }).map((_, i) => <ArticleCardSkeleton key={i} />)
+                            <>
+                                <ArticleCardSkeleton />
+                                <ArticleCardSkeleton className="hidden sm:block" />
+                                <ArticleCardSkeleton className="hidden lg:block" />
+                            </>
                         ) : (
-                            articles.slice(0,3).map((article: any) => (
-                               <ArticleCard key={article.id} article={article} />
+                            articles.slice(0,3).map((article: any, index) => (
+                               <div key={article.id} className={cn({
+                                    'hidden sm:block': index === 1,
+                                    'hidden lg:block': index === 2,
+                               })}>
+                                <ArticleCard article={article} />
+                               </div>
                             ))
                         )}
                    </div>
