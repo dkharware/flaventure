@@ -72,17 +72,17 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                 <div className="grid grid-cols-1 gap-6">
                     <Card className="bg-teal-100 dark:bg-teal-900/40 p-6 flex flex-col justify-between border-0 relative">
                        <div className="flex justify-between items-center mb-4">
-                           <Badge variant="secondary" className="bg-black/10 dark:bg-white/10 border-0">&bull; ADS</Badge>
+                           <Badge variant="secondary" className="bg-black/10 dark:bg-white/10 border-0">&bull; Featured</Badge>
                            <div className="h-8 w-8 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center">
                                <Plus className="h-4 w-4" />
                            </div>
                        </div>
                         <div>
-                            <p className="font-semibold">Become a member</p>
-                            <h3 className="text-xl font-bold font-headline mb-2">Real talk in a corporate world</h3>
+                            <p className="font-semibold">Tutorial</p>
+                            <h3 className="text-xl font-bold font-headline mb-2">Shopify Storefront &amp; Admin API Guide</h3>
                         </div>
-                        <Link href="#" className="text-sm font-medium underline flex items-center gap-1">
-                            Learn more <ArrowRight className="h-3 w-3" />
+                        <Link href="/tutorials/shopify-api-guide" className="text-sm font-medium underline flex items-center gap-1">
+                            Read the guide <ArrowRight className="h-3 w-3" />
                         </Link>
                     </Card>
 
@@ -99,7 +99,7 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                                 )}
                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                <div className="absolute bottom-0 p-4">
-                                    <Button asChild size="pill" className="bg-white text-black hover:bg-gray-200">
+                                    <Button asChild size="pill">
                                         <span>
                                             See all picks
                                             <div className="ml-2 h-8 w-8 rounded-full bg-accent flex items-center justify-center">
