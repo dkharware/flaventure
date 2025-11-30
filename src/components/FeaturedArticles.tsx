@@ -48,19 +48,19 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                                     priority
                                 />
                             )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
                             
                             <div className="absolute top-4 left-4 flex gap-2">
                                 <Badge variant="secondary" className="bg-white/30 backdrop-blur-sm text-white border-0">{format(new Date(mainArticle.publishedAt), 'dd MMM, yyyy')}</Badge>
                                 {mainArticle.tags[0] && <Badge variant="secondary" className="bg-white/30 backdrop-blur-sm text-white border-0">&bull; {mainArticle.tags[0]}</Badge>}
                             </div>
                             
-                            <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6">
-                                <div className="title-overlay">
+                            <div className="absolute bottom-0 left-0 right-0 p-6">
+                                <h2 className="text-2xl font-bold font-headline text-white drop-shadow-lg line-clamp-2">
                                     {mainArticle.title}
-                                </div>
+                                </h2>
                             </div>
-                            <div className="absolute bottom-4 left-4 p-2 bg-white/30 backdrop-blur-sm rounded-full">
+                            <div className="absolute top-4 right-4 p-2 bg-white/30 backdrop-blur-sm rounded-full">
                                 <ExternalLink className="h-5 w-5 text-white" />
                             </div>
 
