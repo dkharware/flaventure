@@ -3,11 +3,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
-import { ArrowRight, ArrowUpRight, Plus, ExternalLink } from 'lucide-react';
 import { Badge } from './ui/badge';
-import { format } from 'date-fns';
+import { ExternalLink } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+
 
 interface Article {
     id: string;
@@ -19,99 +19,101 @@ interface Article {
         url: string;
         altText?: string;
     };
+    authorV2: {
+        name: string;
+    };
     tags: string[];
 }
 
-export function FeaturedArticles({ articles }: { articles: Article[] }) {
-    const [
-        mainArticle,
-        secondaryArticle,
-    ] = articles;
-
-    if (articles.length < 2) {
-        return <div className="container py-12 text-center">Not enough articles to display this section.</div>
-    }
-
+const MainArticleCard = ({ article }: { article: Article }) => {
     return (
-        <section className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Left Column */}
-                {mainArticle && (
-                    <Link href={`/blog/${mainArticle.handle}`} className="group block lg:col-span-2">
-                        <Card className="h-full w-full overflow-hidden relative aspect-video">
-                            {mainArticle.image && (
-                                <Image
-                                    src={mainArticle.image.url}
-                                    alt={mainArticle.image.altText || mainArticle.title}
-                                    fill
-                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                    priority
-                                />
-                            )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
-                            
-                            <div className="absolute top-4 left-4 flex gap-2">
-                                <Badge variant="secondary" className="bg-white/30 backdrop-blur-sm text-white border-0">{format(new Date(mainArticle.publishedAt), 'dd MMM, yyyy')}</Badge>
-                                {mainArticle.tags[0] && <Badge variant="secondary" className="bg-white/30 backdrop-blur-sm text-white border-0">&bull; {mainArticle.tags[0]}</Badge>}
-                            </div>
-                            
-                            <div className="absolute bottom-0 left-0 right-0 p-6">
-                                <h2 className="text-2xl font-bold font-headline text-white drop-shadow-lg line-clamp-2">
-                                    {mainArticle.title}
-                                </h2>
-                            </div>
-                            <div className="absolute top-4 right-4 p-2 bg-white/30 backdrop-blur-sm rounded-full">
-                                <ExternalLink className="h-5 w-5 text-white" />
-                            </div>
+        <Card className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-center bg-muted/50 p-6 rounded-2xl overflow-hidden group">
+            {article.image && (
+                <Link href={`/blog/${article.handle}`} className="block overflow-hidden rounded-xl aspect-[4/3] relative">
+                    <Image
+                        src={article.image.url}
+                        alt={article.image.altText || article.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        priority
+                    />
+                </Link>
+            )}
+            <div className="flex flex-col h-full">
+                <h2 className="text-2xl lg:text-3xl font-bold font-headline mb-4 group-hover:text-primary transition-colors">
+                    <Link href={`/blog/${article.handle}`}>{article.title}</Link>
+                </h2>
+                <div 
+                    className="text-muted-foreground text-sm line-clamp-3 mb-6"
+                    dangerouslySetInnerHTML={{ __html: article.excerptHtml }} 
+                />
 
-                        </Card>
-                    </Link>
-                )}
-                
-                {/* Right Column */}
-                <div className="grid grid-cols-1 gap-6">
-                    <Card className="bg-teal-100 dark:bg-teal-900/40 p-6 flex flex-col justify-between border-0 relative">
-                       <div className="flex justify-between items-center mb-4">
-                           <Badge variant="secondary" className="bg-black/10 dark:bg-white/10 border-0">&bull; Featured</Badge>
-                           <div className="h-8 w-8 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center">
-                               <Plus className="h-4 w-4" />
-                           </div>
-                       </div>
+                <div className="mt-auto flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <Avatar className="h-10 w-10">
+                            <AvatarImage src={`https://i.pravatar.cc/40?u=${article.authorV2.name}`} alt={article.authorV2.name} />
+                            <AvatarFallback>{article.authorV2.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                        </Avatar>
                         <div>
-                            <p className="font-semibold">Tutorial</p>
-                            <h3 className="text-xl font-bold font-headline mb-2">Shopify Storefront &amp; Admin API Guide</h3>
+                            <p className="font-semibold text-sm">{article.authorV2.name}</p>
+                            <p className="text-xs text-muted-foreground">Expert Contributor</p>
                         </div>
-                        <Link href="/tutorials/shopify-api-guide" className="text-sm font-medium underline flex items-center gap-1">
-                            Read the guide <ArrowRight className="h-3 w-3" />
-                        </Link>
-                    </Card>
-
-                    {secondaryArticle && (
-                        <Link href={`/blog/${secondaryArticle.handle}`} className="group block">
-                            <Card className="h-full w-full overflow-hidden relative aspect-square">
-                                {secondaryArticle.image && (
-                                     <Image
-                                        src={secondaryArticle.image.url}
-                                        alt={secondaryArticle.image.altText || secondaryArticle.title}
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                    />
-                                )}
-                               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                               <div className="absolute bottom-0 p-4">
-                                    <Button asChild size="pill">
-                                        <span>
-                                            See all picks
-                                            <div className="ml-2 h-8 w-8 rounded-full bg-accent flex items-center justify-center">
-                                                <ArrowRight className="h-4 w-4" />
-                                            </div>
-                                        </span>
-                                    </Button>
-                                </div>
-                            </Card>
+                    </div>
+                     {article.tags[0] && (
+                        <Link href={`/blog?tag=${article.tags[0]}`}>
+                            <Badge variant="outline">{article.tags[0]}</Badge>
                         </Link>
                     )}
                 </div>
+            </div>
+        </Card>
+    );
+};
+
+const SecondaryArticleCard = ({ article }: { article: Article }) => {
+    return (
+        <Link href={`/blog/${article.handle}`} className="block group">
+            <div className="relative overflow-hidden rounded-xl aspect-[4/3]">
+                {article.image && (
+                    <Image
+                        src={article.image.url}
+                        alt={article.image.altText || article.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                {article.tags[0] && (
+                     <Badge variant="secondary" className="absolute top-3 left-3 z-10 bg-white/20 backdrop-blur-sm text-white border-none">{article.tags[0]}</Badge>
+                )}
+                <div className="absolute top-3 right-3 z-10 p-1.5 bg-white/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ExternalLink className="h-4 w-4 text-white" />
+                </div>
+            </div>
+            <h3 className="font-semibold mt-3 text-base group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
+        </Link>
+    );
+};
+
+
+export function FeaturedArticles({ articles }: { articles: Article[] }) {
+    if (articles.length < 4) {
+        return <div className="container py-12 text-center">Not enough articles to display this section.</div>
+    }
+    
+    const [
+        mainArticle,
+        ...secondaryArticles
+    ] = articles;
+
+    return (
+        <section className="container">
+            {mainArticle && <MainArticleCard article={mainArticle} />}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12 mt-12">
+                {secondaryArticles.slice(0, 3).map(article => (
+                    <SecondaryArticleCard key={article.id} article={article} />
+                ))}
             </div>
         </section>
     );
