@@ -2,22 +2,11 @@
 import React, { Suspense, lazy } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getArticles, getAllTags } from '@/lib/shopify';
-import { format } from 'date-fns';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import { Badge } from '@/components/ui/badge';
-import { Hero } from '@/components/Hero';
 import { BlogTags } from '@/components/BlogTags';
 import { Skeleton } from '@/components/ui/skeleton';
+import { FeaturedArticles } from '@/components/FeaturedArticles';
 
 const WebStoriesSection = lazy(() => import('@/components/WebStoriesSection'));
 const BlogSection = lazy(() => import('@/components/BlogSection'));
@@ -27,17 +16,23 @@ const FaqSection = lazy(() => import('@/components/FaqSection'));
 async function TagsSection() {
     const tags = await getAllTags();
     return (
-      <div>
+      <div className="py-8 md:py-12">
         <BlogTags tags={tags} />
       </div>
     );
 }
 
-export default function Home() {
+export default async function Home() {
+    const { articles } = await getArticles(6);
+
   return (
     <div className="w-full">
-      <Hero />
-      <TagsSection />
+      <Suspense fallback={<SectionSkeleton />}>
+        <FeaturedArticles articles={articles} />
+      </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <TagsSection />
+      </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
         <WebStoriesSection />
       </Suspense>
@@ -52,7 +47,7 @@ export default function Home() {
 }
 
 const SectionSkeleton = () => (
-    <div className="w-full py-12 md:py-24 lg:py-32">
+    <div className="w-full py-12 md:py-16">
         <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
                 <Skeleton className="h-10 w-1/3" />
