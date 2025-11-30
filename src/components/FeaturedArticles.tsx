@@ -100,10 +100,12 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                                <div className="absolute bottom-0 p-4">
                                     <Button asChild size="pill" className="bg-white text-black hover:bg-gray-200">
-                                        <span>See all picks</span>
-                                        <div className="ml-2 h-8 w-8 rounded-full bg-accent flex items-center justify-center">
-                                            <ArrowRight className="h-4 w-4" />
-                                        </div>
+                                        <span>
+                                            See all picks
+                                            <div className="ml-2 h-8 w-8 rounded-full bg-accent flex items-center justify-center">
+                                                <ArrowRight className="h-4 w-4" />
+                                            </div>
+                                        </span>
                                     </Button>
                                 </div>
                                 <div className="absolute top-4 right-4 h-8 w-8 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center text-white text-xs font-bold">
