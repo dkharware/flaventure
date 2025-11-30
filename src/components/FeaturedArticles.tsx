@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
-import { ArrowRight, Flame } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Plus, ExternalLink } from 'lucide-react';
 import { Badge } from './ui/badge';
 import { format } from 'date-fns';
 
@@ -26,25 +26,19 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
     const [
         mainArticle,
         secondaryArticle,
-        tertiaryArticle,
-        quaternaryArticle,
-        linkArticle1,
-        linkArticle2
     ] = articles;
 
-    const tags = Array.from(new Set(articles.flatMap(a => a.tags))).slice(0, 8);
-
-    if (articles.length < 6) {
+    if (articles.length < 2) {
         return <div className="container py-12 text-center">Not enough articles to display this section.</div>
     }
 
     return (
-        <section className="container py-8 md:py-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <section className="container">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Left Column */}
                 {mainArticle && (
-                    <Link href={`/blog/${mainArticle.handle}`} className="group block">
-                        <Card className="h-full w-full overflow-hidden relative aspect-video md:aspect-auto">
+                    <Link href={`/blog/${mainArticle.handle}`} className="group block lg:col-span-2">
+                        <Card className="h-full w-full overflow-hidden relative aspect-video">
                             {mainArticle.image && (
                                 <Image
                                     src={mainArticle.image.url}
@@ -54,107 +48,70 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                                     priority
                                 />
                             )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                            <div className="absolute top-4 left-4">
-                                <Badge variant="secondary" className="bg-white/20 backdrop-blur-sm text-white border-0 flex items-center gap-1">
-                                    <Flame className="h-4 w-4 text-orange-400" /> Hot
-                                </Badge>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                            
+                            <div className="absolute top-4 left-4 flex gap-2">
+                                <Badge variant="secondary" className="bg-white/30 backdrop-blur-sm text-white border-0">{format(new Date(mainArticle.publishedAt), 'dd MMM, yyyy')}</Badge>
+                                <Badge variant="secondary" className="bg-white/30 backdrop-blur-sm text-white border-0">&bull; {mainArticle.tags[0]}</Badge>
                             </div>
-                            <div className="absolute bottom-0 p-6 text-white">
-                                <div className="flex items-center gap-2 text-sm mb-2">
-                                    <span className="font-semibold">{mainArticle.tags[0]}</span>
-                                    <span>&bull;</span>
-                                    <span>{format(new Date(mainArticle.publishedAt), 'dd MMM')}</span>
-                                </div>
-                                <h2 className="text-2xl md:text-3xl font-bold font-headline leading-tight line-clamp-3 group-hover:underline">
+                            
+                            <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6">
+                                <div className="title-overlay">
                                     {mainArticle.title}
-                                </h2>
+                                </div>
                             </div>
+                            <div className="absolute bottom-4 left-4 p-2 bg-white/30 backdrop-blur-sm rounded-full">
+                                <ExternalLink className="h-5 w-5 text-white" />
+                            </div>
+
                         </Card>
                     </Link>
                 )}
                 
                 {/* Right Column */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {secondaryArticle && (
-                        <Card className="md:col-span-2 bg-accent/30 dark:bg-accent/10 p-6 flex flex-col justify-between">
-                            <div>
-                                <div className="flex items-center gap-2 text-sm mb-2 text-muted-foreground">
-                                    <span className="font-semibold">{secondaryArticle.tags[0]}</span>
-                                </div>
-                                <h3 className="text-xl font-bold font-headline mb-2">{secondaryArticle.title}</h3>
-                                <div className="text-sm text-muted-foreground line-clamp-3" dangerouslySetInnerHTML={{ __html: secondaryArticle.excerptHtml }}></div>
-                            </div>
-                            <div className="mt-4 border-t pt-4 space-y-3 text-sm">
-                                {linkArticle1 && (
-                                    <Link href={`/blog/${linkArticle1.handle}`} className="flex justify-between items-center group">
-                                        <span className="group-hover:underline">{linkArticle1.title}</span>
-                                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                                    </Link>
-                                )}
-                                {linkArticle2 && (
-                                    <Link href={`/blog/${linkArticle2.handle}`} className="flex justify-between items-center group">
-                                        <span className="group-hover:underline">{linkArticle2.title}</span>
-                                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                                    </Link>
-                                )}
-                            </div>
-                        </Card>
-                    )}
-
-                    {tertiaryArticle && (
-                        <Link href={`/blog/${tertiaryArticle.handle}`} className="group block">
-                            <Card className="h-full w-full overflow-hidden relative aspect-[4/5]">
-                                {tertiaryArticle.image && (
-                                     <Image
-                                        src={tertiaryArticle.image.url}
-                                        alt={tertiaryArticle.image.altText || tertiaryArticle.title}
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                                    />
-                                )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                <div className="absolute bottom-0 p-4 text-white">
-                                    <h3 className="font-bold font-headline leading-tight line-clamp-2 group-hover:underline">{tertiaryArticle.title}</h3>
-                                </div>
-                            </Card>
+                <div className="grid grid-cols-1 gap-6">
+                    <Card className="bg-teal-100 dark:bg-teal-900/40 p-6 flex flex-col justify-between border-0 relative">
+                       <div className="flex justify-between items-center mb-4">
+                           <Badge variant="secondary" className="bg-black/10 dark:bg-white/10 border-0">&bull; ADS</Badge>
+                           <div className="h-8 w-8 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center">
+                               <Plus className="h-4 w-4" />
+                           </div>
+                       </div>
+                        <div>
+                            <p className="font-semibold">Become a member</p>
+                            <h3 className="text-xl font-bold font-headline mb-2">Real talk in a corporate world</h3>
+                        </div>
+                        <Link href="#" className="text-sm font-medium underline flex items-center gap-1">
+                            Learn more <ArrowRight className="h-3 w-3" />
                         </Link>
-                    )}
-                    
-                    {quaternaryArticle && (
-                         <Link href={`/blog/${quaternaryArticle.handle}`} className="group block">
-                            <Card className="h-full w-full overflow-hidden relative aspect-[4/5]">
-                                {quaternaryArticle.image && (
+                    </Card>
+
+                    {secondaryArticle && (
+                        <Link href={`/blog/${secondaryArticle.handle}`} className="group block">
+                            <Card className="h-full w-full overflow-hidden relative aspect-square">
+                                {secondaryArticle.image && (
                                      <Image
-                                        src={quaternaryArticle.image.url}
-                                        alt={quaternaryArticle.image.altText || quaternaryArticle.title}
+                                        src={secondaryArticle.image.url}
+                                        alt={secondaryArticle.image.altText || secondaryArticle.title}
                                         fill
                                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                                     />
                                 )}
                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                               <div className="absolute bottom-0 p-4 text-white">
-                                    <h3 className="font-bold font-headline leading-tight line-clamp-2 group-hover:underline">{quaternaryArticle.title}</h3>
+                               <div className="absolute bottom-0 p-4">
+                                    <Button asChild size="pill" className="bg-white text-black hover:bg-gray-200">
+                                        <span>See all picks</span>
+                                        <div className="ml-2 h-8 w-8 rounded-full bg-accent flex items-center justify-center">
+                                            <ArrowRight className="h-4 w-4" />
+                                        </div>
+                                    </Button>
+                                </div>
+                                <div className="absolute top-4 right-4 h-8 w-8 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center text-white text-xs font-bold">
+                                    24
                                 </div>
                             </Card>
                         </Link>
                     )}
-
-                    <Card className="md:col-span-2 bg-secondary/50 p-6">
-                        <div className="flex flex-wrap gap-2">
-                           {tags.map(tag => (
-                               <Link href={`/blog?tag=${encodeURIComponent(tag)}`} key={tag}>
-                                   <Badge variant="outline" className="bg-background hover:bg-accent">{tag}</Badge>
-                               </Link>
-                           ))}
-                        </div>
-                        <Link href="/blog" className="flex items-center justify-between mt-4 group text-sm font-semibold">
-                            <span>View All Categories</span>
-                             <div className="h-8 w-8 rounded-full bg-background flex items-center justify-center transition-transform group-hover:translate-x-1">
-                                <ArrowRight className="h-4 w-4" />
-                            </div>
-                        </Link>
-                    </Card>
                 </div>
             </div>
         </section>

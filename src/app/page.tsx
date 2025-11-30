@@ -19,9 +19,18 @@ export default async function Home() {
 
   return (
     <div className="w-full">
-      <Suspense fallback={<SectionSkeleton />}>
-        <FeaturedArticles articles={articles} />
-      </Suspense>
+      <section className="container py-8 md:py-12">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold font-headline">Best of the week</h2>
+          <Link href="/blog" className="flex items-center gap-1 text-sm font-medium hover:text-primary">
+            See all posts <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <Suspense fallback={<SectionSkeleton />}>
+          <FeaturedArticles articles={articles} />
+        </Suspense>
+      </section>
+
       <Suspense fallback={<TagsSkeleton />}>
         <BlogTags tags={tags} />
       </Suspense>
