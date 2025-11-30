@@ -40,14 +40,6 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
 
     return (
         <section className="container py-8 md:py-12">
-            <div className="flex justify-between items-center mb-8">
-                <h1 className="text-4xl md:text-5xl font-bold font-headline">Blog</h1>
-                <Button variant="outline" asChild>
-                    <Link href="/blog">
-                        Read Our Blog <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                </Button>
-            </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Left Column */}
                 {mainArticle && (
