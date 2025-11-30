@@ -44,7 +44,7 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                 {/* Left Column */}
                 {mainArticle && (
                     <Link href={`/blog/${mainArticle.handle}`} className="group block">
-                        <Card className="h-full w-full overflow-hidden relative aspect-[4/5] md:aspect-auto">
+                        <Card className="h-full w-full overflow-hidden relative aspect-video md:aspect-auto">
                             {mainArticle.image && (
                                 <Image
                                     src={mainArticle.image.url}
