@@ -77,7 +77,7 @@ export default async function AboutPage() {
                 <p className="mt-2">
                     If you’re looking for someone who blends technical expertise with creative problem-solving to bring your digital vision to life—I’d love to collaborate!
                 </p>
-                <Button asChild className="mt-4">
+                <Button asChild className="mt-4" variant="glow" size="lg">
                     <a href={`mailto:${authorEmail}`}>Get in Touch</a>
                 </Button>
             </div>
