@@ -101,13 +101,12 @@ export default function BlogSection() {
                             <>
                                 <ArticleCardSkeleton />
                                 <ArticleCardSkeleton className="hidden sm:block" />
-                                <ArticleCardSkeleton className="hidden lg:block" />
+                                <ArticleCardSkeleton className="hidden sm:block" />
                             </>
                         ) : (
                             articles.slice(0,3).map((article: any, index) => (
                                <div key={article.id} className={cn({
-                                    'hidden sm:block': index === 1,
-                                    'hidden lg:block': index === 2,
+                                    'hidden sm:block': index > 0,
                                })}>
                                 <ArticleCard article={article} />
                                </div>
