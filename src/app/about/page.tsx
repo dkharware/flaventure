@@ -2,7 +2,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Mail, Linkedin, Twitter, Github } from 'lucide-react';
+import { Mail, Linkedin, Github } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function AboutPage() {
@@ -15,7 +15,7 @@ export default async function AboutPage() {
       <Card className="max-w-4xl mx-auto">
         <CardHeader className="text-center">
           <Avatar className="w-24 h-24 mx-auto mb-4 border-4 border-primary/10">
-            <AvatarImage src="https://picsum.photos/seed/dk/200" alt={authorName} />
+            <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={authorName} />
             <AvatarFallback>{authorName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
           </Avatar>
           <CardTitle className="text-3xl font-headline">{authorName}</CardTitle>
