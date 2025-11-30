@@ -52,7 +52,7 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                             
                             <div className="absolute top-4 left-4 flex gap-2">
                                 <Badge variant="secondary" className="bg-white/30 backdrop-blur-sm text-white border-0">{format(new Date(mainArticle.publishedAt), 'dd MMM, yyyy')}</Badge>
-                                <Badge variant="secondary" className="bg-white/30 backdrop-blur-sm text-white border-0">&bull; {mainArticle.tags[0]}</Badge>
+                                {mainArticle.tags[0] && <Badge variant="secondary" className="bg-white/30 backdrop-blur-sm text-white border-0">&bull; {mainArticle.tags[0]}</Badge>}
                             </div>
                             
                             <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6">
@@ -107,9 +107,6 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                                             </div>
                                         </span>
                                     </Button>
-                                </div>
-                                <div className="absolute top-4 right-4 h-8 w-8 rounded-full bg-black/20 backdrop-blur-sm flex items-center justify-center text-white text-xs font-bold">
-                                    24
                                 </div>
                             </Card>
                         </Link>
