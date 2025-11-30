@@ -67,7 +67,7 @@ export function BlogTags({ tags }: BlogTagsProps) {
                         </p>
                     </div>
                 </div>
-                <div className="mx-auto max-w-6xl pt-12">
+                <div className="mx-auto max-w-6xl pt-8">
                     <Carousel
                         opts={{
                             align: "start",
