@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Card } from './ui/card';
+import { Card, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { format } from 'date-fns';
@@ -38,7 +38,7 @@ const AuthorInfo = ({ article, className }: { article: Article, className?: stri
 );
 
 const LargeHeroCard = ({ article }: { article: Article }) => (
-    <div className="block group col-span-2">
+    <div className="block group">
         <Card className="h-full overflow-hidden rounded-lg bg-muted/20 p-6 flex flex-col md:flex-row gap-6">
              {article.image && (
                 <div className="relative w-full md:w-1/2 aspect-[16/9] rounded-lg overflow-hidden">
@@ -74,6 +74,28 @@ const LargeHeroCard = ({ article }: { article: Article }) => (
     </div>
 );
 
+const StandardCard = ({ article }: { article: Article }) => (
+    <Link href={`/blog/${article.handle}`} className="block group">
+        <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-transparent border-0 shadow-none">
+            {article.image && (
+            <div className="relative h-48 w-full overflow-hidden rounded-lg">
+                <Image
+                    src={article.image.url}
+                    alt={article.image.altText || article.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                />
+            </div>
+            )}
+            <CardHeader className="p-4 pl-0">
+                <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-2">{article.title}</CardTitle>
+            </CardHeader>
+        </Card>
+    </Link>
+);
+
+
 const ListItemCard = ({ article }: { article: Article }) => (
     <Link href={`/blog/${article.handle}`} className="block group">
         <Card className="h-full overflow-hidden border-b rounded-none p-0 pb-4 bg-transparent shadow-none">
@@ -108,12 +130,18 @@ const ListItemCard = ({ article }: { article: Article }) => (
 
 
 export function FeaturedArticles({ articles }: { articles: Article[] }) {
-    if (articles.length < 5) {
-        return null;
+    if (articles.length < 7) {
+        return (
+            <div className="lg:hidden">
+                 {articles[0] && <LargeHeroCard article={articles[0]} />}
+            </div>
+        );
     }
     
     const [
         mainArticle,
+        subArticle1,
+        subArticle2,
         sideArticle1,
         sideArticle2,
         sideArticle3,
@@ -124,12 +152,16 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
         <section className="container">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12">
                 {/* Left Side */}
-                <div className="lg:col-span-2">
-                    {mainArticle && <LargeHeroCard article={mainArticle} />}
+                <div className="lg:col-span-2 space-y-8">
+                     {mainArticle && <LargeHeroCard article={mainArticle} />}
+                    <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-8">
+                         {subArticle1 && <StandardCard article={subArticle1} />}
+                         {subArticle2 && <StandardCard article={subArticle2} />}
+                    </div>
                 </div>
 
                 {/* Right Side */}
-                <div className="lg:col-span-1 space-y-4">
+                <div className="lg:col-span-1 space-y-4 hidden md:block">
                     <h3 className="font-bold font-headline text-lg">Latest Articles</h3>
                     {sideArticle1 && <ListItemCard article={sideArticle1} />}
                     {sideArticle2 && <ListItemCard article={sideArticle2} />}
