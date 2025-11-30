@@ -23,20 +23,20 @@ export default async function Home() {
         </Suspense>
       </section>
 
-      <Suspense fallback={<SectionSkeleton />}>
+      <Suspense fallback={<GenericSkeleton />}>
         <WebStoriesSection />
       </Suspense>
-      <Suspense fallback={<SectionSkeleton />}>
+      <Suspense fallback={<GenericSkeleton />}>
         <BlogSection />
       </Suspense>
-       <Suspense fallback={<SectionSkeleton />}>
+       <Suspense fallback={<GenericSkeleton />}>
         <FaqSection />
       </Suspense>
     </div>
   );
 }
 
-const SectionSkeleton = () => (
+const GenericSkeleton = () => (
     <div className="w-full py-12 md:py-16">
         <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -50,4 +50,53 @@ const SectionSkeleton = () => (
             </div>
         </div>
     </div>
+);
+
+const SectionSkeleton = () => (
+    <section className="container">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12">
+            {/* Left Side Skeleton */}
+            <div className="lg:col-span-2 space-y-8">
+                {/* Large Hero Card Skeleton */}
+                <div className="h-full overflow-hidden rounded-lg bg-muted/20 p-6 flex flex-col md:flex-row gap-6">
+                    <Skeleton className="relative w-full md:w-1/2 aspect-[16/9] rounded-lg" />
+                    <div className="flex flex-col flex-grow p-1 md:w-1/2 space-y-4">
+                        <Skeleton className="h-6 w-1/2" />
+                        <Skeleton className="h-8 w-full" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-3/4" />
+                        <Skeleton className="h-6 w-1/3" />
+                    </div>
+                </div>
+                {/* Standard Cards Skeleton */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="h-full overflow-hidden rounded-lg bg-muted/20 p-4 flex flex-col space-y-4">
+                        <Skeleton className="w-full aspect-[16/9] rounded-lg" />
+                        <Skeleton className="h-6 w-5/6" />
+                        <Skeleton className="h-4 w-1/2" />
+                    </div>
+                    <div className="h-full overflow-hidden rounded-lg bg-muted/20 p-4 flex flex-col space-y-4">
+                        <Skeleton className="w-full aspect-[16/9] rounded-lg" />
+                        <Skeleton className="h-6 w-5/6" />
+                        <Skeleton className="h-4 w-1/2" />
+                    </div>
+                </div>
+            </div>
+
+            {/* Right Side Skeleton */}
+            <div className="lg:col-span-1 space-y-4">
+                <Skeleton className="h-8 w-1/3" />
+                {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="flex gap-4 items-center border-b pb-4">
+                        <Skeleton className="w-20 h-20 aspect-square rounded-lg flex-shrink-0" />
+                        <div className="flex flex-col flex-grow space-y-2">
+                            <Skeleton className="h-4 w-full" />
+                            <Skeleton className="h-4 w-3/4" />
+                            <Skeleton className="h-4 w-1/2" />
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
 );
