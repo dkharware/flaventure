@@ -21,8 +21,8 @@ import { ShareButtons } from '@/components/ShareButtons';
 import { LikeButton } from '@/components/LikeButton';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const CommentSection = lazy(() => import('@/components/CommentSection').then(module => ({ default: module.CommentSection })));
-const RelatedArticles = lazy(() => import('@/components/RelatedArticles').then(module => ({ default: module.RelatedArticles })));
+const CommentSection = lazy(() => import('@/components/CommentSection'));
+const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
 
 type ArticlePageProps = {
