@@ -43,7 +43,7 @@ const CommentTime = ({ timestamp }: { timestamp: Date }) => {
 };
 
 
-export function CommentSection() {
+export default function CommentSection() {
   const [comments, setComments] = useState<Comment[]>(mockComments);
   const [newComment, setNewComment] = useState({ author: '', text: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);

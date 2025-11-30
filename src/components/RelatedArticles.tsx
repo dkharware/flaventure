@@ -23,7 +23,7 @@ interface RelatedArticlesProps {
     articles: Article[];
 }
 
-export function RelatedArticles({ articles }: RelatedArticlesProps) {
+export default function RelatedArticles({ articles }: RelatedArticlesProps) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {articles.map((related: any) => (
