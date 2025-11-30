@@ -20,6 +20,7 @@ import { TableOfContents } from '@/components/TableOfContents';
 import { ShareButtons } from '@/components/ShareButtons';
 import { LikeButton } from '@/components/LikeButton';
 import { Skeleton } from '@/components/ui/skeleton';
+import Script from 'next/script';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
@@ -78,8 +79,58 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   
   const pdfUrl = article.pdf?.value;
 
+  const siteUrl = 'https://easyfreecv.com';
+  const fullUrl = `${siteUrl}/blog/${article.handle}`;
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": fullUrl
+    },
+    "headline": article.title,
+    "image": article.image ? [article.image.url] : [],
+    "datePublished": article.publishedAt,
+    "dateModified": article.publishedAt, // Assuming no separate modified date
+    "author": {
+      "@type": "Person",
+      "name": article.authorV2.name
+    },
+     "publisher": {
+      "@type": "Organization",
+      "name": "shopifydevguide",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/storedevguide.com.webp"
+      }
+    },
+    "description": article.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160)
+  };
+  
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbItems.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.label,
+      "item": item.href ? `${siteUrl}${item.href}` : fullUrl
+    }))
+  };
+
   return (
     <>
+      <Script
+        id="article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="border-b">
         <div className="container mx-auto px-3 md:px-6">
           <Breadcrumbs items={breadcrumbItems} className="py-4" />
@@ -89,9 +140,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <div className="lg:hidden fixed bottom-24 right-4 z-40">
           <Sheet>
               <SheetTrigger asChild>
-                  <Button size="icon" className="rounded-full shadow-lg">
+                  <Button size="icon" className="rounded-full shadow-lg" aria-label="Open Filters & Recent Posts">
                       <SlidersHorizontal className="h-5 w-5" />
-                      <span className="sr-only">Filters & Recent</span>
                   </Button>
               </SheetTrigger>
               <SheetContent className="hide-scrollbar">
