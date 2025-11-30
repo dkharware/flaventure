@@ -44,7 +44,7 @@ const MainArticleCard = ({ article }: { article: Article }) => {
                         <Badge variant="secondary">{article.tags[0]}</Badge>
                     </Link>
                 )}
-                <h2 className="text-2xl lg:text-2xl font-bold font-headline mb-3 group-hover:text-primary transition-colors">
+                <h2 className="text-2xl lg:text-3xl font-bold font-headline mb-3 group-hover:text-primary transition-colors">
                     <Link href={`/blog/${article.handle}`}>{article.title}</Link>
                 </h2>
                 <div 
