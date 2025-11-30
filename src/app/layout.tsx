@@ -14,6 +14,9 @@ import { ChatWidget } from '@/components/ChatWidget';
 import { ChatProvider } from '@/context/ChatContext';
 import { CookieConsent } from '@/components/CookieConsent';
 import Script from 'next/script';
+import { getAllTags } from '@/lib/shopify';
+import { BlogTags } from '@/components/BlogTags';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const readexPro = Readex_Pro({
   subsets: ['latin'],
@@ -79,11 +82,27 @@ export const metadata: Metadata = {
   manifest: `${siteUrl}/site.webmanifest`,
 };
 
+const TagsSkeleton = () => (
+    <div className="w-full py-4 border-b">
+        <div className="container px-4 md:px-6">
+            <div className="mx-auto max-w-6xl flex gap-4">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-32" />
+                <Skeleton className="h-10 w-20" />
+                <Skeleton className="h-10 w-28" />
+                <Skeleton className="h-10 w-24" />
+            </div>
+        </div>
+    </div>
+)
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const allTags = await getAllTags();
 
   const schema = {
     "@context": "https://schema.org",
@@ -137,6 +156,9 @@ export default async function RootLayout({
             <ChatProvider>
               <div className="flex flex-col min-h-screen">
                 <Header />
+                 <Suspense fallback={<TagsSkeleton />}>
+                  {allTags.length > 0 && <BlogTags tags={allTags} />}
+                </Suspense>
                 <main className="flex-grow">{children}</main>
                 <Footer />
               </div>

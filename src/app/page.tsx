@@ -3,8 +3,7 @@ import React, { Suspense, lazy } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { getArticles, getAllTags } from '@/lib/shopify';
-import { BlogTags } from '@/components/BlogTags';
+import { getArticles } from '@/lib/shopify';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FeaturedArticles } from '@/components/FeaturedArticles';
 
@@ -15,7 +14,6 @@ const FaqSection = lazy(() => import('@/components/FaqSection'));
 
 export default async function Home() {
     const { articles } = await getArticles(7);
-    const tags = await getAllTags();
 
   return (
     <div className="w-full">
@@ -25,9 +23,6 @@ export default async function Home() {
         </Suspense>
       </section>
 
-      <Suspense fallback={<TagsSkeleton />}>
-        <BlogTags tags={tags} />
-      </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
         <WebStoriesSection />
       </Suspense>
@@ -40,20 +35,6 @@ export default async function Home() {
     </div>
   );
 }
-
-const TagsSkeleton = () => (
-    <div className="w-full py-12 md:py-16">
-        <div className="container px-4 md:px-6">
-            <div className="mx-auto max-w-6xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                <Skeleton className="h-16 w-full" />
-                <Skeleton className="h-16 w-full" />
-                <Skeleton className="h-16 w-full" />
-                <Skeleton className="h-16 w-full" />
-                <Skeleton className="h-16 w-full" />
-            </div>
-        </div>
-    </div>
-)
 
 const SectionSkeleton = () => (
     <div className="w-full py-12 md:py-16">

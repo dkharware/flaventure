@@ -1,6 +1,6 @@
 
 
-import { getArticles, getAllTags } from '@/lib/shopify';
+import { getArticles } from '@/lib/shopify';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,7 +14,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTr
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
-import { BlogTags } from '@/components/BlogTags';
 import { ArticleList, ArticleCardSkeleton } from '@/components/ArticleList';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -69,9 +68,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       query
   );
   
-  // All tags are still needed for the main tag explorer on the blog page.
-  const allTags = await getAllTags();
-
   const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "E-commerce & Web Dev Blog");
   const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on Shopify, headless commerce, and industry trends.";
 
@@ -124,13 +120,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>}
             </div>
         </div>
-
-
-        {allTags && allTags.length > 0 && !searchQuery && !tagQuery && (
-          <div className="mb-12">
-            <BlogTags tags={allTags} />
-          </div>
-        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
