@@ -69,7 +69,9 @@ export default function WebStoriesSection() {
             try {
                 const { articles: fetchedArticles } = await getArticles(8);
                 if (fetchedArticles.length > 0) {
-                    setArticles(fetchedArticles);
+                     // Shuffle the array
+                    const shuffledArticles = fetchedArticles.sort(() => 0.5 - Math.random());
+                    setArticles(shuffledArticles);
                 }
             } catch (error) {
                 console.error("Failed to fetch articles, using placeholders.", error);
