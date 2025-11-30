@@ -39,7 +39,6 @@ import { Input } from './ui/input';
 import { LiveSearch } from './LiveSearch';
 import { Separator } from './ui/separator';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
-import { useChat } from '@/context/ChatContext';
 
 const shopifyComponents = [
     {
@@ -89,7 +88,6 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { toggleChat } = useChat();
 
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -236,9 +234,8 @@ export default function Header() {
         <div className="hidden md:flex items-center justify-end gap-4 flex-shrink-0">
           <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
             <DialogTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button variant="outline" size="icon" aria-label="Open search dialog">
                     <Search className="h-4 w-4" />
-                    <span className="sr-only">Open Search</span>
                 </Button>
             </DialogTrigger>
             <DialogContent className="top-1/4">
@@ -258,10 +255,10 @@ export default function Header() {
                         className="h-10 pr-10 bg-muted/50"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        aria-label="Search input"
                       />
-                      <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-10 w-10">
+                      <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-10 w-10" aria-label="Submit search">
                         <Search className="h-4 w-4" />
-                        <span className="sr-only">Search</span>
                       </Button>
                   </form>
                   {searchQuery && (
@@ -285,9 +282,8 @@ export default function Header() {
         <div className="md:hidden flex-shrink-0">
            <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" aria-label="Open mobile navigation menu">
                 <Menu className="h-5 w-5" />
-                 <span className="sr-only">Open navigation menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent className="overflow-y-auto w-full max-w-xs">
@@ -307,10 +303,10 @@ export default function Header() {
                         className="h-10 pr-10"
                         defaultValue={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        aria-label="Search articles input"
                       />
-                      <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-10 w-10">
+                      <Button type="submit" size="icon" variant="ghost" className="absolute right-0 top-0 h-10 w-10" aria-label="Submit article search">
                         <Search className="h-4 w-4" />
-                        <span className="sr-only">Search</span>
                       </Button>
                   </form>
               </div>
@@ -321,7 +317,6 @@ export default function Header() {
                   <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Cheatsheet</Link>
                   <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
                   <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
-                  <button onClick={toggleChat} className={cn(navigationMenuTriggerStyle(), "justify-start")}><MessageSquare className="mr-2 h-4 w-4" /> Chat</button>
               </div>
 
             </SheetContent>

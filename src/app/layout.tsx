@@ -10,8 +10,6 @@ import { NavigationEvents } from '@/components/NavigationEvents';
 import { Suspense } from 'react';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
-import { ChatWidget } from '@/components/ChatWidget';
-import { ChatProvider } from '@/context/ChatContext';
 import { CookieConsent } from '@/components/CookieConsent';
 import Script from 'next/script';
 import { getAllTags } from '@/lib/shopify';
@@ -160,7 +158,6 @@ export default function RootLayout({
       </head>
       <body className={`${readexPro.className} font-body antialiased`}>
           <LoaderProvider>
-            <ChatProvider>
               <div className="flex flex-col min-h-screen">
                 <Header />
                  <Suspense fallback={<TagsSkeleton />}>
@@ -173,9 +170,7 @@ export default function RootLayout({
               <Suspense fallback={null}>
                 <NavigationEvents />
               </Suspense>
-              <ChatWidget />
               <CookieConsent />
-            </ChatProvider>
           </LoaderProvider>
         <SpeedInsights />
         <Analytics />

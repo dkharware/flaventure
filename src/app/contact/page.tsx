@@ -20,20 +20,20 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
-                <Input id="firstName" placeholder="John" />
+                <Input id="firstName" name="firstName" placeholder="John" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
-                <Input id="lastName" placeholder="Doe" />
+                <Input id="lastName" name="lastName" placeholder="Doe" />
               </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="contact@shopifydevguide.com" />
+              <Input id="email" name="email" type="email" placeholder="contact@shopifydevguide.com" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="message">Message</Label>
-              <Textarea id="message" placeholder="Your message..." rows={5} />
+              <Textarea id="message" name="message" placeholder="Your message..." rows={5} />
             </div>
             <Button type="submit" className="w-full">
               Send Message

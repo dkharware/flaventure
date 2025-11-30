@@ -79,8 +79,9 @@ export function BlogSidebar({}: BlogSidebarProps) {
               name="search"
               placeholder="Search articles..." 
               defaultValue={searchParams.get('query') ?? ''}
+              aria-label="Search articles"
             />
-            <Button type="submit" size="icon" variant="outline">
+            <Button type="submit" size="icon" variant="outline" aria-label="Submit search">
               <Search className="h-4 w-4" />
             </Button>
           </form>
