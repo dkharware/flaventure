@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
-import { Eye } from 'lucide-react';
+import { Eye, User } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 
 interface Article {
@@ -20,6 +20,7 @@ interface Article {
   image?: { url: string; altText: string };
   tags: string[];
   viewCount: number;
+  authorV2: { name: string };
 }
 
 interface PageInfo {
@@ -60,7 +61,13 @@ function ArticleCard({ article }: { article: Article }) {
                     className="text-sm text-muted-foreground flex-grow line-clamp-2"
                     dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
                 />
-                <div className="text-xs text-muted-foreground mt-4 pt-4 border-t flex items-center justify-between">
+                <div className="text-xs text-muted-foreground mt-4 pt-4 border-t flex flex-wrap gap-x-4 gap-y-2 items-center justify-between">
+                    {article.authorV2 && (
+                        <div className="flex items-center gap-1">
+                            <User className="h-3 w-3" />
+                            <span>{article.authorV2.name}</span>
+                        </div>
+                    )}
                     <span>{format(new Date(article.publishedAt), 'PPP')}</span>
                     <div className="flex items-center gap-1">
                         <Eye className="h-3 w-3" />

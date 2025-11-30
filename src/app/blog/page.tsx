@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
-import { SlidersHorizontal, Eye } from 'lucide-react';
+import { SlidersHorizontal, Eye, User } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -175,7 +175,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                             className="text-sm text-muted-foreground flex-grow line-clamp-2"
                                             dangerouslySetInnerHTML={{ __html: featuredArticle.excerptHtml }}
                                         />
-                                        <div className="text-xs text-muted-foreground mt-4 pt-4 border-t flex items-center justify-between">
+                                        <div className="text-xs text-muted-foreground mt-4 pt-4 border-t flex flex-wrap gap-x-4 gap-y-2 items-center justify-between">
+                                            <div className="flex items-center gap-1">
+                                                <User className="h-3 w-3" />
+                                                <span>{featuredArticle.authorV2.name}</span>
+                                            </div>
                                             <span>{format(new Date(featuredArticle.publishedAt), 'PPP')}</span>
                                             <div className="flex items-center gap-1">
                                                 <Eye className="h-3 w-3" />

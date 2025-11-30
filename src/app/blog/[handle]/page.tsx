@@ -13,7 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
-import { SlidersHorizontal, Eye, Download } from 'lucide-react';
+import { SlidersHorizontal, Eye, Download, User } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TableOfContents } from '@/components/TableOfContents';
@@ -131,6 +131,15 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                         </div>
                         <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4">{article.title}</h1>
                         <div className="text-muted-foreground text-sm flex items-center justify-center flex-wrap gap-x-4 gap-y-2">
+                            {article.authorV2 && (
+                                <>
+                                <div className="flex items-center gap-1">
+                                    <User className="h-4 w-4" />
+                                    <span>{article.authorV2.name}</span>
+                                </div>
+                                <span className="text-xs hidden md:inline">•</span>
+                                </>
+                            )}
                             <p>{format(new Date(article.publishedAt), 'PPP')}</p>
                             <span className="text-xs hidden md:inline">•</span>
                             <div className="flex items-center gap-1">
