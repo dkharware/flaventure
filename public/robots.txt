@@ -1,3 +1,6 @@
+# See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+#
+# To allow all crawlers to view all pages, so you don't have to worry about getting new pages indexed, use the following:
 User-agent: *
 Allow: /
 

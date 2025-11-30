@@ -1,21 +1,21 @@
 {
-  "name": "easyfreecv",
-  "short_name": "easyfreecv",
-  "description": "EasyFreeCV provides free CV templates, resume writing tips, and expert Shopify blogs covering development, headless Shopify, apps, and eCommerce insights.",
+  "name": "shopifydevguide",
+  "short_name": "shopifydevguide",
+  "description": "Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1A1A1A",
   "icons": [
     {
-      "src": "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon-192x192.png",
+      "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://khahax3ontgwrypo.public.blob.vercel-storage.com/asset/favicon-512x512.png",
+      "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "start_url": "/",
-  "display": "standalone"
+  ]
 }
