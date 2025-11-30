@@ -39,9 +39,8 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-foreground mb-4">Connect With Us</h3>
             <div className="flex space-x-4">
-              <Link href="#" aria-label="GitHub" className="hover:text-primary transition-all hover:-translate-y-1 block"><Github size={20} /></Link>
-              <Link href="#" aria-label="Twitter" className="hover:text-primary transition-all hover:-translate-y-1 block"><Twitter size={20} /></Link>
-              <Link href="#" aria-label="LinkedIn" className="hover:text-primary transition-all hover:-translate-y-1 block"><Linkedin size={20} /></Link>
+              <Link href="https://github.com/DesignerDeepakR" aria-label="GitHub" className="hover:text-primary transition-all hover:-translate-y-1 block"><Github size={20} /></Link>
+              <Link href="https://www.linkedin.com/in/deepak-singh-kharware/" aria-label="LinkedIn" className="hover:text-primary transition-all hover:-translate-y-1 block"><Linkedin size={20} /></Link>
             </div>
           </div>
         </div>

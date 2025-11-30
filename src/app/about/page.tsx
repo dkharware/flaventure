@@ -28,9 +28,6 @@ export default async function AboutPage() {
                   <a href="https://www.linkedin.com/in/deepak-singh-kharware/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin className="h-4 w-4" /></a>
               </Button>
                <Button variant="outline" size="icon" asChild>
-                  <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><Twitter className="h-4 w-4" /></a>
-              </Button>
-               <Button variant="outline" size="icon" asChild>
                   <a href="https://github.com/DesignerDeepakR" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github className="h-4 w-4" /></a>
               </Button>
           </div>
