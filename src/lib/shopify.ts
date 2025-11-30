@@ -220,12 +220,12 @@ export async function getAllTags() {
 
 export async function getRelatedArticles(handle: string, tags: string[]) {
     if (tags.length === 0) {
-        const { articles } = await getArticles(3);
-        return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
+        const { articles } = await getArticles(5);
+        return articles.filter((a: any) => a.handle !== handle).slice(0, 4);
     }
     const tagsQuery = tags.map(tag => `tag:'${tag}'`).join(' OR ');
-    const { articles } = await getArticles(3, `(${tagsQuery})`);
-    return articles.filter((a: any) => a.handle !== handle).slice(0, 2);
+    const { articles } = await getArticles(5, `(${tagsQuery})`);
+    return articles.filter((a: any) => a.handle !== handle).slice(0, 4);
 }
 
 export async function getArticleSuggestions(searchTerm: string) {
