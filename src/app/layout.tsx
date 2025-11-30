@@ -96,13 +96,20 @@ const TagsSkeleton = () => (
     </div>
 )
 
-export default async function RootLayout({
+async function Tags() {
+  const allTags = await getAllTags();
+  if (allTags.length === 0) {
+    return null;
+  }
+  return <BlogTags tags={allTags} />;
+}
+
+
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  const allTags = await getAllTags();
 
   const schema = {
     "@context": "https://schema.org",
@@ -157,7 +164,7 @@ export default async function RootLayout({
               <div className="flex flex-col min-h-screen">
                 <Header />
                  <Suspense fallback={<TagsSkeleton />}>
-                  {allTags.length > 0 && <BlogTags tags={allTags} />}
+                  <Tags />
                 </Suspense>
                 <main className="flex-grow">{children}</main>
                 <Footer />
