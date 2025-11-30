@@ -26,9 +26,9 @@ interface Article {
 
 const MainArticleCard = ({ article }: { article: Article }) => {
     return (
-        <Card className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 items-center bg-muted/50 p-6 rounded-2xl overflow-hidden group">
+        <Card className="flex flex-col h-full bg-muted/50 p-6 rounded-2xl overflow-hidden group">
             {article.image && (
-                <Link href={`/blog/${article.handle}`} className="block overflow-hidden rounded-xl aspect-[16/9] relative">
+                <Link href={`/blog/${article.handle}`} className="block overflow-hidden rounded-xl aspect-[16/9] relative mb-6">
                     <Image
                         src={article.image.url}
                         alt={article.image.altText || article.title}
@@ -72,7 +72,7 @@ const MainArticleCard = ({ article }: { article: Article }) => {
 const SecondaryArticleCard = ({ article }: { article: Article }) => {
     return (
         <Link href={`/blog/${article.handle}`} className="block group">
-            <div className="relative overflow-hidden rounded-xl aspect-[16/9]">
+            <div className="relative overflow-hidden rounded-xl aspect-[16/10]">
                 {article.image && (
                     <Image
                         src={article.image.url}
@@ -101,15 +101,23 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
     
     const [
         mainArticle,
+        sideArticle,
         ...secondaryArticles
     ] = articles;
 
     return (
         <section className="container">
-            {mainArticle && <MainArticleCard article={mainArticle} />}
+             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2">
+                    {mainArticle && <MainArticleCard article={mainArticle} />}
+                </div>
+                <div className="flex flex-col gap-8">
+                    {sideArticle && <SecondaryArticleCard article={sideArticle} />}
+                </div>
+            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12 mt-12">
-                {secondaryArticles.slice(0, 4).map(article => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12 mt-12">
+                {secondaryArticles.slice(0, 3).map(article => (
                     <SecondaryArticleCard key={article.id} article={article} />
                 ))}
             </div>
