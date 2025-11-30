@@ -12,7 +12,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
 import { CookieConsent } from '@/components/CookieConsent';
 import Script from 'next/script';
-import { getAllTags } from '@/lib/shopify';
 import { BlogTags } from '@/components/BlogTags';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -77,13 +76,13 @@ export const metadata: Metadata = {
     shortcut: faviconUrl,
     apple: faviconUrl,
   },
-  manifest: `${siteUrl}/site.webmanifest`,
+  manifest: `/site.webmanifest`,
 };
 
 const TagsSkeleton = () => (
     <div className="w-full py-4 border-b">
         <div className="container px-4 md:px-6">
-            <div className="mx-auto max-w-6xl flex gap-4">
+            <div className="mx-auto max-w-7xl flex gap-4">
                 <Skeleton className="h-10 w-24" />
                 <Skeleton className="h-10 w-32" />
                 <Skeleton className="h-10 w-20" />
@@ -93,14 +92,6 @@ const TagsSkeleton = () => (
         </div>
     </div>
 )
-
-async function Tags() {
-  const allTags = await getAllTags();
-  if (allTags.length === 0) {
-    return null;
-  }
-  return <BlogTags tags={allTags} />;
-}
 
 
 export default function RootLayout({
@@ -161,7 +152,7 @@ export default function RootLayout({
               <div className="flex flex-col min-h-screen">
                 <Header />
                  <Suspense fallback={<TagsSkeleton />}>
-                  <Tags />
+                  <BlogTags />
                 </Suspense>
                 <main className="flex-grow">{children}</main>
                 <Footer />

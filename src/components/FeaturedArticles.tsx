@@ -38,22 +38,26 @@ const AuthorInfo = ({ article, className }: { article: Article, className?: stri
 );
 
 const LargeHeroCard = ({ article }: { article: Article }) => (
-    <Link href={`/blog/${article.handle}`} className="block group col-span-2">
+    <div className="block group col-span-2">
         <Card className="h-full overflow-hidden rounded-lg bg-muted/20 p-6 flex flex-col md:flex-row gap-6">
              {article.image && (
                 <div className="relative w-full md:w-1/2 aspect-[16/9] rounded-lg overflow-hidden">
-                     <Image
-                        src={article.image.url}
-                        alt={article.image.altText || article.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        priority
-                    />
+                    <Link href={`/blog/${article.handle}`} className="block h-full w-full">
+                         <Image
+                            src={article.image.url}
+                            alt={article.image.altText || article.title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            priority
+                        />
+                    </Link>
                 </div>
              )}
              <div className="flex flex-col flex-grow p-1 md:w-1/2">
                 <AuthorInfo article={article} />
-                <h2 className="text-xl md:text-2xl font-bold font-headline mt-4 group-hover:text-primary transition-colors line-clamp-3">{article.title}</h2>
+                <h2 className="text-xl md:text-2xl font-bold font-headline mt-4 group-hover:text-primary transition-colors line-clamp-3">
+                    <Link href={`/blog/${article.handle}`}>{article.title}</Link>
+                </h2>
                 <div 
                     className="text-muted-foreground text-sm mt-2 line-clamp-2"
                     dangerouslySetInnerHTML={{ __html: article.excerptHtml }} 
@@ -67,30 +71,7 @@ const LargeHeroCard = ({ article }: { article: Article }) => (
                 </div>
              </div>
         </Card>
-    </Link>
-);
-
-
-const StandardCard = ({ article }: { article: Article }) => (
-    <Link href={`/blog/${article.handle}`} className="block group">
-        <Card className="h-full overflow-hidden rounded-lg bg-muted/20 p-4 flex flex-col">
-             {article.image && (
-                <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-4">
-                     <Image
-                        src={article.image.url}
-                        alt={article.image.altText || article.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                    />
-                </div>
-             )}
-             <div className="flex flex-col flex-grow p-1">
-                <h3 className="text-base font-bold font-headline mt-1 group-hover:text-primary transition-colors line-clamp-2 flex-grow">{article.title}</h3>
-                <AuthorInfo article={article} className="mt-3" />
-             </div>
-        </Card>
-    </Link>
+    </div>
 );
 
 const ListItemCard = ({ article }: { article: Article }) => (
@@ -127,14 +108,12 @@ const ListItemCard = ({ article }: { article: Article }) => (
 
 
 export function FeaturedArticles({ articles }: { articles: Article[] }) {
-    if (articles.length < 7) {
+    if (articles.length < 5) {
         return null;
     }
     
     const [
         mainArticle,
-        standardArticle1,
-        standardArticle2,
         sideArticle1,
         sideArticle2,
         sideArticle3,
@@ -145,12 +124,8 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
         <section className="container">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12">
                 {/* Left Side */}
-                <div className="lg:col-span-2 space-y-8">
+                <div className="lg:col-span-2">
                     {mainArticle && <LargeHeroCard article={mainArticle} />}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {standardArticle1 && <StandardCard article={standardArticle1} />}
-                        {standardArticle2 && <StandardCard article={standardArticle2} />}
-                    </div>
                 </div>
 
                 {/* Right Side */}

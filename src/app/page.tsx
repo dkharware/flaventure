@@ -13,7 +13,7 @@ const FaqSection = lazy(() => import('@/components/FaqSection'));
 
 
 export default async function Home() {
-    const { articles } = await getArticles(7);
+    const { articles } = await getArticles(5);
 
   return (
     <div className="w-full">
@@ -65,20 +65,7 @@ const SectionSkeleton = () => (
                         <Skeleton className="h-8 w-full" />
                         <Skeleton className="h-4 w-full" />
                         <Skeleton className="h-4 w-3/4" />
-                        <Skeleton className="h-6 w-1/3" />
-                    </div>
-                </div>
-                {/* Standard Cards Skeleton */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="h-full overflow-hidden rounded-lg bg-muted/20 p-4 flex flex-col space-y-4">
-                        <Skeleton className="w-full aspect-[16/9] rounded-lg" />
-                        <Skeleton className="h-6 w-5/6" />
-                        <Skeleton className="h-4 w-1/2" />
-                    </div>
-                    <div className="h-full overflow-hidden rounded-lg bg-muted/20 p-4 flex flex-col space-y-4">
-                        <Skeleton className="w-full aspect-[16/9] rounded-lg" />
-                        <Skeleton className="h-6 w-5/6" />
-                        <Skeleton className="h-4 w-1/2" />
+                        <Skeleton className="h-10 w-1/2" />
                     </div>
                 </div>
             </div>

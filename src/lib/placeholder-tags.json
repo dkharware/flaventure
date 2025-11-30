@@ -1,0 +1,10 @@
+
+[
+    { "name": "Shopify", "count": 20 },
+    { "name": "Headless", "count": 15 },
+    { "name": "Theme Development", "count": 12 },
+    { "name": "Storefront API", "count": 10 },
+    { "name": "Webflow", "count": 8 },
+    { "name": "Next.js", "count": 7 },
+    { "name": "Performance", "count": 5 }
+]

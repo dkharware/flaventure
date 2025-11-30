@@ -6,22 +6,34 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
 import { Badge } from './ui/badge';
+import { useEffect, useState } from 'react';
+import { getAllTags } from '@/lib/shopify';
+import placeholderTags from '@/lib/placeholder-tags.json';
 
 interface Tag {
     name: string;
     count: number;
 }
-interface BlogTagsProps {
-    tags: Tag[];
-}
 
-export function BlogTags({ tags }: BlogTagsProps) {
+export function BlogTags() {
+    const [tags, setTags] = useState<Tag[]>(placeholderTags);
+
+    useEffect(() => {
+        const fetchTags = async () => {
+            try {
+                const liveTags = await getAllTags();
+                if (liveTags.length > 0) {
+                    setTags(liveTags);
+                }
+            } catch (error) {
+                console.error("Failed to fetch live tags, using placeholders.", error);
+            }
+        };
+        fetchTags();
+    }, []);
+
     if (!tags || tags.length === 0) {
         return null;
     }
@@ -38,7 +50,7 @@ export function BlogTags({ tags }: BlogTagsProps) {
                         className="w-full"
                     >
                         <CarouselContent className="-ml-2">
-                            {tags.map((tag, index) => (
+                            {tags.map((tag) => (
                                 <CarouselItem key={tag.name} className="basis-auto pl-2">
                                     <Link href={`/blog?tag=${encodeURIComponent(tag.name)}`} className="block group">
                                          <Badge variant="outline" className="text-sm px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-colors">
