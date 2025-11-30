@@ -13,25 +13,17 @@ const BlogSection = lazy(() => import('@/components/BlogSection'));
 const FaqSection = lazy(() => import('@/components/FaqSection'));
 
 
-async function TagsSection() {
-    const tags = await getAllTags();
-    return (
-      <div className="py-8 md:py-12">
-        <BlogTags tags={tags} />
-      </div>
-    );
-}
-
 export default async function Home() {
     const { articles } = await getArticles(6);
+    const tags = await getAllTags();
 
   return (
     <div className="w-full">
       <Suspense fallback={<SectionSkeleton />}>
         <FeaturedArticles articles={articles} />
       </Suspense>
-      <Suspense fallback={<SectionSkeleton />}>
-        <TagsSection />
+      <Suspense fallback={<TagsSkeleton />}>
+        <BlogTags tags={tags} />
       </Suspense>
       <Suspense fallback={<SectionSkeleton />}>
         <WebStoriesSection />
@@ -45,6 +37,20 @@ export default async function Home() {
     </div>
   );
 }
+
+const TagsSkeleton = () => (
+    <div className="w-full py-12 md:py-16">
+        <div className="container px-4 md:px-6">
+            <div className="mx-auto max-w-6xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+                <Skeleton className="h-16 w-full" />
+            </div>
+        </div>
+    </div>
+)
 
 const SectionSkeleton = () => (
     <div className="w-full py-12 md:py-16">

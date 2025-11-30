@@ -59,15 +59,7 @@ export function BlogTags({ tags }: BlogTagsProps) {
     return (
         <section className="w-full py-8">
             <div className="container px-4 md:px-6">
-                <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                    <div className="space-y-2">
-                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Explore Topics</h2>
-                        <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                            Find articles based on the topics that interest you most.
-                        </p>
-                    </div>
-                </div>
-                <div className="mx-auto max-w-6xl pt-8">
+                <div className="mx-auto max-w-6xl">
                     <Carousel
                         opts={{
                             align: "start",
