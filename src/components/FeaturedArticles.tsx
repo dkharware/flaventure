@@ -81,6 +81,7 @@ const StandardCard = ({ article }: { article: Article }) => (
                         alt={article.image.altText || article.title}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
                     />
                 </div>
              )}
@@ -103,6 +104,7 @@ const ListItemCard = ({ article }: { article: Article }) => (
                             alt={article.image.altText || article.title}
                             fill
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            loading="lazy"
                         />
                     </div>
                 )}
