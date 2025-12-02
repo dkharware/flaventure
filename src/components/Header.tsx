@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home, Wrench } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home, Wrench, Hammer } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -94,6 +94,24 @@ const resourceComponents = [
     },
 ];
 
+const toolComponents = [
+    {
+      title: "Meta Tag Generator",
+      href: "/tools/meta-tag-generator",
+      description: "Generate SEO-friendly meta tags for products, pages, and articles.",
+    },
+    {
+      title: "Liquid to JSON Converter",
+      href: "/tools/liquid-to-json-converter",
+      description: "Convert Liquid objects to JSON for debugging and headless use.",
+    },
+    {
+      title: "Product Schema Generator",
+      href: "/tools/product-schema-generator",
+      description: "Create JSON-LD schema markup for your products to improve SEO.",
+    },
+];
+
 export default function Header() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
@@ -124,7 +142,7 @@ export default function Header() {
     <header className="h-[81px] flex items-center px-4 sm:px-6 md:px-10 bg-background/80 backdrop-blur-sm text-foreground border-b sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between gap-2 md:gap-4">
         <div className="flex-shrink-0">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2" aria-label="storedevguide Home">
             <div className="md:hidden">
               <Logo width={150} height={40} priority />
             </div>
@@ -236,6 +254,22 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
+                  <NavigationMenuTrigger>Shopify Tools</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px]">
+                      {toolComponents.map((component) => (
+                        <ListItem
+                          key={component.title}
+                          title={component.title}
+                          href={component.href}
+                        >
+                          {component.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
                   <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                     <Link href="/about">
                       About
@@ -332,6 +366,7 @@ export default function Header() {
                   <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
                   <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Liquid Cheatsheet</Link>
                   <Link href="/tutorials/shopify-api-guide" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Wrench className="mr-2 h-4 w-4" /> API Guide</Link>
+                  <Link href="/tools/meta-tag-generator" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Hammer className="mr-2 h-4 w-4" /> Shopify Tools</Link>
                   <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
                   <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
               </div>
