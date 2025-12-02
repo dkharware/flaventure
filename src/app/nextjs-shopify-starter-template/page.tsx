@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, Github } from 'lucide-react';
+import { Download, Github, Eye } from 'lucide-react';
 import { CopyButton } from '@/components/tools/CopyButton';
 
 export const metadata: Metadata = {
@@ -41,7 +41,7 @@ export async function getProducts() {
 }
 `.trim();
 
-const installCommand = `npx create-next-app -e https://github.com/example/nextjs-shopify-starter your-project-name`;
+const installCommand = `npx create-next-app -e https://github.com/dkharware/next-shopify-starter your-project-name`;
 
 export default function NextjsStarterPage() {
     const breadcrumbItems = [
@@ -59,15 +59,20 @@ export default function NextjsStarterPage() {
                 <p className="text-lg text-muted-foreground mt-2 max-w-3xl">
                     A production-ready boilerplate for building headless Shopify storefronts with Next.js, Tailwind CSS, and the Storefront API.
                 </p>
-                <div className="flex gap-4 mt-6">
+                <div className="flex flex-wrap gap-4 mt-6">
                     <Button asChild size="lg">
-                        <a href="#">
+                        <a href="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/next-shopify-starter-main.zip">
                             <Download className="mr-2 h-4 w-4" /> Download
                         </a>
                     </Button>
-                    <Button asChild variant="outline" size="lg">
-                         <a href="#" target="_blank" rel="noopener noreferrer">
+                    <Button asChild variant="secondary" size="lg">
+                         <a href="https://github.com/dkharware/next-shopify-starter" target="_blank" rel="noopener noreferrer">
                             <Github className="mr-2 h-4 w-4" /> View on GitHub
+                        </a>
+                    </Button>
+                     <Button asChild variant="outline" size="lg">
+                         <a href="https://doggystickers.vercel.app/" target="_blank" rel="noopener noreferrer">
+                            <Eye className="mr-2 h-4 w-4" /> View Live Demo
                         </a>
                     </Button>
                 </div>
@@ -76,17 +81,18 @@ export default function NextjsStarterPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 <main className="lg:col-span-2 prose dark:prose-invert max-w-none">
                     <Image 
-                        src="https://picsum.photos/seed/nextjs-template/1200/600"
+                        src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/nextjs-shopify-template-screenshot.png"
                         alt="Screenshot of the Next.js Shopify Starter Template"
                         width={1200}
-                        height={600}
+                        height={675}
                         className="rounded-lg shadow-lg mb-8"
+                        priority
                     />
 
                     <h2>What the Template Includes</h2>
                     <ul>
                         <li><strong>Next.js 14 with App Router:</strong> Get the latest features and performance benefits from Next.js.</li>
-                        <li><strong>Tailwind CSS:</strong> A utility-first CSS framework for rapid UI development.</li>
+                        <li><strong>Tailwind CSS & ShadCN UI:</strong> A utility-first CSS framework and pre-built components for rapid UI development.</li>
                         <li><strong>Shopify Storefront API Integration:</strong> Pre-configured data fetching for products, collections, and cart.</li>
                         <li><strong>Component-Based Architecture:</strong> Built with reusable React components for easy customization.</li>
                         <li><strong>Environment Variable Setup:</strong> Easily connect to your Shopify store with a `.env.local` file.</li>
@@ -122,8 +128,8 @@ export default function NextjsStarterPage() {
                                 <p className="font-semibold mb-2">2. Set Up Environment Variables</p>
                                 <p className="text-sm text-muted-foreground">Create a `.env.local` file in your project root and add your Shopify API credentials:</p>
                                 <pre className="text-sm p-3 bg-muted rounded-md mt-2">
-{`NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT=...
-NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN=...`}
+{`NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT="your-store.myshopify.com"
+NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN="..."`}
                                 </pre>
                             </div>
                              <div>
