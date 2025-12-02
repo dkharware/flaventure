@@ -83,6 +83,11 @@ const shopifyComponents = [
 
 const resourceComponents = [
     {
+      title: "Blog",
+      href: "/blog",
+      description: "Browse all our latest posts on Shopify, Webflow, and more.",
+    },
+    {
       title: "Shopify Liquid Cheatsheet",
       href: "/shopify-liquid-cheatsheet",
       description: "Your complete quick reference guide for Shopify Liquid.",
@@ -155,43 +160,6 @@ export default function Header() {
         <div className="hidden md:flex flex-1 justify-center">
             <NavigationMenu>
               <NavigationMenuList>
-                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Blog</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                       <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <a
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                            href="/blog"
-                          >
-                            <div className="mb-2 mt-4 text-lg font-medium">
-                              All Articles
-                            </div>
-                            <p className="text-sm leading-tight text-muted-foreground">
-                              Browse all our latest posts on Shopify, Webflow, and more.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <li>
-                        <ListItem href="/blog?tag=Shopify" title="Shopify">
-                          Articles on development, headless commerce, and apps.
-                        </ListItem>
-                      </li>
-                      <li>
-                        <ListItem href="/blog?tag=Webflow" title="Webflow">
-                          Insights and tutorials for the Webflow platform.
-                        </ListItem>
-                      </li>
-                       <li>
-                        <ListItem href="/blog?tag=Shopify%20Page%20Builders" title="Shopify Page Builders">
-                          Reviews and guides on top Shopify page builders.
-                        </ListItem>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Shopify</NavigationMenuTrigger>
                   <NavigationMenuContent>
