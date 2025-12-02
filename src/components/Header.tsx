@@ -194,9 +194,9 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/shopify-templates-boilerplates" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Templates
+                    <Link href="/shopify-templates-boilerplates" passHref legacyBehavior={false}>
+                        <NavigationMenuLink asChild>
+                             <a className={navigationMenuTriggerStyle()}>Templates</a>
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
@@ -233,16 +233,16 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/about" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            About
+                    <Link href="/about" passHref legacyBehavior={false}>
+                        <NavigationMenuLink asChild>
+                            <a className={navigationMenuTriggerStyle()}>About</a>
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/contact" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Contact
+                    <Link href="/contact" passHref legacyBehavior={false}>
+                        <NavigationMenuLink asChild>
+                            <a className={navigationMenuTriggerStyle()}>Contact</a>
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
@@ -348,3 +348,5 @@ export default function Header() {
     </header>
   );
 }
+
+    
