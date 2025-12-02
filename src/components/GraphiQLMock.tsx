@@ -50,6 +50,137 @@ query getProductByHandle($handle: String!) {
 }`.trim()
     },
     {
+        name: 'Get Collection',
+        query: `
+query getCollectionByHandle($handle: String!) {
+  collection(handle: $handle) {
+    id
+    title
+    description
+    products(first: 3) {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+    }
+  }
+}`.trim(),
+        variables: `
+{
+  "handle": "snowboards"
+}`.trim(),
+        response: `
+{
+  "data": {
+    "collection": {
+      "id": "gid://shopify/Collection/44734870585622",
+      "title": "Snowboards",
+      "description": "Our finest collection of snowboards.",
+      "products": { ... }
+    }
+  },
+  "extensions": { ... }
+}`.trim()
+    },
+    {
+        name: 'Get Article',
+        query: `
+query getArticleByHandle($blogHandle: String!, $articleHandle: String!) {
+  blog(handle: $blogHandle) {
+    articleByHandle(handle: $articleHandle) {
+      id
+      title
+      contentHtml
+      publishedAt
+      authorV2 {
+        name
+      }
+    }
+  }
+}`.trim(),
+        variables: `
+{
+  "blogHandle": "news",
+  "articleHandle": "hello-world"
+}`.trim(),
+        response: `
+{
+  "data": {
+    "blog": {
+      "articleByHandle": {
+        "id": "gid://shopify/Article/603623522582",
+        "title": "Hello World!",
+        "contentHtml": "<h1>Welcome to our blog!</h1>",
+        "publishedAt": "2024-01-01T00:00:00Z",
+        "authorV2": { "name": "Deepak Kharware" }
+      }
+    }
+  },
+  "extensions": { ... }
+}`.trim()
+    },
+     {
+        name: 'Get Blog',
+        query: `
+query getBlogByHandle($handle: String!) {
+  blog(handle: $handle) {
+    id
+    title
+    articles(first: 3) {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+    }
+  }
+}`.trim(),
+        variables: `
+{
+  "handle": "news"
+}`.trim(),
+        response: `
+{
+  "data": {
+    "blog": {
+      "id": "gid://shopify/Blog/8226090418454",
+      "title": "News",
+      "articles": { ... }
+    }
+  },
+  "extensions": { ... }
+}`.trim()
+    },
+    {
+        name: 'Get Page',
+        query: `
+query getPageByHandle($handle: String!) {
+  page(handle: $handle) {
+    id
+    title
+    body
+  }
+}`.trim(),
+        variables: `
+{
+  "handle": "about-us"
+}`.trim(),
+        response: `
+{
+  "data": {
+    "page": {
+      "id": "gid://shopify/Page/241697276182",
+      "title": "About Us",
+      "body": "This is the content of our about us page."
+    }
+  },
+  "extensions": { ... }
+}`.trim()
+    },
+    {
         name: 'Create Cart',
         query: `
 mutation cartCreate($input: CartInput!) {
@@ -278,3 +409,5 @@ export const GraphiQLMock = () => {
         </Card>
     );
 };
+
+    
