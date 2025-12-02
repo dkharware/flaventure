@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useCallback, useEffect } from 'react';
@@ -15,7 +16,6 @@ export function MetaTagGenerator() {
         imageUrl: 'https://cdn.shopify.com/s/files/1/2/3/4/files/my-product-image.jpg',
         siteName: 'My Awesome Store',
     });
-
     const [generatedTags, setGeneratedTags] = useState('');
 
     const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
