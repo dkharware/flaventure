@@ -41,43 +41,33 @@ import { LiveSearch } from './LiveSearch';
 const shopifyComponents = [
     {
       title: "Headless",
-      href: "/blog?query=headless",
+      href: "/blog?tag=Headless",
       description: "Learn about building custom storefronts with modern frameworks.",
     },
     {
       title: "App Bridge",
-      href: "/blog?query=app%20bridge",
+      href: "/blog?tag=Shopify%20App%20Bridge",
       description: "Integrate your app seamlessly with the Shopify admin.",
     },
     {
         title: "Theme Development",
-        href: "/blog?query=theme%20development",
+        href: "/blog?tag=Theme%20Development",
         description: "Create beautiful and performant themes for the online store.",
     },
     {
         title: "Storefront API",
-        href: "/blog?query=storefront%20api",
+        href: "/blog?tag=Storefront%20API",
         description: "Master the API for building unique shopping experiences.",
     },
     {
         title: "Admin API",
-        href: "/blog?query=admin%20api",
+        href: "/blog?tag=Admin%20API",
         description: "Manage your store programmatically.",
     },
     {
         title: "Hydrogen",
-        href: "/blog?query=hydrogen",
+        href: "/blog?tag=Hydrogen",
         description: "Build fast, custom storefronts with React.",
-    },
-    {
-        title: "Oxygen",
-        href: "/blog?query=oxygen",
-        description: "Deploy and host your Hydrogen storefronts.",
-    },
-    {
-        title: "Polaris",
-        href: "/blog?query=polaris",
-        description: "Use Shopify's design system for your apps.",
     },
 ];
 
@@ -180,33 +170,31 @@ export default function Header() {
                         </li>
                         <div className="grid grid-cols-2 gap-3">
                             {shopifyComponents.slice(0, 2).map((component) => (
-                                <li key={component.title}>
                                 <ListItem
+                                    key={component.title}
                                     title={component.title}
                                     href={component.href}
                                 >
                                     {component.description}
                                 </ListItem>
-                                </li>
                             ))}
                         </div>
                         <div className="col-span-1 grid grid-cols-2 gap-3">
                             {shopifyComponents.slice(2).map((component) => (
-                                <li key={component.title}>
                                 <ListItem
+                                    key={component.title}
                                     title={component.title}
                                     href={component.href}
                                 >
                                     {component.description}
                                 </ListItem>
-                                </li>
                             ))}
                         </div>
                      </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/shopify-templates-boilerplates" legacyBehavior passHref>
+                  <Link href="/shopify-templates-boilerplates" passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                       Templates
                     </NavigationMenuLink>
@@ -245,14 +233,14 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/about" legacyBehavior passHref>
+                  <Link href="/about" passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                       About
                     </NavigationMenuLink>
                   </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/contact" legacyBehavior passHref>
+                  <Link href="/contact" passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                       Contact
                     </NavigationMenuLink>
@@ -360,3 +348,5 @@ export default function Header() {
     </header>
   );
 }
+
+    
