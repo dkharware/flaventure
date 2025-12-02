@@ -194,9 +194,11 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                      <Link href="/shopify-templates-boilerplates" className={navigationMenuTriggerStyle()}>Templates</Link>
-                  </NavigationMenuLink>
+                    <Link href="/shopify-templates-boilerplates" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Templates
+                        </NavigationMenuLink>
+                    </Link>
                 </NavigationMenuItem>
                  <NavigationMenuItem>
                   <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
@@ -231,14 +233,18 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                        <Link href="/about" className={navigationMenuTriggerStyle()}>About</Link>
-                    </NavigationMenuLink>
+                    <Link href="/about" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            About
+                        </NavigationMenuLink>
+                    </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <NavigationMenuLink asChild>
-                        <Link href="/contact" className={navigationMenuTriggerStyle()}>Contact</Link>
-                    </NavigationMenuLink>
+                    <Link href="/contact" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Contact
+                        </NavigationMenuLink>
+                    </Link>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
@@ -319,20 +325,20 @@ export default function Header() {
               </div>
               
                <div className="flex flex-col space-y-1 mt-4 border-t pt-2">
-                  <Link href="/" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Home className="mr-2 h-4 w-4" /> Home</Link>
-                  <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
-                  <Link href="/shopify-templates-boilerplates" className={cn(navigationMenuTriggerStyle(), "justify-start")}><LayoutTemplate className="mr-2 h-4 w-4" /> Templates</Link>
-                  <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Liquid Cheatsheet</Link>
-                  <Link href="/tutorials/shopify-api-guide" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Wrench className="mr-2 h-4 w-4" /> API Guide</Link>
+                  <Link href="/" key="home-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Home className="mr-2 h-4 w-4" /> Home</Link>
+                  <Link href="/blog" key="blog-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
+                  <Link href="/shopify-templates-boilerplates" key="templates-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start")}><LayoutTemplate className="mr-2 h-4 w-4" /> Templates</Link>
+                  <Link href="/shopify-liquid-cheatsheet" key="cheatsheet-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Liquid Cheatsheet</Link>
+                  <Link href="/tutorials/shopify-api-guide" key="api-guide-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Wrench className="mr-2 h-4 w-4" /> API Guide</Link>
                   
                   <p className="px-4 py-2 text-sm font-semibold text-muted-foreground">Tools</p>
-                  <Link href="/tools/meta-tag-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><DraftingCompass className="mr-2 h-4 w-4" /> Meta Tag Generator</Link>
-                  <Link href="/tools/liquid-to-json-converter" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><FileJson className="mr-2 h-4 w-4" /> Liquid to JSON</Link>
-                  <Link href="/tools/product-schema-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><Hammer className="mr-2 h-4 w-4" /> Product Schema</Link>
+                  <Link href="/tools/meta-tag-generator" key="meta-tag-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><DraftingCompass className="mr-2 h-4 w-4" /> Meta Tag Generator</Link>
+                  <Link href="/tools/liquid-to-json-converter" key="liquid-json-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><FileJson className="mr-2 h-4 w-4" /> Liquid to JSON</Link>
+                  <Link href="/tools/product-schema-generator" key="product-schema-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><Hammer className="mr-2 h-4 w-4" /> Product Schema</Link>
 
                   <p className="px-4 py-2 text-sm font-semibold text-muted-foreground">Company</p>
-                  <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
-                  <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
+                  <Link href="/about" key="about-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
+                  <Link href="/contact" key="contact-mobile" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
               </div>
 
             </SheetContent>
@@ -342,5 +348,3 @@ export default function Header() {
     </header>
   );
 }
-
-    
