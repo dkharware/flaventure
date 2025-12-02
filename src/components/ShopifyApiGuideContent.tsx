@@ -12,6 +12,7 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import Link from "next/link";
+import { GraphiQLMock } from "./GraphiQLMock";
 
 const apiGuideData = {
     storefrontApi: [
@@ -159,6 +160,12 @@ export function ShopifyApiGuideContent() {
             />
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         </div>
+
+        <section id="interactive-example" className="mb-12">
+            <h2 className="text-2xl font-bold font-headline mb-6">Interactive Example</h2>
+            <GraphiQLMock />
+        </section>
+
 
         {filteredData.storefrontApi.length > 0 && (
             <section id="storefront-api" className="mb-12">
