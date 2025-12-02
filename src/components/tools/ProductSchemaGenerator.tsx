@@ -1,12 +1,11 @@
 
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { CopyButton } from './CopyButton';
 
 export function ProductSchemaGenerator() {
@@ -31,7 +30,7 @@ export function ProductSchemaGenerator() {
         setFormData(prev => ({ ...prev, [name]: value }));
     }, []);
 
-    const generateSchema = useCallback(() => {
+    useEffect(() => {
         const schema = {
             "@context": "https://schema.org/",
             "@type": "Product",
@@ -61,10 +60,6 @@ export function ProductSchemaGenerator() {
         };
         setGeneratedSchema(JSON.stringify(schema, null, 2));
     }, [formData]);
-
-    React.useEffect(() => {
-        generateSchema();
-    }, [generateSchema]);
 
     return (
         <Card>
@@ -125,7 +120,7 @@ export function ProductSchemaGenerator() {
                     <div className="space-y-4">
                         <CardHeader className="p-0">
                             <CardTitle>Generated JSON-LD Schema</CardTitle>
-                            <CardDescription>Copy this script and paste it before the closing `</head>` or `</body>` tag in your theme.</CardDescription>
+                            <CardDescription>Copy this script and paste it before the closing {`</body>`} tag in your theme.</CardDescription>
                         </CardHeader>
                         <div className="relative">
                             <pre className="bg-muted text-foreground p-4 rounded-lg shadow-inner overflow-x-auto h-[500px]">
