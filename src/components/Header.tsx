@@ -171,11 +171,6 @@ export default function Header() {
                           Reviews and guides on top Shopify page builders.
                         </ListItem>
                       </li>
-                       <li>
-                        <ListItem href="/blog?tag=WooCommerce" title="WooCommerce">
-                          Tips and tricks for the WordPress e-commerce plugin.
-                        </ListItem>
-                      </li>
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
