@@ -1,7 +1,6 @@
-
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -24,7 +23,7 @@ export function MetaTagGenerator() {
         setFormData(prev => ({ ...prev, [name]: value }));
     }, []);
 
-    const generateTags = useCallback(() => {
+    useEffect(() => {
         const { title, description, url, imageUrl, siteName } = formData;
         const tags = `
 <!-- Primary Meta Tags -->
@@ -49,10 +48,6 @@ export function MetaTagGenerator() {
 `;
         setGeneratedTags(tags.trim());
     }, [formData]);
-
-    React.useEffect(() => {
-        generateTags();
-    }, [generateTags]);
 
     return (
         <Card>
@@ -93,7 +88,7 @@ export function MetaTagGenerator() {
                             <pre className="bg-muted text-foreground p-4 rounded-lg shadow-inner overflow-x-auto h-[350px]">
                                 <code>{generatedTags}</code>
                             </pre>
-                            <CopyButton textToCopy={generatedTags} />
+                            {generatedTags && <CopyButton textToCopy={generatedTags} />}
                         </div>
                     </div>
                 </div>
