@@ -194,11 +194,9 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/shopify-templates-boilerplates" passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Templates
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                      <Link href="/shopify-templates-boilerplates">Templates</Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                  <NavigationMenuItem>
                   <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
@@ -233,18 +231,14 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/about" passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      About
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                        <Link href="/about">About</Link>
                     </NavigationMenuLink>
-                  </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/contact" passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Contact
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                        <Link href="/contact">Contact</Link>
                     </NavigationMenuLink>
-                  </Link>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
