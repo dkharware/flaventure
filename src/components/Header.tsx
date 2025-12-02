@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home, Wrench, Hammer, FileJson, DraftingCompass } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home, Wrench, Hammer, FileJson, DraftingCompass, LayoutTemplate } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -237,6 +237,13 @@ export default function Header() {
                      </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                    <Link href="/shopify-templates-boilerplates">
+                      Templates
+                    </Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
                  <NavigationMenuItem>
                   <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -364,6 +371,7 @@ export default function Header() {
                <div className="flex flex-col space-y-1 mt-4 border-t pt-2">
                   <Link href="/" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Home className="mr-2 h-4 w-4" /> Home</Link>
                   <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
+                  <Link href="/shopify-templates-boilerplates" className={cn(navigationMenuTriggerStyle(), "justify-start")}><LayoutTemplate className="mr-2 h-4 w-4" /> Templates</Link>
                   <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Liquid Cheatsheet</Link>
                   <Link href="/tutorials/shopify-api-guide" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Wrench className="mr-2 h-4 w-4" /> API Guide</Link>
                   
@@ -384,5 +392,3 @@ export default function Header() {
     </header>
   );
 }
-
-    
