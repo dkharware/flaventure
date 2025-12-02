@@ -79,7 +79,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   
   const pdfUrl = article.pdf?.value;
 
-  const siteUrl = 'https://easyfreecv.com';
+  const siteUrl = 'https://storedevguide.com';
   const fullUrl = `${siteUrl}/blog/${article.handle}`;
 
   const articleSchema = {
@@ -99,7 +99,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     },
      "publisher": {
       "@type": "Organization",
-      "name": "shopifydevguide",
+      "name": "storedevguide",
       "logo": {
         "@type": "ImageObject",
         "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/storedevguide.com.webp"

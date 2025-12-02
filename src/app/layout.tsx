@@ -22,14 +22,14 @@ const readexPro = Readex_Pro({
   weight: ['400', '500', '600', '700'],
 });
 
-const siteUrl = 'https://easyfreecv.com';
+const siteUrl = 'https://storedevguide.com';
 const faviconUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/favicon.ico";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
-    template: '%s | shopifydevguide',
+    template: '%s | storedevguide',
   },
   description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
   keywords: [
@@ -41,25 +41,25 @@ export const metadata: Metadata = {
     'headless Shopify',
     'Storefront API',
     'Shopify blog',
-    'shopifydevguide',
+    'storedevguide',
     'Webflow',
     'WooCommerce',
     'Shopify Page Builders'
   ],
-  authors: [{ name: 'shopifydevguide', url: siteUrl }],
-  creator: 'shopifydevguide',
-  publisher: 'shopifydevguide',
+  authors: [{ name: 'storedevguide', url: siteUrl }],
+  creator: 'storedevguide',
+  publisher: 'storedevguide',
   openGraph: {
     title: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
     description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
     url: siteUrl,
-    siteName: 'shopifydevguide',
+    siteName: 'storedevguide',
     images: [
       {
         url: '/og-image.png', // Assuming you'll add an og-image.png to your public folder
         width: 1200,
         height: 630,
-        alt: 'shopifydevguide Blog',
+        alt: 'storedevguide Blog',
       },
     ],
     locale: 'en_US',
@@ -103,7 +103,7 @@ export default function RootLayout({
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "shopifydevguide",
+    "name": "storedevguide",
     "url": siteUrl,
     "description": metadata.description,
     "potentialAction": {
@@ -116,7 +116,7 @@ export default function RootLayout({
     },
     "publisher": {
       "@type": "Organization",
-      "name": "shopifydevguide",
+      "name": "storedevguide",
       "logo": {
         "@type": "ImageObject",
         "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/storedevguide.com.webp",

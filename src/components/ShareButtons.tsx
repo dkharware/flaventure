@@ -11,7 +11,7 @@ interface ShareButtonsProps {
   title: string;
 }
 
-const siteUrl = 'https://easyfreecv.com';
+const siteUrl = 'https://storedevguide.com';
 
 export function ShareButtons({ title }: ShareButtonsProps) {
   const pathname = usePathname();
