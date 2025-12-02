@@ -8,11 +8,14 @@ import {
     AccordionTrigger,
   } from "@/components/ui/accordion";
 import { Card, CardContent } from '@/components/ui/card';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import Link from "next/link";
-import { GraphiQLMock } from "./GraphiQLMock";
+import { Skeleton } from "./ui/skeleton";
+
+const GraphiQLMock = React.lazy(() => import("./GraphiQLMock").then(module => ({ default: module.GraphiQLMock })));
+
 
 const apiGuideData = {
     storefrontApi: [
@@ -163,7 +166,9 @@ export function ShopifyApiGuideContent() {
 
         <section id="interactive-example" className="mb-12">
             <h2 className="text-2xl font-bold font-headline mb-6">Interactive Example</h2>
-            <GraphiQLMock />
+            <Suspense fallback={<Skeleton className="h-[500px] w-full" />}>
+                <GraphiQLMock />
+            </Suspense>
         </section>
 
 
