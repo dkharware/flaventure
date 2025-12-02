@@ -85,11 +85,6 @@ export default function TemplatesHubPage() {
                                         View Details <ArrowRight className="ml-2 h-4 w-4" />
                                     </Link>
                                 </Button>
-                                <Button asChild variant="outline" size="icon">
-                                    <a href={template.githubUrl} target="_blank" rel="noopener noreferrer" aria-label="View on GitHub">
-                                        <Github className="h-4 w-4" />
-                                    </a>
-                                </Button>
                             </div>
                         </CardContent>
                     </Card>
