@@ -1,6 +1,15 @@
+
+'use client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useEffect, useState } from 'react';
 
 export default function TermsAndConditionsPage() {
+  const [lastUpdated, setLastUpdated] = useState('');
+
+  useEffect(() => {
+    setLastUpdated(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+  }, []);
+
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
       <Card className="max-w-4xl mx-auto">
@@ -8,10 +17,10 @@ export default function TermsAndConditionsPage() {
           <CardTitle className="text-3xl font-headline">Terms and Conditions</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-muted-foreground prose">
-          <p>Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p>Last updated: {lastUpdated}</p>
           
           <p>
-            Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the shopifydevguide website (the "Service") operated by shopifydevguide ("us", "we", or "our").
+            Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the storedevguide website (the "Service") operated by storedevguide ("us", "we", or "our").
           </p>
           <p>
             Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who access or use the Service.
@@ -24,7 +33,7 @@ export default function TermsAndConditionsPage() {
           
           <h3 className="text-xl font-headline text-foreground">Intellectual Property</h3>
           <p>
-            The Service and its original content (excluding Content provided by users), features, and functionality are and will remain the exclusive property of shopifydevguide and its licensors.
+            The Service and its original content (excluding Content provided by users), features, and functionality are and will remain the exclusive property of storedevguide and its licensors.
           </p>
 
           <h3 className="text-xl font-headline text-foreground">User Content</h3>

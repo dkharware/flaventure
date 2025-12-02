@@ -130,10 +130,14 @@ const ListItemCard = ({ article }: { article: Article }) => (
 
 
 export function FeaturedArticles({ articles }: { articles: Article[] }) {
+    if (!articles || articles.length === 0) {
+        return <div className="hidden">No articles to display.</div>;
+    }
+
     if (articles.length < 7) {
         return (
-            <div className="lg:hidden">
-                 {articles[0] && <LargeHeroCard article={articles[0]} />}
+            <div className="grid grid-cols-1 gap-8">
+                 {articles.map(article => <LargeHeroCard key={article.id} article={article} />)}
             </div>
         );
     }
@@ -154,14 +158,14 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                 {/* Left Side */}
                 <div className="lg:col-span-2 space-y-8">
                      {mainArticle && <LargeHeroCard article={mainArticle} />}
-                    <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                          {subArticle1 && <StandardCard article={subArticle1} />}
                          {subArticle2 && <StandardCard article={subArticle2} />}
                     </div>
                 </div>
 
                 {/* Right Side */}
-                <div className="lg:col-span-1 space-y-4 hidden md:block">
+                <div className="lg:col-span-1 space-y-4">
                     <h3 className="font-bold font-headline text-lg">Latest Articles</h3>
                     {sideArticle1 && <ListItemCard article={sideArticle1} />}
                     {sideArticle2 && <ListItemCard article={sideArticle2} />}

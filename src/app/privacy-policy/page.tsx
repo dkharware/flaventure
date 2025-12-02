@@ -1,6 +1,15 @@
+
+'use client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useEffect, useState } from 'react';
 
 export default function PrivacyPolicyPage() {
+  const [lastUpdated, setLastUpdated] = useState('');
+
+  useEffect(() => {
+    setLastUpdated(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+  }, []);
+
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
       <Card className="max-w-4xl mx-auto">
@@ -8,10 +17,10 @@ export default function PrivacyPolicyPage() {
           <CardTitle className="text-3xl font-headline">Privacy Policy</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 text-muted-foreground prose">
-          <p>Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p>Last updated: {lastUpdated}</p>
           
           <p>
-            shopifydevguide ("us", "we", or "our") operates the shopifydevguide website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
+            storedevguide ("us", "we", or "our") operates the storedevguide website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
           </p>
 
           <h3 className="text-xl font-headline text-foreground">Information Collection and Use</h3>

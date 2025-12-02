@@ -18,8 +18,8 @@ import { ArticleList, ArticleCardSkeleton } from '@/components/ArticleList';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export const metadata: Metadata = {
-  title: 'E-commerce & Web Dev Blog | shopifydevguide',
-  description: 'Read the latest articles on Shopify, Webflow, headless commerce, and modern web development from the shopifydevguide team.',
+  title: 'E-commerce & Web Dev Blog | storedevguide',
+  description: 'Read the latest articles on Shopify, Webflow, headless commerce, and modern web development from the storedevguide team.',
 };
 
 interface BlogPageProps {
