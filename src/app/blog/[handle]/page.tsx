@@ -21,6 +21,7 @@ import { ShareButtons } from '@/components/ShareButtons';
 import { LikeButton } from '@/components/LikeButton';
 import { Skeleton } from '@/components/ui/skeleton';
 import Script from 'next/script';
+import { getSiteUrl } from '@/lib/utils';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
@@ -79,7 +80,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   
   const pdfUrl = article.pdf?.value;
 
-  const siteUrl = 'https://storedevguide.com';
+  const siteUrl = getSiteUrl();
   const fullUrl = `${siteUrl}/blog/${article.handle}`;
 
   const articleSchema = {

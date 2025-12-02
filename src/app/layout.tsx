@@ -14,6 +14,7 @@ import { CookieConsent } from '@/components/CookieConsent';
 import Script from 'next/script';
 import { BlogTags } from '@/components/BlogTags';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getSiteUrl } from '@/lib/utils';
 
 const readexPro = Readex_Pro({
   subsets: ['latin'],
@@ -22,7 +23,7 @@ const readexPro = Readex_Pro({
   weight: ['400', '500', '600', '700'],
 });
 
-const siteUrl = 'https://storedevguide.com';
+const siteUrl = getSiteUrl();
 const faviconUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/favicon.ico";
 
 export const metadata: Metadata = {

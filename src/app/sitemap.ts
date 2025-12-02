@@ -1,10 +1,11 @@
 
 import { MetadataRoute } from 'next';
 import { getArticles } from '@/lib/shopify';
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://storedevguide.com';
+import { getSiteUrl } from '@/lib/utils';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const siteUrl = getSiteUrl();
+
   const staticRoutes = [
     '/',
     '/about',

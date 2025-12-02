@@ -6,17 +6,18 @@ import { Button } from './ui/button';
 import { Twitter, Linkedin, Facebook, Link as LinkIcon, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { getSiteUrl } from '@/lib/utils';
 
 interface ShareButtonsProps {
   title: string;
 }
 
-const siteUrl = 'https://storedevguide.com';
-
 export function ShareButtons({ title }: ShareButtonsProps) {
   const pathname = usePathname();
   const { toast } = useToast();
   const [isCopied, setIsCopied] = useState(false);
+  
+  const siteUrl = getSiteUrl();
   const fullUrl = `${siteUrl}${pathname}`;
 
   const shareOptions = [
