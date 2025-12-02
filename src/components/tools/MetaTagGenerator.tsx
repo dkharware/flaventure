@@ -82,7 +82,7 @@ export function MetaTagGenerator() {
                     <div className="space-y-4">
                         <CardHeader className="p-0">
                             <CardTitle>Generated Meta Tags</CardTitle>
-                            <CardDescription>Copy and paste this into the `<head>` of your theme.</CardDescription>
+                            <CardDescription>Copy and paste this into the '<head>' of your theme.</CardDescription>
                         </CardHeader>
                         <div className="relative">
                             <pre className="bg-muted text-foreground p-4 rounded-lg shadow-inner overflow-x-auto h-[350px]">
