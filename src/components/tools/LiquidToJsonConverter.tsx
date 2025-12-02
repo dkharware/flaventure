@@ -90,27 +90,6 @@ export function LiquidToJsonConverter() {
                         )}
                     </div>
                 </div>
-                 <Card className="mt-8">
-                    <CardHeader>
-                        <CardTitle>How does this work?</CardTitle>
-                        <CardDescription>
-                            This tool is designed for a common Shopify development pattern: serializing a Liquid object into a JSON object to pass data to JavaScript.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-sm text-muted-foreground">
-                            It works best when you provide the rendered HTML output from a Liquid snippet that contains a JSON object. For example, pasting the raw output of a page containing `{{'{'}}{'{'} product | json {'}'}{'}'}`.
-                        </p>
-                        <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto mt-4">
-                            <code>
-{`<!-- Example: Paste the rendered output of this Liquid code -->
-<script type="application/json">
-    {{ product | json }}
-</script>`}
-                            </code>
-                        </pre>
-                    </CardContent>
-                </Card>
             </CardContent>
         </Card>
     );
