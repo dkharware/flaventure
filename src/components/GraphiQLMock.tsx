@@ -245,6 +245,47 @@ mutation cartCreate($input: CartInput!) {
 
 const adminApiExamples = [
     {
+        name: 'Create Product',
+        query: `
+mutation productCreate($input: ProductInput!) {
+  productCreate(input: $input) {
+    product {
+      id
+      title
+      handle
+      status
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}`.trim(),
+        variables: `
+{
+  "input": {
+    "title": "My New Awesome Product",
+    "productType": "Snowboard",
+    "vendor": "storedevguide",
+    "status": "DRAFT"
+  }
+}`.trim(),
+        response: `
+{
+  "data": {
+    "productCreate": {
+      "product": {
+        "id": "gid://shopify/Product/9123456789012",
+        "title": "My New Awesome Product",
+        "handle": "my-new-awesome-product",
+        "status": "DRAFT"
+      },
+      "userErrors": []
+    }
+  }
+}`.trim()
+    },
+    {
         name: 'Update Product',
         query: `
 mutation productUpdate($input: ProductInput!) {
@@ -281,16 +322,20 @@ mutation productUpdate($input: ProductInput!) {
   }
 }`.trim()
     },
-     {
-        name: 'Create Product',
-        query: `
-mutation productCreate($input: ProductInput!) {
-  productCreate(input: $input) {
-    product {
+    {
+      name: 'Create Webhook',
+      query: `
+mutation webhookSubscriptionCreate($topic: WebhookSubscriptionTopic!, $webhookSubscription: WebhookSubscriptionInput!) {
+  webhookSubscriptionCreate(topic: $topic, webhookSubscription: $webhookSubscription) {
+    webhookSubscription {
       id
-      title
-      handle
-      status
+      topic
+      endpoint {
+        __typename
+        ... on WebhookHttpEndpoint {
+          callbackUrl
+        }
+      }
     }
     userErrors {
       field
@@ -300,22 +345,23 @@ mutation productCreate($input: ProductInput!) {
 }`.trim(),
         variables: `
 {
-  "input": {
-    "title": "My New Awesome Product",
-    "productType": "Snowboard",
-    "vendor": "storedevguide",
-    "status": "DRAFT"
+  "topic": "ORDERS_CREATE",
+  "webhookSubscription": {
+    "callbackUrl": "https://yourapp.com/webhooks",
+    "format": "JSON"
   }
 }`.trim(),
         response: `
 {
   "data": {
-    "productCreate": {
-      "product": {
-        "id": "gid://shopify/Product/9123456789012",
-        "title": "My New Awesome Product",
-        "handle": "my-new-awesome-product",
-        "status": "DRAFT"
+    "webhookSubscriptionCreate": {
+      "webhookSubscription": {
+        "id": "gid://shopify/WebhookSubscription/123456789",
+        "topic": "ORDERS_CREATE",
+        "endpoint": {
+          "__typename": "WebhookHttpEndpoint",
+          "callbackUrl": "https://yourapp.com/webhooks"
+        }
       },
       "userErrors": []
     }
@@ -409,5 +455,3 @@ export const GraphiQLMock = () => {
         </Card>
     );
 };
-
-    
