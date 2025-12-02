@@ -25,34 +25,28 @@ export function LiquidToJsonConverter() {
         }
 
         try {
-            // This is a simplified approach. It looks for a JSON block inside <script> tags.
+            // This is a simplified approach. It looks for a JSON block inside <script> tags or as a raw object.
             const scriptRegex = /<script[^>]*>([\s\S]*?)<\/script>/;
-            const match = liquidInput.match(scriptRegex);
+            let contentToParse = liquidInput;
+            const scriptMatch = liquidInput.match(scriptRegex);
             
-            if (match && match[1]) {
-                const jsonString = match[1].trim()
-                    // Attempt to clean up Liquid syntax remnants
-                    .replace(/{{\s*product_json\s*}}/g, '') 
-                    .trim();
+            if (scriptMatch && scriptMatch[1]) {
+                contentToParse = scriptMatch[1];
+            }
 
-                try {
-                    const jsonObj = JSON.parse(jsonString);
-                    setJsonOutput(JSON.stringify(jsonObj, null, 2));
-                } catch (e) {
-                     // Try to find JSON within the string
-                    const jsonMatch = jsonString.match(/({[\s\S]*})/);
-                    if (jsonMatch && jsonMatch[1]) {
-                        const jsonObj = JSON.parse(jsonMatch[1]);
-                        setJsonOutput(JSON.stringify(jsonObj, null, 2));
-                    } else {
-                        throw e; // Re-throw if no JSON is found
-                    }
-                }
+            // Clean up common Liquid remnants and find the JSON
+            contentToParse = contentToParse.replace(/{{\s*.*?\s*}}/g, '').trim();
+            const jsonMatch = contentToParse.match(/({[\s\S]*})|(\[[\s\S]*\])/);
+
+            if (jsonMatch) {
+                const jsonString = jsonMatch[0];
+                const jsonObj = JSON.parse(jsonString);
+                setJsonOutput(JSON.stringify(jsonObj, null, 2));
             } else {
-                setError("Could not automatically find a JSON block. This tool works best with Liquid that serializes an object to JSON, for example, inside a `<script>` tag like `{{ product | json }}`.");
+                setError("Could not automatically find a JSON block. This tool works best with Liquid that serializes an object to JSON, for example, `{{ product | json }}`.");
             }
         } catch (e) {
-            setError('Invalid JSON found. Please ensure the Liquid output is valid JSON.');
+            setError('Invalid JSON found. Please ensure the Liquid output contains a valid JSON object or array.');
         }
     }, [liquidInput]);
 
@@ -61,12 +55,12 @@ export function LiquidToJsonConverter() {
             <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                        <Label htmlFor="liquid-input" className="text-lg font-semibold">Liquid Input</Label>
+                        <Label htmlFor="liquid-input" className="text-lg font-semibold">Liquid Output or Snippet</Label>
                         <Textarea
                             id="liquid-input"
                             value={liquidInput}
                             onChange={(e) => setLiquidInput(e.target.value)}
-                            placeholder="Paste your Liquid code here..."
+                            placeholder="Paste your Liquid code or rendered output here..."
                             rows={12}
                             className="font-mono text-sm"
                         />
@@ -100,16 +94,16 @@ export function LiquidToJsonConverter() {
                     <CardHeader>
                         <CardTitle>How does this work?</CardTitle>
                         <CardDescription>
-                            This tool is designed for a common Shopify development pattern: serializing a Liquid object into a JSON object within a {'<script>'} tag to pass data to JavaScript.
+                            This tool is designed for a common Shopify development pattern: serializing a Liquid object into a JSON object to pass data to JavaScript.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <p className="text-sm text-muted-foreground">
-                            It works best when you provide a Liquid snippet that contains a JSON object. For example, pasting the content of a `product.json.liquid` template or a section that renders product data into a script tag.
+                            It works best when you provide the rendered HTML output from a Liquid snippet that contains a JSON object. For example, pasting the raw output of a page containing `{{'{'}}{'{'} product | json {'}'}{'}'}`.
                         </p>
                         <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto mt-4">
                             <code>
-{`<!-- Example: -->
+{`<!-- Example: Paste the rendered output of this Liquid code -->
 <script type="application/json">
     {{ product | json }}
 </script>`}

@@ -2,11 +2,13 @@
 import type { Metadata } from 'next';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { MetaTagGenerator } from '@/components/tools/MetaTagGenerator';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
 
 export const metadata: Metadata = {
-    title: 'Shopify Meta Tag Generator | Tools',
-    description: 'Generate SEO-friendly meta tags (title, description, Open Graph, Twitter cards) for your Shopify products, pages, and articles to improve search visibility.',
-    keywords: ['Shopify meta tags', 'meta tag generator', 'Shopify SEO', 'Open Graph generator', 'Twitter card generator'],
+    title: 'Free Shopify Meta Tag Generator | SEO & Social Media',
+    description: 'Generate SEO-friendly meta tags (title, description), Open Graph tags for Facebook, and Twitter cards for your Shopify products, pages, and articles to improve search visibility and social sharing.',
+    keywords: ['Shopify meta tags', 'meta tag generator', 'Shopify SEO', 'Open Graph generator', 'Twitter card generator', 'social media SEO'],
 };
 
 export default function MetaTagGeneratorPage() {
@@ -24,10 +26,34 @@ export default function MetaTagGeneratorPage() {
               <div className="text-center mb-12">
                   <h1 className="text-4xl md:text-5xl font-headline font-bold">Shopify Meta Tag Generator</h1>
                   <p className="text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                      Create SEO-friendly meta tags for your Shopify store content.
+                      Create perfect, SEO-friendly meta tags for your Shopify store content to boost search rankings and social media appearance.
                   </p>
               </div>
               <MetaTagGenerator />
+
+               <div className="prose dark:prose-invert max-w-none mx-auto mt-12">
+                    <Card className="mt-8">
+                        <CardHeader>
+                            <CardTitle>What Are Meta Tags and Why Are They Important?</CardTitle>
+                        </CardHeader>
+                        <CardContent className="prose dark:prose-invert max-w-none">
+                            <p>Meta tags are snippets of text that describe a page's content; they don't appear on the page itself, but only in the page's source code. They are essential for Search Engine Optimization (SEO) and for controlling how your content appears when shared on social media.</p>
+                            
+                            <h3>Key Meta Tags Covered by This Tool:</h3>
+                            <ul>
+                                <li><strong>Title Tag:</strong> The main title displayed in search engine results and browser tabs. It's a critical factor for search rankings.</li>
+                                <li><strong>Meta Description:</strong> A brief summary of the page's content shown in search results. A compelling description encourages users to click on your link.</li>
+                                <li><strong>Open Graph Tags (og:*):</strong> Used by Facebook, LinkedIn, and other social platforms to display rich previews of your content, including a title, description, and image.</li>
+                                <li><strong>Twitter Card Tags (twitter:*):</strong> Similar to Open Graph, but specifically for Twitter. They allow you to attach photos and videos to Tweets that link to your content.</li>
+                            </ul>
+
+                             <h3>How This Improves Your Shopify SEO</h3>
+                            <p>
+                                By providing search engines and social platforms with clear, structured information, you increase your chances of ranking higher and gaining more traffic. Well-crafted meta tags lead to better click-through rates from search results and more engaging social media shares, driving more potential customers to your store.
+                            </p>
+                        </CardContent>
+                    </Card>
+              </div>
           </div>
       </div>
     </>
