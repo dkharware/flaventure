@@ -193,11 +193,11 @@ export default function Header() {
                      </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href="/shopify-templates-boilerplates" passHref legacyBehavior={false}>
-                        <NavigationMenuLink asChild>
-                             <a className={navigationMenuTriggerStyle()}>Templates</a>
-                        </NavigationMenuLink>
+                 <NavigationMenuItem>
+                    <Link href="/shopify-templates-boilerplates" legacyBehavior passHref>
+                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                        Templates
+                      </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                  <NavigationMenuItem>
@@ -233,16 +233,16 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/about" passHref legacyBehavior={false}>
-                        <NavigationMenuLink asChild>
-                            <a className={navigationMenuTriggerStyle()}>About</a>
+                    <Link href="/about" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            About
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/contact" passHref legacyBehavior={false}>
-                        <NavigationMenuLink asChild>
-                            <a className={navigationMenuTriggerStyle()}>Contact</a>
+                    <Link href="/contact" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Contact
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
@@ -348,5 +348,7 @@ export default function Header() {
     </header>
   );
 }
+
+    
 
     
