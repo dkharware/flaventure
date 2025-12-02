@@ -30,22 +30,25 @@ export function LiquidToJsonConverter() {
             const match = liquidInput.match(scriptRegex);
             
             if (match && match[1]) {
-                const jsonString = match[1].trim();
-                const jsonObj = JSON.parse(jsonString);
-                setJsonOutput(JSON.stringify(jsonObj, null, 2));
-            } else {
-                // A more basic attempt to clean and parse
-                let cleaned = liquidInput
-                    .replace(/{%-?|-%}/g, '') // Remove liquid tags
-                    .replace(/\| json/g, '')
-                    .replace(/assign \w+ =/g, '')
+                const jsonString = match[1].trim()
+                    // Attempt to clean up Liquid syntax remnants
+                    .replace(/{{\s*product_json\s*}}/g, '') 
                     .trim();
 
-                // Handle cases like `{{ product | json }}`
-                if (cleaned.startsWith('{{') && cleaned.endsWith('}}')) {
-                    cleaned = cleaned.substring(2, cleaned.length - 2).trim();
+                try {
+                    const jsonObj = JSON.parse(jsonString);
+                    setJsonOutput(JSON.stringify(jsonObj, null, 2));
+                } catch (e) {
+                     // Try to find JSON within the string
+                    const jsonMatch = jsonString.match(/({[\s\S]*})/);
+                    if (jsonMatch && jsonMatch[1]) {
+                        const jsonObj = JSON.parse(jsonMatch[1]);
+                        setJsonOutput(JSON.stringify(jsonObj, null, 2));
+                    } else {
+                        throw e; // Re-throw if no JSON is found
+                    }
                 }
-
+            } else {
                 setError("Could not automatically find a JSON block. This tool works best with Liquid that serializes an object to JSON, for example, inside a `<script>` tag like `{{ product | json }}`.");
             }
         } catch (e) {
@@ -97,7 +100,7 @@ export function LiquidToJsonConverter() {
                     <CardHeader>
                         <CardTitle>How does this work?</CardTitle>
                         <CardDescription>
-                            This tool is designed for a common Shopify development pattern: serializing a Liquid object into a JSON object within a `<script>` tag to pass data to JavaScript.
+                            This tool is designed for a common Shopify development pattern: serializing a Liquid object into a JSON object within a {'<script>'} tag to pass data to JavaScript.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
