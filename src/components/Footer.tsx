@@ -23,7 +23,15 @@ export default function Footer() {
               <li><Link href="/about" className="text-sm hover:text-primary transition-colors">About Us</Link></li>
               <li><Link href="/contact" className="text-sm hover:text-primary transition-colors">Contact</Link></li>
               <li><Link href="/blog" className="text-sm hover:text-primary transition-colors">Blog</Link></li>
-              <li><Link href="/blog?tag=Shopify" className="text-sm hover:text-primary transition-colors">Shopify</Link></li>
+            </ul>
+          </div>
+
+           <div>
+            <h3 className="font-bold text-foreground mb-4">Resources</h3>
+            <ul className="space-y-2">
+              <li><Link href="/shopify-liquid-cheatsheet" className="text-sm hover:text-primary transition-colors">Liquid Cheatsheet</Link></li>
+              <li><Link href="/tutorials/shopify-api-guide" className="text-sm hover:text-primary transition-colors">API Guide</Link></li>
+              <li><Link href="/blog?tag=Shopify" className="text-sm hover:text-primary transition-colors">Shopify Articles</Link></li>
             </ul>
           </div>
 
@@ -35,14 +43,6 @@ export default function Footer() {
               <li><Link href="/site-map" className="text-sm hover:text-primary transition-colors">Sitemap</Link></li>
             </ul>
           </div>
-
-          <div>
-            <h3 className="font-bold text-foreground mb-4">Connect With Us</h3>
-            <div className="flex space-x-4">
-              <Link href="https://github.com/dkharware" aria-label="GitHub" className="hover:text-primary transition-all hover:-translate-y-1 block"><Github size={20} /></Link>
-              <Link href="https://www.linkedin.com/in/deepak-singh-kharware/" aria-label="LinkedIn" className="hover:text-primary transition-all hover:-translate-y-1 block"><Linkedin size={20} /></Link>
-            </div>
-          </div>
         </div>
         <div className="mt-8 pt-8 border-t border-border/50 text-center text-sm">
           <p>&copy; {new Date().getFullYear()} storedevguide. All rights reserved.</p>
@@ -51,3 +51,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+    

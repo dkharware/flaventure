@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home, Wrench } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -37,8 +37,6 @@ import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { Input } from './ui/input';
 import { LiveSearch } from './LiveSearch';
-import { Separator } from './ui/separator';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 const shopifyComponents = [
     {
@@ -80,6 +78,19 @@ const shopifyComponents = [
         title: "Polaris",
         href: "/blog?query=polaris",
         description: "Use Shopify's design system for your apps.",
+    },
+];
+
+const resourceComponents = [
+    {
+      title: "Shopify Liquid Cheatsheet",
+      href: "/shopify-liquid-cheatsheet",
+      description: "Your complete quick reference guide for Shopify Liquid.",
+    },
+    {
+      title: "Shopify API Guide",
+      href: "/tutorials/shopify-api-guide",
+      description: "A comprehensive guide to using the Storefront and Admin APIs.",
     },
 ];
 
@@ -213,6 +224,22 @@ export default function Header() {
                      </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
+                 <NavigationMenuItem>
+                  <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px]">
+                      {resourceComponents.map((component) => (
+                        <ListItem
+                          key={component.title}
+                          title={component.title}
+                          href={component.href}
+                        >
+                          {component.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
                     <Link href="/about">
@@ -271,12 +298,6 @@ export default function Header() {
                 </div>
             </DialogContent>
            </Dialog>
-           
-           <Button asChild>
-                <Link href="/shopify-liquid-cheatsheet">
-                    Liquid Cheatsheet
-                </Link>
-            </Button>
         </div>
 
         <div className="md:hidden flex-shrink-0">
@@ -288,11 +309,11 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent className="overflow-y-auto w-full max-w-xs">
               <SheetHeader>
-                 <Link href="/" className="flex items-center gap-2 mb-4" aria-label="shopifydevguide Home">
+                 <Link href="/" className="flex items-center gap-2 mb-4" aria-label="storedevguide Home">
                     <Logo width={150} height={40}/>
                 </Link>
                 <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
-                <SheetDescription className="sr-only">A list of navigation links for the shopifydevguide website.</SheetDescription>
+                <SheetDescription className="sr-only">A list of navigation links for the storedevguide website.</SheetDescription>
               </SheetHeader>
               <div className="mt-4">
                   <form onSubmit={handleSearchSubmit} className="relative w-full">
@@ -314,7 +335,8 @@ export default function Header() {
                <div className="flex flex-col space-y-1 mt-4 border-t pt-2">
                   <Link href="/" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Home className="mr-2 h-4 w-4" /> Home</Link>
                   <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
-                  <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Cheatsheet</Link>
+                  <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Liquid Cheatsheet</Link>
+                  <Link href="/tutorials/shopify-api-guide" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Wrench className="mr-2 h-4 w-4" /> API Guide</Link>
                   <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
                   <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
               </div>
@@ -326,3 +348,5 @@ export default function Header() {
     </header>
   );
 }
+
+    
