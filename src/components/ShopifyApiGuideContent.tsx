@@ -11,6 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
+import Link from "next/link";
 
 const apiGuideData = {
     storefrontApi: [
@@ -80,10 +81,19 @@ const apiGuideData = {
             code: `// Storefront: Only GraphQL queries.
 // Admin: GraphQL queries/mutations OR REST requests.`
         }
+    ],
+    tools: [
+        {
+            title: 'Shopify GraphiQL App',
+            description: "Explore the Shopify Admin and Storefront APIs interactively using the official GraphiQL app. It's the best way to test queries, discover available data, and get familiar with the latest API versions directly in your store.",
+            code: ``,
+            isLink: true,
+            link: "https://shopify.dev/apps/tools/graphiql-app"
+        }
     ]
 };
 
-const GuideCard = ({ title, description, code }: { title: string, description: string, code: string }) => {
+const GuideCard = ({ title, description, code, isLink, link }: { title: string, description: string, code: string, isLink?: boolean, link?: string }) => {
     return (
         <Card className="flex flex-col">
             <CardContent className="p-0">
@@ -94,11 +104,17 @@ const GuideCard = ({ title, description, code }: { title: string, description: s
                         </AccordionTrigger>
                         <AccordionContent className="px-4 pb-4">
                             <p className="text-sm text-muted-foreground mb-4">{description}</p>
-                            <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto">
-                                <code>
-                                    {code}
-                                </code>
-                            </pre>
+                            {isLink && link ? (
+                                <Link href={link} target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
+                                    Install the Shopify GraphiQL App
+                                </Link>
+                            ) : (
+                                <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto">
+                                    <code>
+                                        {code}
+                                    </code>
+                                </pre>
+                            )}
                         </AccordionContent>
                     </AccordionItem>
                 </Accordion>
@@ -127,6 +143,7 @@ export function ShopifyApiGuideContent() {
             storefrontApi: filterItems(apiGuideData.storefrontApi),
             adminApi: filterItems(apiGuideData.adminApi),
             comparison: filterItems(apiGuideData.comparison),
+            tools: filterItems(apiGuideData.tools),
         };
     }, [searchTerm]);
 
@@ -166,6 +183,15 @@ export function ShopifyApiGuideContent() {
                 <h2 className="text-2xl font-bold font-headline mb-6">Comparison</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
                     {filteredData.comparison.map((item) => <GuideCard key={item.title} {...item} />)}
+                </div>
+            </section>
+        )}
+
+        {filteredData.tools.length > 0 && (
+            <section id="tools" className="mb-12">
+                <h2 className="text-2xl font-bold font-headline mb-6">Tools & Resources</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+                    {filteredData.tools.map((item: any) => <GuideCard key={item.title} {...item} />)}
                 </div>
             </section>
         )}
