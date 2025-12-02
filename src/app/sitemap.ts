@@ -20,7 +20,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/tools/liquid-to-json-converter',
     '/tools/product-schema-generator',
     '/shopify-templates-boilerplates',
-    '/nextjs-shopify-starter-template'
+    '/nextjs-shopify-starter-template',
+    '/shopify-theme-starter-template',
+    '/shopify-liquid-snippets-pack',
+    '/shopify-hydrogen-starter',
+    '/shopify-tailwind-theme-template'
   ].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
