@@ -5,9 +5,10 @@ interface LogoProps {
   width: number;
   height: number;
   className?: string;
+  priority?: boolean;
 }
 
-export const Logo = ({ width, height, className }: LogoProps) => {
+export const Logo = ({ width, height, className, priority = false }: LogoProps) => {
     return (
         <Image 
             src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/storedevguide.com.webp" 
@@ -15,7 +16,7 @@ export const Logo = ({ width, height, className }: LogoProps) => {
             width={width} 
             height={height}
             className={`object-contain ${className || ''}`}
-            priority
+            priority={priority}
         />
     );
 };

@@ -115,10 +115,10 @@ export default function Header() {
         <div className="flex-shrink-0">
           <Link href="/" className="flex items-center gap-2" aria-label="shopifydevguide Home">
             <div className="md:hidden">
-              <Logo width={150} height={40} />
+              <Logo width={150} height={40} priority />
             </div>
             <div className="hidden md:block">
-              <Logo width={136} height={51} />
+              <Logo width={136} height={51} priority />
             </div>
           </Link>
         </div>
