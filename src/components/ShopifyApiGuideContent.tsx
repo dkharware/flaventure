@@ -92,7 +92,7 @@ const apiGuideData = {
             description: "Explore the Shopify Admin and Storefront APIs interactively using the official GraphiQL app. It's the best way to test queries, discover available data, and get familiar with the latest API versions directly in your store.",
             code: ``,
             isLink: true,
-            link: "https://shopify.dev/apps/tools/graphiql-app"
+            link: "https://shopify-graphiql-app.shopifycloud.com/login"
         }
     ]
 };
