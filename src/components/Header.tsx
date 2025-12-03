@@ -113,7 +113,7 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSearchSubmit = (event: FormEvent<HTMLFormEvent>) => {
+  const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (searchQuery.trim()) {
         router.push(`/blog?query=${encodeURIComponent(searchQuery.trim())}`);
@@ -194,11 +194,11 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/shopify-templates-boilerplates" legacyBehavior={false} passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink asChild>
+                    <Link href="/shopify-templates-boilerplates" className={navigationMenuTriggerStyle()}>
                       Templates
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                  <NavigationMenuItem>
                   <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
@@ -233,18 +233,18 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/about" legacyBehavior={false} passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                   <NavigationMenuLink asChild>
+                    <Link href="/about" className={navigationMenuTriggerStyle()}>
                       About
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/contact" legacyBehavior={false} passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink asChild>
+                    <Link href="/contact" className={navigationMenuTriggerStyle()}>
                       Contact
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
