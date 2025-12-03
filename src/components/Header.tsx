@@ -194,7 +194,7 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/shopify-templates-boilerplates" passHref legacyBehavior>
+                    <Link href="/shopify-templates-boilerplates" legacyBehavior passHref>
                       <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                         Templates
                       </NavigationMenuLink>
@@ -233,14 +233,14 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/about" passHref legacyBehavior>
+                    <Link href="/about" legacyBehavior passHref>
                       <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                         About
                       </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/contact" passHref legacyBehavior>
+                    <Link href="/contact" legacyBehavior passHref>
                       <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                         Contact
                       </NavigationMenuLink>
@@ -348,5 +348,7 @@ export default function Header() {
     </header>
   );
 }
+
+    
 
     
