@@ -194,7 +194,7 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/shopify-templates-boilerplates" legacyBehavior={false} passHref>
+                    <Link href="/shopify-templates-boilerplates" legacyBehavior passHref>
                       <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                         Templates
                       </NavigationMenuLink>
@@ -233,14 +233,14 @@ export default function Header() {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/about" legacyBehavior={false} passHref>
+                    <Link href="/about" legacyBehavior passHref>
                       <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                         About
                       </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/contact" legacyBehavior={false} passHref>
+                    <Link href="/contact" legacyBehavior passHref>
                       <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                         Contact
                       </NavigationMenuLink>
@@ -325,20 +325,40 @@ export default function Header() {
               </div>
               
                <div className="flex flex-col space-y-1 mt-4 border-t pt-2">
-                  <Link href="/" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start")}><Home className="mr-2 h-4 w-4" /> Home</a></Link>
-                  <Link href="/blog" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</a></Link>
-                  <Link href="/shopify-templates-boilerplates" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start")}><LayoutTemplate className="mr-2 h-4 w-4" /> Templates</a></Link>
-                  <Link href="/shopify-liquid-cheatsheet" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Liquid Cheatsheet</a></Link>
-                  <Link href="/tutorials/shopify-api-guide" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start")}><Wrench className="mr-2 h-4 w-4" /> API Guide</a></Link>
+                  <NavigationMenuLink asChild>
+                    <Link href="/" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Home className="mr-2 h-4 w-4" /> Home</Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link href="/shopify-templates-boilerplates" className={cn(navigationMenuTriggerStyle(), "justify-start")}><LayoutTemplate className="mr-2 h-4 w-4" /> Templates</Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Liquid Cheatsheet</Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link href="/tutorials/shopify-api-guide" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Wrench className="mr-2 h-4 w-4" /> API Guide</Link>
+                  </NavigationMenuLink>
                   
                   <p className="px-4 py-2 text-sm font-semibold text-muted-foreground">Tools</p>
-                  <Link href="/tools/meta-tag-generator" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><DraftingCompass className="mr-2 h-4 w-4" /> Meta Tag Generator</a></Link>
-                  <Link href="/tools/liquid-to-json-converter" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><FileJson className="mr-2 h-4 w-4" /> Liquid to JSON</a></Link>
-                  <Link href="/tools/product-schema-generator" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><Hammer className="mr-2 h-4 w-4" /> Product Schema</a></Link>
+                  <NavigationMenuLink asChild>
+                    <Link href="/tools/meta-tag-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><DraftingCompass className="mr-2 h-4 w-4" /> Meta Tag Generator</Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link href="/tools/liquid-to-json-converter" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><FileJson className="mr-2 h-4 w-4" /> Liquid to JSON</Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link href="/tools/product-schema-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><Hammer className="mr-2 h-4 w-4" /> Product Schema</Link>
+                  </NavigationMenuLink>
 
                   <p className="px-4 py-2 text-sm font-semibold text-muted-foreground">Company</p>
-                  <Link href="/about" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</a></Link>
-                  <Link href="/contact" passHref legacyBehavior={false}><a className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</a></Link>
+                   <NavigationMenuLink asChild>
+                    <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
+                   </NavigationMenuLink>
+                   <NavigationMenuLink asChild>
+                    <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
+                   </NavigationMenuLink>
               </div>
 
             </SheetContent>
@@ -348,5 +368,3 @@ export default function Header() {
     </header>
   );
 }
-
-    
