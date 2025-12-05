@@ -1,7 +1,28 @@
 
 import Link from 'next/link';
-import { Github, Twitter, Linkedin } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import { Logo } from './Logo';
+
+const QuoraIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M14.5 12.5a5 5 0 0 1-5 5A5 5 0 0 1 5 13a5 5 0 0 1 5-5h1.5" />
+    <path d="M14.5 12.5a2.5 2.5 0 0 1 0-5h4a2.5 2.5 0 0 1 0 5h-4Z" />
+    <path d="m19 12.5 2 4.5" />
+    <path d="m9.5 7.5-1 4" />
+  </svg>
+);
+
 
 export default function Footer() {
   return (
@@ -18,6 +39,9 @@ export default function Footer() {
              <div className="flex space-x-4">
               <a href="https://www.linkedin.com/company/storedevguide/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-primary transition-colors">
                 <Linkedin className="h-5 w-5" />
+              </a>
+              <a href="https://www.quora.com/profile/StoreDevGuide" target="_blank" rel="noopener noreferrer" aria-label="Quora" className="hover:text-primary transition-colors">
+                <QuoraIcon className="h-5 w-5" />
               </a>
             </div>
           </div>
