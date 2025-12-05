@@ -23,6 +23,16 @@ const QuoraIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const ShopifyIcon = (props: React.SVGProps<SVGSVGElement>) => (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M19.33 5.432a2.394 2.394 0 00-2.3-2.16H6.97c-1.28.005-2.313.9-2.33 2.16l-.33 13.065a.65.65 0 00.65.663h14.08a.65.65 0 00.65-.663l-.36-13.065zM9.03 14.868c-.03.22-.18.39-.4.43h-.04a.43.43 0 01-.43-.47l.45-6.918a.42.42 0 01.42-.4h.04c.22.04.38.21.4.43l-.44 6.928zm3.62-4.146c-1.34 0-2.43 1-2.43 2.227 0 1.226 1.09 2.226 2.43 2.226s2.43-1 2.43-2.226c0-1.226-1.09-2.227-2.43-2.227zm5.61 4.146c-.03.22-.18.39-.4.43h-.04a.43.43 0 01-.43-.47l.45-6.918a.42.42 0 01.42-.4h.04c.22.04.38.21.4.43l-.44 6.928z" />
+    </svg>
+);
 
 export default function Footer() {
   return (
@@ -42,6 +52,9 @@ export default function Footer() {
               </a>
               <a href="https://www.quora.com/profile/StoreDevGuide" target="_blank" rel="noopener noreferrer" aria-label="Quora" className="hover:text-primary transition-colors">
                 <QuoraIcon className="h-5 w-5" />
+              </a>
+              <a href="https://community.shopify.com/u/dkharware/" target="_blank" rel="noopener noreferrer" aria-label="Shopify Community" className="hover:text-primary transition-colors">
+                <ShopifyIcon className="h-5 w-5" />
               </a>
             </div>
           </div>
