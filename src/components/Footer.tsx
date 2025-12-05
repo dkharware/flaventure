@@ -15,6 +15,11 @@ export default function Footer() {
             <p className="text-sm">
               Explore in-depth articles on Shopify themes, headless commerce, and e-commerce development.
             </p>
+             <div className="flex space-x-4">
+              <a href="https://www.linkedin.com/company/storedevguide/?viewAsMember=true" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-primary transition-colors">
+                <Linkedin className="h-5 w-5" />
+              </a>
+            </div>
           </div>
           
           <div>
@@ -52,5 +57,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-    
