@@ -29,20 +29,6 @@ export default function Footer() {
             <p className="text-sm">
               Explore in-depth articles on Shopify themes, headless commerce, and e-commerce development.
             </p>
-             <div className="flex flex-wrap gap-x-4 gap-y-2">
-                {socialLinks.map(link => (
-                     <a 
-                        key={link.name}
-                        href={link.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        aria-label={link.name} 
-                        className="text-sm hover:text-primary transition-colors font-medium"
-                    >
-                        {link.name}
-                    </a>
-                ))}
-            </div>
           </div>
           
           <div>
@@ -73,8 +59,22 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t border-border/50 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} storedevguide. All rights reserved.</p>
+        <div className="mt-8 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center text-sm">
+            <p className="text-muted-foreground mb-4 md:mb-0">&copy; {new Date().getFullYear()} storedevguide. All rights reserved.</p>
+             <div className="flex flex-wrap gap-x-4 gap-y-2">
+                {socialLinks.map(link => (
+                     <a 
+                        key={link.name}
+                        href={link.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        aria-label={link.name} 
+                        className="text-sm hover:text-primary transition-colors font-medium"
+                    >
+                        {link.name}
+                    </a>
+                ))}
+            </div>
         </div>
       </div>
     </footer>
