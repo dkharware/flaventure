@@ -1,13 +1,14 @@
 
+'use client';
 
-import { getArticleByHandle, getArticles, getAllTags, getRelatedArticles } from '@/lib/shopify';
+import { getArticleByHandle, getRelatedArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
@@ -26,48 +27,49 @@ import { getSiteUrl } from '@/lib/utils';
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
-
-export async function generateStaticParams() {
-  const { articles } = await getArticles(100); 
-  return articles.map((article: any) => ({
-    handle: article.handle,
-  }));
-}
-
-export async function generateMetadata({ params }: { params: { handle: string } }): Promise<Metadata> {
-  const article = await getArticleByHandle(params.handle);
-
-  if (!article) {
-    return {
-      title: 'Article Not Found',
-    };
-  }
-
-  return {
-    title: article.title,
-    description: article.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160),
-    openGraph: {
-        title: article.title,
-        description: article.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160),
-        images: article.image ? [
-            {
-                url: article.image.url,
-                alt: article.image.altText || article.title,
-            }
-        ] : [],
+async function fetchArticleData(handle: string) {
+    const article = await getArticleByHandle(handle);
+    if (!article) {
+        return { article: null, relatedArticles: [] };
     }
-  };
+    const relatedArticles = await getRelatedArticles(article.handle, article.tags);
+    return { article, relatedArticles };
 }
 
-export default async function ArticlePage({ params }: { params: { handle: string } }) {
-  const article = await getArticleByHandle(params.handle);
-  
-  if (!article) {
-    notFound();
+export default function ArticlePage({ params }: { params: { handle: string } }) {
+  const [articleData, setArticleData] = useState<{ article: any, relatedArticles: any[] } | null>(null);
+
+  useEffect(() => {
+    fetchArticleData(params.handle).then(data => {
+        if (!data.article) {
+            notFound();
+        }
+        setArticleData(data);
+    });
+  }, [params.handle]);
+
+  if (!articleData) {
+    return (
+        <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <aside className="lg:col-span-3 hidden lg:block">
+                    <Skeleton className="h-48 w-full" />
+                </aside>
+                <main className="lg:col-span-6 space-y-8">
+                    <Skeleton className="h-8 w-1/2 mx-auto" />
+                    <Skeleton className="h-96 w-full" />
+                    <Skeleton className="h-64 w-full" />
+                </main>
+                <aside className="lg:col-span-3 hidden lg:block">
+                    <Skeleton className="h-64 w-full" />
+                </aside>
+            </div>
+        </div>
+    );
   }
 
-  const relatedArticles = await getRelatedArticles(article.handle, article.tags);
-
+  const { article, relatedArticles } = articleData;
+  
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     { label: 'Blog', href: '/blog' },
@@ -75,7 +77,6 @@ export default async function ArticlePage({ params }: { params: { handle: string
   ];
   
   const pdfUrl = article.pdf?.value;
-
   const siteUrl = getSiteUrl();
   const fullUrl = `${siteUrl}/blog/${article.handle}`;
 
@@ -89,7 +90,7 @@ export default async function ArticlePage({ params }: { params: { handle: string
     "headline": article.title,
     "image": article.image ? [article.image.url] : [],
     "datePublished": article.publishedAt,
-    "dateModified": article.publishedAt, // Assuming no separate modified date
+    "dateModified": article.publishedAt,
     "author": {
       "@type": "Person",
       "name": article.authorV2.name
@@ -271,4 +272,36 @@ export default async function ArticlePage({ params }: { params: { handle: string
     </div>
     </>
   );
+}
+
+export async function generateStaticParams() {
+  const { articles } = await getArticles(100); 
+  return articles.map((article: any) => ({
+    handle: article.handle,
+  }));
+}
+
+export async function generateMetadata({ params }: { params: { handle: string } }): Promise<Metadata> {
+  const article = await getArticleByHandle(params.handle);
+
+  if (!article) {
+    return {
+      title: 'Article Not Found',
+    };
+  }
+
+  return {
+    title: article.title,
+    description: article.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160),
+    openGraph: {
+        title: article.title,
+        description: article.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160),
+        images: article.image ? [
+            {
+                url: article.image.url,
+                alt: article.image.altText || article.title,
+            }
+        ] : [],
+    }
+  };
 }
