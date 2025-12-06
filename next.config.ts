@@ -38,11 +38,9 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: false,
-  experimental: {
-    allowedDevOrigins: [
-        "https://6000-firebase-shopifydevguide-1764137754571.cluster-ikxjzjhlifcwuroomfkjrx437g.cloudworkstations.dev"
-    ]
-  }
+  allowedDevOrigins: [
+      "https://6000-firebase-shopifydevguide-1764137754571.cluster-ikxjzjhlifcwuroomfkjrx437g.cloudworkstations.dev"
+  ]
 };
 
 export default nextConfig;
