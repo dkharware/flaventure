@@ -8,6 +8,7 @@ import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 
 interface Article {
     id: string;
@@ -25,6 +26,23 @@ interface Article {
     tags: string[];
 }
 
+const ClientFormattedDate = ({ dateString, formatString }: { dateString: string, formatString: string }) => {
+    const [formattedDate, setFormattedDate] = useState('');
+
+    useEffect(() => {
+        setFormattedDate(format(new Date(dateString), formatString));
+    }, [dateString, formatString]);
+
+    if (!formattedDate) {
+        return null;
+    }
+
+    return (
+        <p className="text-xs text-muted-foreground">{formattedDate}</p>
+    );
+};
+
+
 const AuthorInfo = ({ article, className }: { article: Article, className?: string }) => (
     <div className={cn("flex items-center gap-2", className)}>
         <Avatar className="h-6 w-6">
@@ -33,7 +51,7 @@ const AuthorInfo = ({ article, className }: { article: Article, className?: stri
         </Avatar>
         <p className="font-semibold text-xs text-muted-foreground">{article.authorV2.name}</p>
         <span className="text-muted-foreground text-xs">•</span>
-        <p className="text-xs text-muted-foreground">{format(new Date(article.publishedAt), 'dd MMM, yyyy')}</p>
+        <ClientFormattedDate dateString={article.publishedAt} formatString="dd MMM, yyyy" />
     </div>
 );
 
@@ -120,7 +138,7 @@ const ListItemCard = ({ article }: { article: Article }) => (
                         </Avatar>
                         <p className="font-semibold text-xs text-muted-foreground">{article.authorV2.name}</p>
                         <span className="text-muted-foreground text-xs">•</span>
-                        <p className="text-xs text-muted-foreground">{format(new Date(article.publishedAt), 'dd.MM.yyyy')}</p>
+                        <ClientFormattedDate dateString={article.publishedAt} formatString="dd.MM.yyyy" />
                     </div>
                 </div>
             </div>
