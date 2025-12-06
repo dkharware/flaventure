@@ -25,13 +25,7 @@ import { getSiteUrl } from '@/lib/utils';
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
-interface ArticlePageProps {
-    params: {
-        handle: string;
-    };
-}
-
-export default async function ArticlePage({ params }: ArticlePageProps) {
+export default async function ArticlePage({ params }: { params: { handle: string } }) {
   const article = await getArticleByHandle(params.handle);
 
   if (!article) {
@@ -275,3 +269,5 @@ export async function generateMetadata({ params }: { params: { handle: string } 
     }
   };
 }
+
+    
