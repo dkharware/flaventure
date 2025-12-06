@@ -1,6 +1,4 @@
 
-'use client';
-
 import { getArticleByHandle, getRelatedArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -8,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { Suspense, lazy } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
@@ -27,48 +25,20 @@ import { getSiteUrl } from '@/lib/utils';
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
-async function fetchArticleData(handle: string) {
-    const article = await getArticleByHandle(handle);
-    if (!article) {
-        return { article: null, relatedArticles: [] };
-    }
-    const relatedArticles = await getRelatedArticles(article.handle, article.tags);
-    return { article, relatedArticles };
+interface ArticlePageProps {
+  params: {
+    handle: string;
+  };
 }
 
-export default function ArticlePage({ params }: { params: { handle: string } }) {
-  const [articleData, setArticleData] = useState<{ article: any, relatedArticles: any[] } | null>(null);
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  const article = await getArticleByHandle(params.handle);
 
-  useEffect(() => {
-    fetchArticleData(params.handle).then(data => {
-        if (!data.article) {
-            notFound();
-        }
-        setArticleData(data);
-    });
-  }, [params.handle]);
-
-  if (!articleData) {
-    return (
-        <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                <aside className="lg:col-span-3 hidden lg:block">
-                    <Skeleton className="h-48 w-full" />
-                </aside>
-                <main className="lg:col-span-6 space-y-8">
-                    <Skeleton className="h-8 w-1/2 mx-auto" />
-                    <Skeleton className="h-96 w-full" />
-                    <Skeleton className="h-64 w-full" />
-                </main>
-                <aside className="lg:col-span-3 hidden lg:block">
-                    <Skeleton className="h-64 w-full" />
-                </aside>
-            </div>
-        </div>
-    );
+  if (!article) {
+    notFound();
   }
-
-  const { article, relatedArticles } = articleData;
+  
+  const relatedArticles = await getRelatedArticles(article.handle, article.tags);
   
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
