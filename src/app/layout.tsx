@@ -130,6 +130,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${readexPro.variable}`}>
       <head>
+        <meta name="p:domain_verify" content="9e86368e858272577ac859ef29ea3e3b"/>
         <Script
             src="https://www.googletagmanager.com/gtag/js?id=G-0H420BHZNW"
             strategy="afterInteractive"
