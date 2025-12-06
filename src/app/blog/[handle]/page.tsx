@@ -25,7 +25,13 @@ import { getSiteUrl } from '@/lib/utils';
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
-export default async function ArticlePage({ params }: { params: { handle: string } }) {
+interface ArticlePageProps {
+    params: {
+        handle: string;
+    };
+}
+
+export default async function ArticlePage({ params }: ArticlePageProps) {
   const article = await getArticleByHandle(params.handle);
 
   if (!article) {
