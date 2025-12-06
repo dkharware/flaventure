@@ -21,11 +21,12 @@ import { LikeButton } from '@/components/LikeButton';
 import { Skeleton } from '@/components/ui/skeleton';
 import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
+import { NextPageProps } from '@/app/types';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
-export default async function ArticlePage({ params }: { params: { handle: string } }) {
+export default async function ArticlePage({ params }: NextPageProps<{ handle: string }>) {
   const article = await getArticleByHandle(params.handle);
 
   if (!article) {
@@ -245,7 +246,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { handle: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: NextPageProps<{ handle: string }>): Promise<Metadata> {
   const article = await getArticleByHandle(params.handle);
 
   if (!article) {
