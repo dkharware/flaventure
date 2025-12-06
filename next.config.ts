@@ -30,7 +30,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https',
+        protocol: 'https,"',
         hostname: '5lgivccarqkvddiv.public.blob.vercel-storage.com',
         port: '',
         pathname: '/**',
@@ -38,11 +38,6 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: false,
-  experimental: {
-    allowedDevOrigins: [
-      "https://6000-firebase-shopifydevguide-1764137754571.cluster-ikxjzjhlifcwuroomfkjrx437g.cloudworkstations.dev"
-    ]
-  }
 };
 
 export default nextConfig;
