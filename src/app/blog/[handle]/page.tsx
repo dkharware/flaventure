@@ -38,7 +38,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { handle: string } }): Promise<Metadata> {
   const article = await getArticleByHandle(params.handle);
 
   if (!article) {
