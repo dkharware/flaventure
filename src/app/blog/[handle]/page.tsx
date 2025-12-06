@@ -27,10 +27,6 @@ const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
 
-type ArticlePageProps = {
-  params: { handle: string };
-};
-
 export async function generateStaticParams() {
   const { articles } = await getArticles(100); 
   return articles.map((article: any) => ({
@@ -63,7 +59,7 @@ export async function generateMetadata({ params }: { params: { handle: string } 
   };
 }
 
-export default async function ArticlePage({ params }: ArticlePageProps) {
+export default async function ArticlePage({ params }: { params: { handle: string } }) {
   const article = await getArticleByHandle(params.handle);
   
   if (!article) {
