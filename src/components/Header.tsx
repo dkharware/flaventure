@@ -137,7 +137,7 @@ export default function Header() {
     <header className="h-[81px] flex items-center px-4 sm:px-6 md:px-10 bg-background/80 backdrop-blur-sm text-foreground border-b sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between gap-2 md:gap-4">
         <div className="flex-shrink-0">
-          <Link href="/" className="flex items-center gap-2" aria-label="storedevguide Home">
+          <Link href="/" className="flex items-center gap-2 p-2 rounded-md bg-white" aria-label="storedevguide Home">
             <div className="md:hidden">
               <Logo width={150} height={40} priority />
             </div>
