@@ -98,8 +98,8 @@ export function FaqClient({ faqData }: FaqClientProps) {
             </div>
             <div className="md:col-span-2 mt-4 md:mt-0">
                 <Accordion type="single" collapsible className="w-full" defaultValue={activeFaqs[0]?.question}>
-                    {activeFaqs.map((faq) => (
-                        <AccordionItem value={faq.question || faq._question || ''} key={faq.question || faq._question}>
+                    {activeFaqs.map((faq, index) => (
+                        <AccordionItem value={faq.question || faq._question || ''} key={`${activeCategory}-${index}`}>
                             <AccordionTrigger className="text-left">{faq.question || faq._question}</AccordionTrigger>
                             <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
                         </AccordionItem>
