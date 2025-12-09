@@ -1,5 +1,5 @@
 
-import { getArticleByHandle, getRelatedArticles } from '@/lib/shopify';
+import { getArticleByHandle, getRelatedArticles, getArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
