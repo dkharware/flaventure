@@ -77,17 +77,21 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   ];
 
   return (
-    <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
-        <Breadcrumbs items={breadcrumbItems} />
-        
-        <div className="my-8 text-center">
-          <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
-          <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>
-          <div className="mt-6 max-w-xl mx-auto">
-            <BlogSearch initialQuery={searchQuery} />
+    <>
+      <div className="w-full bg-muted/20 py-8">
+        <div className="container mx-auto px-3 md:px-6">
+          <Breadcrumbs items={breadcrumbItems} />
+          <div className="my-8 text-center">
+            <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
+            <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>
+            <div className="mt-6 max-w-xl mx-auto">
+              <BlogSearch initialQuery={searchQuery} />
+            </div>
           </div>
         </div>
+      </div>
 
+      <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
               <Suspense fallback={
@@ -191,5 +195,6 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </aside>
         </div>
     </div>
+    </>
   );
 }

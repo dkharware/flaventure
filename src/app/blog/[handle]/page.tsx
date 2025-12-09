@@ -93,8 +93,10 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <div className="container mx-auto px-3 md:px-6">
-          <Breadcrumbs items={breadcrumbItems} className="py-4" />
+      <div className="w-full bg-muted/20">
+        <div className="container mx-auto px-3 md:px-6">
+            <Breadcrumbs items={breadcrumbItems} className="py-4" />
+        </div>
       </div>
       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">

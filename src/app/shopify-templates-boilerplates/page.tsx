@@ -57,39 +57,45 @@ export default function TemplatesHubPage() {
     ];
 
     return (
-        <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
-            <Breadcrumbs items={breadcrumbItems} className="mb-8" />
-            <div className="text-center mb-12">
-                <h1 className="text-4xl md:text-5xl font-headline font-bold">Shopify Templates & Boilerplates</h1>
-                <p className="text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                   A hub for developers to download free, production-ready code templates—including Next.js starters, theme boilerplates, and Liquid snippets—to kickstart their next Shopify project.
-                </p>
+        <>
+            <div className="w-full bg-muted/20 py-8">
+                <div className="container mx-auto px-4 md:px-6">
+                    <Breadcrumbs items={breadcrumbItems} />
+                    <div className="text-center my-8">
+                        <h1 className="text-4xl md:text-5xl font-headline font-bold">Shopify Templates & Boilerplates</h1>
+                        <p className="text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
+                           A hub for developers to download free, production-ready code templates—including Next.js starters, theme boilerplates, and Liquid snippets—to kickstart their next Shopify project.
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {templates.map((template) => (
-                    <Card key={template.title} className="flex flex-col">
-                        <CardHeader>
-                            <CardTitle>{template.title}</CardTitle>
-                            <CardDescription>{template.description}</CardDescription>
-                        </CardHeader>
-                        <CardContent className="flex-grow flex flex-col justify-end">
-                             <div className="flex flex-wrap gap-2 mb-4">
-                                {template.tags.map(tag => (
-                                    <div key={tag} className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded-md">{tag}</div>
-                                ))}
-                            </div>
-                            <div className="flex gap-2 mt-auto">
-                                <Button asChild className="w-full">
-                                    <Link href={template.href}>
-                                        View Details <ArrowRight className="ml-2 h-4 w-4" />
-                                    </Link>
-                                </Button>
-                            </div>
-                        </CardContent>
-                    </Card>
-                ))}
+            <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {templates.map((template) => (
+                        <Card key={template.title} className="flex flex-col">
+                            <CardHeader>
+                                <CardTitle>{template.title}</CardTitle>
+                                <CardDescription>{template.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex-grow flex flex-col justify-end">
+                                 <div className="flex flex-wrap gap-2 mb-4">
+                                    {template.tags.map(tag => (
+                                        <div key={tag} className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded-md">{tag}</div>
+                                    ))}
+                                </div>
+                                <div className="flex gap-2 mt-auto">
+                                    <Button asChild className="w-full">
+                                        <Link href={template.href}>
+                                            View Details <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Link>
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
