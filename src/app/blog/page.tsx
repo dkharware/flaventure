@@ -8,11 +8,9 @@ import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
-import { SlidersHorizontal, Eye, User } from 'lucide-react';
+import { Eye, User } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArticleList, ArticleCardSkeleton } from '@/components/ArticleList';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -82,33 +80,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   return (
     <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <Breadcrumbs items={breadcrumbItems} />
-        <div className="lg:hidden fixed bottom-24 right-4 z-40">
-            <Sheet>
-                <SheetTrigger asChild>
-                    <Button size="icon" className="rounded-full shadow-lg">
-                        <SlidersHorizontal className="h-5 w-5" />
-                        <span className="sr-only">Open Filters</span>
-                    </Button>
-                </SheetTrigger>
-                <SheetContent className="hide-scrollbar">
-                  <SheetHeader>
-                    <SheetTitle className="sr-only">Blog Sidebar</SheetTitle>
-                    <SheetDescription className="sr-only">Contains blog search, tags, and recent posts.</SheetDescription>
-                  </SheetHeader>
-                  <ScrollArea className="h-full pr-6">
-                    <Suspense fallback={
-                       <div className="space-y-8">
-                          <Skeleton className="h-24 w-full" />
-                          <Skeleton className="h-48 w-full" />
-                          <Skeleton className="h-64 w-full" />
-                       </div>
-                    }>
-                        <BlogSidebar />
-                    </Suspense>
-                  </ScrollArea>
-                </SheetContent>
-            </Sheet>
-        </div>
+        
         <div className="relative overflow-hidden rounded-xl p-8 my-8 bg-background">
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-yellow-100/50 via-white to-pink-200/50 dark:from-yellow-900/10 dark:via-background dark:to-pink-900/10"></div>
@@ -147,6 +119,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                                     priority
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                     />
                                     <div className="absolute top-4 left-4 flex flex-wrap gap-2 z-10">
                                         {featuredArticle.tags?.slice(0, 2).map((tag: string) => (
@@ -190,7 +163,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                     </div>
                 ) : (
                     <div className="text-center py-16 border rounded-lg bg-muted/20">
-                        <h3 className="text-xl font-semibold">No Articles Found</h3>
+                        <h2 className="text-xl font-semibold">No Articles Found</h2>
                         <p className="text-muted-foreground mt-2">Please try another search or tag, or check back later.</p>
                         <Button asChild variant="outline" className="mt-4">
                             <Link href="/blog">Back to Blog</Link>
@@ -199,7 +172,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                 )}
               </Suspense>
             </main>
-            <aside className="lg:col-span-1 lg:mt-0 hidden lg:block">
+            <aside className="lg:col-span-1 lg:mt-0">
                  <Suspense fallback={
                     <div className="space-y-8">
                         <Skeleton className="h-24 w-full" />
@@ -207,7 +180,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                         <Skeleton className="h-64 w-full" />
                     </div>
                  }>
-                    <BlogSidebar />
+                    <div className="lg:sticky lg:top-28">
+                      <BlogSidebar />
+                    </div>
                 </Suspense>
             </aside>
         </div>

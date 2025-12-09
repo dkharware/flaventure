@@ -1,8 +1,5 @@
 
 import React, { Suspense, lazy } from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 import { getArticles } from '@/lib/shopify';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FeaturedArticles } from '@/components/FeaturedArticles';
@@ -17,6 +14,7 @@ export default async function Home() {
 
   return (
     <div className="w-full">
+      <h1 className="sr-only">storedevguide | Expert Shopify Blog: Themes, App Bridge, Storefront API & More</h1>
       <section className="container py-8 md:py-12">
         <Suspense fallback={<SectionSkeleton />}>
           <FeaturedArticles articles={articles} />
@@ -86,7 +84,7 @@ const SectionSkeleton = () => (
 
             {/* Right Side Skeleton */}
             <div className="lg:col-span-1 space-y-4">
-                <Skeleton className="h-8 w-1/3" />
+                <h2 className="font-bold font-headline text-lg"><Skeleton className="h-8 w-1/3" /></h2>
                 {Array.from({ length: 4 }).map((_, i) => (
                     <div key={i} className="flex gap-4 items-center border-b pb-4">
                         <Skeleton className="w-20 h-20 aspect-square rounded-lg flex-shrink-0" />

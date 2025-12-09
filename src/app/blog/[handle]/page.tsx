@@ -11,9 +11,7 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from '@/components/ui/sheet';
-import { SlidersHorizontal, Eye, Download, User } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { Eye, Download, User } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TableOfContents } from '@/components/TableOfContents';
 import { ShareButtons } from '@/components/ShareButtons';
@@ -100,33 +98,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
         </div>
       </div>
       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
-        <div className="lg:hidden fixed bottom-24 right-4 z-40">
-          <Sheet>
-              <SheetTrigger asChild>
-                  <Button size="icon" className="rounded-full shadow-lg" aria-label="Open Filters & Recent Posts">
-                      <SlidersHorizontal className="h-5 w-5" />
-                  </Button>
-              </SheetTrigger>
-              <SheetContent className="hide-scrollbar">
-                <SheetHeader>
-                  <SheetTitle className="sr-only">Blog Sidebar</SheetTitle>
-                  <SheetDescription className="sr-only">Contains blog search, tags, and recent posts.</SheetDescription>
-                </SheetHeader>
-                <ScrollArea className="h-full pr-6">
-                  <Suspense fallback={
-                     <div className="space-y-8">
-                        <Skeleton className="h-24 w-full" />
-                        <Skeleton className="h-48 w-full" />
-                        <Skeleton className="h-64 w-full" />
-                     </div>
-                  }>
-                      <BlogSidebar />
-                  </Suspense>
-                </ScrollArea>
-              </SheetContent>
-          </Sheet>
-        </div>
-       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <aside className="lg:col-span-3 hidden lg:block">
               <div className="sticky top-28">
                 <TableOfContents content={article.contentHtml} />
@@ -134,42 +106,30 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
             </aside>
             <main className="lg:col-span-6">
                 <article>
-                    <header className="mb-8 text-center pt-4">
-                        <div className="mb-4 flex flex-wrap gap-2 justify-center">
+                    <header className="mb-8">
+                        <div className="mb-4 flex flex-wrap gap-2">
                           {article.tags.map((tag: string) => (
                               <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
-                                  <Badge variant="secondary" className="shadow-md">{tag}</Badge>
+                                  <Badge variant="secondary">{tag}</Badge>
                               </Link>
                           ))}
                         </div>
                         <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4">{article.title}</h1>
-                        <div className="text-muted-foreground text-sm flex items-center justify-center flex-wrap gap-x-4 gap-y-2">
+                        <div className="text-muted-foreground text-sm flex items-center flex-wrap gap-x-4 gap-y-2">
                             {article.authorV2 && (
-                                <>
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-2">
                                     <User className="h-4 w-4" />
                                     <span>{article.authorV2.name}</span>
                                 </div>
-                                <span className="text-xs hidden md:inline">•</span>
-                                </>
                             )}
-                            <p>{format(new Date(article.publishedAt), 'PPP')}</p>
-                            <span className="text-xs hidden md:inline">•</span>
-                            <div className="flex items-center gap-1">
+                            <span className="hidden md:inline">•</span>
+                            <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                             <span className="hidden md:inline">•</span>
+                            <div className="flex items-center gap-1.5">
                                 <Eye className="h-4 w-4" />
                                 <span>{article.viewCount.toLocaleString()} views</span>
                             </div>
                         </div>
-                        {pdfUrl && (
-                          <div className="mt-6 flex justify-center">
-                              <Button asChild>
-                                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer" download>
-                                      <Download className="mr-2 h-4 w-4" />
-                                      Download PDF
-                                  </a>
-                              </Button>
-                          </div>
-                        )}
                     </header>
 
                     {article.image && (
@@ -180,8 +140,21 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                         fill
                         className="object-cover"
                         priority
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 800px"
                         />
                     </div>
+                    )}
+                    
+                    {pdfUrl && (
+                      <div className="my-6 p-4 bg-muted/50 rounded-lg flex items-center justify-between">
+                          <p className="font-semibold">Want to read this offline?</p>
+                          <Button asChild size="sm">
+                              <a href={pdfUrl} target="_blank" rel="noopener noreferrer" download>
+                                  <Download className="mr-2 h-4 w-4" />
+                                  Download PDF
+                              </a>
+                          </Button>
+                      </div>
                     )}
 
                     <div className="prose dark:prose-invert max-w-none mx-auto">
@@ -208,7 +181,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                 {relatedArticles.length > 0 && (
                      <Suspense fallback={
                         <div className="mt-16 pt-12 border-t space-y-8">
-                            <Skeleton className="h-8 w-1/3 mx-auto" />
+                            <h2 className="text-3xl font-bold font-headline mb-8 text-center"><Skeleton className="h-8 w-1/3 mx-auto" /></h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <Skeleton className="h-64 w-full" />
                                 <Skeleton className="h-64 w-full" />
@@ -222,7 +195,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                      </Suspense>
                 )}
             </main>
-            <aside className="lg:col-span-3 relative hidden lg:block">
+            <aside className="lg:col-span-3 relative">
                 <Suspense fallback={
                    <div className="space-y-8">
                       <Skeleton className="h-24 w-full" />
@@ -230,7 +203,9 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                       <Skeleton className="h-64 w-full" />
                    </div>
                 }>
-                    <BlogSidebar />
+                    <div className="lg:sticky lg:top-28">
+                        <BlogSidebar />
+                    </div>
                 </Suspense>
             </aside>
         </div>
