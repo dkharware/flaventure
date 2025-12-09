@@ -9,13 +9,14 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
     return { data: null, errors: [{ message: `Shopify API credentials are not configured. Please add NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN to your .env.local file.` }] };
   }
 
-  // Construct the endpoint robustly
-  // 1. Remove protocol if present
-  let cleanDomain = storeDomain.replace(/^https?:\/\//, '');
-  // 2. Remove any trailing paths or slashes
-  cleanDomain = cleanDomain.split('/')[0];
-  // 3. Construct the final correct endpoint
-  const endpoint = `https://${cleanDomain}/api/${apiVersion}/graphql.json`;
+  let endpoint: string;
+  if (storeDomain.includes('myshopify.com/api')) {
+    // If the user has provided the full API endpoint
+    endpoint = storeDomain;
+  } else {
+    // If the user has provided just the store domain
+    endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
+  }
   
   try {
     const response = await fetch(endpoint, {
