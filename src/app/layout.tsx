@@ -156,8 +156,8 @@ export default function RootLayout({
         )}
       >
           <div className="absolute top-0 left-0 w-full h-full bg-grid-black -z-20"></div>
-          <div className="absolute top-[-20%] left-[-30%] w-[80%] h-[120%] bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary))_0%,_transparent_40%)] animate-float -z-10 opacity-40"></div>
-          <div className="absolute bottom-[-20%] right-[-30%] w-[80%] h-[120%] bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent))_0%,_transparent_40%)] animate-float animation-delay-[-5s] -z-10 opacity-40"></div>
+          <div className="absolute top-0 left-[-30%] w-[80%] h-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary))_0%,_transparent_40%)] animate-float -z-10 opacity-40"></div>
+          <div className="absolute bottom-0 right-[-30%] w-[80%] h-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent))_0%,_transparent_40%)] animate-float animation-delay-[-5s] -z-10 opacity-40"></div>
 
           <LoaderProvider>
               <div className="flex flex-col min-h-screen">
