@@ -67,7 +67,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       query
   );
   
-  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "E-commerce & Web Dev Blog");
+  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "From the Blog");
   const pageDescription = tagQuery || searchQuery ? `Browsing articles for: ${tagQuery || searchQuery}` : "Get the latest insights on Shopify, headless commerce, and industry trends.";
 
   const featuredArticle = articles.length > 0 ? articles[0] : null;
@@ -82,13 +82,15 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <Breadcrumbs items={breadcrumbItems} />
         
-        <div className="relative overflow-hidden rounded-xl p-8 my-8 bg-background">
-            <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-yellow-100/50 via-white to-pink-200/50 dark:from-yellow-900/10 dark:via-background dark:to-pink-900/10"></div>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#fecaca,transparent)] opacity-20 dark:opacity-5"></div>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_0%_0px,#fef9c3,transparent)] opacity-20 dark:opacity-5"></div>
-            </div>
-            <div className="relative z-10 text-center">
+        <div className="relative overflow-hidden rounded-xl p-8 my-8 text-center">
+            <div
+                className="absolute inset-0 z-0 opacity-10 dark"
+                style={{
+                    backgroundImage:
+                    'radial-gradient(circle at 40% 60%, hsl(var(--primary) / 0.2), transparent 50%), radial-gradient(circle at 80% 20%, hsl(var(--accent) / 0.2), transparent 50%)',
+                }}
+            />
+            <div className="relative z-10">
                 <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
                 <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>
                 <div className="mt-6 max-w-xl mx-auto">
