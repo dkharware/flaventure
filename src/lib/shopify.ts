@@ -6,8 +6,9 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   const apiVersion = '2024-04';
 
   if (!storeDomain || !accessToken) {
-    console.warn("Shopify API credentials are not configured. Blog posts will not be loaded.");
-    return { data: null, errors: [{ message: `Shopify API credentials are not configured. Please add NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN to your .env.local file.` }] };
+    const errorMsg = "Shopify API credentials are not configured. Blog posts will not be loaded.";
+    console.warn(errorMsg);
+    return { data: null, errors: [{ message: `${errorMsg} Please add NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN to your .env.local file.` }] };
   }
 
   const endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
@@ -23,14 +24,15 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
       next: { revalidate: 60 } // Use Next.js revalidation
     });
 
+    const jsonResponse = await response.json();
+
     if (!response.ok) {
-        const responseBody = await response.text();
+        const responseBody = jsonResponse.errors ? JSON.stringify(jsonResponse.errors, null, 2) : await response.text();
         const error = `Shopify API request failed with status ${response.status}: ${responseBody}`;
         console.error(error);
         return { data: null, errors: [{ message: error }] };
     }
     
-    const jsonResponse = await response.json();
     if (jsonResponse.errors) {
       console.error("Shopify API returned GraphQL errors:", jsonResponse.errors);
     }
@@ -42,6 +44,7 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
     return { data: null, errors: [{ message: `Failed to fetch from Shopify: ${errorMessage}` }] };
   }
 }
+
 
 // Simple deterministic hash function for generating view counts
 const getDeterministicViewCount = (handle: string) => {
@@ -85,20 +88,22 @@ const ArticleFragment = gql`
 `;
 
 const ARTICLES_QUERY = gql`
-  query GetArticles($first: Int, $last: Int, $before: String, $after: String, $query: String) {
-    articles(first: $first, last: $last, before: $before, after: $after, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
-      edges {
-        cursor
-        node {
-          ...ArticleFragment
+  query GetArticles($first: Int, $last: Int, $before: String, $after: String, $query: String, $blogHandle: String = "news") {
+    blog(handle: $blogHandle) {
+        articles(first: $first, last: $last, before: $before, after: $after, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
+          edges {
+            cursor
+            node {
+              ...ArticleFragment
+            }
+          }
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
         }
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
     }
   }
   ${ArticleFragment}
@@ -106,25 +111,29 @@ const ARTICLES_QUERY = gql`
 
 const ARTICLE_QUERY = gql`
   query GetArticleByHandle($handle: String!) {
-    blog(handle: "news") {
-      articleByHandle(handle: $handle) {
-        ...ArticleFragment
-        contentHtml
-        pdf: metafield(namespace: "custom", key: "pdf_url") {
-          value
+    articles(first: 1, query: $handle) {
+        edges {
+            node {
+                ...ArticleFragment
+                contentHtml
+                pdf: metafield(namespace: "custom", key: "pdf_url") {
+                  value
+                }
+            }
         }
-      }
     }
   }
   ${ArticleFragment}
 `;
 
 const ALL_TAGS_QUERY = gql`
-  query GetAllTags {
-    articles(first: 250) {
-      edges {
-        node {
-          tags
+  query GetAllTags($blogHandle: String = "news") {
+    blog(handle: $blogHandle) {
+      articles(first: 250) {
+        edges {
+          node {
+            tags
+          }
         }
       }
     }
@@ -132,14 +141,16 @@ const ALL_TAGS_QUERY = gql`
 `;
 
 const ARTICLE_SUGGESTIONS_QUERY = gql`
-  query GetArticleSuggestions($first: Int, $query: String) {
-    articles(first: $first, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
-      edges {
-        node {
-          title
-          handle
+  query GetArticleSuggestions($first: Int, $query: String, $blogHandle: String = "news") {
+    blog(handle: $blogHandle) {
+        articles(first: $first, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
+          edges {
+            node {
+              title
+              handle
+            }
+          }
         }
-      }
     }
   }
 `;
@@ -162,6 +173,7 @@ export async function getArticles(
 
     const variables: Record<string, any> = {
         query: query,
+        blogHandle: "news" // Assuming a default blog handle
     };
 
     if (isPagingBackwards) {
@@ -174,20 +186,20 @@ export async function getArticles(
 
     const response = await shopifyFetch(ARTICLES_QUERY, variables);
     
-    if (!response.data?.articles?.edges) {
+    if (!response.data?.blog?.articles?.edges) {
         return { articles: [], pageInfo: { hasNextPage: false, hasPreviousPage: false, startCursor: null, endCursor: null } };
     }
 
-    const articles = response.data.articles.edges.map((edge: any) => processArticleNode(edge.node));
+    const articles = response.data.blog.articles.edges.map((edge: any) => processArticleNode(edge.node));
     
-    const pageInfo = response.data.articles.pageInfo;
+    const pageInfo = response.data.blog.articles.pageInfo;
 
     return { articles, pageInfo };
 }
 
 export async function getArticleByHandle(handle: string) {
-    const response = await shopifyFetch(ARTICLE_QUERY, { handle });
-    const articleNode = response.data?.blog?.articleByHandle;
+    const response = await shopifyFetch(ARTICLE_QUERY, { handle: `handle:${handle}` });
+    const articleNode = response.data?.articles?.edges[0]?.node;
 
     if (!articleNode) {
         return null;
@@ -202,12 +214,12 @@ export async function getArticleByHandle(handle: string) {
 }
 
 export async function getAllTags() {
-    const response = await shopifyFetch(ALL_TAGS_QUERY);
-    if (!response.data?.articles?.edges) {
+    const response = await shopifyFetch(ALL_TAGS_QUERY, { blogHandle: 'news'});
+    if (!response.data?.blog?.articles?.edges) {
         return [];
     }
     const tagCounts: { [key: string]: number } = {};
-    response.data.articles.edges.forEach((edge: { node: { tags: string[] } }) => {
+    response.data.blog.articles.edges.forEach((edge: { node: { tags: string[] } }) => {
         edge.node.tags.forEach(tag => {
             if (tagCounts[tag]) {
                 tagCounts[tag]++;
@@ -237,9 +249,9 @@ export async function getArticleSuggestions(searchTerm: string) {
     }
     const searchQuery = `(title:*${searchTerm}* OR body:*${searchTerm}*)`;
     
-    const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: searchQuery });
+    const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: searchQuery, blogHandle: 'news' });
     
-    return response.data?.articles?.edges.map((edge: any) => ({
+    return response.data?.blog?.articles?.edges.map((edge: any) => ({
       title: edge.node.title,
       handle: edge.node.handle,
     })) || [];
