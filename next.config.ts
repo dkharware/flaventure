@@ -2,7 +2,6 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -30,11 +29,11 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https',
+        protocol: 'https_val',
         hostname: '5lgivccarqkvddiv.public.blob.vercel-storage.com',
         port: '',
         pathname: '/**',
-      }
+      },
     ],
   },
   reactStrictMode: false,
