@@ -64,8 +64,16 @@ const getDeterministicViewCount = (handle: string) => {
         hash = (hash << 5) - hash + char;
         hash |= 0; // Convert to 32bit integer
     }
-    return Math.abs(hash % 2000) + 150; // Generate a number between 150 and 2150
+    return Math.abs(hash % 4000) + 250; // Generate a number between 250 and 4250
 };
+
+// Simple deterministic hash function for generating read times
+const getDeterministicReadTime = (content: string) => {
+    const wordsPerMinute = 200;
+    const wordCount = content.split(/\s+/).length;
+    const readTime = Math.ceil(wordCount / wordsPerMinute);
+    return Math.max(1, readTime); // Ensure at least 1 minute read time
+}
 
 
 const gql = String.raw;
@@ -77,6 +85,7 @@ const ArticleFragment = gql`
     handle
     excerptHtml
     publishedAt
+    content(truncateAt: 500)
     image {
       url
       altText
@@ -148,6 +157,15 @@ const ARTICLE_SUGGESTIONS_QUERY = gql`
   }
 `;
 
+const processArticleNode = (node: any) => {
+  if (!node) return null;
+  return {
+    ...node,
+    viewCount: getDeterministicViewCount(node.handle),
+    readTime: getDeterministicReadTime(node.content || node.contentHtml || '')
+  };
+};
+
 export async function getArticles(
     count: number = 12, 
     query?: string, 
@@ -173,10 +191,7 @@ export async function getArticles(
         return { articles: [], pageInfo: { hasNextPage: false, hasPreviousPage: false, startCursor: null, endCursor: null } };
     }
 
-    const articles = response.data.articles.edges.map((edge: any) => ({
-      ...edge.node,
-      viewCount: getDeterministicViewCount(edge.node.handle)
-    }));
+    const articles = response.data.articles.edges.map((edge: any) => processArticleNode(edge.node));
     
     const pageInfo = response.data.articles.pageInfo;
 
@@ -191,9 +206,10 @@ export async function getArticleByHandle(handle: string) {
         return null;
     }
 
+    const processedArticle = processArticleNode(articleNode);
+
     return {
-        ...articleNode,
-        viewCount: getDeterministicViewCount(articleNode.handle),
+        ...processedArticle,
         pdf: articleNode.pdf
     };
 }

@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ArticleContent } from '@/components/ArticleContent';
 import { Button } from '@/components/ui/button';
-import { Eye, Download, User } from 'lucide-react';
+import { Eye, Clock, Calendar } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TableOfContents } from '@/components/TableOfContents';
 import { ShareButtons } from '@/components/ShareButtons';
@@ -93,10 +93,8 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <div className="border-b">
-        <div className="container mx-auto px-3 md:px-6">
+      <div className="container mx-auto px-3 md:px-6">
           <Breadcrumbs items={breadcrumbItems} className="py-4" />
-        </div>
       </div>
       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -115,17 +113,22 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                               </Link>
                           ))}
                         </div>
-                        <h1 className="text-3xl md:text-4xl font-bold font-headline mb-4">{article.title}</h1>
-                        <div className="text-muted-foreground text-sm flex items-center flex-wrap gap-x-4 gap-y-2">
+                        <h1 className="text-3xl md:text-5xl font-bold font-headline mb-4">{article.title}</h1>
+                        <div className="text-muted-foreground text-sm flex items-center flex-wrap gap-x-6 gap-y-2">
                             {article.authorV2 && (
                                 <div className="flex items-center gap-2">
-                                    <User className="h-4 w-4" />
+                                    <Image src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={article.authorV2.name} width={24} height={24} className="rounded-full" />
                                     <span>{article.authorV2.name}</span>
                                 </div>
                             )}
-                            <span className="hidden md:inline">•</span>
-                            <span>{format(new Date(article.publishedAt), 'PPP')}</span>
-                             <span className="hidden md:inline">•</span>
+                            <div className="flex items-center gap-1.5">
+                                <Calendar className="h-4 w-4" />
+                                <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                                <Clock className="h-4 w-4" />
+                                <span>{article.readTime} min read</span>
+                            </div>
                             <div className="flex items-center gap-1.5">
                                 <Eye className="h-4 w-4" />
                                 <span>{article.viewCount.toLocaleString()} views</span>
@@ -146,18 +149,6 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                     </div>
                     )}
                     
-                    {pdfUrl && (
-                      <div className="my-6 p-4 bg-muted/50 rounded-lg flex items-center justify-between">
-                          <p className="font-semibold">Want to read this offline?</p>
-                          <Button asChild size="sm">
-                              <a href={pdfUrl} target="_blank" rel="noopener noreferrer" download>
-                                  <Download className="mr-2 h-4 w-4" />
-                                  Download PDF
-                              </a>
-                          </Button>
-                      </div>
-                    )}
-
                     <div className="prose dark:prose-invert max-w-none mx-auto">
                       <ArticleContent content={article.contentHtml} />
                     </div>
@@ -169,19 +160,19 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                 </article>
 
                 <Suspense fallback={
-                    <div className="mt-16 pt-12 border-t space-y-4">
+                    <div className="mt-16 pt-12 border-t border-border/10 space-y-4">
                         <Skeleton className="h-8 w-1/2 mx-auto" />
                         <Skeleton className="h-24 w-full" />
                     </div>
                 }>
-                    <div className="mt-16 pt-12 border-t">
+                    <div className="mt-16 pt-12 border-t border-border/10">
                         <CommentSection />
                     </div>
                 </Suspense>
 
                 {relatedArticles.length > 0 && (
                      <Suspense fallback={
-                        <div className="mt-16 pt-12 border-t space-y-8">
+                        <div className="mt-16 pt-12 border-t border-border/10 space-y-8">
                             <h2 className="text-3xl font-bold font-headline mb-8 text-center"><Skeleton className="h-8 w-1/3 mx-auto" /></h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <Skeleton className="h-64 w-full" />
@@ -189,7 +180,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                             </div>
                         </div>
                      }>
-                        <div className="mt-16 pt-12 border-t">
+                        <div className="mt-16 pt-12 border-t border-border/10">
                             <h2 className="text-3xl font-bold font-headline mb-8 text-center">Related Articles</h2>
                             <RelatedArticles articles={relatedArticles} />
                         </div>

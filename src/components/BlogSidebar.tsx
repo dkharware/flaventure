@@ -95,6 +95,56 @@ export function BlogSidebar({}: BlogSidebarProps) {
 
       <Card>
         <CardHeader>
+          <CardTitle className="text-xl font-bold">Popular Articles</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
+            <ul className="space-y-4">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <li key={i} className="flex items-start gap-4 border-b border-border/20 pb-4 last:border-b-0 last:pb-0">
+                  <Skeleton className="h-14 w-14 rounded-md" />
+                  <div className="flex-grow space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-3 w-1/2" />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            recentPosts.length > 0 && (
+              <ul className="space-y-4">
+                {recentPosts.map(post => (
+                  <li key={post.id} className="border-b border-border/20 pb-4 last:border-b-0 last:pb-0">
+                    <Link href={`/blog/${post.handle}`} className="group flex items-start gap-4">
+                      {post.image && (
+                        <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md">
+                          <Image 
+                            src={post.image.url}
+                            alt={post.image.altText || post.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-grow">
+                        <p className="font-semibold group-hover:text-primary transition-colors line-clamp-2 text-sm">{post.title}</p>
+                        <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
+                          <span>{post.readTime} min read</span>
+                          <span>&bull;</span>
+                          <span>{post.viewCount.toLocaleString()} views</span>
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
           <CardTitle className="text-xl font-bold">Tags</CardTitle>
         </CardHeader>
         <CardContent>
@@ -111,7 +161,7 @@ export function BlogSidebar({}: BlogSidebarProps) {
                 {tags.map(tag => (
                   <Link key={tag.name} href={`/blog?tag=${encodeURIComponent(tag.name)}`}>
                     <Badge variant={searchParams.get('tag') === tag.name ? 'default' : 'secondary'} className="hover:bg-primary hover:text-primary-foreground transition-colors text-sm">
-                      {tag.name} ({tag.count})
+                      {tag.name}
                     </Badge>
                   </Link>
                 ))}
@@ -121,51 +171,6 @@ export function BlogSidebar({}: BlogSidebarProps) {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-xl font-bold">Recent Posts</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isLoading ? (
-            <ul className="space-y-4">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <li key={i} className="flex items-center gap-4 border-b pb-4 last:border-b-0 last:pb-0">
-                  <Skeleton className="h-14 w-14 rounded-md" />
-                  <div className="flex-grow space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-3 w-1/2" />
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            recentPosts.length > 0 && (
-              <ul className="space-y-4">
-                {recentPosts.map(post => (
-                  <li key={post.id} className="border-b pb-4 last:border-b-0 last:pb-0">
-                    <Link href={`/blog/${post.handle}`} className="group flex items-center gap-4">
-                      {post.image && (
-                        <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-md">
-                          <Image 
-                            src={post.image.url}
-                            alt={post.image.altText || post.title}
-                            fill
-                            className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          />
-                        </div>
-                      )}
-                      <div className="flex-grow">
-                        <p className="font-semibold group-hover:text-primary transition-colors line-clamp-2 text-sm">{post.title}</p>
-                        <p className="text-xs text-muted-foreground mt-1">{format(new Date(post.publishedAt), 'PPP')}</p>
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )
-          )}
-        </CardContent>
-      </Card>
     </div>
   );
 }

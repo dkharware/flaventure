@@ -3,12 +3,16 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Card, CardHeader, CardTitle } from './ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
+import { Button } from './ui/button';
+import { ArrowRight, Eye, Clock, Calendar } from 'lucide-react';
+import { getArticles } from '@/lib/shopify';
+import { Skeleton } from './ui/skeleton';
 
 interface Article {
     id: string;
@@ -24,6 +28,8 @@ interface Article {
         name: string;
     };
     tags: string[];
+    readTime: number;
+    viewCount: number;
 }
 
 const ClientFormattedDate = ({ dateString, formatString }: { dateString: string, formatString: string }) => {
@@ -50,76 +56,64 @@ const AuthorInfo = ({ article, className }: { article: Article, className?: stri
             <AvatarFallback>{article.authorV2.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
         </Avatar>
         <p className="font-semibold text-xs text-muted-foreground">{article.authorV2.name}</p>
-        <span className="text-muted-foreground text-xs">•</span>
-        <ClientFormattedDate dateString={article.publishedAt} formatString="dd MMM, yyyy" />
     </div>
 );
 
 const LargeHeroCard = ({ article }: { article: Article }) => (
-    <div className="block group">
-        <Card className="h-full overflow-hidden rounded-lg bg-muted/20 p-6 flex flex-col md:flex-row gap-6">
-             {article.image && (
-                <div className="relative w-full md:w-1/2 aspect-[16/9] rounded-lg overflow-hidden">
-                    <Link href={`/blog/${article.handle}`} className="block h-full w-full">
-                         <Image
-                            src={article.image.url}
-                            alt={article.image.altText || article.title}
-                            fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                            priority
-                        />
-                    </Link>
-                </div>
-             )}
-             <div className="flex flex-col flex-grow p-1 md:w-1/2">
+    <div className="block group relative overflow-hidden rounded-lg">
+        {article.image && (
+        <div className="absolute inset-0">
+            <Image
+                src={article.image.url}
+                alt={article.image.altText || article.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+        </div>
+        )}
+        <div className="relative p-8 md:p-12 flex flex-col justify-end h-[500px] text-white">
+            <div className="space-y-4">
                 <AuthorInfo article={article} />
-                <h2 className="text-xl md:text-2xl font-bold font-headline mt-4 group-hover:text-primary transition-colors line-clamp-3">
+                <h2 className="text-3xl md:text-4xl font-bold font-headline group-hover:text-primary transition-colors line-clamp-3">
                     <Link href={`/blog/${article.handle}`}>{article.title}</Link>
                 </h2>
                 <div 
-                    className="text-muted-foreground text-sm mt-2 line-clamp-2"
+                    className="text-white/80 text-sm mt-2 line-clamp-2"
                     dangerouslySetInnerHTML={{ __html: article.excerptHtml }} 
                 />
-                <div className="mt-4 flex flex-wrap gap-2">
-                    {article.tags.slice(0, 3).map(tag => (
-                         <Badge key={tag} variant="secondary">
-                            {tag}
-                         </Badge>
-                    ))}
+                 <div className="flex items-center flex-wrap gap-x-4 gap-y-2 text-xs text-white/80">
+                    <div className="flex items-center gap-1.5">
+                        <Calendar className="h-4 w-4" />
+                        <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                        <Clock className="h-4 w-4" />
+                        <span>{article.readTime} min read</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                        <Eye className="h-4 w-4" />
+                        <span>{article.viewCount.toLocaleString()} views</span>
+                    </div>
                 </div>
-             </div>
-        </Card>
+                 <div className="mt-6">
+                    <Button asChild>
+                        <Link href={`/blog/${article.handle}`}>Read More <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                    </Button>
+                </div>
+            </div>
+        </div>
     </div>
 );
 
-const StandardCard = ({ article }: { article: Article }) => (
-    <Link href={`/blog/${article.handle}`} className="block group">
-        <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-transparent border-0 shadow-none">
-            {article.image && (
-            <div className="relative h-48 w-full overflow-hidden rounded-lg">
-                <Image
-                    src={article.image.url}
-                    alt={article.image.altText || article.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                />
-            </div>
-            )}
-            <CardHeader className="p-4 pl-0">
-                <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-2">{article.title}</CardTitle>
-            </CardHeader>
-        </Card>
-    </Link>
-);
 
-
-const ListItemCard = ({ article }: { article: Article }) => (
+const PopularArticleItem = ({ article }: { article: Article }) => (
     <Link href={`/blog/${article.handle}`} className="block group">
-        <Card className="h-full overflow-hidden border-b rounded-none p-0 pb-4 bg-transparent shadow-none">
-            <div className="flex gap-4 items-center">
+        <Card className="h-full overflow-hidden border-b border-border/20 rounded-none p-0 pb-4 bg-transparent shadow-none">
+            <div className="flex gap-4 items-start">
                 {article.image && (
-                    <div className="relative w-20 h-20 aspect-square rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="relative w-1/3 aspect-square rounded-lg overflow-hidden flex-shrink-0">
                         <Image
                             src={article.image.url}
                             alt={article.image.altText || article.title}
@@ -129,16 +123,12 @@ const ListItemCard = ({ article }: { article: Article }) => (
                         />
                     </div>
                 )}
-                <div className="flex flex-col flex-grow">
-                    <h3 className="text-sm font-bold font-headline group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
-                     <div className="flex items-center gap-2 mt-1.5">
-                        <Avatar className="h-5 w-5">
-                            <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={article.authorV2.name} />
-                            <AvatarFallback>{article.authorV2.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                        </Avatar>
-                        <p className="font-semibold text-xs text-muted-foreground">{article.authorV2.name}</p>
-                        <span className="text-muted-foreground text-xs">•</span>
-                        <ClientFormattedDate dateString={article.publishedAt} formatString="dd.MM.yyyy" />
+                <div className="flex flex-col flex-grow w-2/3">
+                    <h3 className="text-sm font-bold group-hover:text-primary transition-colors line-clamp-2">{article.title}</h3>
+                     <div className="flex items-center gap-2 mt-1.5 text-xs text-muted-foreground">
+                        <span>{article.readTime} min read</span>
+                        <span>&bull;</span>
+                        <span>{article.viewCount.toLocaleString()} views</span>
                     </div>
                 </div>
             </div>
@@ -148,47 +138,53 @@ const ListItemCard = ({ article }: { article: Article }) => (
 
 
 export function FeaturedArticles({ articles }: { articles: Article[] }) {
+    const [popularArticles, setPopularArticles] = useState<Article[]>([]);
+    
+    useEffect(() => {
+        async function fetchPopular() {
+            const { articles } = await getArticles(4, `(tag:'popular' OR tag:'featured')`);
+            setPopularArticles(articles);
+        }
+        fetchPopular();
+    }, []);
+
     if (!articles || articles.length === 0) {
         return <div className="hidden">No articles to display.</div>;
     }
 
-    if (articles.length < 7) {
-        return (
-            <div className="grid grid-cols-1 gap-8">
-                 {articles.map(article => <LargeHeroCard key={article.id} article={article} />)}
-            </div>
-        );
-    }
-    
-    const [
-        mainArticle,
-        subArticle1,
-        subArticle2,
-        sideArticle1,
-        sideArticle2,
-        sideArticle3,
-        sideArticle4
-    ] = articles;
+    const mainArticle = articles[0];
 
     return (
         <section className="container">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12">
-                {/* Left Side */}
                 <div className="lg:col-span-2 space-y-8">
                      {mainArticle && <LargeHeroCard article={mainArticle} />}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                         {subArticle1 && <StandardCard article={subArticle1} />}
-                         {subArticle2 && <StandardCard article={subArticle2} />}
-                    </div>
                 </div>
 
-                {/* Right Side */}
                 <div className="lg:col-span-1 space-y-4">
-                    <h3 className="font-bold font-headline text-lg">Latest Articles</h3>
-                    {sideArticle1 && <ListItemCard article={sideArticle1} />}
-                    {sideArticle2 && <ListItemCard article={sideArticle2} />}
-                    {sideArticle3 && <ListItemCard article={sideArticle3} />}
-                    {sideArticle4 && <ListItemCard article={sideArticle4} />}
+                    <div className="flex justify-between items-center mb-4">
+                        <h3 className="font-bold font-headline text-xl">Popular Articles</h3>
+                        <div className="flex gap-2">
+                            <Button size="icon" variant="outline"><ArrowRight className="h-4 w-4" /></Button>
+                            <Button size="icon" variant="outline"><ArrowRight className="h-4 w-4" /></Button>
+                        </div>
+                    </div>
+                    
+                    {popularArticles.length > 0 ? (
+                        popularArticles.map(article => <PopularArticleItem key={article.id} article={article} />)
+                    ) : (
+                        Array.from({ length: 4 }).map((_, i) => (
+                            <div key={i} className="flex gap-4 items-start border-b border-border/20 pb-4">
+                                <div className='w-1/3'>
+                                    <Skeleton className="w-20 h-16 aspect-square rounded-lg flex-shrink-0" />
+                                </div>
+                                <div className="flex flex-col flex-grow space-y-2 w-2/3">
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-3/4" />
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </section>
