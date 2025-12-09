@@ -65,7 +65,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       query
   );
   
-  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Explore Articles & Guides on Shopify & Headless Commerce.");
+  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Explore Articles & Guides");
   const pageDescription = tagQuery || searchQuery ? `Browsing articles for: ${tagQuery || searchQuery}` : "Your go-to resource for in-depth tutorials, expert insights, and the latest trends in e-commerce development.";
 
   const featuredArticle = articles.length > 0 ? articles[0] : null;
@@ -80,16 +80,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
     <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <Breadcrumbs items={breadcrumbItems} />
         
-        <div className="relative overflow-hidden p-8 my-8 text-center bg-black bg-grid-black rounded-lg">
-            <div className="absolute top-[-50%] left-[-20%] w-[60%] h-[150%] bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary))_0%,_transparent_50%)] animate-float z-0"></div>
-            <div className="absolute bottom-[-50%] right-[-20%] w-[60%] h-[150%] bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent))_0%,_transparent_50%)] animate-float animation-delay-[-5s] z-0"></div>
-            <div className="relative z-10">
-                <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-6xl text-white">{pageTitle}</h1>
-                <p className="text-lg text-white/80 mt-2 max-w-2xl mx-auto">{pageDescription}</p>
-                <div className="mt-6 max-w-xl mx-auto">
-                  <BlogSearch initialQuery={searchQuery} />
-                </div>
-            </div>
+        <div className="my-8 text-center">
+          <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
+          <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>
+          <div className="mt-6 max-w-xl mx-auto">
+            <BlogSearch initialQuery={searchQuery} />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
