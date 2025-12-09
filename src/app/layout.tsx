@@ -156,7 +156,7 @@ export default function RootLayout({
                  <Suspense fallback={<TagsSkeleton />}>
                   <BlogTags />
                 </Suspense>
-                <main className="flex-grow">{children}</main>
+                <main className="flex-grow pt-24">{children}</main>
                 <Footer />
               </div>
               <Toaster />
