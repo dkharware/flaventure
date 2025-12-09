@@ -6,7 +6,7 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
 
   if (!storeDomain || !accessToken) {
     console.warn("Shopify API credentials are not configured. Blog posts will not be loaded.");
-    return { data: null, errors: [{ message: `Shopify API credentials are not configured.` }] };
+    return { data: null, errors: [{ message: `Shopify API credentials are not configured. Please add NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN to your .env.local file.` }] };
   }
 
   // Construct the endpoint robustly
@@ -28,31 +28,28 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
       next: { revalidate: 60 } // Use Next.js revalidation
     });
 
-    const responseBody = await response.text();
-
     if (!response.ok) {
-      if (responseBody.trim().startsWith('<!DOCTYPE html>')) {
-          console.error(`Shopify API request failed with status ${response.status} and returned an HTML page. Please check your endpoint ('${storeDomain}') and access token.`);
-          return { data: null, errors: [{ message: `Shopify API request returned an HTML page. Check your store domain and access token.` }] };
-      }
-      console.error(`Shopify API request failed with status ${response.status}:`, responseBody);
-      return { data: null, errors: [{ message: `Shopify API request failed with status ${response.status}` }] };
+        const responseBody = await response.text();
+        if (responseBody.includes('<!DOCTYPE html>')) {
+            const error = `Shopify API request failed with status ${response.status} and returned an HTML page. This usually means the endpoint is wrong. Please check your endpoint: ${storeDomain}`;
+            console.error(error);
+            return { data: null, errors: [{ message: error }] };
+        }
+        const error = `Shopify API request failed with status ${response.status}: ${responseBody}`;
+        console.error(error);
+        return { data: null, errors: [{ message: error }] };
     }
     
-    try {
-        const jsonResponse = JSON.parse(responseBody);
-        if (jsonResponse.errors) {
-          console.error("Shopify API returned GraphQL errors:", jsonResponse.errors);
-        }
-        return jsonResponse;
-    } catch (e) {
-        console.error("Failed to parse JSON response from Shopify. The endpoint might be incorrect and returned HTML instead of JSON.", responseBody);
-        return { data: null, errors: [{ message: "Failed to parse JSON response from Shopify. Check the API endpoint configuration." }] };
+    const jsonResponse = await response.json();
+    if (jsonResponse.errors) {
+      console.error("Shopify API returned GraphQL errors:", jsonResponse.errors);
     }
+    return jsonResponse;
 
   } catch (error) {
     console.error("Failed to fetch from Shopify:", error);
-    return { data: null, errors: [{ message: error instanceof Error ? error.message : "Unknown fetch error" }] };
+    const errorMessage = error instanceof Error ? error.message : "Unknown fetch error";
+    return { data: null, errors: [{ message: `Failed to fetch from Shopify: ${errorMessage}` }] };
   }
 }
 
