@@ -250,10 +250,10 @@ export async function getArticleSuggestions(searchTerm: string) {
     }
     const searchQuery = `(title:*${searchTerm}* OR body:*${searchTerm}*)`;
     
-    const response = await getArticles(5, searchQuery);
+    const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: searchQuery });
     
-    return response.articles.map((article: any) => ({
-      title: article.title,
-      handle: article.handle,
-    }));
+    return response.data?.articles?.edges.map((edge: any) => ({
+      title: edge.node.title,
+      handle: edge.node.handle,
+    })) || [];
 }

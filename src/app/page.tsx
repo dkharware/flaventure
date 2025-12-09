@@ -11,13 +11,15 @@ const FaqSection = lazy(() => import('@/components/FaqSection'));
 
 export default async function Home() {
     const { articles } = await getArticles(5);
+    const { articles: popularArticles } = await getArticles(4, `(tag:'popular' OR tag:'featured')`);
+
 
   return (
     <div className="w-full">
       <h1 className="sr-only">storedevguide | Expert Shopify Blog: Themes, App Bridge, Storefront API & More</h1>
       <section className="container py-8 md:py-12">
         <Suspense fallback={<SectionSkeleton />}>
-          <FeaturedArticles articles={articles} />
+          <FeaturedArticles articles={articles} popularArticles={popularArticles} />
         </Suspense>
       </section>
 

@@ -137,17 +137,8 @@ const PopularArticleItem = ({ article }: { article: Article }) => (
 );
 
 
-export function FeaturedArticles({ articles }: { articles: Article[] }) {
-    const [popularArticles, setPopularArticles] = useState<Article[]>([]);
+export function FeaturedArticles({ articles, popularArticles }: { articles: Article[], popularArticles: Article[] }) {
     
-    useEffect(() => {
-        async function fetchPopular() {
-            const { articles } = await getArticles(4, `(tag:'popular' OR tag:'featured')`);
-            setPopularArticles(articles);
-        }
-        fetchPopular();
-    }, []);
-
     if (!articles || articles.length === 0) {
         return <div className="hidden">No articles to display.</div>;
     }
@@ -164,10 +155,6 @@ export function FeaturedArticles({ articles }: { articles: Article[] }) {
                 <div className="lg:col-span-1 space-y-4">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="font-bold font-headline text-xl">Popular Articles</h3>
-                        <div className="flex gap-2">
-                            <Button size="icon" variant="outline"><ArrowRight className="h-4 w-4" /></Button>
-                            <Button size="icon" variant="outline"><ArrowRight className="h-4 w-4" /></Button>
-                        </div>
                     </div>
                     
                     {popularArticles.length > 0 ? (
