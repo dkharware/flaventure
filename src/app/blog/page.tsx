@@ -14,18 +14,13 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArticleList, ArticleCardSkeleton } from '@/components/ArticleList';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BlogSearch } from '@/components/BlogSearch';
+import { NextPageProps } from '../types';
 
 export const metadata: Metadata = {
   title: 'E-commerce & Web Dev Blog | storedevguide',
   description: 'Read the latest articles on Shopify, Webflow, headless commerce, and modern web development from the storedevguide team.',
 };
 
-interface BlogPageProps {
-    searchParams?: {
-        query?: string;
-        tag?: string;
-    };
-}
 
 const POSTS_PER_PAGE = 11; // 1 for featured, 10 for grid on first page
 
@@ -49,9 +44,10 @@ function FeaturedArticleSkeleton() {
     );
 }
 
-export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const searchQuery = searchParams?.query;
-  const tagQuery = searchParams?.tag;
+export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
+  const resolvedSearchParams = await searchParams;
+  const searchQuery = resolvedSearchParams?.query as string;
+  const tagQuery = resolvedSearchParams?.tag as string;
 
   let query;
   if (searchQuery) {
