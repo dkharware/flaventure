@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArticleList, ArticleCardSkeleton } from '@/components/ArticleList';
 import { Skeleton } from '@/components/ui/skeleton';
+import { BlogSearch } from '@/components/BlogSearch';
 
 export const metadata: Metadata = {
   title: 'E-commerce & Web Dev Blog | storedevguide',
@@ -67,7 +68,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   );
   
   const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "E-commerce & Web Dev Blog");
-  const pageDescription = tagQuery || searchQuery ? "" : "Get the latest insights on Shopify, headless commerce, and industry trends.";
+  const pageDescription = tagQuery || searchQuery ? `Browsing articles for: ${tagQuery || searchQuery}` : "Get the latest insights on Shopify, headless commerce, and industry trends.";
 
   const featuredArticle = articles.length > 0 ? articles[0] : null;
   const initialArticles = articles.slice(1);
@@ -89,7 +90,10 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </div>
             <div className="relative z-10 text-center">
                 <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
-                {pageDescription && <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>}
+                <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>
+                <div className="mt-6 max-w-xl mx-auto">
+                  <BlogSearch initialQuery={searchQuery} />
+                </div>
             </div>
         </div>
 
@@ -108,7 +112,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               }>
                 {articles && articles.length > 0 ? (
                     <div className="space-y-12">
-                      {featuredArticle && (
+                      {featuredArticle && !searchQuery && !tagQuery && (
                          <Link key={featuredArticle.id} href={`/blog/${featuredArticle.handle}`} className="block group">
                             <Card className="h-full flex flex-col md:flex-row overflow-hidden transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                                 {featuredArticle.image && (
@@ -155,7 +159,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
                       )}
 
                       <ArticleList 
-                        initialArticles={initialArticles} 
+                        initialArticles={searchQuery || tagQuery ? articles : initialArticles} 
                         initialPageInfo={pageInfo} 
                         query={query} 
                       />
