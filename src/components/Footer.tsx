@@ -20,7 +20,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="bg-background text-muted-foreground border-t">
-      <div className="container mx-auto py-12 px-6 md:px-10">
+      <div className="container mx-auto py-8 px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2" aria-label="storedevguide Home">
