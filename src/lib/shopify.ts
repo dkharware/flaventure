@@ -1,21 +1,18 @@
 
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
-  const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT;
+  const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   const apiVersion = '2024-04';
 
   if (!storeDomain || !accessToken) {
     console.warn("Shopify API credentials are not configured. Blog posts will not be loaded.");
-    return { data: null, errors: [{ message: `Shopify API credentials are not configured. Please add NEXT_PUBLIC_SHOPIFY_STOREFRONT_API_ENDPOINT and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN to your .env.local file.` }] };
+    return { data: null, errors: [{ message: `Shopify API credentials are not configured. Please add NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN to your .env.local file.` }] };
   }
 
-  let endpoint: string;
-  // Check if the provided domain is a full URL.
-  if (storeDomain.startsWith('http')) {
-    endpoint = storeDomain;
-  } else {
-    // If the user has provided just the store domain part.
-    endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
+  let endpoint = storeDomain.startsWith('http') ? storeDomain : `https://${storeDomain}`;
+
+  if (!endpoint.includes('graphql.json')) {
+    endpoint = `${endpoint}/api/${apiVersion}/graphql.json`;
   }
   
   try {
@@ -31,11 +28,6 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
 
     if (!response.ok) {
         const responseBody = await response.text();
-        if (responseBody.includes('<!DOCTYPE html>')) {
-            const error = `Shopify API request failed with status ${response.status} and returned an HTML page. This usually means the endpoint is wrong. Please check your endpoint: ${storeDomain}`;
-            console.error(error);
-            return { data: null, errors: [{ message: error }] };
-        }
         const error = `Shopify API request failed with status ${response.status}: ${responseBody}`;
         console.error(error);
         return { data: null, errors: [{ message: error }] };
