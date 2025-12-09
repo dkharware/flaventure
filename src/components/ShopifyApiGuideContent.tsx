@@ -25,7 +25,7 @@ const apiGuideData = {
             code: `// Use this API for building custom 'headless' experiences for customers.`
         },
         {
-            title: 'Key Characteristics',
+            title: 'Storefront API Characteristics',
             description: "Public Access, Read-focused (for shop data), GraphQL Only, Optimized for Buyers.",
             code: `query GetProducts {
   products(first: 5) {
@@ -39,7 +39,7 @@ const apiGuideData = {
 }`
         },
         {
-            title: 'Common Use Cases',
+            title: 'Storefront API Use Cases',
             description: "Building custom websites (Next.js, etc.), creating native mobile apps, integrating 'buy' buttons into other sites.",
             code: `// Example: Fetching products for a custom React component.`
         }
@@ -51,7 +51,7 @@ const apiGuideData = {
             code: `// Use this API for server-side logic and building apps for merchants.`
         },
         {
-            title: 'Key Characteristics',
+            title: 'Admin API Characteristics',
             description: "Authenticated Access (server-side only), Read & Write capabilities, available in GraphQL and REST, Optimized for Merchants.",
             code: `POST /admin/api/2024-04/products.json
 {
@@ -61,7 +61,7 @@ const apiGuideData = {
 }`
         },
         {
-            title: 'Common Use Cases',
+            title: 'Admin API Use Cases',
             description: "Building custom dashboard apps, syncing inventory with an external system, automating order fulfillment.",
             code: `// Example: A script to automatically tag new orders.`
         }
@@ -176,7 +176,7 @@ export function ShopifyApiGuideContent() {
             <section id="storefront-api" className="mb-12">
                 <h2 className="text-2xl font-bold font-headline mb-6">Storefront API</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-                    {filteredData.storefrontApi.map((item) => <GuideCard key={item.title} {...item} />)}
+                    {filteredData.storefrontApi.map((item) => <GuideCard key={`storefront-${item.title}`} {...item} />)}
                 </div>
             </section>
         )}
@@ -185,7 +185,7 @@ export function ShopifyApiGuideContent() {
             <section id="admin-api" className="mb-12">
                 <h2 className="text-2xl font-bold font-headline mb-6">Admin API</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-                    {filteredData.adminApi.map((item) => <GuideCard key={item.title} {...item} />)}
+                    {filteredData.adminApi.map((item) => <GuideCard key={`admin-${item.title}`} {...item} />)}
                 </div>
             </section>
         )}
@@ -194,7 +194,7 @@ export function ShopifyApiGuideContent() {
             <section id="comparison" className="mb-12">
                 <h2 className="text-2xl font-bold font-headline mb-6">Comparison</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-                    {filteredData.comparison.map((item) => <GuideCard key={item.title} {...item} />)}
+                    {filteredData.comparison.map((item) => <GuideCard key={`comparison-${item.title}`} {...item} />)}
                 </div>
             </section>
         )}
@@ -203,7 +203,7 @@ export function ShopifyApiGuideContent() {
             <section id="tools" className="mb-12">
                 <h2 className="text-2xl font-bold font-headline mb-6">Tools & Resources</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-                    {filteredData.tools.map((item: any) => <GuideCard key={item.title} {...item} />)}
+                    {filteredData.tools.map((item: any) => <GuideCard key={`tools-${item.title}`} {...item} />)}
                 </div>
             </section>
         )}

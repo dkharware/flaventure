@@ -191,7 +191,7 @@ export function CheatsheetContent() {
                 <section id="basics" className="mb-12">
                     <h2 className="text-2xl font-bold font-headline mb-6">Basics</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-                        {filteredData.basics.map((item) => <CheatSheetCard key={item.title} {...item} />)}
+                        {filteredData.basics.map((item) => <CheatSheetCard key={`basics-${item.title}`} {...item} />)}
                     </div>
                 </section>
             )}
@@ -200,7 +200,7 @@ export function CheatsheetContent() {
                 <section id="objects" className="mb-12">
                     <h2 className="text-2xl font-bold font-headline mb-6">Objects</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-                        {filteredData.objects.map((item) => <CheatSheetCard key={item.title} {...item} />)}
+                        {filteredData.objects.map((item) => <CheatSheetCard key={`objects-${item.title}`} {...item} />)}
                     </div>
                 </section>
             )}
@@ -209,7 +209,7 @@ export function CheatsheetContent() {
                 <section id="tags" className="mb-12">
                     <h2 className="text-2xl font-bold font-headline mb-6">Tags</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-                        {filteredData.tags.map((item) => <CheatSheetCard key={item.title} {...item} />)}
+                        {filteredData.tags.map((item) => <CheatSheetCard key={`tags-${item.title}`} {...item} />)}
                     </div>
                 </section>
             )}
@@ -218,7 +218,7 @@ export function CheatsheetContent() {
                 <section id="filters" className="mb-12">
                     <h2 className="text-2xl font-bold font-headline mb-6">Filters</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
-                        {filteredData.filters.map((item) => <CheatSheetCard key={item.title} {...item} />)}
+                        {filteredData.filters.map((item) => <CheatSheetCard key={`filters-${item.title}`} {...item} />)}
                     </div>
                 </section>
             )}

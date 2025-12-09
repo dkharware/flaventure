@@ -50,8 +50,8 @@ export function BlogTags() {
                         className="w-full"
                     >
                         <CarouselContent className="-ml-2">
-                            {tags.map((tag) => (
-                                <CarouselItem key={tag.name} className="basis-auto pl-2">
+                            {tags.map((tag, index) => (
+                                <CarouselItem key={`${tag.name}-${index}`} className="basis-auto pl-2">
                                     <Link href={`/blog?tag=${encodeURIComponent(tag.name)}`} className="block group">
                                          <Badge variant="outline" className="text-sm px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-colors">
                                             #{tag.name}
