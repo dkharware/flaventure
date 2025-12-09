@@ -10,11 +10,11 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   }
 
   let endpoint: string;
-  if (storeDomain.includes('myshopify.com/api')) {
-    // If the user has provided the full API endpoint
+  // Check if the provided domain is a full URL.
+  if (storeDomain.startsWith('http')) {
     endpoint = storeDomain;
   } else {
-    // If the user has provided just the store domain
+    // If the user has provided just the store domain part.
     endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
   }
   
