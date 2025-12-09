@@ -1,5 +1,4 @@
 
-
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
@@ -34,7 +33,7 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
     }
     
     if (jsonResponse.errors) {
-      console.error("Shopify API returned GraphQL errors:", jsonResponse.errors);
+      console.error("Shopify API returned GraphQL errors:", JSON.stringify(jsonResponse.errors, null, 2));
     }
     return jsonResponse;
 
@@ -88,21 +87,19 @@ const ArticleFragment = gql`
 `;
 
 const ARTICLES_QUERY = gql`
-  query GetArticles($first: Int, $last: Int, $before: String, $after: String, $query: String, $blogHandle: String = "news") {
-    blog(handle: $blogHandle) {
-        articles(first: $first, last: $last, before: $before, after: $after, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
-          edges {
-            cursor
-            node {
-              ...ArticleFragment
-            }
+  query GetArticles($first: Int, $last: Int, $before: String, $after: String, $query: String) {
+    articles(first: $first, last: $last, before: $before, after: $after, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
+        edges {
+          cursor
+          node {
+            ...ArticleFragment
           }
-          pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-          }
+        }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
         }
     }
   }
@@ -111,29 +108,23 @@ const ARTICLES_QUERY = gql`
 
 const ARTICLE_QUERY = gql`
   query GetArticleByHandle($handle: String!) {
-    articles(first: 1, query: $handle) {
-        edges {
-            node {
-                ...ArticleFragment
-                contentHtml
-                pdf: metafield(namespace: "custom", key: "pdf_url") {
-                  value
-                }
-            }
-        }
+    articleByHandle(handle: $handle) {
+      ...ArticleFragment
+      contentHtml
+      pdf: metafield(namespace: "custom", key: "pdf_url") {
+        value
+      }
     }
   }
   ${ArticleFragment}
 `;
 
 const ALL_TAGS_QUERY = gql`
-  query GetAllTags($blogHandle: String = "news") {
-    blog(handle: $blogHandle) {
-      articles(first: 250) {
-        edges {
-          node {
-            tags
-          }
+  query GetAllTags {
+    articles(first: 250) {
+      edges {
+        node {
+          tags
         }
       }
     }
@@ -141,14 +132,12 @@ const ALL_TAGS_QUERY = gql`
 `;
 
 const ARTICLE_SUGGESTIONS_QUERY = gql`
-  query GetArticleSuggestions($first: Int, $query: String, $blogHandle: String = "news") {
-    blog(handle: $blogHandle) {
-        articles(first: $first, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
-          edges {
-            node {
-              title
-              handle
-            }
+  query GetArticleSuggestions($first: Int, $query: String) {
+    articles(first: $first, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
+        edges {
+          node {
+            title
+            handle
           }
         }
     }
@@ -173,7 +162,6 @@ export async function getArticles(
 
     const variables: Record<string, any> = {
         query: query,
-        blogHandle: "news" // Assuming a default blog handle
     };
 
     if (isPagingBackwards) {
@@ -186,20 +174,51 @@ export async function getArticles(
 
     const response = await shopifyFetch(ARTICLES_QUERY, variables);
     
-    if (!response.data?.blog?.articles?.edges) {
+    if (!response.data?.articles?.edges) {
         return { articles: [], pageInfo: { hasNextPage: false, hasPreviousPage: false, startCursor: null, endCursor: null } };
     }
 
-    const articles = response.data.blog.articles.edges.map((edge: any) => processArticleNode(edge.node));
+    const articles = response.data.articles.edges.map((edge: any) => processArticleNode(edge.node));
     
-    const pageInfo = response.data.blog.articles.pageInfo;
+    const pageInfo = response.data.articles.pageInfo;
 
     return { articles, pageInfo };
 }
 
 export async function getArticleByHandle(handle: string) {
-    const response = await shopifyFetch(ARTICLE_QUERY, { handle: `handle:${handle}` });
-    const articleNode = response.data?.articles?.edges[0]?.node;
+    // Note: articleByHandle requires a blog handle. Since we don't know it,
+    // we'll fetch from the global articles list and find the one with the matching handle.
+    // This is less direct but more robust if the blog structure changes.
+    const response = await shopifyFetch(ARTICLES_QUERY, { first: 250 });
+    
+    if (!response.data?.articles?.edges) {
+        return null;
+    }
+
+    const matchedEdge = response.data.articles.edges.find((edge: any) => edge.node.handle === handle);
+    
+    if (!matchedEdge) {
+        return null;
+    }
+
+    // Now fetch the full content for the matched article
+    const fullArticleResponse = await shopifyFetch(gql`
+        query GetFullArticle($id: ID!) {
+            node(id: $id) {
+                ... on Article {
+                    ...ArticleFragment
+                    contentHtml
+                    pdf: metafield(namespace: "custom", key: "pdf_url") {
+                      value
+                    }
+                }
+            }
+        }
+        ${ArticleFragment}
+    `, { id: matchedEdge.node.id });
+
+
+    const articleNode = fullArticleResponse.data?.node;
 
     if (!articleNode) {
         return null;
@@ -214,12 +233,12 @@ export async function getArticleByHandle(handle: string) {
 }
 
 export async function getAllTags() {
-    const response = await shopifyFetch(ALL_TAGS_QUERY, { blogHandle: 'news'});
-    if (!response.data?.blog?.articles?.edges) {
+    const response = await shopifyFetch(ALL_TAGS_QUERY);
+    if (!response.data?.articles?.edges) {
         return [];
     }
     const tagCounts: { [key: string]: number } = {};
-    response.data.blog.articles.edges.forEach((edge: { node: { tags: string[] } }) => {
+    response.data.articles.edges.forEach((edge: { node: { tags: string[] } }) => {
         edge.node.tags.forEach(tag => {
             if (tagCounts[tag]) {
                 tagCounts[tag]++;
@@ -249,9 +268,9 @@ export async function getArticleSuggestions(searchTerm: string) {
     }
     const searchQuery = `(title:*${searchTerm}* OR body:*${searchTerm}*)`;
     
-    const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: searchQuery, blogHandle: 'news' });
+    const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: searchQuery });
     
-    return response.data?.blog?.articles?.edges.map((edge: any) => ({
+    return response.data?.articles?.edges.map((edge: any) => ({
       title: edge.node.title,
       handle: edge.node.handle,
     })) || [];
