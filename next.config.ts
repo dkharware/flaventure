@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'https_val',
+        protocol: 'https',
         hostname: '5lgivccarqkvddiv.public.blob.vercel-storage.com',
         port: '',
         pathname: '/**',
