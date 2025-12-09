@@ -1,4 +1,5 @@
 
+
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
