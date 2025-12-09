@@ -120,7 +120,7 @@ export default function RootLayout({
       "name": "storedevguide",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/storedevguide.com.webp",
+        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/newlogo.webp",
         "width": 150,
         "height": 40
       }

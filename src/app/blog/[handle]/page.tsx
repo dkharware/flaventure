@@ -64,7 +64,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
       "name": "storedevguide",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/storedevguide.com.webp"
+        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/newlogo.webp"
       }
     },
     "description": article.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160)
