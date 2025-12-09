@@ -25,7 +25,8 @@ const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
 export default async function ArticlePage({ params }: NextPageProps<{ handle: string }>) {
-  const article = await getArticleByHandle(params.handle);
+  const resolvedParams = await params;
+  const article = await getArticleByHandle(resolvedParams.handle);
 
   if (!article) {
     notFound();
@@ -222,7 +223,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: NextPageProps<{ handle: string }>): Promise<Metadata> {
-  const article = await getArticleByHandle(params.handle);
+  const resolvedParams = await params;
+  const article = await getArticleByHandle(resolvedParams.handle);
 
   if (!article) {
     return {
