@@ -57,7 +57,7 @@ export default function NextjsStarterPage() {
             <header className="mb-12">
                 <h1 className="text-4xl md:text-5xl font-headline font-bold">Next.js Shopify Starter Template</h1>
                 <p className="text-lg text-muted-foreground mt-2 max-w-3xl">
-                    A production-ready boilerplate for building headless Shopify storefronts with Next.js, Tailwind CSS, and the Storefront API.
+                    Our free, production-ready boilerplate is the perfect starting point for building high-performance headless Shopify storefronts. It comes pre-configured with Next.js, Tailwind CSS, and seamless Storefront API integration, so you can skip the setup and start developing your unique brand experience right away.
                 </p>
                 <div className="flex flex-wrap gap-4 mt-6">
                     <Button asChild size="lg">

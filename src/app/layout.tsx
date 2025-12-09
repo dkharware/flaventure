@@ -29,7 +29,7 @@ const faviconUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/favi
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
+    default: 'Free Shopify Templates, Next.js Starters & Developer Guides',
     template: '%s | storedevguide',
   },
   description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',

@@ -62,7 +62,7 @@ export default function TemplatesHubPage() {
             <div className="text-center mb-12">
                 <h1 className="text-4xl md:text-5xl font-headline font-bold">Shopify Templates & Boilerplates</h1>
                 <p className="text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                    Download free, production-ready code templates to kickstart your next Shopify project.
+                   A hub for developers to download free, production-ready code templates—including Next.js starters, theme boilerplates, and Liquid snippets—to kickstart their next Shopify project.
                 </p>
             </div>
 
