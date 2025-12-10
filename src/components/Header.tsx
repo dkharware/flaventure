@@ -328,40 +328,64 @@ export default function Header() {
               </div>
               
                <div className="flex flex-col space-y-1 mt-4 border-t pt-2">
-                  <NavigationMenuLink asChild>
-                    <Link href="/" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Home className="mr-2 h-4 w-4" /> Home</Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link href="/shopify-templates-boilerplates" className={cn(navigationMenuTriggerStyle(), "justify-start")}><LayoutTemplate className="mr-2 h-4 w-4" /> Templates</Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start")}><BookCopy className="mr-2 h-4 w-4" /> Liquid Cheatsheet</Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link href="/tutorials/shopify-api-guide" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Wrench className="mr-2 h-4 w-4" /> API Guide</Link>
-                  </NavigationMenuLink>
-                  
-                  <p className="px-4 py-2 text-sm font-semibold text-muted-foreground">Tools</p>
-                  <NavigationMenuLink asChild>
-                    <Link href="/tools/meta-tag-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><DraftingCompass className="mr-2 h-4 w-4" /> Meta Tag Generator</Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link href="/tools/liquid-to-json-converter" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><FileJson className="mr-2 h-4 w-4" /> Liquid to JSON</Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link href="/tools/product-schema-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4")}><Hammer className="mr-2 h-4 w-4" /> Product Schema</Link>
-                  </NavigationMenuLink>
+                 <NavigationMenu orientation="vertical" className="w-full">
+                  <NavigationMenuList className="flex-col items-stretch space-x-0 space-y-1 w-full">
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><Home className="mr-2 h-4 w-4" /> Home</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><Newspaper className="mr-2 h-4 w-4" /> Blog</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/shopify-templates-boilerplates" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><LayoutTemplate className="mr-2 h-4 w-4" /> Templates</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/shopify-liquid-cheatsheet" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><BookCopy className="mr-2 h-4 w-4" /> Liquid Cheatsheet</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/tutorials/shopify-api-guide" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><Wrench className="mr-2 h-4 w-4" /> API Guide</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    
+                    <p className="px-4 py-2 text-sm font-semibold text-muted-foreground">Tools</p>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/tools/meta-tag-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4 w-[calc(100%-1rem)]")}><DraftingCompass className="mr-2 h-4 w-4" /> Meta Tag Generator</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/tools/liquid-to-json-converter" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4 w-[calc(100%-1rem)]")}><FileJson className="mr-2 h-4 w-4" /> Liquid to JSON</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/tools/product-schema-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4 w-[calc(100%-1rem)]")}><Hammer className="mr-2 h-4 w-4" /> Product Schema</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
 
-                  <p className="px-4 py-2 text-sm font-semibold text-muted-foreground">Company</p>
-                   <NavigationMenuLink asChild>
-                    <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Info className="mr-2 h-4 w-4" /> About</Link>
-                   </NavigationMenuLink>
-                   <NavigationMenuLink asChild>
-                    <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
-                   </NavigationMenuLink>
+                    <p className="px-4 py-2 text-sm font-semibold text-muted-foreground">Company</p>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><Info className="mr-2 h-4 w-4" /> About</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                 </NavigationMenu>
               </div>
 
             </SheetContent>
