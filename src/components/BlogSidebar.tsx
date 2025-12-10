@@ -14,6 +14,9 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { getAllTags, getArticles } from '@/lib/shopify';
 import { Skeleton } from './ui/skeleton';
+import placeholderTags from '@/lib/placeholder-tags.json';
+import placeholderArticles from '@/lib/placeholder-articles.json';
+
 
 interface Tag {
   name: string;
@@ -38,10 +41,23 @@ export function BlogSidebar({}: BlogSidebarProps) {
           getAllTags(),
           getArticles(5).then(res => res.articles)
         ]);
-        setTags(tagsData);
-        setRecentPosts(recentPostsData);
+        
+        if (tagsData && tagsData.length > 0) {
+          setTags(tagsData);
+        } else {
+          setTags(placeholderTags);
+        }
+
+        if (recentPostsData && recentPostsData.length > 0) {
+          setRecentPosts(recentPostsData);
+        } else {
+          setRecentPosts(placeholderArticles as any[]);
+        }
+
       } catch (error) {
-        console.error("Failed to fetch sidebar data", error);
+        console.error("Failed to fetch sidebar data, using placeholders.", error);
+        setTags(placeholderTags);
+        setRecentPosts(placeholderArticles as any[]);
       } finally {
         setIsLoading(false);
       }
@@ -128,11 +144,13 @@ export function BlogSidebar({}: BlogSidebarProps) {
                       )}
                       <div className="flex-grow">
                         <p className="font-semibold group-hover:text-primary transition-colors line-clamp-2 text-sm">{post.title}</p>
-                        <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
-                          <span>{post.readTime} min read</span>
-                          <span>&bull;</span>
-                          <span>{post.viewCount.toLocaleString()} views</span>
-                        </div>
+                        {post.readTime && post.viewCount && (
+                          <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
+                            <span>{post.readTime} min read</span>
+                            <span>&bull;</span>
+                            <span>{post.viewCount.toLocaleString()} views</span>
+                          </div>
+                        )}
                       </div>
                     </Link>
                   </li>
