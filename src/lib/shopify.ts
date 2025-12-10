@@ -3,8 +3,8 @@ import placeholderArticles from '@/lib/placeholder-articles.json';
 import placeholderTags from '@/lib/placeholder-tags.json';
 
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
-  const storeDomain = process.env.SHOPIFY_STORE_DOMAIN;
-  const accessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
+  const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   const apiVersion = '2024-04';
 
   if (!storeDomain || !accessToken || storeDomain.includes('your-store-name')) {
@@ -192,27 +192,21 @@ export async function getArticles(
 }
 
 export async function getArticleByHandle(handle: string) {
-    const query = gql`
-      query GetArticleByHandle($handle: String!) {
-        articles(first: 1, query: $handle) {
-          edges {
-            node {
-              ...ArticleFragment
-              contentHtml
-              pdf: metafield(namespace: "custom", key: "pdf_url") {
-                value
-              }
-            }
-          }
-        }
-      }
-      ${ArticleFragment}
-    `;
-    const response = await shopifyFetch(query, { handle: `handle:'${handle}'` });
+    const response = await shopifyFetch(ARTICLE_QUERY, { handle });
     
-    const articleNode = response.data?.articles?.edges[0]?.node;
+    const articleNode = response.data?.blog?.articleByHandle;
 
     if (!articleNode) {
+        const { articles } = await getArticles(1, `handle:${handle}`);
+        const foundArticle = articles[0];
+        if (foundArticle) {
+          const fullArticle = await shopifyFetch(ARTICLE_QUERY, { handle: foundArticle.handle });
+          const fullArticleNode = fullArticle.data?.blog?.articleByHandle;
+           if (fullArticleNode) {
+            return processArticleNode(fullArticleNode);
+          }
+        }
+
         const placeholder = getPlaceholderArticles().find(p => p.handle === handle) || getPlaceholderArticles()[0];
         return { ...placeholder, contentHtml: placeholder.excerptHtml, pdf: null };
     }
