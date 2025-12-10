@@ -1,4 +1,5 @@
 
+
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
@@ -108,11 +109,13 @@ const ARTICLES_QUERY = gql`
 
 const ARTICLE_QUERY = gql`
   query GetArticleByHandle($handle: String!) {
-    articleByHandle(handle: $handle) {
-      ...ArticleFragment
-      contentHtml
-      pdf: metafield(namespace: "custom", key: "pdf_url") {
-        value
+    blog(handle: "news") {
+      articleByHandle(handle: $handle) {
+        ...ArticleFragment
+        contentHtml
+        pdf: metafield(namespace: "custom", key: "pdf_url") {
+          value
+        }
       }
     }
   }
@@ -186,39 +189,9 @@ export async function getArticles(
 }
 
 export async function getArticleByHandle(handle: string) {
-    // Note: articleByHandle requires a blog handle. Since we don't know it,
-    // we'll fetch from the global articles list and find the one with the matching handle.
-    // This is less direct but more robust if the blog structure changes.
-    const response = await shopifyFetch(ARTICLES_QUERY, { first: 250 });
+    const response = await shopifyFetch(ARTICLE_QUERY, { handle });
     
-    if (!response.data?.articles?.edges) {
-        return null;
-    }
-
-    const matchedEdge = response.data.articles.edges.find((edge: any) => edge.node.handle === handle);
-    
-    if (!matchedEdge) {
-        return null;
-    }
-
-    // Now fetch the full content for the matched article
-    const fullArticleResponse = await shopifyFetch(gql`
-        query GetFullArticle($id: ID!) {
-            node(id: $id) {
-                ... on Article {
-                    ...ArticleFragment
-                    contentHtml
-                    pdf: metafield(namespace: "custom", key: "pdf_url") {
-                      value
-                    }
-                }
-            }
-        }
-        ${ArticleFragment}
-    `, { id: matchedEdge.node.id });
-
-
-    const articleNode = fullArticleResponse.data?.node;
+    const articleNode = response.data?.blog?.articleByHandle;
 
     if (!articleNode) {
         return null;
