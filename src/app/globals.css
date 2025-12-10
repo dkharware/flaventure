@@ -68,7 +68,7 @@
     @apply bg-background text-foreground;
   }
   .prose {
-    @apply text-base;
+    @apply text-base text-foreground;
   }
 
   .dark .prose {
