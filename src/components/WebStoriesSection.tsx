@@ -65,6 +65,13 @@ export default function WebStoriesSection() {
     const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
+        const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+
+        if (!hasApiKeys) {
+            setIsLoading(false);
+            return;
+        }
+
         const fetchArticles = async () => {
             try {
                 const { articles: fetchedArticles } = await getArticles(8);
@@ -104,7 +111,7 @@ export default function WebStoriesSection() {
               <CarouselContent>
                 {articles.map((article: any) => (
                   <CarouselItem key={article.id} className="basis-2/3 md:basis-1/2 lg:basis-1/3">
-                    {isLoading && article.id.startsWith('placeholder') ? (
+                    {isLoading ? (
                         <div className="relative aspect-[4/5] w-full h-auto rounded-xl overflow-hidden">
                             <Skeleton className="h-full w-full" />
                         </div>

@@ -34,7 +34,16 @@ export function BlogSidebar({}: BlogSidebarProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+    
     async function fetchData() {
+      if (!hasApiKeys) {
+        setTags(placeholderTags);
+        setRecentPosts(placeholderArticles as any[]);
+        setIsLoading(false);
+        return;
+      }
+      
       setIsLoading(true);
       try {
         const [tagsData, recentPostsData] = await Promise.all([

@@ -57,6 +57,13 @@ export default function BlogSection() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+
+        if (!hasApiKeys) {
+            setIsLoading(false);
+            return;
+        }
+
         const fetchArticles = async () => {
             try {
                 const { articles: fetchedArticles } = await getArticles(9);

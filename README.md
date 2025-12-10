@@ -10,6 +10,8 @@ To get started, take a look at `src/app/page.tsx`. The main blog logic is in `sr
 
 To connect your Shopify store, you need to provide two pieces of information in your `.env` file: your store domain and a **Storefront API access token**.
 
+**The application will show placeholder data until valid credentials are provided.**
+
 ### Step 1: Find Your Store Domain
 
 This is the `myshopify.com` URL for your store (e.g., `your-store-name.myshopify.com`).
@@ -19,7 +21,7 @@ This is the `myshopify.com` URL for your store (e.g., `your-store-name.myshopify
 1.  From your Shopify admin, go to **Settings** > **Apps and sales channels**.
 2.  Click **Develop apps**, then **Create an app**. Give it a name like "Headless Blog".
 3.  Once created, go to the **Configuration** tab. In the **Storefront API integration** section, click **Edit**.
-4.  Check the boxes for the permissions you need. For this blog, you **MUST** enable the following:
+4.  Check the boxes for the permissions you need. For this blog, you **MUST** enable the following permissions:
     *   `unauthenticated_read_content` (to read blogs, articles, and pages)
     *   `unauthenticated_read_product_listings` (to read products and collections, which are used for tags)
 5.  Click **Save**.
