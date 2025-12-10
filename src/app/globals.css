@@ -69,7 +69,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
   .prose {
     @apply text-base text-foreground;
@@ -95,7 +95,7 @@
   }
 
   .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-    @apply font-headline text-foreground;
+    @apply text-foreground;
   }
 
   .prose p, .prose span, .prose li, .prose strong, .prose a {
