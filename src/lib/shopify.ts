@@ -7,7 +7,7 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   const apiVersion = '2024-04';
 
-  if (!storeDomain || !accessToken || storeDomain.includes('your-store-name')) {
+  if (!storeDomain || !accessToken || storeDomain.includes('your-store-name') || !accessToken.trim()) {
     const errorMsg = "Shopify API credentials are not configured. Returning placeholder data.";
     console.warn(errorMsg);
     return { data: null, errors: [{ message: errorMsg }] };
@@ -154,13 +154,14 @@ const processArticleNode = (node: any) => {
   };
 };
 
-const getPlaceholderArticles = () => {
-    return placeholderArticles.map(article => ({
+const getPlaceholderArticles = (count?: number) => {
+    const articles = placeholderArticles.map(article => ({
         ...article,
         viewCount: getDeterministicViewCount(article.handle),
         readTime: getDeterministicReadTime(article.excerptHtml),
         authorV2: { name: 'Author' }
     }));
+    return count ? articles.slice(0, count) : articles;
 }
 
 export async function getArticles(
@@ -181,8 +182,8 @@ export async function getArticles(
 
     const response = await shopifyFetch(ARTICLES_QUERY, variables);
     
-    if (!response.data?.articles?.edges) {
-        const articles = getPlaceholderArticles().slice(0, count);
+    if (!response.data?.articles?.edges || response.errors) {
+        const articles = getPlaceholderArticles(count);
         return { articles, pageInfo: { hasNextPage: articles.length >= count, hasPreviousPage: false, startCursor: null, endCursor: null } };
     }
 
@@ -196,18 +197,8 @@ export async function getArticleByHandle(handle: string) {
     
     const articleNode = response.data?.blog?.articleByHandle;
 
-    if (!articleNode) {
-        const { articles } = await getArticles(1, `handle:${handle}`);
-        const foundArticle = articles[0];
-        if (foundArticle) {
-          const fullArticle = await shopifyFetch(ARTICLE_QUERY, { handle: foundArticle.handle });
-          const fullArticleNode = fullArticle.data?.blog?.articleByHandle;
-           if (fullArticleNode) {
-            return processArticleNode(fullArticleNode);
-          }
-        }
-
-        const placeholder = getPlaceholderArticles().find(p => p.handle === handle) || getPlaceholderArticles()[0];
+    if (!articleNode || response.errors) {
+        const placeholder = getPlaceholderArticles().find(p => p.handle === handle) || getPlaceholderArticles(1)[0];
         return { ...placeholder, contentHtml: placeholder.excerptHtml, pdf: null };
     }
 
@@ -221,7 +212,7 @@ export async function getArticleByHandle(handle: string) {
 
 export async function getAllTags() {
     const response = await shopifyFetch(ALL_TAGS_QUERY);
-    if (!response.data?.articles?.edges) {
+    if (!response.data?.articles?.edges || response.errors) {
         return placeholderTags;
     }
     const tagCounts: { [key: string]: number } = {};
@@ -259,7 +250,7 @@ export async function getArticleSuggestions(searchTerm: string) {
     
     const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: searchQuery });
 
-    if (!response.data?.articles?.edges) {
+    if (!response.data?.articles?.edges || response.errors) {
         return placeholderArticles
             .filter(a => a.title.toLowerCase().includes(searchTerm.toLowerCase()))
             .map(a => ({ title: a.title, handle: a.handle }));
