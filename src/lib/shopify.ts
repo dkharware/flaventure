@@ -7,15 +7,14 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   const apiVersion = '2024-04';
 
-  // Log the credentials to test if they are loading
   console.log('Attempting to connect to Shopify with the following credentials:');
   console.log(`- Store Domain: ${storeDomain}`);
   console.log(`- Access Token (first 8 chars): ${accessToken?.substring(0, 8)}...`);
 
-
   if (!storeDomain || !accessToken || storeDomain.includes('your-store-name') || !accessToken.trim()) {
-    const errorMsg = "Shopify API credentials are not configured. Returning placeholder data.";
-    console.warn(errorMsg);
+    const errorMsg = "Shopify API credentials are not configured in environment variables.";
+    console.error(errorMsg);
+    // Always return a structure that won't crash the app, but log the configuration error.
     return { data: null, errors: [{ message: errorMsg }] };
   }
   
@@ -35,8 +34,8 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
     const jsonResponse = await response.json();
 
     if (!response.ok) {
-        const responseBody = jsonResponse.errors ? JSON.stringify(jsonResponse.errors, null, 2) : await response.text();
-        const error = `Shopify API request failed with status ${response.status}: ${responseBody}`;
+        const responseBody = jsonResponse.errors ? JSON.stringify(jsonResponse.errors, null, 2) : `Response status: ${response.status}`;
+        const error = `Shopify API request failed. Status: ${response.status}. Body: ${responseBody}`;
         console.error(error);
         return { data: null, errors: [{ message: error }] };
     }
@@ -189,6 +188,7 @@ export async function getArticles(
     const response = await shopifyFetch(ARTICLES_QUERY, variables);
     
     if (!response.data?.articles?.edges || response.errors) {
+        console.warn("getArticles: Shopify API call failed or returned no articles. Returning placeholder data.");
         const articles = getPlaceholderArticles(count);
         return { articles, pageInfo: { hasNextPage: articles.length >= count, hasPreviousPage: false, startCursor: null, endCursor: null } };
     }
@@ -204,6 +204,7 @@ export async function getArticleByHandle(handle: string) {
     const articleNode = response.data?.blog?.articleByHandle;
 
     if (!articleNode || response.errors) {
+        console.warn(`getArticleByHandle: Shopify API call failed for handle "${handle}". Returning placeholder data.`);
         const placeholder = getPlaceholderArticles().find(p => p.handle === handle) || getPlaceholderArticles(1)[0];
         return { ...placeholder, contentHtml: placeholder.excerptHtml, pdf: null };
     }
@@ -219,6 +220,7 @@ export async function getArticleByHandle(handle: string) {
 export async function getAllTags() {
     const response = await shopifyFetch(ALL_TAGS_QUERY);
     if (!response.data?.articles?.edges || response.errors) {
+        console.warn("getAllTags: Shopify API call failed. Returning placeholder data.");
         return placeholderTags;
     }
     const tagCounts: { [key: string]: number } = {};
@@ -257,6 +259,7 @@ export async function getArticleSuggestions(searchTerm: string) {
     const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: searchQuery });
 
     if (!response.data?.articles?.edges || response.errors) {
+        console.warn("getArticleSuggestions: Shopify API call failed. Returning placeholder data.");
         return placeholderArticles
             .filter(a => a.title.toLowerCase().includes(searchTerm.toLowerCase()))
             .map(a => ({ title: a.title, handle: a.handle }));
