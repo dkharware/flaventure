@@ -12,8 +12,6 @@ const FaqSection = lazy(() => import('@/components/FaqSection'));
 
 export default async function Home() {
     const { articles } = await getArticles(5);
-    const { articles: popularArticles } = await getArticles(4, `(tag:'popular' OR tag:'featured')`);
-
 
   return (
     <div className="w-full">
@@ -33,7 +31,7 @@ export default async function Home() {
 
       <section className="container py-8 md:py-12">
         <Suspense fallback={<SectionSkeleton />}>
-          <FeaturedArticles articles={articles} popularArticles={popularArticles} />
+          <FeaturedArticles articles={articles} />
         </Suspense>
       </section>
 

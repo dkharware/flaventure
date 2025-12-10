@@ -137,13 +137,36 @@ const PopularArticleItem = ({ article }: { article: Article }) => (
 );
 
 
-export function FeaturedArticles({ articles, popularArticles }: { articles: Article[], popularArticles: Article[] }) {
+export function FeaturedArticles({ articles: latestArticles }: { articles: Article[] }) {
+    const [popularArticles, setPopularArticles] = useState<Article[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchPopular() {
+            setIsLoading(true);
+            try {
+                const { articles: fetchedPopular } = await getArticles(4, `(tag:'popular' OR tag:'featured')`);
+                if (fetchedPopular.length > 0) {
+                    setPopularArticles(fetchedPopular);
+                } else {
+                    // Fallback to latest articles if no popular ones are found
+                    setPopularArticles(latestArticles.slice(1, 5));
+                }
+            } catch (e) {
+                console.error("Failed to fetch popular articles, using latest instead.", e);
+                setPopularArticles(latestArticles.slice(1, 5));
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchPopular();
+    }, [latestArticles]);
     
-    if (!articles || articles.length === 0) {
+    if (!latestArticles || latestArticles.length === 0) {
         return <div className="hidden">No articles to display.</div>;
     }
 
-    const mainArticle = articles[0];
+    const mainArticle = latestArticles[0];
 
     return (
         <section className="container">
@@ -157,9 +180,7 @@ export function FeaturedArticles({ articles, popularArticles }: { articles: Arti
                         <h3 className="font-bold font-headline text-xl">Popular Articles</h3>
                     </div>
                     
-                    {popularArticles.length > 0 ? (
-                        popularArticles.map(article => <PopularArticleItem key={article.id} article={article} />)
-                    ) : (
+                    {isLoading ? (
                         Array.from({ length: 4 }).map((_, i) => (
                             <div key={i} className="flex gap-4 items-start border-b border-border/20 pb-4">
                                 <div className='w-1/3'>
@@ -171,6 +192,8 @@ export function FeaturedArticles({ articles, popularArticles }: { articles: Arti
                                 </div>
                             </div>
                         ))
+                    ) : (
+                        popularArticles.map(article => <PopularArticleItem key={article.id} article={article} />)
                     )}
                 </div>
             </div>
