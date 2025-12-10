@@ -1,15 +1,20 @@
 
+import placeholderArticles from '@/lib/placeholder-articles.json';
+import placeholderTags from '@/lib/placeholder-tags.json';
+
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   const apiVersion = '2024-04';
 
-  if (!storeDomain || !accessToken) {
-    const errorMsg = "Shopify API credentials are not configured. Blog posts will not be loaded.";
+  if (!storeDomain || !accessToken || storeDomain === 'your-store-name.myshopify.com') {
+    const errorMsg = "Shopify API credentials are not configured. Returning placeholder data.";
     console.warn(errorMsg);
-    return { data: null, errors: [{ message: `${errorMsg} Please add NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN to your .env file.` }] };
+    // Returning a structure that looks like a failed API call with an error message
+    // but the calling functions will handle this by returning placeholders.
+    return { data: null, errors: [{ message: errorMsg }] };
   }
-
+  
   const endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
   
   try {
@@ -155,6 +160,15 @@ const processArticleNode = (node: any) => {
   };
 };
 
+const getPlaceholderArticles = () => {
+    return placeholderArticles.map(article => ({
+        ...article,
+        viewCount: getDeterministicViewCount(article.handle),
+        readTime: getDeterministicReadTime(article.excerptHtml),
+        authorV2: { name: 'Author' } // Add placeholder author
+    }));
+}
+
 export async function getArticles(
     count: number = 12, 
     query?: string, 
@@ -177,7 +191,8 @@ export async function getArticles(
     const response = await shopifyFetch(ARTICLES_QUERY, variables);
     
     if (!response.data?.articles?.edges) {
-        return { articles: [], pageInfo: { hasNextPage: false, hasPreviousPage: false, startCursor: null, endCursor: null } };
+        const articles = getPlaceholderArticles().slice(0, count);
+        return { articles, pageInfo: { hasNextPage: articles.length >= count, hasPreviousPage: false, startCursor: null, endCursor: null } };
     }
 
     const articles = response.data.articles.edges.map((edge: any) => processArticleNode(edge.node)).filter(Boolean);
@@ -193,7 +208,8 @@ export async function getArticleByHandle(handle: string) {
     const articleNode = response.data?.blog?.articleByHandle;
 
     if (!articleNode) {
-        return null;
+        const placeholder = getPlaceholderArticles().find(p => p.handle === handle) || getPlaceholderArticles()[0];
+        return { ...placeholder, contentHtml: placeholder.excerptHtml, pdf: null };
     }
 
     const processedArticle = processArticleNode(articleNode);
@@ -207,7 +223,7 @@ export async function getArticleByHandle(handle: string) {
 export async function getAllTags() {
     const response = await shopifyFetch(ALL_TAGS_QUERY);
     if (!response.data?.articles?.edges) {
-        return [];
+        return placeholderTags;
     }
     const tagCounts: { [key: string]: number } = {};
     response.data.articles.edges.forEach((edge: { node: { tags: string[] } }) => {
@@ -220,8 +236,10 @@ export async function getAllTags() {
         });
     });
 
-    return Object.entries(tagCounts).map(([name, count]) => ({ name, count }))
+    const tags = Object.entries(tagCounts).map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count);
+
+    return tags.length > 0 ? tags : placeholderTags;
 }
 
 export async function getRelatedArticles(handle: string, tags: string[]) {
@@ -241,6 +259,12 @@ export async function getArticleSuggestions(searchTerm: string) {
     const searchQuery = `(title:*${searchTerm}* OR body:*${searchTerm}*)`;
     
     const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: searchQuery });
+
+    if (!response.data?.articles?.edges) {
+        return placeholderArticles
+            .filter(a => a.title.toLowerCase().includes(searchTerm.toLowerCase()))
+            .map(a => ({ title: a.title, handle: a.handle }));
+    }
     
     return response.data?.articles?.edges.map((edge: any) => ({
       title: edge.node.title,
