@@ -160,10 +160,12 @@ export default function RootLayout({
           <LoaderProvider>
               <div className="flex flex-col min-h-screen">
                 <Header />
-                 <Suspense fallback={<TagsSkeleton />}>
-                  <BlogTags />
-                </Suspense>
-                <main className="flex-grow pt-24">{children}</main>
+                 <div className="pt-24">
+                  <Suspense fallback={<TagsSkeleton />}>
+                    <BlogTags />
+                  </Suspense>
+                 </div>
+                <main className="flex-grow">{children}</main>
                 <Footer />
               </div>
               <Toaster />
