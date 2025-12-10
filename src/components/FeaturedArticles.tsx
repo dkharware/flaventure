@@ -113,7 +113,7 @@ const PopularArticleItem = ({ article }: { article: Article }) => (
         <Card className="h-full overflow-hidden border-b border-border/20 rounded-none p-0 pb-4 bg-transparent shadow-none">
             <div className="flex gap-4 items-start">
                 {article.image && (
-                    <div className="relative w-1/3 aspect-square rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="relative w-1/3 aspect-[16/9] rounded-lg overflow-hidden flex-shrink-0">
                         <Image
                             src={article.image.url}
                             alt={article.image.altText || article.title}
@@ -184,7 +184,7 @@ export function FeaturedArticles({ articles: latestArticles }: { articles: Artic
                         Array.from({ length: 4 }).map((_, i) => (
                             <div key={i} className="flex gap-4 items-start border-b border-border/20 pb-4">
                                 <div className='w-1/3'>
-                                    <Skeleton className="w-20 h-16 aspect-square rounded-lg flex-shrink-0" />
+                                    <Skeleton className="w-24 h-16 rounded-lg flex-shrink-0" />
                                 </div>
                                 <div className="flex flex-col flex-grow space-y-2 w-2/3">
                                     <Skeleton className="h-4 w-full" />
