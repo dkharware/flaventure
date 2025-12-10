@@ -158,7 +158,7 @@ export default function RootLayout({
           <div className="absolute bottom-0 right-[-30%] w-[80%] h-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent))_0%,_transparent_40%)] animate-float animation-delay-[-5s] -z-10 opacity-40"></div>
 
           <LoaderProvider>
-              <div className="flex flex-col min-h-screen">
+              <div className="flex flex-col min-h-screen overflow-x-hidden">
                 <Header />
                  <div className="pt-24">
                   <Suspense fallback={<TagsSkeleton />}>
