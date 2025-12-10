@@ -19,15 +19,11 @@ export default {
       screens: {
         '3xl': '1800px',
       },
-      typography: (theme: (arg0: string) => any) => ({
-        DEFAULT: {
-          css: {
-            pre: {
-              'white-space': 'pre-wrap',
-            },
-          },
-        },
-      }),
+      typography: {
+        // This is intentionally left empty to resolve a warning.
+        // You can add customizations here in the future if needed.
+        prose: {},
+      },
       fontFamily: {
         body: [
           '-apple-system',
