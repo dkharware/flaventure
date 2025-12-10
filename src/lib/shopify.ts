@@ -8,9 +8,7 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   const apiVersion = '2024-04';
 
   if (!storeDomain || !accessToken || storeDomain.includes('your-store-name') || !accessToken.trim()) {
-    const errorMsg = "Shopify API credentials are not configured in environment variables.";
-    // Always return a structure that won't crash the app, but log the configuration error.
-    return { data: null, errors: [{ message: errorMsg }] };
+    return { data: null, errors: [{ message: "Shopify API credentials are not configured." }] };
   }
   
   const endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;

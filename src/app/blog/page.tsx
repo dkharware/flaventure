@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
-import { Eye, User, ArrowRight } from 'lucide-react';
+import { Eye, User, ArrowRight, AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
@@ -15,6 +15,7 @@ import { ArticleList, ArticleCardSkeleton } from '@/components/ArticleList';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BlogSearch } from '@/components/BlogSearch';
 import { NextPageProps } from '../types';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export const metadata: Metadata = {
   title: 'E-commerce & Web Dev Blog | storedevguide',
@@ -42,6 +43,22 @@ function FeaturedArticleSkeleton() {
             </div>
         </Card>
     );
+}
+
+function MissingApiKeyWarning() {
+  if (process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN && !process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN.includes('your-store-name')) {
+    return null;
+  }
+
+  return (
+    <Alert variant="destructive" className="mb-8 bg-yellow-500/10 border-yellow-500/50 text-yellow-200">
+      <AlertTriangle className="h-4 w-4 !text-yellow-400" />
+      <AlertTitle className="text-yellow-300 font-bold">Configuration Needed</AlertTitle>
+      <AlertDescription>
+        You are seeing placeholder data. To connect your own Shopify store, set the <code>NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN</code> and <code>NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN</code> environment variables on your deployment server.
+      </AlertDescription>
+    </Alert>
+  );
 }
 
 export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
@@ -90,6 +107,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
+              <MissingApiKeyWarning />
               <Suspense fallback={
                 <div className="space-y-12">
                     <FeaturedArticleSkeleton />
