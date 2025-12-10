@@ -8,7 +8,7 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   if (!storeDomain || !accessToken) {
     const errorMsg = "Shopify API credentials are not configured. Blog posts will not be loaded.";
     console.warn(errorMsg);
-    return { data: null, errors: [{ message: `${errorMsg} Please add NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN to your .env.local file.` }] };
+    return { data: null, errors: [{ message: `${errorMsg} Please add NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN to your .env file.` }] };
   }
 
   const endpoint = `https://${storeDomain}/api/${apiVersion}/graphql.json`;
