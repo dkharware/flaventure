@@ -10,8 +10,6 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   if (!storeDomain || !accessToken || storeDomain === 'your-store-name.myshopify.com') {
     const errorMsg = "Shopify API credentials are not configured. Returning placeholder data.";
     console.warn(errorMsg);
-    // Returning a structure that looks like a failed API call with an error message
-    // but the calling functions will handle this by returning placeholders.
     return { data: null, errors: [{ message: errorMsg }] };
   }
   
@@ -25,7 +23,7 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
         'X-Shopify-Storefront-Access-Token': accessToken,
       },
       body: JSON.stringify({ query, variables }),
-      next: { revalidate: 60 } // Use Next.js revalidation
+      next: { revalidate: 60 }
     });
 
     const jsonResponse = await response.json();
@@ -49,26 +47,22 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   }
 }
 
-
-// Simple deterministic hash function for generating view counts
 const getDeterministicViewCount = (handle: string) => {
     let hash = 0;
     for (let i = 0; i < handle.length; i++) {
         const char = handle.charCodeAt(i);
         hash = (hash << 5) - hash + char;
-        hash |= 0; // Convert to 32bit integer
+        hash |= 0;
     }
-    return Math.abs(hash % 4000) + 250; // Generate a number between 250 and 4250
+    return Math.abs(hash % 4000) + 250;
 };
 
-// Simple deterministic hash function for generating read times
 const getDeterministicReadTime = (content: string) => {
     const wordsPerMinute = 200;
     const wordCount = content ? content.split(/\s+/).length : 0;
     const readTime = Math.ceil(wordCount / wordsPerMinute);
-    return Math.max(1, readTime); // Ensure at least 1 minute read time
+    return Math.max(1, readTime);
 }
-
 
 const gql = String.raw;
 
@@ -165,7 +159,7 @@ const getPlaceholderArticles = () => {
         ...article,
         viewCount: getDeterministicViewCount(article.handle),
         readTime: getDeterministicReadTime(article.excerptHtml),
-        authorV2: { name: 'Author' } // Add placeholder author
+        authorV2: { name: 'Author' }
     }));
 }
 
@@ -175,10 +169,7 @@ export async function getArticles(
     pagination: { before?: string; after?: string } = {}
 ) {
     const isPagingBackwards = !!pagination.before;
-
-    const variables: Record<string, any> = {
-        query: query,
-    };
+    const variables: Record<string, any> = { query };
 
     if (isPagingBackwards) {
         variables.last = count;
@@ -196,16 +187,30 @@ export async function getArticles(
     }
 
     const articles = response.data.articles.edges.map((edge: any) => processArticleNode(edge.node)).filter(Boolean);
-    
     const pageInfo = response.data.articles.pageInfo;
-
     return { articles, pageInfo };
 }
 
 export async function getArticleByHandle(handle: string) {
-    const response = await shopifyFetch(ARTICLE_QUERY, { handle });
+    const query = gql`
+      query GetArticleByHandle($handle: String!) {
+        articles(first: 1, query: $handle) {
+          edges {
+            node {
+              ...ArticleFragment
+              contentHtml
+              pdf: metafield(namespace: "custom", key: "pdf_url") {
+                value
+              }
+            }
+          }
+        }
+      }
+      ${ArticleFragment}
+    `;
+    const response = await shopifyFetch(query, { handle: `handle:'${handle}'` });
     
-    const articleNode = response.data?.blog?.articleByHandle;
+    const articleNode = response.data?.articles?.edges[0]?.node;
 
     if (!articleNode) {
         const placeholder = getPlaceholderArticles().find(p => p.handle === handle) || getPlaceholderArticles()[0];
