@@ -110,6 +110,9 @@
   .prose a {
     @apply text-primary hover:underline;
   }
+  .prose strong {
+    color: hsl(var(--foreground));
+  }
   .prose blockquote {
     @apply border-l-4 border-primary bg-secondary/40 p-4 italic;
   }
