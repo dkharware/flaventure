@@ -150,7 +150,7 @@ export default function RootLayout({
       </head>
       <body className={cn(
           readexPro.className,
-          "font-body antialiased relative overflow-x-hidden"
+          "font-body antialiased relative"
         )}
       >
           <div className="absolute top-0 left-0 w-full h-full bg-grid-black -z-20"></div>
