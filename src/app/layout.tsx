@@ -78,7 +78,6 @@ export const metadata: Metadata = {
     shortcut: faviconUrl,
     apple: faviconUrl,
   },
-  manifest: `/site.webmanifest`,
 };
 
 const TagsSkeleton = () => (
@@ -148,7 +147,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-        <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className={cn(
           readexPro.className,
