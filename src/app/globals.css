@@ -72,7 +72,7 @@
   }
 
   .dark .prose {
-      --tw-prose-body: hsl(var(--foreground) / 0.9);
+      --tw-prose-body: hsl(var(--foreground) / 0.95);
       --tw-prose-headings: hsl(var(--foreground));
       --tw-prose-lead: hsl(var(--foreground) / 0.9);
       --tw-prose-links: hsl(var(--primary));
