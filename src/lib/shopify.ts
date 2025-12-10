@@ -9,7 +9,6 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
 
   if (!storeDomain || !accessToken || storeDomain.includes('your-store-name') || !accessToken.trim()) {
     const errorMsg = "Shopify API credentials are not configured in environment variables.";
-    console.error(errorMsg);
     // Always return a structure that won't crash the app, but log the configuration error.
     return { data: null, errors: [{ message: errorMsg }] };
   }
@@ -32,17 +31,14 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
     if (!response.ok) {
         const responseBody = jsonResponse.errors ? JSON.stringify(jsonResponse.errors, null, 2) : `Response status: ${response.status}`;
         const error = `Shopify API request failed. Status: ${response.status}. Body: ${responseBody}`;
-        console.error(error);
         return { data: null, errors: [{ message: error }] };
     }
     
     if (jsonResponse.errors) {
-      console.error("Shopify API returned GraphQL errors:", JSON.stringify(jsonResponse.errors, null, 2));
     }
     return jsonResponse;
 
   } catch (error) {
-    console.error("Failed to fetch from Shopify:", error);
     const errorMessage = error instanceof Error ? error.message : "Unknown fetch error";
     return { data: null, errors: [{ message: `Failed to fetch from Shopify: ${errorMessage}` }] };
   }
@@ -150,6 +146,7 @@ const processArticleNode = (node: any) => {
   if (!node) return null;
   return {
     ...node,
+    tags: node.tags || [],
     viewCount: getDeterministicViewCount(node.handle),
     readTime: getDeterministicReadTime(node.content || node.contentHtml || '')
   };
@@ -184,7 +181,6 @@ export async function getArticles(
     const response = await shopifyFetch(ARTICLES_QUERY, variables);
     
     if (!response.data?.articles?.edges || response.errors) {
-        console.warn("getArticles: Shopify API call failed or returned no articles. Returning placeholder data.");
         const articles = getPlaceholderArticles(count);
         return { articles, pageInfo: { hasNextPage: articles.length >= count, hasPreviousPage: false, startCursor: null, endCursor: null } };
     }
@@ -200,7 +196,6 @@ export async function getArticleByHandle(handle: string) {
     const articleNode = response.data?.blog?.articleByHandle;
 
     if (!articleNode || response.errors) {
-        console.warn(`getArticleByHandle: Shopify API call failed for handle "${handle}". Returning placeholder data.`);
         const placeholder = getPlaceholderArticles().find(p => p.handle === handle) || getPlaceholderArticles(1)[0];
         return { ...placeholder, contentHtml: placeholder.excerptHtml, pdf: null };
     }
@@ -216,7 +211,6 @@ export async function getArticleByHandle(handle: string) {
 export async function getAllTags() {
     const response = await shopifyFetch(ALL_TAGS_QUERY);
     if (!response.data?.articles?.edges || response.errors) {
-        console.warn("getAllTags: Shopify API call failed. Returning placeholder data.");
         return placeholderTags;
     }
     const tagCounts: { [key: string]: number } = {};
@@ -237,7 +231,7 @@ export async function getAllTags() {
 }
 
 export async function getRelatedArticles(handle: string, tags: string[]) {
-    if (tags.length === 0) {
+    if (!tags || tags.length === 0) {
         const { articles } = await getArticles(5);
         return articles.filter((a: any) => a.handle !== handle).slice(0, 4);
     }
@@ -255,7 +249,6 @@ export async function getArticleSuggestions(searchTerm: string) {
     const response = await shopifyFetch(ARTICLE_SUGGESTIONS_QUERY, { first: 5, query: searchQuery });
 
     if (!response.data?.articles?.edges || response.errors) {
-        console.warn("getArticleSuggestions: Shopify API call failed. Returning placeholder data.");
         return placeholderArticles
             .filter(a => a.title.toLowerCase().includes(searchTerm.toLowerCase()))
             .map(a => ({ title: a.title, handle: a.handle }));
