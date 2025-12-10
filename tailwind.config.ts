@@ -19,11 +19,6 @@ export default {
       screens: {
         '3xl': '1800px',
       },
-      typography: {
-        // This is intentionally left empty to resolve a warning.
-        // You can add customizations here in the future if needed.
-        prose: {},
-      },
       fontFamily: {
         body: [
           '-apple-system',
