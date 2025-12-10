@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply overflow-x-hidden;
+  }
+  
   :root {
     --background: 0 0% 8%;
     --foreground: 0 0% 98%;
@@ -94,8 +98,8 @@
     @apply font-headline text-foreground;
   }
 
-  .prose p, .prose span, .prose li {
-    @apply leading-relaxed text-foreground;
+  .prose p, .prose span, .prose li, .prose strong, .prose a {
+    @apply text-foreground;
   }
   .prose ul {
     @apply list-disc pl-5 space-y-2;
