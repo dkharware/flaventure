@@ -3,11 +3,11 @@ import placeholderArticles from '@/lib/placeholder-articles.json';
 import placeholderTags from '@/lib/placeholder-tags.json';
 
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
-  const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
-  const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  const storeDomain = process.env.SHOPIFY_STORE_DOMAIN;
+  const accessToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   const apiVersion = '2024-04';
 
-  if (!storeDomain || !accessToken || storeDomain === 'your-store-name.myshopify.com') {
+  if (!storeDomain || !accessToken || storeDomain.includes('your-store-name')) {
     const errorMsg = "Shopify API credentials are not configured. Returning placeholder data.";
     console.warn(errorMsg);
     return { data: null, errors: [{ message: errorMsg }] };
