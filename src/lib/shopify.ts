@@ -1,5 +1,4 @@
 
-
 async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
   const storeDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
@@ -60,7 +59,7 @@ const getDeterministicViewCount = (handle: string) => {
 // Simple deterministic hash function for generating read times
 const getDeterministicReadTime = (content: string) => {
     const wordsPerMinute = 200;
-    const wordCount = content.split(/\s+/).length;
+    const wordCount = content ? content.split(/\s+/).length : 0;
     const readTime = Math.ceil(wordCount / wordsPerMinute);
     return Math.max(1, readTime); // Ensure at least 1 minute read time
 }
@@ -75,7 +74,7 @@ const ArticleFragment = gql`
     handle
     excerptHtml
     publishedAt
-    content(truncateAt: 500)
+    content
     image {
       url
       altText
@@ -181,7 +180,7 @@ export async function getArticles(
         return { articles: [], pageInfo: { hasNextPage: false, hasPreviousPage: false, startCursor: null, endCursor: null } };
     }
 
-    const articles = response.data.articles.edges.map((edge: any) => processArticleNode(edge.node));
+    const articles = response.data.articles.edges.map((edge: any) => processArticleNode(edge.node)).filter(Boolean);
     
     const pageInfo = response.data.articles.pageInfo;
 
