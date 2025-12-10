@@ -66,6 +66,6 @@
     "typescript": "^5"
   },
   "overrides": {
-    "@genkit-ai/next": "^1.0.0"
+    "@genkit-ai/next": "1.0.0"
   }
 }
