@@ -102,6 +102,7 @@
   }
   .prose p {
     @apply leading-relaxed;
+    color: hsl(var(--foreground));
   }
   .prose ul {
     @apply list-disc pl-5 space-y-2;
