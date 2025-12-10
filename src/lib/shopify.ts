@@ -7,10 +7,6 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   const apiVersion = '2024-04';
 
-  console.log('Attempting to connect to Shopify with the following credentials:');
-  console.log(`- Store Domain: ${storeDomain}`);
-  console.log(`- Access Token (first 8 chars): ${accessToken?.substring(0, 8)}...`);
-
   if (!storeDomain || !accessToken || storeDomain.includes('your-store-name') || !accessToken.trim()) {
     const errorMsg = "Shopify API credentials are not configured in environment variables.";
     console.error(errorMsg);
