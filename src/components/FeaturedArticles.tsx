@@ -113,7 +113,7 @@ const PopularArticleItem = ({ article }: { article: Article }) => (
         <Card className="h-full overflow-hidden border-b border-border/20 rounded-none p-0 pb-4 bg-transparent shadow-none">
             <div className="flex gap-4 items-start">
                 {article.image && (
-                    <div className="relative w-1/3 aspect-[16/9] rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="relative w-24 h-16 rounded-lg overflow-hidden flex-shrink-0">
                         <Image
                             src={article.image.url}
                             alt={article.image.altText || article.title}

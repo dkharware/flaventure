@@ -68,7 +68,6 @@ export default function BlogSection() {
             try {
                 const { articles: fetchedArticles } = await getArticles(9);
                 if (fetchedArticles.length > 0) {
-                    // Shuffle the array
                     const shuffledArticles = fetchedArticles.sort(() => 0.5 - Math.random());
                     setArticles(shuffledArticles);
                 }

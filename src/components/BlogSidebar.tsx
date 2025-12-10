@@ -23,7 +23,6 @@ interface Tag {
   count: number;
 }
 interface BlogSidebarProps {
-  // Props are no longer needed as the component fetches its own data
 }
 
 export function BlogSidebar({}: BlogSidebarProps) {

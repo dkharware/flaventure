@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     siteName: 'storedevguide',
     images: [
       {
-        url: '/og-image.png', // Assuming you'll add an og-image.png to your public folder
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'storedevguide Blog',
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
     description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
-    images: ['/og-image.png'], // Assuming you'll add an og-image.png to your public folder
+    images: ['/og-image.png'],
   },
   icons: {
     icon: faviconUrl,
