@@ -5,7 +5,7 @@
 
 @layer base {
   html {
-    @apply overflow-x-hidden;
+    overflow-x: hidden;
   }
   
   :root {
@@ -72,7 +72,7 @@
     @apply bg-background text-foreground overflow-x-hidden;
   }
   .prose {
-    @apply text-base text-foreground;
+    @apply text-base;
   }
 
   .dark .prose {
@@ -93,22 +93,17 @@
       --tw-prose-th-borders: hsl(var(--border));
       --tw-prose-td-borders: hsl(var(--border));
   }
-
-  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-    @apply text-foreground;
+  
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6,
+  .prose p, .prose span, .prose li, .prose a, .prose strong {
+    color: hsl(var(--foreground));
   }
 
-  .prose p, .prose span, .prose li, .prose strong, .prose a {
-    @apply text-foreground;
-  }
   .prose ul {
     @apply list-disc pl-5 space-y-2;
   }
   .prose a {
     @apply text-primary hover:underline;
-  }
-  .prose strong {
-    color: hsl(var(--foreground));
   }
   .prose blockquote {
     @apply border-l-4 border-primary bg-secondary/40 p-4 italic;
