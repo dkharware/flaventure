@@ -32,23 +32,6 @@ interface Article {
     viewCount: number;
 }
 
-const ClientFormattedDate = ({ dateString, formatString }: { dateString: string, formatString: string }) => {
-    const [formattedDate, setFormattedDate] = useState('');
-
-    useEffect(() => {
-        setFormattedDate(format(new Date(dateString), formatString));
-    }, [dateString, formatString]);
-
-    if (!formattedDate) {
-        return null;
-    }
-
-    return (
-        <p className="text-xs text-muted-foreground">{formattedDate}</p>
-    );
-};
-
-
 const AuthorInfo = ({ article, className }: { article: Article, className?: string }) => (
     <div className={cn("flex items-center gap-2", className)}>
         <Avatar className="h-6 w-6">
