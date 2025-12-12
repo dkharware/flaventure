@@ -1,7 +1,6 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { format } from 'date-fns';
@@ -13,8 +12,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Badge } from '@/components/ui/badge';
-import { getArticles } from '@/lib/shopify';
-import placeholderArticles from '@/lib/placeholder-articles.json';
 import { Skeleton } from './ui/skeleton';
 
 
@@ -60,34 +57,8 @@ const StoryCard = ({ article }: { article: Article }) => (
 );
 
 
-export default function WebStoriesSection() {
-    const [articles, setArticles] = useState<Article[]>(placeholderArticles as Article[]);
-    const [isLoading, setIsLoading] = useState(true);
-    
-    useEffect(() => {
-        const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-
-        if (!hasApiKeys) {
-            setIsLoading(false);
-            return;
-        }
-
-        const fetchArticles = async () => {
-            try {
-                const { articles: fetchedArticles } = await getArticles(8);
-                if (fetchedArticles.length > 0) {
-                     // Shuffle the array
-                    const shuffledArticles = fetchedArticles.sort(() => 0.5 - Math.random());
-                    setArticles(shuffledArticles);
-                }
-            } catch (error) {
-                console.error("Failed to fetch articles, using placeholders.", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchArticles();
-    }, []);
+export default function WebStoriesSection({ articles }: { articles: Article[] }) {
+    const isLoading = !articles || articles.length === 0;
     
     return (
       <section className="w-full py-12 md:py-16">
@@ -109,8 +80,8 @@ export default function WebStoriesSection() {
               className="w-full"
             >
               <CarouselContent>
-                {articles.map((article: any) => (
-                  <CarouselItem key={article.id} className="basis-2/3 md:basis-1/2 lg:basis-1/4">
+                {(isLoading ? Array.from({ length: 8 }) : articles).map((article: any, index) => (
+                  <CarouselItem key={article?.id || index} className="basis-2/3 md:basis-1/2 lg:basis-1/4">
                     {isLoading ? (
                         <div className="relative aspect-[4/5] w-full h-auto rounded-xl overflow-hidden">
                             <Skeleton className="h-full w-full" />

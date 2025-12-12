@@ -7,9 +7,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getArticles } from '@/lib/shopify';
 import { format } from 'date-fns';
-import placeholderArticles from '@/lib/placeholder-articles.json';
 import { Skeleton } from './ui/skeleton';
 import { cn } from '@/lib/utils';
 
@@ -61,35 +59,8 @@ const ArticleCard = ({ article }: { article: Article }) => (
 );
 
 
-export default function SpotlightBlogs() {
-    const [articles, setArticles] = useState<Article[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-
-        const fetchArticles = async () => {
-            setIsLoading(true);
-            try {
-                 if (!hasApiKeys || (process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN.includes('your-store-name'))) {
-                    setArticles(placeholderArticles as Article[]);
-                    return;
-                }
-                const { articles: fetchedArticles } = await getArticles(6);
-                if (fetchedArticles.length > 0) {
-                    setArticles(fetchedArticles);
-                } else {
-                    setArticles(placeholderArticles as Article[]);
-                }
-            } catch (error) {
-                console.error("Failed to fetch articles, using placeholders.", error);
-                setArticles(placeholderArticles as Article[]);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchArticles();
-    }, []);
+export default function SpotlightBlogs({ articles }: { articles: Article[] }) {
+    const isLoading = !articles || articles.length === 0;
 
     const ArticleCardSkeleton = ({ className }: { className?: string }) => (
          <div className={cn("space-y-3", className)}>
@@ -130,7 +101,7 @@ export default function SpotlightBlogs() {
                                 <ArticleCardSkeleton />
                             </>
                         ) : (
-                            articles.slice(0,6).map((article: any, index) => (
+                            articles.map((article: any, index) => (
                                <div key={article.id}>
                                 <ArticleCard article={article} />
                                </div>

@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -136,36 +137,15 @@ const PopularArticleItem = ({ article }: { article: Article }) => (
 );
 
 
-export function FeaturedArticles({ articles: latestArticles }: { articles: Article[] }) {
-    const [popularArticles, setPopularArticles] = useState<Article[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchPopular() {
-            setIsLoading(true);
-            try {
-                const { articles: fetchedPopular } = await getArticles(4, `(tag:'popular' OR tag:'featured')`);
-                if (fetchedPopular.length > 0) {
-                    setPopularArticles(fetchedPopular);
-                } else {
-                    // Fallback to latest articles if no popular ones are found
-                    setPopularArticles(latestArticles.slice(1, 5));
-                }
-            } catch (e) {
-                console.error("Failed to fetch popular articles, using latest instead.", e);
-                setPopularArticles(latestArticles.slice(1, 5));
-            } finally {
-                setIsLoading(false);
-            }
-        }
-        fetchPopular();
-    }, [latestArticles]);
+export function FeaturedArticles({ articles }: { articles: Article[] }) {
     
-    if (!latestArticles || latestArticles.length === 0) {
+    if (!articles || articles.length === 0) {
         return <div className="hidden">No articles to display.</div>;
     }
 
-    const mainArticle = latestArticles[0];
+    const mainArticle = articles[0];
+    const popularArticles = articles.slice(1, 5);
+    const isLoading = articles.length === 0;
 
     return (
         <section className="container">

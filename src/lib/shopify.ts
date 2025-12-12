@@ -7,10 +7,6 @@ async function shopifyFetch(query: string, variables: Record<string, any> = {}) 
   const accessToken = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   const apiVersion = '2024-04';
 
-  console.log("Attempting to connect to Shopify with the following credentials:");
-  console.log(`- Store Domain: ${storeDomain}`);
-  console.log(`- Access Token (first 8 chars): ${accessToken?.substring(0, 8)}...`);
-
   if (!storeDomain || !accessToken || storeDomain.includes('your-store-name') || !accessToken.trim()) {
     return { data: null, errors: [{ message: "Shopify API credentials are not configured." }] };
   }
@@ -233,15 +229,24 @@ export async function getAllTags() {
     return tags.length > 0 ? tags : placeholderTags;
 }
 
-export async function getRelatedArticles(handle: string, tags: string[]) {
-    if (!tags || tags.length === 0) {
-        const { articles } = await getArticles(5);
-        return articles.filter((a: any) => a.handle !== handle).slice(0, 4);
+export async function getRelatedArticles(currentArticleHandle: string, tags: string[]) {
+    const articlesToFetch = 5; // Fetch a bit extra to ensure we have enough after filtering
+    let relatedArticles: any[] = [];
+
+    if (tags && tags.length > 0) {
+        const tagsQuery = tags.map(tag => `tag:'${tag}'`).join(' OR ');
+        const { articles } = await getArticles(articlesToFetch, `(${tagsQuery})`);
+        relatedArticles = articles;
+    } else {
+        // Fallback if no tags
+        const { articles } = await getArticles(articlesToFetch);
+        relatedArticles = articles;
     }
-    const tagsQuery = tags.map(tag => `tag:'${tag}'`).join(' OR ');
-    const { articles } = await getArticles(5, `(${tagsQuery})`);
-    return articles.filter((a: any) => a.handle !== handle).slice(0, 4);
+    
+    // Filter out the current article and take the top 4
+    return relatedArticles.filter((a: any) => a.handle !== currentArticleHandle).slice(0, 4);
 }
+
 
 export async function getArticleSuggestions(searchTerm: string) {
     if (!searchTerm) {

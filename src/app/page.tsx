@@ -11,7 +11,12 @@ import CategoriesSection from '@/components/CategoriesSection';
 import { BlogSearch } from '@/components/BlogSearch';
 
 export default async function Home() {
-    const { articles } = await getArticles(9);
+    // Fetch a larger batch of articles to distribute among sections
+    const { articles } = await getArticles(20);
+
+    const featuredArticles = articles.slice(0, 5); // 1 for hero, 4 for popular
+    const spotlightArticles = articles.slice(5, 11); // Next 6
+    const webStoryArticles = articles.slice(11, 19); // Next 8
 
   return (
     <div className="w-full">
@@ -30,10 +35,10 @@ export default async function Home() {
 
       <Suspense fallback={<SectionSkeleton />}>
         <div className="py-16 md:py-24 space-y-16 md:space-y-24">
-            <FeaturedArticles articles={articles} />
+            <FeaturedArticles articles={featuredArticles} />
             <CategoriesSection />
-            <SpotlightBlogs />
-            <WebStoriesSection />
+            <SpotlightBlogs articles={spotlightArticles} />
+            <WebStoriesSection articles={webStoryArticles} />
             <FaqSection />
         </div>
       </Suspense>
