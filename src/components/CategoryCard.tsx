@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -42,8 +43,8 @@ export function CategoryCard({ tag, index }: CategoryCardProps) {
                     sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, 12.5vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                <div className="absolute inset-0 flex items-center justify-center p-2">
-                    <div className="bg-white/10 backdrop-blur-sm py-1.5 px-4 rounded-full border border-white/20">
+                <div className="absolute inset-0 flex items-center justify-center p-2 bg-black/20 backdrop-blur-sm">
+                    <div className="py-1.5 px-4 rounded-full border border-white/20">
                          <p className="font-semibold text-xs md:text-sm text-white text-center">{tag.name}</p>
                     </div>
                 </div>
