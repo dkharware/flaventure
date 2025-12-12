@@ -30,19 +30,20 @@ const faviconUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/favi
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Shopify AI Tools & Expert Developer Guides | storedevguide',
+    default: 'Shopify Headless, Hydrogen & AI Developer Guides | storedevguide',
     template: '%s | storedevguide',
   },
-  description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Storefront API, headless commerce, and free developer tools.',
+  description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Hydrogen, headless commerce with Next.js, and free developer tools.',
   keywords: [
     'Shopify', 
     'Shopify AI',
+    'Hydrogen',
+    'Headless Shopify',
     'AI for e-commerce',
     'Shopify theme',
     'Shopify app bridge',
     'Shopify storefront',
     'Shopify development',
-    'headless Shopify',
     'Storefront API',
     'Shopify blog',
     'storedevguide',
@@ -53,8 +54,8 @@ export const metadata: Metadata = {
   creator: 'storedevguide',
   publisher: 'storedevguide',
   openGraph: {
-    title: 'Shopify AI Tools & Expert Developer Guides | storedevguide',
-    description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Storefront API, headless commerce, and free developer tools.',
+    title: 'Shopify Headless, Hydrogen & AI Developer Guides | storedevguide',
+    description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Hydrogen, headless commerce with Next.js, and free developer tools.',
     url: siteUrl,
     siteName: 'storedevguide',
     images: [
@@ -62,7 +63,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'storedevguide - Shopify AI Tools and Developer Guides',
+        alt: 'storedevguide - Shopify AI, Hydrogen, and Headless Developer Guides',
       },
     ],
     locale: 'en_US',
@@ -70,8 +71,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Shopify AI Tools & Expert Developer Guides | storedevguide',
-    description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Storefront API, headless commerce, and free developer tools.',
+    title: 'Shopify Headless, Hydrogen & AI Developer Guides | storedevguide',
+    description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Hydrogen, headless commerce with Next.js, and free developer tools.',
     images: ['/og-image.png'],
   },
   icons: {
@@ -151,7 +152,7 @@ export default function RootLayout({
       </head>
       <body className={cn(
           readexPro.className,
-          "font-body antialiased overflow-hidden"
+          "font-body antialiased"
         )}
       >
           <LoaderProvider>
