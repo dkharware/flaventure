@@ -26,6 +26,7 @@ export function CategoryCard({ tag, index }: CategoryCardProps) {
                         alt={`Image for ${tag.name}`}
                         fill
                         className="object-cover"
+                        data-ai-hint="abstract"
                     />
                 </div>
                 <p className="font-semibold text-sm group-hover:text-primary transition-colors">{tag.name}</p>
