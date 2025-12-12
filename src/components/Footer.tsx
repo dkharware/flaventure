@@ -46,7 +46,7 @@ export default function Footer() {
               <li><Link href="/shopify-liquid-cheatsheet" className="text-sm hover:text-primary transition-colors">Liquid Cheatsheet</Link></li>
               <li><Link href="/tutorials/shopify-api-guide" className="text-sm hover:text-primary transition-colors">API Guide</Link></li>
                <li><Link href="/tools/meta-tag-generator" className="text-sm hover:text-primary transition-colors">Shopify Tools</Link></li>
-              <li><Link href="/blog?tag=Shopify" className="text-sm hover:text-primary transition-colors">Shopify Articles</Link></li>
+              <li><Link href="/shopify-templates-boilerplates" className="text-sm hover:text-primary transition-colors">Templates</Link></li>
             </ul>
           </div>
 

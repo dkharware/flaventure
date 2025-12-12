@@ -156,7 +156,7 @@ export default function RootLayout({
         )}
       >
           <LoaderProvider>
-              <div className="flex flex-col min-h-screen relative h-screen overflow-y-auto overflow-x-hidden">
+              <div className="flex flex-col min-h-screen relative overflow-x-hidden">
                 <div className="absolute top-0 left-[-30%] w-[80%] h-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary))_0%,_transparent_40%)] animate-float -z-10 opacity-40"></div>
                 <div className="absolute bottom-0 right-[-30%] w-[80%] h-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent))_0%,_transparent_40%)] animate-float animation-delay-[-5s] -z-10 opacity-40"></div>
 
