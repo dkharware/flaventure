@@ -19,6 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/tools/meta-tag-generator',
     '/tools/liquid-to-json-converter',
     '/tools/product-schema-generator',
+    '/tools/shopify-ai-content-generator',
     '/shopify-templates-boilerplates',
     '/nextjs-shopify-starter-template',
     '/shopify-theme-starter-template',

@@ -30,12 +30,14 @@ const faviconUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/favi
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Free Shopify Templates, Next.js Starters & Developer Guides',
+    default: 'Shopify AI Tools & Expert Developer Guides | storedevguide',
     template: '%s | storedevguide',
   },
-  description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
+  description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Storefront API, headless commerce, and free developer tools.',
   keywords: [
     'Shopify', 
+    'Shopify AI',
+    'AI for e-commerce',
     'Shopify theme',
     'Shopify app bridge',
     'Shopify storefront',
@@ -44,16 +46,15 @@ export const metadata: Metadata = {
     'Storefront API',
     'Shopify blog',
     'storedevguide',
-    'Webflow',
-    'WooCommerce',
-    'Shopify Page Builders'
+    'Next.js Shopify',
+    'Shopify tools'
   ],
   authors: [{ name: 'storedevguide', url: siteUrl }],
   creator: 'storedevguide',
   publisher: 'storedevguide',
   openGraph: {
-    title: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
-    description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
+    title: 'Shopify AI Tools & Expert Developer Guides | storedevguide',
+    description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Storefront API, headless commerce, and free developer tools.',
     url: siteUrl,
     siteName: 'storedevguide',
     images: [
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'storedevguide Blog',
+        alt: 'storedevguide - Shopify AI Tools and Developer Guides',
       },
     ],
     locale: 'en_US',
@@ -69,8 +70,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Expert Shopify Blog: Themes, App Bridge, Storefront API & More',
-    description: 'Your expert resource for Shopify. In-depth articles on Shopify themes, App Bridge, Storefront API, headless commerce, Webflow, WooCommerce, and more e-commerce topics.',
+    title: 'Shopify AI Tools & Expert Developer Guides | storedevguide',
+    description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Storefront API, headless commerce, and free developer tools.',
     images: ['/og-image.png'],
   },
   icons: {
@@ -128,7 +129,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${readexPro.variable}`}>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="p:domain_verify" content="9e86368e858272577ac859ef29ea3e3b"/>
         <Script
@@ -150,12 +151,11 @@ export default function RootLayout({
       </head>
       <body className={cn(
           readexPro.className,
-          "font-body antialiased"
+          "font-body antialiased overflow-hidden"
         )}
       >
           <LoaderProvider>
               <div className="flex flex-col min-h-screen relative h-screen overflow-y-auto overflow-x-hidden">
-                <div className="absolute top-0 left-0 w-full h-full bg-grid-black -z-20"></div>
                 <div className="absolute top-0 left-[-30%] w-[80%] h-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--primary))_0%,_transparent_40%)] animate-float -z-10 opacity-40"></div>
                 <div className="absolute bottom-0 right-[-30%] w-[80%] h-full bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent))_0%,_transparent_40%)] animate-float animation-delay-[-5s] -z-10 opacity-40"></div>
 

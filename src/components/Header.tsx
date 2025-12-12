@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home, Wrench, Hammer, FileJson, DraftingCompass, LayoutTemplate } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home, Wrench, Hammer, FileJson, DraftingCompass, LayoutTemplate, Sparkles } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -90,6 +90,11 @@ const resourceComponents = [
 ];
 
 const toolComponents = [
+    {
+      title: "Shopify AI Content Generator",
+      href: "/tools/shopify-ai-content-generator",
+      description: "Generate product descriptions and blog posts with AI.",
+    },
     {
       title: "Meta Tag Generator",
       href: "/tools/meta-tag-generator",
@@ -352,6 +357,11 @@ export default function Header() {
                     </NavigationMenuItem>
                     
                     <p className="px-4 py-2 text-sm font-semibold text-muted-foreground">Tools</p>
+                    <NavigationMenuItem className="w-full">
+                      <NavigationMenuLink asChild>
+                        <Link href="/tools/shopify-ai-content-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4 w-[calc(100%-1rem)]")}><Sparkles className="mr-2 h-4 w-4" /> AI Content Generator</Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
                     <NavigationMenuItem className="w-full">
                       <NavigationMenuLink asChild>
                         <Link href="/tools/meta-tag-generator" className={cn(navigationMenuTriggerStyle(), "justify-start ml-4 w-[calc(100%-1rem)]")}><DraftingCompass className="mr-2 h-4 w-4" /> Meta Tag Generator</Link>
