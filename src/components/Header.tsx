@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, ShoppingCart, Info, ChevronDown, BookCopy, MessageSquare, Home, Wrench, Hammer, FileJson, DraftingCompass, LayoutTemplate, Sparkles, ArrowRight } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, Info, ChevronDown, BookCopy, Wrench, Sparkles, Home } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -33,22 +33,32 @@ import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { Input } from './ui/input';
 import { LiveSearch } from './LiveSearch';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 const resourceComponents = [
     {
-      title: "Blog",
+      title: "All Articles",
       href: "/blog",
-      description: "Browse all our latest posts on Shopify, Webflow, and more.",
+      icon: <Newspaper className="h-4 w-4" />,
+      description: "Browse all our latest posts on Shopify, web development, and more.",
     },
     {
       title: "Shopify Liquid Cheatsheet",
       href: "/shopify-liquid-cheatsheet",
-      description: "Your complete quick reference guide for Shopify Liquid.",
+      icon: <BookCopy className="h-4 w-4" />,
+      description: "Your complete quick reference guide for Shopify Liquid syntax and objects.",
     },
     {
       title: "Shopify API Guide",
       href: "/tutorials/shopify-api-guide",
+      icon: <Wrench className="h-4 w-4" />,
       description: "A comprehensive guide to using the Storefront and Admin APIs.",
+    },
+     {
+      title: "Templates & Boilerplates",
+      href: "/shopify-templates-boilerplates",
+      icon: <Wrench className="h-4 w-4" />,
+      description: "Download free, production-ready code templates and starters.",
     },
 ];
 
@@ -56,29 +66,40 @@ const toolComponents = [
     {
       title: "Shopify AI Content Generator",
       href: "/tools/shopify-ai-content-generator",
+      icon: <Sparkles className="h-4 w-4" />,
       description: "Generate product descriptions and blog posts with AI.",
     },
     {
       title: "Meta Tag Generator",
       href: "/tools/meta-tag-generator",
-      description: "Generate SEO-friendly meta tags for products, pages, and articles.",
+      icon: <Wrench className="h-4 w-4" />,
+      description: "Generate SEO-friendly meta tags for products and pages.",
     },
     {
       title: "Liquid to JSON Converter",
       href: "/tools/liquid-to-json-converter",
+      icon: <Wrench className="h-4 w-4" />,
       description: "Convert Liquid objects to JSON for debugging and headless use.",
     },
     {
       title: "Product Schema Generator",
       href: "/tools/product-schema-generator",
+      icon: <Wrench className="h-4 w-4" />,
       description: "Create JSON-LD schema markup for your products to improve SEO.",
     },
+];
+
+const mainLinks = [
+  { href: '/blog', label: 'Blog', icon: <Newspaper className="mr-2 h-4 w-4" /> },
+  { href: '/about', label: 'About', icon: <Info className="mr-2 h-4 w-4" /> },
+  { href: '/contact', label: 'Contact', icon: <Phone className="mr-2 h-4 w-4" /> },
 ];
 
 export default function Header() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -113,7 +134,7 @@ export default function Header() {
   return (
     <header className={cn(
       "sticky top-0 left-0 right-0 z-[60] transition-all duration-300",
-      isScrolled ? "shadow-md bg-background/80 backdrop-blur-lg" : ""
+      isScrolled ? "shadow-md bg-background/80 backdrop-blur-lg" : "bg-transparent"
     )}>
       <div className="container mx-auto flex items-center justify-between gap-4 h-20 px-4 md:px-6">
           <div className="flex-1 md:flex-initial">
@@ -126,41 +147,50 @@ export default function Header() {
               <NavigationMenu>
               <NavigationMenuList>
                   <NavigationMenuItem>
-                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                      <Link href="/blog">
-                      Articles
-                      </Link>
-                  </NavigationMenuLink>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <Link href="/blog?tag=Headless">
-                        Categories
+                        <Link href="/blog">
+                        Blog
                         </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                  <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                      <Link href="/about">
-                      About
-                      </Link>
-                  </NavigationMenuLink>
+                    <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                        {resourceComponents.map((component) => (
+                           <ListItem
+                            key={component.title}
+                            title={component.title}
+                            href={component.href}
+                           >
+                            {component.description}
+                           </ListItem>
+                        ))}
+                        </ul>
+                    </NavigationMenuContent>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                  <NavigationMenuTrigger>Pages</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                      <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                      {[...resourceComponents, ...toolComponents].map((component) => (
-                          <ListItem
-                          key={component.title}
-                          title={component.title}
-                          href={component.href}
-                          >
-                          {component.description}
-                          </ListItem>
-                      ))}
-                      </ul>
-                  </NavigationMenuContent>
+                    <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                        {toolComponents.map((component) => (
+                           <ListItem
+                            key={component.title}
+                            title={component.title}
+                            href={component.href}
+                           >
+                            {component.description}
+                           </ListItem>
+                        ))}
+                        </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                        <Link href="/about">
+                        About
+                        </Link>
+                    </NavigationMenuLink>
                   </NavigationMenuItem>
               </NavigationMenuList>
               </NavigationMenu>
@@ -188,46 +218,62 @@ export default function Header() {
                 </DialogContent>
               </Dialog>
               <Button asChild className="rounded-full hidden sm:flex">
-                  <Link href="/contact">Contact <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                  <Link href="/contact">Contact</Link>
               </Button>
           </div>
 
           <div className="md:hidden flex-shrink-0">
-          <Sheet>
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
               <Button variant="ghost" size="icon" aria-label="Open mobile navigation menu">
                   <Menu className="h-5 w-5" />
               </Button>
               </SheetTrigger>
               <SheetContent className="overflow-y-auto w-full max-w-xs">
-              <SheetHeader>
-                  <Link href="/" className="flex items-center gap-2 mb-4" aria-label="storedevguide Home">
-                      <Logo width={150} height={40}/>
-                  </Link>
-                  <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
-                  <SheetDescription className="sr-only">A list of navigation links for the storedevguide website.</SheetDescription>
-              </SheetHeader>
-              <div className="flex flex-col space-y-1 mt-4 pt-2">
-                  <NavigationMenu orientation="vertical" className="w-full">
-                  <NavigationMenuList className="flex-col items-stretch space-x-0 space-y-1 w-full">
-                      <NavigationMenuItem className="w-full">
-                      <NavigationMenuLink asChild>
-                          <Link href="/blog" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><Newspaper className="mr-2 h-4 w-4" /> Articles</Link>
-                      </NavigationMenuLink>
-                      </NavigationMenuItem>
-                      <NavigationMenuItem className="w-full">
-                      <NavigationMenuLink asChild>
-                          <Link href="/about" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><Info className="mr-2 h-4 w-4" /> About</Link>
-                      </NavigationMenuLink>
-                      </NavigationMenuItem>
-                      <NavigationMenuItem className="w-full">
-                      <NavigationMenuLink asChild>
-                          <Link href="/contact" className={cn(navigationMenuTriggerStyle(), "justify-start w-full")}><Phone className="mr-2 h-4 w-4" /> Contact</Link>
-                      </NavigationMenuLink>
-                      </NavigationMenuItem>
-                  </NavigationMenuList>
-                  </NavigationMenu>
-              </div>
+                <SheetHeader>
+                    <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 mb-4" aria-label="storedevguide Home">
+                        <Logo width={150} height={40}/>
+                    </Link>
+                    <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
+                    <SheetDescription className="sr-only">A list of navigation links for the storedevguide website.</SheetDescription>
+                </SheetHeader>
+                <div className="flex flex-col space-y-2 mt-4 pt-2">
+                    <Accordion type="multiple" className="w-full">
+                        <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
+                            <Newspaper className="mr-2 h-4 w-4" /> Blog
+                        </Link>
+                        <AccordionItem value="resources">
+                            <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full font-semibold text-base")}>
+                                <div className="flex items-center"><BookCopy className="mr-2 h-4 w-4" /> Resources</div>
+                            </AccordionTrigger>
+                            <AccordionContent className="pl-4">
+                                {resourceComponents.map(item => (
+                                    <Link key={item.title} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block p-2 text-muted-foreground hover:text-primary">
+                                        {item.title}
+                                    </Link>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="tools">
+                             <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full font-semibold text-base")}>
+                                <div className="flex items-center"><Wrench className="mr-2 h-4 w-4" /> Tools</div>
+                            </AccordionTrigger>
+                            <AccordionContent className="pl-4">
+                                {toolComponents.map(item => (
+                                    <Link key={item.title} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block p-2 text-muted-foreground hover:text-primary">
+                                        {item.title}
+                                    </Link>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+                         <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
+                            <Info className="mr-2 h-4 w-4" /> About
+                        </Link>
+                         <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
+                            <Phone className="mr-2 h-4 w-4" /> Contact
+                        </Link>
+                    </Accordion>
+                </div>
               </SheetContent>
           </Sheet>
           </div>
