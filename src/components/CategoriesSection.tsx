@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getAllTags } from '@/lib/shopify';
+import { getAllTags, getArticles } from '@/lib/shopify';
 import placeholderTags from '@/lib/placeholder-tags.json';
 import { Skeleton } from './ui/skeleton';
 import { CategoryCard, CategoryCardSkeleton } from './CategoryCard';
@@ -11,6 +11,7 @@ import { CategoryCard, CategoryCardSkeleton } from './CategoryCard';
 interface Tag {
     name: string;
     count: number;
+    imageUrl?: string;
 }
 
 export default function CategoriesSection() {
@@ -24,19 +25,25 @@ export default function CategoriesSection() {
             setIsLoading(true);
             try {
                 if (!hasApiKeys || (process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN.includes('your-store-name'))) {
-                    setTags(placeholderTags);
+                    setTags(placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`})));
                     return;
                 }
                 
                 const fetchedTags = await getAllTags();
-                if (fetchedTags && fetchedTags.length > 0) {
-                    setTags(fetchedTags);
+                const tagsWithImages = await Promise.all(fetchedTags.map(async (tag: Tag) => {
+                    const { articles } = await getArticles(1, `tag:'${tag.name}'`);
+                    const imageUrl = articles[0]?.image?.url;
+                    return { ...tag, imageUrl };
+                }));
+
+                if (tagsWithImages && tagsWithImages.length > 0) {
+                    setTags(tagsWithImages);
                 } else {
-                    setTags(placeholderTags);
+                    setTags(placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`})));
                 }
             } catch (error) {
                 console.error("Failed to fetch tags, using placeholders.", error);
-                setTags(placeholderTags);
+                setTags(placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`})));
             } finally {
                 setIsLoading(false);
             }
@@ -56,11 +63,11 @@ export default function CategoriesSection() {
                     </div>
                 </div>
                 <div className="mx-auto max-w-7xl pt-8">
-                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+                   <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6">
                         {isLoading ? (
                             Array.from({ length: 12 }).map((_, index) => <CategoryCardSkeleton key={index} />)
                         ) : (
-                            tags.slice(0, 12).map((tag, index) => (
+                            tags.slice(0, 16).map((tag, index) => (
                                <CategoryCard key={index} tag={tag} index={index} />
                             ))
                         )}
