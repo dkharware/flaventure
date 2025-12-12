@@ -149,6 +149,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
+        <script src="https://quge5.com/88/tag.min.js" data-zone="192397" async data-cfasync="false"></script>
       </head>
       <body className={cn(
           readexPro.className,
