@@ -24,14 +24,16 @@ const mockComments: Comment[] = [
 
 const CommentTime = ({ timestamp }: { timestamp: Date }) => {
   const [timeAgo, setTimeAgo] = useState('');
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // This runs only on the client, after hydration
+    // This effect runs only on the client, after hydration
+    setIsClient(true);
     setTimeAgo(formatDistanceToNow(timestamp, { addSuffix: true }));
   }, [timestamp]);
 
-  if (!timeAgo) {
-      // Render a placeholder on the server and initial client render
+  if (!isClient) {
+      // On the server and during the initial client render, render nothing to avoid mismatch
       return null;
   }
 
