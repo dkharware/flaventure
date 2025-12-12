@@ -12,7 +12,7 @@ export default {
     container: {
       center: true,
       screens: {
-        '2xl': '85vw',
+        '2xl': '95vw',
       },
     },
     extend: {
