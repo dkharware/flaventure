@@ -5,13 +5,15 @@ import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface BlogSearchProps {
   initialQuery?: string;
+  className?: string;
 }
 
-export function BlogSearch({ initialQuery = '' }: BlogSearchProps) {
+export function BlogSearch({ initialQuery = '', className }: BlogSearchProps) {
   const router = useRouter();
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
@@ -26,17 +28,20 @@ export function BlogSearch({ initialQuery = '' }: BlogSearchProps) {
   };
 
   return (
-    <form onSubmit={handleSearch} className="flex gap-2 w-full">
+    <form onSubmit={handleSearch} className={cn("relative w-full", className)}>
       <Input 
         type="search" 
         name="search"
-        placeholder="Search for articles, guides, and tutorials..." 
+        placeholder="Search anything you are looking for" 
         defaultValue={initialQuery}
-        className="h-12 text-base bg-background/80"
+        className="h-14 text-base bg-background/80 rounded-full pl-12 pr-16 shadow-lg"
         aria-label="Search articles"
       />
-      <Button type="submit" size="icon" className="h-12 w-12 flex-shrink-0" aria-label="Submit search">
-        <Search className="h-5 w-5" />
+       <div className="absolute left-5 top-1/2 -translate-y-1/2">
+            <Search className="h-5 w-5 text-muted-foreground" />
+       </div>
+      <Button type="submit" size="icon" className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full" aria-label="Submit search">
+        <ArrowRight className="h-5 w-5" />
       </Button>
     </form>
   );

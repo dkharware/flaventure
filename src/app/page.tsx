@@ -8,37 +8,22 @@ import SpotlightBlogs from '@/components/SpotlightBlogs';
 import WebStoriesSection from '@/components/WebStoriesSection';
 import FaqSection from '@/components/FaqSection';
 import CategoriesSection from '@/components/CategoriesSection';
-
-const CategoryBubble = ({ name, position }: { name: string, position: string }) => (
-  <div className={`absolute ${position} hidden lg:block`}>
-    <div className="relative w-28 h-28">
-      <div className="absolute inset-0 bg-white/50 rounded-full blur-xl"></div>
-      <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center text-center p-2 shadow-lg">
-        <span className="text-sm font-medium text-center">{name}</span>
-      </div>
-    </div>
-  </div>
-);
+import { BlogSearch } from '@/components/BlogSearch';
 
 export default async function Home() {
     const { articles } = await getArticles(9);
 
   return (
     <div className="w-full">
-      <section className="relative w-full overflow-hidden hero-grid-bg bg-info">
+      <section className="relative w-full overflow-hidden hero-gradient-bg">
         <div className="container mx-auto py-24 px-3 md:py-32 md:px-6 text-center">
             
-            <CategoryBubble name="AI Tool" position="top-1/4 left-[10%]" />
-            <CategoryBubble name="Technology" position="top-1/2 left-[5%]" />
-            <CategoryBubble name="Foods" position="bottom-1/4 left-[12%]" />
-
-            <CategoryBubble name="Play" position="top-1/4 right-[10%]" />
-            <CategoryBubble name="AI Intelligence" position="top-1/2 right-[5%]" />
-            <CategoryBubble name="Lifestyle" position="bottom-1/4 right-[12%]" />
-
-            <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-7xl md:text-8xl">Discover Latest Articles</h1>
-            <div className="mt-12 max-w-xl mx-auto">
-              <NewsletterCard />
+            <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-6xl md:text-7xl">Hey, We're storedevguide. See our thoughts, stories and ideas.</h1>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+                Welcome! Thought-provoking articles, inspiring stories, and expert insights across industries and interests.
+            </p>
+            <div className="mt-8 max-w-xl mx-auto">
+              <BlogSearch />
             </div>
         </div>
       </section>
@@ -92,3 +77,4 @@ const SectionSkeleton = () => (
          </div>
     </section>
 );
+
