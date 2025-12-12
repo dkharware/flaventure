@@ -33,8 +33,8 @@ const CommentTime = ({ timestamp }: { timestamp: Date }) => {
   }, [timestamp]);
 
   if (!isClient) {
-      // On the server and during the initial client render, render nothing to avoid mismatch
-      return null;
+      // On the server and during the initial client render, render a placeholder or nothing
+      return <span className="text-xs text-muted-foreground">...</span>;
   }
 
   return (

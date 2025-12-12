@@ -11,9 +11,11 @@ export function LikeButton() {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState<number | null>(null);
   const { toast } = useToast();
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Generate random count only on the client-side to avoid hydration mismatch
+    // This effect runs only on the client, after hydration
+    setIsClient(true);
     setLikeCount(Math.floor(Math.random() * 100) + 1);
   }, []);
 
@@ -34,7 +36,7 @@ export function LikeButton() {
   };
 
   return (
-    <Button variant="outline" onClick={handleLike} className="group" suppressHydrationWarning>
+    <Button variant="outline" onClick={handleLike} className="group">
       <Heart
         className={cn(
           'h-5 w-5 mr-2 transition-all',
@@ -42,7 +44,7 @@ export function LikeButton() {
         )}
       />
       <span className={cn('font-medium', liked ? 'text-primary' : 'text-muted-foreground')}>
-        {likeCount !== null ? `${likeCount} Likes` : 'Like'}
+        {isClient && likeCount !== null ? `${likeCount} Likes` : 'Like'}
       </span>
     </Button>
   );
