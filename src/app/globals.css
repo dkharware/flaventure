@@ -136,3 +136,24 @@
         scrollbar-width: none; /* Firefox */
     }
 }
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-moveInCircle {
+  animation: moveInCircle 20s linear infinite;
+}
+
+.blob {
+  @apply absolute rounded-full opacity-50 blur-3xl;
+  transition: transform 5s ease-in-out;
+}
