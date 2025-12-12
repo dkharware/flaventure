@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -170,12 +169,12 @@ export function FeaturedArticles({ articles: latestArticles }: { articles: Artic
 
     return (
         <section className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12">
-                <div className="lg:col-span-2 space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-12">
+                <div className="space-y-8">
                      {mainArticle && <LargeHeroCard article={mainArticle} />}
                 </div>
 
-                <div className="lg:col-span-1 space-y-4">
+                <div className="space-y-4">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="font-bold font-headline text-xl">Popular Articles</h3>
                     </div>
