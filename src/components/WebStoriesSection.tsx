@@ -100,7 +100,7 @@ export default function WebStoriesSection() {
                   </p>
               </div>
           </div>
-          <div className="mx-auto max-w-5xl pt-8">
+          <div className="mx-auto max-w-7xl pt-8">
             <Carousel
               opts={{
                 align: "start",
@@ -110,7 +110,7 @@ export default function WebStoriesSection() {
             >
               <CarouselContent>
                 {articles.map((article: any) => (
-                  <CarouselItem key={article.id} className="basis-2/3 md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={article.id} className="basis-2/3 md:basis-1/2 lg:basis-1/4">
                     {isLoading ? (
                         <div className="relative aspect-[4/5] w-full h-auto rounded-xl overflow-hidden">
                             <Skeleton className="h-full w-full" />

@@ -101,19 +101,20 @@ export default function BlogSection() {
                         </p>
                     </div>
                 </div>
-                <div className="mx-auto max-w-5xl pt-8">
-                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div className="mx-auto max-w-7xl pt-8">
+                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                         {isLoading ? (
                             <>
                                 <ArticleCardSkeleton />
                                 <ArticleCardSkeleton className="hidden sm:block" />
                                 <ArticleCardSkeleton className="hidden lg:block" />
+                                <ArticleCardSkeleton className="hidden lg:block" />
                             </>
                         ) : (
-                            articles.slice(0,3).map((article: any, index) => (
+                            articles.slice(0,4).map((article: any, index) => (
                                <div key={article.id} className={cn({
-                                    'hidden sm:block': index === 1,
-                                    'hidden lg:block': index === 2,
+                                    'hidden sm:block': index >= 2,
+                                    'hidden lg:block': index >= 4,
                                })}>
                                 <ArticleCard article={article} />
                                </div>
