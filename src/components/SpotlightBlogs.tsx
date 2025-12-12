@@ -24,10 +24,10 @@ interface Article {
 }
 
 const ArticleCard = ({ article }: { article: Article }) => (
-    <Link href={article.handle === '#' ? '/blog' : `/blog/${article.handle}`} className="block group h-full">
+    <Link href={`/blog/${article.handle}`} className="block group h-full">
         <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-background/50 backdrop-blur-lg">
             {article.image && (
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl">
+                <div className="relative aspect-[16/9] w-full overflow-hidden">
                     <Image
                     src={article.image.url}
                     alt={article.image.altText || article.title}
@@ -50,7 +50,7 @@ const ArticleCard = ({ article }: { article: Article }) => (
                 </div>
                  <div className="mt-4">
                     <Button asChild variant="link" className="p-0 h-auto text-primary font-semibold">
-                        <Link href={`/blog/${article.handle}`}>Read More <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        <div role="button">Read More <ArrowRight className="ml-2 h-4 w-4" /></div>
                     </Button>
                 </div>
             </div>

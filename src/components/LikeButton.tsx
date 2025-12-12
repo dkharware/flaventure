@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 
 export function LikeButton() {
   const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState<number | null>(null);
+  const [likeCount, setLikeCount] = useState<number>(0);
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
 
@@ -20,18 +20,18 @@ export function LikeButton() {
   }, []);
 
   const handleLike = () => {
-    if (likeCount === null) return;
+    if (!isClient) return;
 
     if (!liked) {
       setLiked(true);
-      setLikeCount(prev => (prev || 0) + 1);
+      setLikeCount(prev => prev + 1);
       toast({
         title: 'Thank you!',
         description: "You've liked this article.",
       });
     } else {
       setLiked(false);
-      setLikeCount(prev => (prev || 0) - 1);
+      setLikeCount(prev => prev - 1);
     }
   };
 
@@ -44,7 +44,7 @@ export function LikeButton() {
         )}
       />
       <span className={cn('font-medium', liked ? 'text-primary' : 'text-muted-foreground')}>
-        {isClient && likeCount !== null ? `${likeCount} Likes` : 'Like'}
+        {isClient ? `${likeCount} Likes` : 'Like'}
       </span>
     </Button>
   );
