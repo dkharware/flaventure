@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
 
   return (
     <div className="container mx-auto py-12 px-6 md:px-10">
-      <Card className="max-w-4xl mx-auto">
+      <Card className="max-w-4xl mx-auto bg-background/50 backdrop-blur-lg">
         <CardHeader>
           <CardTitle className="text-3xl font-headline">Privacy Policy</CardTitle>
         </CardHeader>
@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
 
           <h3 className="text-xl font-headline text-foreground">Log Data</h3>
           <p>
-            We may also collect information that your browser sends whenever you visit our Service ("Log Data"). This Log Data may include information such as your computer's Internet Protocol ("IP") address, browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, and other statistics.
+            We may also collect information that your browser sends whenever you visit our Service ("Log Data"). This LogData may include information such as your computer's Internet Protocol ("IP") address, browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, and other statistics.
           </p>
 
           <h3 className="text-xl font-headline text-foreground">Cookies</h3>

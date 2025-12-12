@@ -52,7 +52,7 @@ export function ShopifyAiContentGenerator() {
     }
 
     return (
-        <Card>
+        <Card className="bg-background/50 backdrop-blur-lg">
             <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-6">

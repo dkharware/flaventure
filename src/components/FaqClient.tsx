@@ -61,7 +61,7 @@ export function FaqClient({ faqData }: FaqClientProps) {
                                      <Card 
                                         onClick={() => setActiveCategory(item.category)}
                                         className={cn(
-                                            'cursor-pointer transition-all p-4 flex items-center gap-3',
+                                            'cursor-pointer transition-all p-4 flex items-center gap-3 bg-background/50 backdrop-blur-lg',
                                             activeCategory === item.category ? 'bg-primary text-primary-foreground shadow-lg' : 'bg-muted/50 hover:bg-muted'
                                         )}
                                     >
@@ -82,7 +82,7 @@ export function FaqClient({ faqData }: FaqClientProps) {
                             key={item.category}
                             onClick={() => setActiveCategory(item.category)}
                             className={cn(
-                                'cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5',
+                                'cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5 bg-background/50 backdrop-blur-lg',
                                 activeCategory === item.category ? 'bg-primary text-primary-foreground shadow-lg' : 'bg-card hover:bg-muted'
                             )}
                         >

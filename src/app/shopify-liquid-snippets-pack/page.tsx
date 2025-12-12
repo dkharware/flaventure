@@ -21,7 +21,7 @@ export default function LiquidSnippetsPage() {
         <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
             <Breadcrumbs items={breadcrumbItems} className="mb-8" />
             
-             <Card className="max-w-4xl mx-auto">
+             <Card className="max-w-4xl mx-auto bg-background/50 backdrop-blur-lg">
                 <CardHeader>
                     <CardTitle className="text-3xl md:text-4xl font-headline">Shopify Liquid Snippets Pack</CardTitle>
                     <CardDescription className="text-lg">

@@ -58,7 +58,7 @@ export default function TemplatesHubPage() {
 
     return (
         <>
-            <div className="w-full bg-muted/20 py-8">
+            <div className="w-full bg-background/50 backdrop-blur-lg border-b py-8">
                 <div className="container mx-auto px-4 md:px-6">
                     <Breadcrumbs items={breadcrumbItems} />
                     <div className="text-center my-8">
@@ -73,7 +73,7 @@ export default function TemplatesHubPage() {
             <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {templates.map((template) => (
-                        <Card key={template.title} className="flex flex-col">
+                        <Card key={template.title} className="flex flex-col bg-background/50 backdrop-blur-lg">
                             <CardHeader>
                                 <CardTitle>{template.title}</CardTitle>
                                 <CardDescription>{template.description}</CardDescription>

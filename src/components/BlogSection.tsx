@@ -26,7 +26,7 @@ interface Article {
 
 const ArticleCard = ({ article }: { article: Article }) => (
     <Link href={article.handle === '#' ? '/blog' : `/blog/${article.handle}`} className="block group h-full">
-        <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+        <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-background/50 backdrop-blur-lg">
             {article.image && (
                 <div className="relative h-48 w-full overflow-hidden">
                     <Image
@@ -91,7 +91,7 @@ export default function BlogSection() {
     )
 
     return (
-        <section className="w-full py-12 md:py-16 bg-muted/20">
+        <section className="w-full py-12 md:py-16 bg-background/50 backdrop-blur-lg">
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">

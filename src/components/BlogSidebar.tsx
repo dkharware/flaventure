@@ -92,7 +92,7 @@ export function BlogSidebar({}: BlogSidebarProps) {
 
   return (
     <div className="space-y-8 sticky top-28">
-      <Card>
+      <Card className="bg-background/50 backdrop-blur-lg">
         <CardHeader>
           <CardTitle className="text-xl font-bold">Search</CardTitle>
         </CardHeader>
@@ -117,7 +117,7 @@ export function BlogSidebar({}: BlogSidebarProps) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-background/50 backdrop-blur-lg">
         <CardHeader>
           <CardTitle className="text-xl font-bold">Popular Articles</CardTitle>
         </CardHeader>
@@ -169,7 +169,7 @@ export function BlogSidebar({}: BlogSidebarProps) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="bg-background/50 backdrop-blur-lg">
         <CardHeader>
           <CardTitle className="text-xl font-bold">Tags</CardTitle>
         </CardHeader>

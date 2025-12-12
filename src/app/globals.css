@@ -9,25 +9,25 @@
   }
   
   :root {
-    --background: 0 0% 8%;
+    --background: 260 20% 5%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 10%;
+    --card: 260 20% 12%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
+    --popover: 260 20% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 158 79% 51%; /* Bright Green */
-    --primary-foreground: 240 10% 3.9%;
-    --secondary: 240 3.7% 15.9%;
+    --primary: 260 80% 60%; /* Vibrant Violet */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 260 20% 15%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 260 20% 15%;
+    --muted-foreground: 260 5% 65%;
     --accent: 333 91% 55%; /* Pink/Magenta */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 158 79% 51%;
+    --border: 260 20% 18%;
+    --input: 260 20% 18%;
+    --ring: 260 80% 65%;
     --radius: 0.8rem;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -37,25 +37,25 @@
   }
 
   .dark {
-    --background: 0 0% 8%;
+    --background: 260 20% 5%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 10%;
+    --card: 260 20% 12%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
+    --popover: 260 20% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 158 79% 51%; /* Bright Green */
-    --primary-foreground: 240 10% 3.9%;
-    --secondary: 240 3.7% 15.9%;
+    --primary: 260 80% 60%; /* Vibrant Violet */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 260 20% 15%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 260 20% 15%;
+    --muted-foreground: 260 5% 65%;
     --accent: 333 91% 55%; /* Pink/Magenta */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 158 79% 51%;
+    --border: 260 20% 18%;
+    --input: 260 20% 18%;
+    --ring: 260 80% 65%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -126,11 +126,6 @@
 }
 
 @layer utilities {
-    .bg-grid-black {
-        background-image: linear-gradient(to right, hsl(var(--border)) 0.5px, transparent 0.5px), linear-gradient(to bottom, hsl(var(--border)) 0.5px, transparent 0.5px);
-        background-size: 40px 40px;
-    }
-    
     .hide-scrollbar::-webkit-scrollbar {
         width: 0px;
         height: 0px;

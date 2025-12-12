@@ -17,7 +17,8 @@ export default async function Home() {
     <div className="w-full">
       <section className="w-full">
         <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
-          <div className="relative overflow-hidden p-8 my-8 text-center rounded-lg">
+          <div className="relative overflow-hidden p-8 my-8 text-center rounded-lg min-h-[40vh] flex flex-col justify-center items-center">
+              <div className="absolute inset-0 bg-background/50 backdrop-blur-lg rounded-lg -z-10"/>
               <div className="relative z-10">
                   <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-6xl text-white">Shopify, Headless & AI Developer Guides</h1>
                   <p className="text-lg text-white/80 mt-2 max-w-2xl mx-auto">Your go-to resource for in-depth tutorials, expert insights, and the latest trends in Shopify, headless commerce, and AI development.</p>

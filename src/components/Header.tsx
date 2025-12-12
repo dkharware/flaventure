@@ -140,7 +140,7 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 p-4 flex justify-center z-[60]">
-      <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-4 h-16 px-4 md:px-6 bg-black/50 border border-white/10 backdrop-blur-lg rounded-full md:rounded-full">
+      <div className="w-full max-w-7xl mx-auto flex items-center justify-between gap-4 h-16 px-4 md:px-6 bg-background/50 border border-white/10 backdrop-blur-lg rounded-xl md:rounded-full">
         <div className="flex-1 md:flex-shrink-0">
           <Link href="/" className="flex items-center gap-2 rounded-md" aria-label="storedevguide Home">
             <Logo width={120} height={32} priority />

@@ -37,7 +37,7 @@ interface ArticleListProps {
 function ArticleCard({ article }: { article: Article }) {
     return (
         <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
-        <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+        <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-background/50 backdrop-blur-lg">
             {article.image && (
             <div className="relative h-48 w-full overflow-hidden">
                 <Image
@@ -82,7 +82,7 @@ function ArticleCard({ article }: { article: Article }) {
 
 export function ArticleCardSkeleton() {
     return (
-        <Card className="h-full flex flex-col overflow-hidden">
+        <Card className="h-full flex flex-col overflow-hidden bg-background/50 backdrop-blur-lg">
             <Skeleton className="h-48 w-full" />
             <div className="p-4 flex-grow flex flex-col">
                 <Skeleton className="h-4 w-5/6 mb-4" />

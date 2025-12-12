@@ -19,7 +19,7 @@ export default function ProductSchemaGeneratorPage() {
 
   return (
     <>
-      <div className="w-full bg-muted/20 py-8">
+      <div className="w-full bg-background/50 backdrop-blur-lg border-b py-8">
         <div className="container mx-auto px-4 md:px-6">
             <Breadcrumbs items={breadcrumbItems} />
             <div className="text-center my-8">
@@ -36,7 +36,7 @@ export default function ProductSchemaGeneratorPage() {
           </div>
 
           <div className="prose dark:prose-invert max-w-4xl mx-auto mt-12">
-              <Card className="mt-8">
+              <Card className="mt-8 bg-background/50 backdrop-blur-lg">
                   <CardHeader>
                       <CardTitle>What is Product Schema and Why Does it Matter for SEO?</CardTitle>
                   </CardHeader>

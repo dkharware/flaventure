@@ -52,7 +52,7 @@ export default function NextjsStarterPage() {
 
     return (
         <>
-            <div className="w-full bg-muted/20 py-8">
+            <div className="w-full bg-background/50 backdrop-blur-lg border-b py-8">
                 <div className="container mx-auto px-4 md:px-6">
                     <Breadcrumbs items={breadcrumbItems} />
                     <header className="mt-8">
@@ -114,7 +114,7 @@ export default function NextjsStarterPage() {
                     </main>
 
                     <aside className="lg:col-span-1">
-                        <Card className="sticky top-28">
+                        <Card className="sticky top-28 bg-background/50 backdrop-blur-lg">
                             <CardHeader>
                                 <CardTitle>How to Install</CardTitle>
                             </CardHeader>

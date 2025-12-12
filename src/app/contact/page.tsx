@@ -46,7 +46,7 @@ export default function ContactPage() {
 
   return (
     <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
-      <Card className="max-w-2xl mx-auto">
+      <Card className="max-w-2xl mx-auto bg-background/50 backdrop-blur-lg">
         <CardHeader>
           <CardTitle className="text-2xl md:text-3xl font-headline">Contact Us</CardTitle>
           <CardDescription>

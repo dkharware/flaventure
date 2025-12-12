@@ -152,13 +152,13 @@ export default function RootLayout({
       </head>
       <body className={cn(
           readexPro.className,
-          "font-body antialiased"
+          "font-body antialiased overflow-hidden"
         )}
       >
           <LoaderProvider>
-              <div className="flex flex-col min-h-screen relative overflow-x-hidden bg-gradient-to-tr from-background to-secondary/20">
+              <div className="flex flex-col min-h-screen relative overflow-x-hidden">
                 <Header />
-                 <div className="pt-24">
+                 <div className="pt-24 border-b bg-background/50 backdrop-blur-lg">
                   <Suspense fallback={<TagsSkeleton />}>
                     <BlogTags />
                   </Suspense>

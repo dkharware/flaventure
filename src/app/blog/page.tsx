@@ -27,7 +27,7 @@ const POSTS_PER_PAGE = 11; // 1 for featured, 10 for grid on first page
 
 function FeaturedArticleSkeleton() {
     return (
-        <Card className="h-full flex flex-col md:flex-row overflow-hidden bg-card border-border/20">
+        <Card className="h-full flex flex-col md:flex-row overflow-hidden bg-background/50 backdrop-blur-lg">
             <Skeleton className="h-48 md:h-auto md:w-1/2" />
             <div className="flex-1 flex flex-col p-6 space-y-4">
                 <Skeleton className="h-6 w-3/4" />
@@ -91,7 +91,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
 
   return (
     <>
-      <div className="w-full bg-muted/20 py-8">
+      <div className="w-full bg-background/50 backdrop-blur-lg border-b py-8">
         <div className="container mx-auto px-3 md:px-6">
           <Breadcrumbs items={breadcrumbItems} />
           <div className="my-8 text-center">
@@ -123,7 +123,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
                     <div className="space-y-12">
                       {featuredArticle && !searchQuery && !tagQuery && (
                          <div className="block group">
-                            <Card className="h-full flex flex-col md:flex-row overflow-hidden bg-card border-border/20 transition-all duration-300 hover:shadow-xl hover:border-primary/20">
+                            <Card className="h-full flex flex-col md:flex-row overflow-hidden bg-background/50 backdrop-blur-lg border-border/20 transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                                 {featuredArticle.image && (
                                 <div className="relative h-48 md:h-auto md:w-1/2 overflow-hidden">
                                     <Link href={`/blog/${featuredArticle.handle}`}>

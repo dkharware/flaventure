@@ -13,7 +13,7 @@ export default async function AboutPage() {
 
   return (
     <div className="container mx-auto py-12 px-4 md:px-6">
-      <Card className="max-w-4xl mx-auto">
+      <Card className="max-w-4xl mx-auto bg-background/50 backdrop-blur-lg">
         <CardHeader className="text-center">
           <Avatar className="w-24 h-24 mx-auto mb-4 border-4 border-primary/10">
             <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={authorName} />
