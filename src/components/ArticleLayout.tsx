@@ -3,7 +3,7 @@
 
 import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
-import { PanelLeftClose, PanelRightClose } from 'lucide-react';
+import { SidebarOpen, SidebarClose } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   Tooltip,
@@ -49,7 +49,7 @@ export function ArticleLayout({ leftSidebar, mainContent, rightSidebar }: Articl
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                     className="sticky top-28"
                 >
-                    {isSidebarOpen ? <PanelLeftClose className="h-4 w-4" /> : <PanelRightClose className="h-4 w-4" />}
+                    {isSidebarOpen ? <SidebarClose className="h-5 w-5" /> : <SidebarOpen className="h-5 w-5" />}
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="left">
