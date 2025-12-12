@@ -20,6 +20,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { NextPageProps } from '@/app/types';
+import { ArticleLayout } from '@/components/ArticleLayout';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
@@ -81,6 +82,83 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
     }))
   };
 
+  const leftSidebar = (
+    <div className="sticky top-28">
+      <TableOfContents content={article.contentHtml} />
+    </div>
+  );
+
+  const mainContent = (
+    <article>
+        <header className="mb-8">
+            <div className="mb-4 flex flex-wrap gap-2">
+              {article.tags.map((tag: string) => (
+                  <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
+                      <Badge variant="secondary">{tag}</Badge>
+                  </Link>
+              ))}
+            </div>
+            <h1 className="text-3xl md:text-5xl font-bold font-headline mb-4">{article.title}</h1>
+            <div className="text-muted-foreground text-sm flex items-center flex-wrap gap-x-6 gap-y-2">
+                {article.authorV2 && (
+                    <div className="flex items-center gap-2">
+                        <Image src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={article.authorV2.name} width={24} height={24} className="rounded-full" />
+                        <span>{article.authorV2.name}</span>
+                    </div>
+                )}
+                <div className="flex items-center gap-1.5">
+                    <Calendar className="h-4 w-4" />
+                    <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                    <Clock className="h-4 w-4" />
+                    <span>{article.readTime} min read</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                    <Eye className="h-4 w-4" />
+                    <span>{article.viewCount.toLocaleString()} views</span>
+                </div>
+            </div>
+        </header>
+
+        {article.image && (
+        <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden mb-8 shadow-lg">
+            <Image
+            src={article.image.url}
+            alt={article.image.altText || article.title}
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 800px"
+            />
+        </div>
+        )}
+        
+        <div className="prose dark:prose-invert max-w-none mx-auto">
+          <ArticleContent content={article.contentHtml} />
+        </div>
+
+        <div className="flex items-center justify-center mt-8 space-x-4">
+          <LikeButton />
+          <ShareButtons title={article.title} />
+        </div>
+    </article>
+  );
+
+  const rightSidebar = (
+    <Suspense fallback={
+       <div className="space-y-8">
+          <Skeleton className="h-24 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-64 w-full" />
+       </div>
+    }>
+        <div className="lg:sticky lg:top-28">
+            <BlogSidebar />
+        </div>
+    </Suspense>
+  );
+
   return (
     <>
       <Script
@@ -99,111 +177,44 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
         </div>
       </div>
       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            <aside className="lg:col-span-3 hidden lg:block">
-              <div className="sticky top-28">
-                <TableOfContents content={article.contentHtml} />
-              </div>
-            </aside>
-            <main className="lg:col-span-6">
-                <article>
-                    <header className="mb-8">
-                        <div className="mb-4 flex flex-wrap gap-2">
-                          {article.tags.map((tag: string) => (
-                              <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
-                                  <Badge variant="secondary">{tag}</Badge>
-                              </Link>
-                          ))}
-                        </div>
-                        <h1 className="text-3xl md:text-5xl font-bold font-headline mb-4">{article.title}</h1>
-                        <div className="text-muted-foreground text-sm flex items-center flex-wrap gap-x-6 gap-y-2">
-                            {article.authorV2 && (
-                                <div className="flex items-center gap-2">
-                                    <Image src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={article.authorV2.name} width={24} height={24} className="rounded-full" />
-                                    <span>{article.authorV2.name}</span>
-                                </div>
-                            )}
-                            <div className="flex items-center gap-1.5">
-                                <Calendar className="h-4 w-4" />
-                                <span>{format(new Date(article.publishedAt), 'PPP')}</span>
-                            </div>
-                            <div className="flex items-center gap-1.5">
-                                <Clock className="h-4 w-4" />
-                                <span>{article.readTime} min read</span>
-                            </div>
-                            <div className="flex items-center gap-1.5">
-                                <Eye className="h-4 w-4" />
-                                <span>{article.viewCount.toLocaleString()} views</span>
-                            </div>
-                        </div>
-                    </header>
+        <ArticleLayout
+          leftSidebar={leftSidebar}
+          mainContent={
+            <>
+              {mainContent}
 
-                    {article.image && (
-                    <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden mb-8 shadow-lg">
-                        <Image
-                        src={article.image.url}
-                        alt={article.image.altText || article.title}
-                        fill
-                        className="object-cover"
-                        priority
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 800px"
-                        />
-                    </div>
-                    )}
-                    
-                    <div className="prose dark:prose-invert max-w-none mx-auto">
-                      <ArticleContent content={article.contentHtml} />
-                    </div>
-
-                    <div className="flex items-center justify-center mt-8 space-x-4">
-                      <LikeButton />
-                      <ShareButtons title={article.title} />
-                    </div>
-                </article>
-
-                <Suspense fallback={
-                    <div className="mt-16 pt-12 border-t border-border/10 space-y-4">
-                        <Skeleton className="h-8 w-1/2 mx-auto" />
-                        <Skeleton className="h-24 w-full" />
-                    </div>
-                }>
-                    <div className="mt-16 pt-12 border-t border-border/10">
-                        <CommentSection />
-                    </div>
-                </Suspense>
-
-                {relatedArticles.length > 0 && (
-                     <Suspense fallback={
-                        <div className="mt-16 pt-12 border-t border-border/10 space-y-8">
-                            <h2 className="text-3xl font-bold font-headline mb-8 text-center"><Skeleton className="h-8 w-1/3 mx-auto" /></h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <Skeleton className="h-64 w-full" />
-                                <Skeleton className="h-64 w-full" />
-                            </div>
-                        </div>
-                     }>
-                        <div className="mt-16 pt-12 border-t border-border/10">
-                            <h2 className="text-3xl font-bold font-headline mb-8 text-center">Related Articles</h2>
-                            <RelatedArticles articles={relatedArticles} />
-                        </div>
-                     </Suspense>
-                )}
-            </main>
-            <aside className="lg:col-span-3 relative">
-                <Suspense fallback={
-                   <div className="space-y-8">
+              <Suspense fallback={
+                  <div className="mt-16 pt-12 border-t border-border/10 space-y-4">
+                      <Skeleton className="h-8 w-1/2 mx-auto" />
                       <Skeleton className="h-24 w-full" />
-                      <Skeleton className="h-48 w-full" />
-                      <Skeleton className="h-64 w-full" />
-                   </div>
-                }>
-                    <div className="lg:sticky lg:top-28">
-                        <BlogSidebar />
-                    </div>
-                </Suspense>
-            </aside>
-        </div>
-    </div>
+                  </div>
+              }>
+                  <div className="mt-16 pt-12 border-t border-border/10">
+                      <CommentSection />
+                  </div>
+              </Suspense>
+
+              {relatedArticles.length > 0 && (
+                   <Suspense fallback={
+                      <div className="mt-16 pt-12 border-t border-border/10 space-y-8">
+                          <h2 className="text-3xl font-bold font-headline mb-8 text-center"><Skeleton className="h-8 w-1/3 mx-auto" /></h2>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                              <Skeleton className="h-64 w-full" />
+                              <Skeleton className="h-64 w-full" />
+                          </div>
+                      </div>
+                   }>
+                      <div className="mt-16 pt-12 border-t border-border/10">
+                          <h2 className="text-3xl font-bold font-headline mb-8 text-center">Related Articles</h2>
+                          <RelatedArticles articles={relatedArticles} />
+                      </div>
+                   </Suspense>
+              )}
+            </>
+          }
+          rightSidebar={rightSidebar}
+        />
+      </div>
     </>
   );
 }
