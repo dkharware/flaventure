@@ -35,9 +35,8 @@ export function BlogSearch({ initialQuery = '' }: BlogSearchProps) {
         className="h-12 text-base bg-background/80"
         aria-label="Search articles"
       />
-      <Button type="submit" size="lg" aria-label="Submit search">
-        <Search className="h-5 w-5 mr-2" />
-        Search
+      <Button type="submit" size="icon" className="h-12 w-12 flex-shrink-0" aria-label="Submit search">
+        <Search className="h-5 w-5" />
       </Button>
     </form>
   );
