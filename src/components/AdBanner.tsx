@@ -1,7 +1,6 @@
 
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -9,7 +8,7 @@ import { ExternalLink } from 'lucide-react';
 
 export function AdBanner() {
   return (
-    <Link href="https://otieu.com/4/10313318" target="_blank" rel="noopener noreferrer sponsored" className="block group">
+    <a href="https://otieu.com/4/10313318" target="_blank" rel="noopener noreferrer sponsored" className="block group">
       <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-background/50 backdrop-blur-lg">
         <div className="relative h-48 w-full overflow-hidden">
           <Image
@@ -38,6 +37,6 @@ export function AdBanner() {
             </div>
         </CardContent>
       </Card>
-    </Link>
+    </a>
   );
 }
