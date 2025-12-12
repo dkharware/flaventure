@@ -9,26 +9,26 @@
   }
   
   :root {
-    --background: 0 0% 100%;
-    --foreground: 260 20% 5%;
-    --card: 0 0% 100%;
-    --card-foreground: 260 20% 5%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 260 20% 5%;
-    --primary: 330 89% 55%; /* Pink */
+    --background: 240 10% 97%;
+    --foreground: 240 10% 3.9%;
+    --card: 240 10% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 240 10% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 340 82% 60%; /* pink */
     --primary-foreground: 0 0% 98%;
-    --secondary: 260 20% 95%;
-    --secondary-foreground: 260 20% 10%;
-    --muted: 260 20% 95%;
-    --muted-foreground: 260 5% 45%;
-    --accent: 48 96% 57%; /* Yellow */
-    --accent-foreground: 260 20% 5%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 260 20% 90%;
-    --input: 260 20% 90%;
-    --ring: 330 89% 55%;
-    --info: 220 70% 50%; /* Blue */
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 340 82% 60%; /* pink */
+    --info: 220 83% 60%; /* blue */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -37,26 +37,26 @@
   }
 
   .dark {
-    --background: 260 20% 5%;
+    --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-    --card: 260 20% 12%;
+    --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
-    --popover: 260 20% 3.9%;
+    --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 330 89% 55%; /* Pink */
+    --primary: 340 82% 60%; /* pink */
     --primary-foreground: 0 0% 98%;
-    --secondary: 260 20% 15%;
+    --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 260 20% 15%;
-    --muted-foreground: 260 5% 65%;
-    --accent: 48 96% 57%; /* Yellow */
-    --accent-foreground: 260 20% 5%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 260 20% 18%;
-    --input: 260 20% 18%;
-    --ring: 330 89% 60%;
-    --info: 220 70% 50%; /* Blue */
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 340 82% 60%; /* pink */
+    --info: 220 83% 60%; /* blue */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -136,27 +136,24 @@
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
     }
-}
 
-@keyframes moveInCircle {
-  0% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    .hero-grid-bg {
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0) 2px, transparent 2px),
+        linear-gradient(hsla(252, 84%, 93%, 0.5) 1px, transparent 1px),
+        linear-gradient(90deg, hsla(252, 84%, 93%, 0.5) 1px, transparent 1px);
+      background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+      background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    }
+    .dark .hero-grid-bg {
+        background-image:
+        linear-gradient(rgba(0,0,0,0) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(0,0,0,0) 2px, transparent 2px),
+        linear-gradient(hsla(240, 10%, 10%, 0.8) 1px, transparent 1px),
+        linear-gradient(90deg, hsla(240, 10%, 10%, 0.8) 1px, transparent 1px);
+    }
+    .bg-info {
+        background-color: hsl(var(--info));
+    }
 }
-
-.animate-moveInCircle {
-  animation: moveInCircle 20s linear infinite;
-}
-
-.blob {
-  @apply absolute rounded-full opacity-50 blur-3xl;
-  transition: transform 5s ease-in-out;
-}
-
-    

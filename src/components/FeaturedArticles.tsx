@@ -60,7 +60,7 @@ const AuthorInfo = ({ article, className }: { article: Article, className?: stri
 );
 
 const LargeHeroCard = ({ article }: { article: Article }) => (
-    <div className="block group relative overflow-hidden rounded-lg">
+    <div className="block group relative overflow-hidden rounded-2xl">
         {article.image && (
         <div className="absolute inset-0">
             <Image

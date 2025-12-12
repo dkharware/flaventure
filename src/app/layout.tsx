@@ -157,23 +157,7 @@ export default function RootLayout({
       >
           <LoaderProvider>
               <div className="flex flex-col min-h-screen relative overflow-x-hidden">
-                <div className="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden">
-                  <div className="absolute w-[40vmax] h-[40vmax] -top-[10vmax] -left-[10vmax] animate-moveInCircle">
-                    <div className="w-full h-full rounded-full bg-[radial-gradient(circle_farthest-side,hsl(var(--primary)/0.4),transparent)] blob" />
-                  </div>
-                  <div className="absolute w-[30vmax] h-[30vmax] -bottom-[5vmax] -right-[5vmax] animate-moveInCircle" style={{ animationDelay: '5s' }}>
-                    <div className="w-full h-full rounded-full bg-[radial-gradient(circle_farthest-side,hsl(var(--accent)/0.3),transparent)] blob" />
-                  </div>
-                   <div className="absolute w-[35vmax] h-[35vmax] -bottom-[15vmax] -left-[10vmax] animate-moveInCircle" style={{ animationDelay: '10s' }}>
-                    <div className="w-full h-full rounded-full bg-[radial-gradient(circle_farthest-side,hsl(220_70%_50%/0.3),transparent)] blob" />
-                  </div>
-                </div>
                 <Header />
-                 <div className="pt-24 border-b bg-background/50 backdrop-blur-lg">
-                  <Suspense fallback={<TagsSkeleton />}>
-                    <BlogTags />
-                  </Suspense>
-                 </div>
                 <main className="flex-grow">{children}</main>
                 <Footer />
               </div>

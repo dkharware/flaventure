@@ -112,10 +112,7 @@ export default function BlogSection() {
                             </>
                         ) : (
                             articles.slice(0,4).map((article: any, index) => (
-                               <div key={article.id} className={cn({
-                                    'hidden sm:block': index >= 2,
-                                    'hidden lg:block': index >= 4,
-                               })}>
+                               <div key={article.id}>
                                 <ArticleCard article={article} />
                                </div>
                             ))

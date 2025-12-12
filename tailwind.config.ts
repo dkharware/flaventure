@@ -12,7 +12,7 @@ export default {
     container: {
       center: true,
       screens: {
-        '2xl': '95vw',
+        '2xl': '1440px',
       },
     },
     extend: {
@@ -86,6 +86,7 @@ export default {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+        info: 'hsl(var(--info))',
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',

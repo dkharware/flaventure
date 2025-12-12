@@ -1,99 +1,92 @@
 
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { getArticles } from '@/lib/shopify';
 import { Skeleton } from '@/components/ui/skeleton';
+import { NewsletterCard } from '@/components/NewsletterCard';
 import { FeaturedArticles } from '@/components/FeaturedArticles';
-import { BlogSearch } from '@/components/BlogSearch';
+import BlogSection from '@/components/BlogSection';
+import WebStoriesSection from '@/components/WebStoriesSection';
+import FaqSection from '@/components/FaqSection';
 
-const WebStoriesSection = lazy(() => import('@/components/WebStoriesSection'));
-const BlogSection = lazy(() => import('@/components/BlogSection'));
-const FaqSection = lazy(() => import('@/components/FaqSection'));
-
+const CategoryBubble = ({ name, position }: { name: string, position: string }) => (
+  <div className={`absolute ${position} hidden lg:block`}>
+    <div className="relative w-28 h-28">
+      <div className="absolute inset-0 bg-white/50 rounded-full blur-xl"></div>
+      <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center text-center p-2 shadow-lg">
+        <span className="text-sm font-medium text-center">{name}</span>
+      </div>
+    </div>
+  </div>
+);
 
 export default async function Home() {
-    const { articles } = await getArticles(5);
+    const { articles } = await getArticles(9);
 
   return (
     <div className="w-full">
-      <section className="w-full">
-        <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
-          <div className="relative overflow-hidden p-8 my-8 text-center rounded-lg min-h-[40vh] flex flex-col justify-center items-center bg-info">
-              <div className="relative z-10">
-                  <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-6xl text-white">Shopify, Headless & AI Developer Guides</h1>
-                  <p className="text-lg text-white/80 mt-2 max-w-2xl mx-auto">Your go-to resource for in-depth tutorials, expert insights, and the latest trends in Shopify, headless commerce, and AI development.</p>
-                  <div className="mt-6 max-w-xl mx-auto">
-                    <BlogSearch />
-                  </div>
-              </div>
-          </div>
+      <section className="relative w-full overflow-hidden hero-grid-bg bg-info">
+        <div className="container mx-auto py-24 px-3 md:py-32 md:px-6 text-center">
+            
+            <CategoryBubble name="AI Tool" position="top-1/4 left-[10%]" />
+            <CategoryBubble name="Technology" position="top-1/2 left-[5%]" />
+            <CategoryBubble name="Foods" position="bottom-1/4 left-[12%]" />
+
+            <CategoryBubble name="Play" position="top-1/4 right-[10%]" />
+            <CategoryBubble name="AI Intelligence" position="top-1/2 right-[5%]" />
+            <CategoryBubble name="Lifestyle" position="bottom-1/4 right-[12%]" />
+
+            <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-7xl md:text-8xl">Discover Latest Articles</h1>
+            <div className="mt-12 max-w-xl mx-auto">
+              <NewsletterCard />
+            </div>
         </div>
       </section>
 
-      <section className="container py-8 md:py-12">
-        <Suspense fallback={<SectionSkeleton />}>
-          <FeaturedArticles articles={articles} />
-        </Suspense>
-      </section>
-
-      <Suspense fallback={<GenericSkeleton />}>
-        <WebStoriesSection />
-      </Suspense>
-      <Suspense fallback={<GenericSkeleton />}>
-        <BlogSection />
-      </Suspense>
-       <Suspense fallback={<GenericSkeleton />}>
-        <FaqSection />
+      <Suspense fallback={<SectionSkeleton />}>
+        <div className="py-16 md:py-24 space-y-16 md:space-y-24">
+            <FeaturedArticles articles={articles} />
+            <BlogSection />
+            <WebStoriesSection />
+            <FaqSection />
+        </div>
       </Suspense>
     </div>
   );
 }
 
-const GenericSkeleton = () => (
-    <div className="w-full py-12 md:py-16">
-        <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-                <Skeleton className="h-10 w-1/3" />
-                <Skeleton className="h-6 w-2/3" />
-            </div>
-            <div className="mx-auto max-w-5xl pt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <Skeleton className="h-80 w-full" />
-                <Skeleton className="h-80 w-full" />
-                <Skeleton className="h-80 w-full" />
-            </div>
-        </div>
-    </div>
-);
 
 const SectionSkeleton = () => (
-    <section className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12">
-            <div className="lg:col-span-2 space-y-8">
-                <div className="h-full overflow-hidden rounded-lg bg-card p-6 flex flex-col md:flex-row gap-6">
-                    <Skeleton className="relative w-full md:w-1/2 aspect-[16/9] rounded-2xl" />
-                    <div className="flex flex-col flex-grow p-1 md:w-1/2 space-y-4">
-                        <Skeleton className="h-6 w-1/2" />
-                        <Skeleton className="h-8 w-full" />
-                        <Skeleton className="h-4 w-full" />
-                        <Skeleton className="h-4 w-3/4" />
-                        <Skeleton className="h-10 w-1/2" />
-                    </div>
+    <section className="container py-16 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <Skeleton className="aspect-square w-full rounded-2xl" />
+            <div className="space-y-4">
+                <Skeleton className="h-10 w-3/4" />
+                <Skeleton className="h-5 w-full" />
+                <Skeleton className="h-5 w-5/6" />
+                <div className="flex gap-4">
+                    <Skeleton className="h-6 w-1/4" />
+                    <Skeleton className="h-6 w-1/4" />
+                    <Skeleton className="h-6 w-1/4" />
                 </div>
-            </div>
-
-            <div className="lg:col-span-1 space-y-4">
-                <h2 className="font-bold font-headline text-lg"><Skeleton className="h-8 w-1/3" /></h2>
-                {Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} className="flex gap-4 items-start border-b border-border/20 pb-4">
-                        <div className='w-1/3'>
-                            <Skeleton className="w-20 h-16 aspect-square rounded-2xl flex-shrink-0" />
-                        </div>
-                        <div className="flex flex-col flex-grow space-y-2 w-2/3">
-                            <Skeleton className="h-4 w-full" />
-                            <Skeleton className="h-4 w-3/4" />
-                        </div>
-                    </div>
-                ))}
+                <Skeleton className="h-12 w-1/3" />
             </div>
         </div>
+         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="space-y-3">
+                <Skeleton className="h-56 w-full rounded-2xl" />
+                <Skeleton className="h-6 w-3/4" />
+                <Skeleton className="h-5 w-1/2" />
+            </div>
+             <div className="space-y-3">
+                <Skeleton className="h-56 w-full rounded-2xl" />
+                <Skeleton className="h-6 w-3/4" />
+                <Skeleton className="h-5 w-1/2" />
+            </div>
+             <div className="space-y-3">
+                <Skeleton className="h-56 w-full rounded-2xl" />
+                <Skeleton className="h-6 w-3/4" />
+                <Skeleton className="h-5 w-1/2" />
+            </div>
+         </div>
     </section>
 );
