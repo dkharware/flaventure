@@ -4,9 +4,10 @@ import { getArticles } from '@/lib/shopify';
 import { Skeleton } from '@/components/ui/skeleton';
 import { NewsletterCard } from '@/components/NewsletterCard';
 import { FeaturedArticles } from '@/components/FeaturedArticles';
-import BlogSection from '@/components/BlogSection';
+import SpotlightBlogs from '@/components/SpotlightBlogs';
 import WebStoriesSection from '@/components/WebStoriesSection';
 import FaqSection from '@/components/FaqSection';
+import CategoriesSection from '@/components/CategoriesSection';
 
 const CategoryBubble = ({ name, position }: { name: string, position: string }) => (
   <div className={`absolute ${position} hidden lg:block`}>
@@ -45,7 +46,8 @@ export default async function Home() {
       <Suspense fallback={<SectionSkeleton />}>
         <div className="py-16 md:py-24 space-y-16 md:space-y-24">
             <FeaturedArticles articles={articles} />
-            <BlogSection />
+            <CategoriesSection />
+            <SpotlightBlogs />
             <WebStoriesSection />
             <FaqSection />
         </div>
