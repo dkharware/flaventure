@@ -10,7 +10,8 @@
         "url": "https://picsum.photos/seed/s1/600/400",
         "altText": "A computer screen showing performance metrics"
       },
-      "tags": []
+      "tags": [],
+      "readTime": 5
     },
     {
       "id": "placeholder-2",
@@ -22,7 +23,8 @@
         "url": "https://picsum.photos/seed/s2/600/400",
         "altText": "Code on a screen representing a headless architecture"
       },
-      "tags": []
+      "tags": [],
+      "readTime": 8
     },
     {
       "id": "placeholder-3",
@@ -34,6 +36,7 @@
         "url": "https://picsum.photos/seed/s3/600/400",
         "altText": "A diagram of API connections"
       },
-      "tags": []
+      "tags": [],
+      "readTime": 7
     }
 ]
