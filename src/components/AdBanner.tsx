@@ -25,17 +25,19 @@ export function AdBanner() {
             <ExternalLink className="h-3 w-3 text-white" />
           </div>
         </div>
-        <CardHeader className="p-4">
-          <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-2">Check Out This Amazing Offer</CardTitle>
-        </CardHeader>
-        <CardContent className="flex-grow flex flex-col p-4 pt-0">
-            <div className="text-sm text-muted-foreground flex-grow line-clamp-2">
-                Discover exclusive deals and products. Click to learn more about what our partners have to offer.
-            </div>
-             <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
-                Advertisement
-            </div>
-        </CardContent>
+        <div className="p-4 flex-grow flex flex-col">
+            <CardHeader className="p-0">
+                <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-3">Check Out This Amazing Offer</CardTitle>
+            </CardHeader>
+            <CardContent className="flex-grow flex flex-col p-0 mt-2">
+                <div className="text-sm text-muted-foreground flex-grow line-clamp-2">
+                    Discover exclusive deals and products. Click to learn more about what our partners have to offer.
+                </div>
+                <div className="text-xs text-muted-foreground mt-4 pt-4 border-t">
+                    Advertisement
+                </div>
+            </CardContent>
+        </div>
       </Card>
     </a>
   );

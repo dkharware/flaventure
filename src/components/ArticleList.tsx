@@ -54,28 +54,30 @@ function ArticleCard({ article }: { article: Article }) {
                 </div>
             </div>
             )}
-            <CardHeader className="p-4">
-                <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-3">{article.title}</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-grow flex flex-col p-4 pt-0">
-                <div
-                    className="text-sm text-muted-foreground flex-grow line-clamp-2"
-                    dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
-                />
-                <div className="text-xs text-muted-foreground mt-4 pt-4 border-t flex flex-wrap gap-x-4 gap-y-2 items-center justify-between">
-                    {article.authorV2 && (
+            <div className="p-4 flex-grow flex flex-col">
+                <CardHeader className="p-0">
+                    <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-3">{article.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex-grow flex flex-col p-0 mt-2">
+                    <div
+                        className="text-sm text-muted-foreground flex-grow line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: article.excerptHtml }}
+                    />
+                    <div className="text-xs text-muted-foreground mt-4 pt-4 border-t flex flex-wrap gap-x-4 gap-y-2 items-center justify-between">
+                        {article.authorV2 && (
+                            <div className="flex items-center gap-1">
+                                <User className="h-3 w-3" />
+                                <span>{article.authorV2.name}</span>
+                            </div>
+                        )}
+                        <span>{format(new Date(article.publishedAt), 'PPP')}</span>
                         <div className="flex items-center gap-1">
-                            <User className="h-3 w-3" />
-                            <span>{article.authorV2.name}</span>
+                            <Eye className="h-3 w-3" />
+                            <span>{article.viewCount.toLocaleString()}</span>
                         </div>
-                    )}
-                    <span>{format(new Date(article.publishedAt), 'PPP')}</span>
-                    <div className="flex items-center gap-1">
-                        <Eye className="h-3 w-3" />
-                        <span>{article.viewCount.toLocaleString()}</span>
                     </div>
-                </div>
-            </CardContent>
+                </CardContent>
+            </div>
         </Card>
         </Link>
     );
@@ -171,4 +173,3 @@ export function ArticleList({ initialArticles, initialPageInfo, query }: Article
     </>
   );
 }
-

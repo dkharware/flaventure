@@ -24,13 +24,15 @@ const mockComments: Comment[] = [
 
 const CommentTime = ({ timestamp }: { timestamp: Date }) => {
   const [timeAgo, setTimeAgo] = useState('');
+  const [isClient, setIsClient] = useState(false);
   
   useEffect(() => {
+    setIsClient(true);
     setTimeAgo(formatDistanceToNow(timestamp, { addSuffix: true }));
   }, [timestamp]);
 
-  if (!timeAgo) {
-      return <span className="text-xs text-muted-foreground">just now</span>;
+  if (!isClient) {
+      return <span className="text-xs text-muted-foreground"></span>;
   }
 
   return (
