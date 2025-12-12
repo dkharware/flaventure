@@ -145,11 +145,11 @@ export default function RootLayout({
                 gtag('config', 'G-0H420BHZNW');
             `}
         </Script>
-        <script
+        <Script
+          id="website-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-        <script src="https://quge5.com/88/tag.min.js" data-zone="192397" async data-cfasync="false"></script>
       </head>
       <body className={cn(
           readexPro.className,
@@ -170,6 +170,12 @@ export default function RootLayout({
           </LoaderProvider>
         <SpeedInsights />
         <Analytics />
+        <Script 
+          src="https://quge5.com/88/tag.min.js" 
+          data-zone="192397" 
+          data-cfasync="false"
+          strategy="afterInteractive" 
+        />
       </body>
     </html>
   );
