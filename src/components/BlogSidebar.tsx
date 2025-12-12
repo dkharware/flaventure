@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { Input } from '@/components/ui/input';
@@ -16,6 +17,7 @@ import { getAllTags, getArticles } from '@/lib/shopify';
 import { Skeleton } from './ui/skeleton';
 import placeholderTags from '@/lib/placeholder-tags.json';
 import placeholderArticles from '@/lib/placeholder-articles.json';
+import { AdBanner } from './AdBanner';
 
 
 interface Tag {
@@ -116,6 +118,8 @@ export function BlogSidebar({}: BlogSidebarProps) {
           )}
         </CardContent>
       </Card>
+
+      <AdBanner />
 
       <Card className="bg-background/50 backdrop-blur-lg">
         <CardHeader>
