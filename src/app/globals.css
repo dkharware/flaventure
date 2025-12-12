@@ -140,24 +140,4 @@
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
     }
-
-    @keyframes float {
-      0% {
-        transform: translateY(0px) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-20px) rotate(5deg);
-      }
-      100% {
-        transform: translateY(0px) rotate(0deg);
-      }
-    }
-
-    .animate-float {
-      animation: float 15s ease-in-out infinite;
-    }
-
-    .animation-delay-[-5s] {
-      animation-delay: -5s;
-    }
 }
