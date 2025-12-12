@@ -165,7 +165,7 @@
         background-color: hsl(var(--info));
     }
     .animate-text-gradient {
-      background: linear-gradient(to right, hsl(var(--foreground)), hsl(var(--primary)), hsl(var(--foreground)));
+      background: linear-gradient(to right, hsl(var(--info)), hsl(var(--primary)), hsl(var(--info)));
       background-size: 200% auto;
       -webkit-background-clip: text;
       background-clip: text;
