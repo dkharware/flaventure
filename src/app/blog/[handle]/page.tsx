@@ -122,7 +122,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
         </header>
 
         {article.image && (
-        <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden mb-8 shadow-lg">
+        <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden mb-8 shadow-lg">
             <Image
             src={article.image.url}
             alt={article.image.altText || article.title}
