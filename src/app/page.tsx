@@ -15,7 +15,7 @@ export default async function Home() {
 
   return (
     <div className="w-full">
-      <section className="relative w-full overflow-hidden hero-grid-bg">
+      <section className="relative w-full overflow-hidden hero-gradient-bg hero-grid-bg">
         <div className="container mx-auto py-24 px-3 md:py-32 md:px-6 text-center">
             
             <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-6xl md:text-7xl animate-text-gradient">Hey, We're storedevguide. See our thoughts, stories and ideas.</h1>

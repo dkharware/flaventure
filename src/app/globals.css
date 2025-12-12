@@ -140,15 +140,17 @@
     }
 
     .hero-gradient-bg {
-        background: hsl(var(--background));
+        background: radial-gradient(circle at top, hsl(var(--primary) / 0.1), transparent 40%),
+                    radial-gradient(circle at bottom, hsl(var(--info) / 0.1), transparent 40%),
+                    hsl(var(--background));
     }
 
     .hero-grid-bg {
       background-image:
         linear-gradient(rgba(255, 255, 255, 0) 2px, transparent 2px),
         linear-gradient(90deg, rgba(255, 255, 255, 0) 2px, transparent 2px),
-        linear-gradient(hsla(252, 84%, 93%, 0.5) 1px, transparent 1px),
-        linear-gradient(90deg, hsla(252, 84%, 93%, 0.5) 1px, transparent 1px);
+        linear-gradient(hsla(0, 0%, 100%, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, hsla(0, 0%, 100%, 0.05) 1px, transparent 1px);
       background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
       background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
     }
@@ -156,8 +158,8 @@
         background-image:
         linear-gradient(rgba(0,0,0,0) 2px, transparent 2px),
         linear-gradient(90deg, rgba(0,0,0,0) 2px, transparent 2px),
-        linear-gradient(hsla(240, 10%, 10%, 0.8) 1px, transparent 1px),
-        linear-gradient(90deg, hsla(240, 10%, 10%, 0.8) 1px, transparent 1px);
+        linear-gradient(hsl(var(--border) / 0.5) 1px, transparent 1px),
+        linear-gradient(90deg, hsl(var(--border) / 0.5) 1px, transparent 1px);
     }
     .bg-info {
         background-color: hsl(var(--info));
