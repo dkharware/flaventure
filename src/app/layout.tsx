@@ -11,8 +11,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
 import { CookieConsent } from '@/components/CookieConsent';
 import Script from 'next/script';
-import { BlogTags } from '@/components/BlogTags';
-import { Skeleton } from '@/components/ui/skeleton';
 import { getSiteUrl } from '@/lib/utils';
 import { cn } from '@/lib/utils';
 
@@ -73,21 +71,6 @@ export const metadata: Metadata = {
     apple: faviconUrl,
   },
 };
-
-const TagsSkeleton = () => (
-    <div className="w-full py-4 border-b">
-        <div className="container px-4 md:px-6">
-            <div className="mx-auto max-w-7xl flex gap-4">
-                <Skeleton className="h-10 w-24" />
-                <Skeleton className="h-10 w-32" />
-                <Skeleton className="h-10 w-20" />
-                <Skeleton className="h-10 w-28" />
-                <Skeleton className="h-10 w-24" />
-            </div>
-        </div>
-    </div>
-)
-
 
 export default function RootLayout({
   children,
