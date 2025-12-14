@@ -13,11 +13,11 @@ const FaqSection = lazy(() => import('@/components/FaqSection'));
 
 export default async function Home() {
     // Fetch a larger batch of articles to distribute among sections
-    const { articles } = await getArticles(20);
+    const { articles } = await getArticles(12);
 
     const featuredArticles = articles.slice(0, 5); // 1 for hero, 4 for popular
     const spotlightArticles = articles.slice(5, 11); // Next 6
-    const webStoryArticles = articles.slice(11, 19); // Next 8
+    const webStoryArticles = articles.slice(11); // Remaining articles
 
   return (
     <div className="w-full">
