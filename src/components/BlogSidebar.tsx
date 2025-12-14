@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { Input } from '@/components/ui/input';
@@ -12,68 +11,32 @@ import { Badge } from '@/components/ui/badge';
 import type { FormEvent } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { getAllTags, getArticles } from '@/lib/shopify';
 import { Skeleton } from './ui/skeleton';
-import placeholderTags from '@/lib/placeholder-tags.json';
-import placeholderArticles from '@/lib/placeholder-articles.json';
 
 
 interface Tag {
   name: string;
   count: number;
 }
+interface Article {
+  id: string;
+  handle: string;
+  title: string;
+  image?: { url: string; altText: string };
+  readTime?: number;
+  viewCount?: number;
+}
 interface BlogSidebarProps {
+    tags: Tag[];
+    recentPosts: Article[];
 }
 
-export function BlogSidebar({}: BlogSidebarProps) {
+export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [tags, setTags] = useState<Tag[]>([]);
-  const [recentPosts, setRecentPosts] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-    
-    async function fetchData() {
-      if (!hasApiKeys) {
-        setTags(placeholderTags);
-        setRecentPosts(placeholderArticles as any[]);
-        setIsLoading(false);
-        return;
-      }
-      
-      setIsLoading(true);
-      try {
-        const [tagsData, recentPostsData] = await Promise.all([
-          getAllTags(),
-          getArticles(5).then(res => res.articles)
-        ]);
-        
-        if (tagsData && tagsData.length > 0) {
-          setTags(tagsData);
-        } else {
-          setTags(placeholderTags);
-        }
-
-        if (recentPostsData && recentPostsData.length > 0) {
-          setRecentPosts(recentPostsData);
-        } else {
-          setRecentPosts(placeholderArticles as any[]);
-        }
-
-      } catch (error) {
-        console.error("Failed to fetch sidebar data, using placeholders.", error);
-        setTags(placeholderTags);
-        setRecentPosts(placeholderArticles as any[]);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
-
+  const isLoading = !tags || !recentPosts;
+  
   const isFilterActive = searchParams.has('query') || searchParams.has('tag');
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {

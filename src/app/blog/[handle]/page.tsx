@@ -1,5 +1,5 @@
 
-import { getArticleByHandle, getRelatedArticles } from '@/lib/shopify';
+import { getArticleByHandle, getRelatedArticles, getAllTags, getArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { format } from 'date-fns';
@@ -30,7 +30,11 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
     notFound();
   }
   
-  const relatedArticles = await getRelatedArticles(article.handle, article.tags);
+  const [relatedArticles, tagsData, recentPostsData] = await Promise.all([
+      getRelatedArticles(article.handle, article.tags),
+      getAllTags(),
+      getArticles(5).then(res => res.articles)
+  ]);
   
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -195,7 +199,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                    </div>
                 }>
                     <div className="lg:sticky lg:top-28">
-                        <BlogSidebar />
+                        <BlogSidebar tags={tagsData} recentPosts={recentPostsData} />
                     </div>
                 </Suspense>
             </aside>

@@ -46,6 +46,7 @@ function ArticleCard({ article }: { article: Article }) {
                 alt={article.image.altText || article.title}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
                     {article.tags?.slice(0, 2).map((tag: string) => (
@@ -125,26 +126,24 @@ export function ArticleList({ initialArticles, initialPageInfo, query }: Article
   }, [pageInfo, isLoading, query]);
 
   useEffect(() => {
+    const loader = loaderRef.current;
+    if (!loader) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0].isIntersecting && !isLoading) {
           handleLoadMore();
         }
       },
       { threshold: 1.0 }
     );
-
-    const loader = loaderRef.current;
-    if (loader) {
-      observer.observe(loader);
-    }
+    
+    observer.observe(loader);
 
     return () => {
-      if (loader) {
-        observer.unobserve(loader);
-      }
+      observer.unobserve(loader);
     };
-  }, [handleLoadMore]);
+  }, [handleLoadMore, isLoading]);
   
   const articlesWithAd = [...articles];
   if (articlesWithAd.length >= 4) {

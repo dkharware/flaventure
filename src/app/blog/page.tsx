@@ -1,5 +1,5 @@
 
-import { getArticles } from '@/lib/shopify';
+import { getArticles, getAllTags } from '@/lib/shopify';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -73,10 +73,13 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
     query = `tag:'${tagQuery}'`;
   }
   
-  const { articles, pageInfo } = await getArticles(
-      POSTS_PER_PAGE + 1, 
-      query
-  );
+  const [articlesData, tagsData, recentPostsData] = await Promise.all([
+      getArticles(POSTS_PER_PAGE + 1, query),
+      getAllTags(),
+      getArticles(5).then(res => res.articles)
+  ]);
+  
+  const { articles, pageInfo } = articlesData;
   
   const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Explore Articles & Guides");
   const pageDescription = tagQuery || searchQuery ? `Browsing articles for: ${tagQuery || searchQuery}` : "Your go-to resource for in-depth tutorials, expert insights, and the latest trends in e-commerce development.";
@@ -203,7 +206,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
                     </div>
                  }>
                     <div className="lg:sticky lg:top-28">
-                      <BlogSidebar />
+                      <BlogSidebar tags={tagsData} recentPosts={recentPostsData} />
                     </div>
                 </Suspense>
             </aside>
