@@ -74,58 +74,6 @@
   body {
     @apply bg-background text-foreground overflow-x-hidden;
   }
-  .prose {
-    @apply text-base;
-  }
-
-  .dark .prose {
-      --tw-prose-body: hsl(var(--foreground));
-      --tw-prose-headings: hsl(var(--foreground));
-      --tw-prose-lead: hsl(var(--foreground) / 0.9);
-      --tw-prose-links: hsl(var(--primary));
-      --tw-prose-bold: hsl(var(--foreground));
-      --tw-prose-counters: hsl(var(--muted-foreground));
-      --tw-prose-bullets: hsl(var(--muted-foreground));
-      --tw-prose-hr: hsl(var(--border));
-      --tw-prose-quotes: hsl(var(--foreground));
-      --tw-prose-quote-borders: hsl(var(--primary));
-      --tw-prose-captions: hsl(var(--muted-foreground));
-      --tw-prose-code: hsl(var(--primary));
-      --tw-prose-pre-code: hsl(var(--foreground) / 0.9);
-      --tw-prose-pre-bg: hsl(var(--secondary) / 0.5);
-      --tw-prose-th-borders: hsl(var(--border));
-      --tw-prose-td-borders: hsl(var(--border));
-  }
-  
-  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6,
-  .prose p, .prose span, .prose li, .prose a, .prose strong {
-    color: hsl(var(--foreground));
-  }
-
-  .prose ul {
-    @apply list-disc pl-5 space-y-2;
-  }
-  .prose a {
-    @apply text-primary hover:underline;
-  }
-  .prose blockquote {
-    @apply border-l-4 border-primary bg-secondary/40 p-4 italic;
-  }
-  .prose pre {
-    @apply bg-secondary/50 text-secondary-foreground p-4 rounded-lg shadow-inner overflow-x-auto relative;
-  }
-  .prose code {
-    @apply font-code text-sm;
-  }
-  .prose pre code {
-    @apply bg-transparent p-0;
-  }
-  .prose :not(pre) > code {
-      @apply bg-secondary text-primary px-1.5 py-0.5 rounded-md;
-  }
-  .prose h2 {
-    @apply mt-[30px];
-  }
 }
 
 @layer utilities {
