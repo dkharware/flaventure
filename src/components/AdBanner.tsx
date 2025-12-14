@@ -8,7 +8,7 @@ import { ExternalLink } from 'lucide-react';
 
 export function AdBanner() {
   return (
-    <a href="https://otieu.com/4/10313318" target="_blank" rel="noopener noreferrer sponsored" className="block group">
+    <div className="block group">
       <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-background/50 backdrop-blur-lg">
         <div className="relative h-48 w-full overflow-hidden">
           <Image
@@ -20,9 +20,6 @@ export function AdBanner() {
           />
           <div className="absolute top-3 left-3 z-10">
             <Badge variant="secondary" className="shadow-md bg-yellow-500/20 text-yellow-200 border border-yellow-500/50">Sponsored</Badge>
-          </div>
-           <div className="absolute top-3 right-3 z-10 bg-black/50 rounded-full p-1.5">
-            <ExternalLink className="h-3 w-3 text-white" />
           </div>
         </div>
         <div className="p-4 flex-grow flex flex-col">
@@ -39,6 +36,6 @@ export function AdBanner() {
             </CardContent>
         </div>
       </Card>
-    </a>
+    </div>
   );
 }

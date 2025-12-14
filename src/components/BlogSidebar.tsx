@@ -12,6 +12,7 @@ import type { FormEvent } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import Image from 'next/image';
 import { Skeleton } from './ui/skeleton';
+import { GoogleAd } from './GoogleAd';
 
 
 interface Tag {
@@ -132,6 +133,8 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
           )}
         </CardContent>
       </Card>
+
+       <GoogleAd className="bg-background/50 backdrop-blur-lg p-4" />
 
       <Card className="bg-background/50 backdrop-blur-lg">
         <CardHeader>
