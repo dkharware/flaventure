@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { formatDistanceToNow } from 'date-fns';
 
 interface Comment {
   id: number;
@@ -23,12 +22,14 @@ const mockComments: Comment[] = [
 ];
 
 const CommentTime = ({ timestamp }: { timestamp: Date }) => {
-  const [timeAgo, setTimeAgo] = useState('');
+  const [formattedDate, setFormattedDate] = useState('');
   const [isClient, setIsClient] = useState(false);
   
   useEffect(() => {
     setIsClient(true);
-    setTimeAgo(formatDistanceToNow(timestamp, { addSuffix: true }));
+    setFormattedDate(
+      `${new Date(timestamp).toLocaleDateString()} at ${new Date(timestamp).toLocaleTimeString()}`
+    );
   }, [timestamp]);
 
   if (!isClient) {
@@ -37,7 +38,7 @@ const CommentTime = ({ timestamp }: { timestamp: Date }) => {
 
   return (
     <p className="text-xs text-muted-foreground">
-        {timeAgo}
+        {formattedDate}
     </p>
   );
 };
