@@ -33,10 +33,8 @@ export default {
           '"Segoe UI Emoji"',
           '"Segoe UI Symbol"',
           '"Noto Color Emoji"',
-          'var(--font-readex-pro)'
         ],
         headline: [
-            'var(--font-readex-pro)',
             '-apple-system',
             'BlinkMacSystemFont',
             '"Segoe UI"',

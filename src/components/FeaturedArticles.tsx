@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
@@ -69,7 +68,7 @@ const LargeHeroCard = ({ article }: { article: Article }) => (
                  <div className="flex items-center flex-wrap gap-x-4 gap-y-2 text-xs text-white/80">
                     <div className="flex items-center gap-1.5">
                         <Calendar className="h-4 w-4" />
-                        <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                        <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                         <Clock className="h-4 w-4" />

@@ -1,6 +1,5 @@
 
 import type {Metadata} from 'next';
-import { Readex_Pro } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import Header from '@/components/Header';
@@ -16,13 +15,6 @@ import { BlogTags } from '@/components/BlogTags';
 import { Skeleton } from '@/components/ui/skeleton';
 import { getSiteUrl } from '@/lib/utils';
 import { cn } from '@/lib/utils';
-
-const readexPro = Readex_Pro({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-readex-pro',
-  weight: ['400', '500', '600', '700'],
-});
 
 const siteUrl = getSiteUrl();
 const faviconUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/favicon.ico";
@@ -152,7 +144,6 @@ export default function RootLayout({
         />
       </head>
       <body className={cn(
-          readexPro.className,
           "font-body antialiased"
         )}
       >

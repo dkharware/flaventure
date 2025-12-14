@@ -7,7 +7,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { format } from 'date-fns';
 import { Eye, User } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
 import { AdBanner } from './AdBanner';
@@ -71,7 +70,7 @@ function ArticleCard({ article }: { article: Article }) {
                                 <span>{article.authorV2.name}</span>
                             </div>
                         )}
-                        <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                        <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                         <div className="flex items-center gap-1">
                             <Eye className="h-3 w-3" />
                             <span>{article.viewCount.toLocaleString()}</span>

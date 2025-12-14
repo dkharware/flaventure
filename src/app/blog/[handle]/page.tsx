@@ -2,7 +2,6 @@
 import { getArticleByHandle, getRelatedArticles, getAllTags, getArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense, lazy } from 'react';
@@ -127,7 +126,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                             )}
                             <div className="flex items-center gap-1.5">
                                 <Calendar className="h-4 w-4" />
-                                <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                                <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                             </div>
                             <div className="flex items-center gap-1.5">
                                 <Clock className="h-4 w-4" />

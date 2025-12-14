@@ -4,7 +4,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 
 interface Article {
@@ -43,7 +42,7 @@ export default function RelatedArticles({ articles }: RelatedArticlesProps) {
                             <CardTitle className="text-lg font-headline group-hover:text-primary transition-colors">{related.title}</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className="text-xs text-muted-foreground">{format(new Date(related.publishedAt), 'PPP')}</p>
+                            <p className="text-xs text-muted-foreground">{new Date(related.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                         </CardContent>
                     </Card>
                 </Link>

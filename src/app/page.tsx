@@ -2,7 +2,6 @@
 import React, { Suspense, lazy } from 'react';
 import { getArticles } from '@/lib/shopify';
 import { Skeleton } from '@/components/ui/skeleton';
-import { NewsletterCard } from '@/components/NewsletterCard';
 import { FeaturedArticles } from '@/components/FeaturedArticles';
 import SpotlightBlogs from '@/components/SpotlightBlogs';
 import WebStoriesSection from '@/components/WebStoriesSection';

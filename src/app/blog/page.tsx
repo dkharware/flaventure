@@ -3,7 +3,6 @@ import { getArticles, getAllTags } from '@/lib/shopify';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { format } from 'date-fns';
 import type { Metadata } from 'next';
 import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
@@ -162,7 +161,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
                                                 <Image src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={featuredArticle.authorV2.name} width={20} height={20} className="rounded-full" />
                                                 <span>{featuredArticle.authorV2.name}</span>
                                             </div>
-                                            <span>{format(new Date(featuredArticle.publishedAt), 'PPP')}</span>
+                                            <span>{new Date(featuredArticle.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                                             <div className="flex items-center gap-1">
                                                 <Eye className="h-3 w-3" />
                                                 <span>{featuredArticle.viewCount.toLocaleString()} views</span>

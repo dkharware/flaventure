@@ -3,7 +3,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { format } from 'date-fns';
 import {
   Carousel,
   CarouselContent,
@@ -48,7 +47,7 @@ const StoryCard = ({ article }: { article: Article }) => (
                 />
                 <div className="mt-4">
                     <Badge variant="secondary" className="bg-white/20 text-white backdrop-blur-sm border-none">
-                    {format(new Date(article.publishedAt), 'PPP')}
+                    {new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </Badge>
                 </div>
             </div>

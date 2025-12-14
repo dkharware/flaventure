@@ -1,7 +1,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { format } from 'date-fns';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -44,7 +43,7 @@ export function PostCard({ article }: { article: Article }) {
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
             <div className="flex items-center gap-1.5">
                 <Calendar className="h-3 w-3" />
-                <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
             </div>
             <div className="flex items-center gap-1.5">
                 <Clock className="h-3 w-3" />

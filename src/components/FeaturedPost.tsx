@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { format } from 'date-fns';
 import { ArrowRight, Calendar, Clock, User } from 'lucide-react';
 
 interface Article {
@@ -59,7 +58,7 @@ export function FeaturedPost({ article }: { article: Article }) {
             )}
             <div className="flex items-center gap-1.5">
                 <Calendar className="h-4 w-4" />
-                <span>{format(new Date(article.publishedAt), 'PPP')}</span>
+                <span>{new Date(article.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
             </div>
             <div className="flex items-center gap-1.5">
                 <Clock className="h-4 w-4" />
