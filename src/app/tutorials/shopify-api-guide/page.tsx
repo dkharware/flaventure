@@ -2,6 +2,11 @@
 import type { Metadata } from 'next';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ShopifyApiGuideContent } from '@/components/ShopifyApiGuideContent';
+import { Suspense, lazy } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const GraphiQLMock = lazy(() => import("@/components/GraphiQLMock").then(module => ({ default: module.GraphiQLMock })));
+
 
 export const metadata: Metadata = {
     title: 'Shopify Storefront & Admin API Tutorial',
@@ -27,10 +32,17 @@ export default function ShopifyApiGuidePage() {
                       Your quick reference for Shopify's core APIs. Click on any item to see a description and code example.
                   </p>
               </div>
+
+               <section id="interactive-example" className="mb-12">
+                  <h2 className="text-2xl font-bold font-headline mb-6">Interactive Example</h2>
+                  <Suspense fallback={<Skeleton className="h-[500px] w-full" />}>
+                      <GraphiQLMock />
+                  </Suspense>
+              </section>
+
               <ShopifyApiGuideContent />
           </div>
       </div>
     </>
   );
 }
-

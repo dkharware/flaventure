@@ -1,14 +1,15 @@
 
-import React, { Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { getArticles } from '@/lib/shopify';
 import { Skeleton } from '@/components/ui/skeleton';
 import { NewsletterCard } from '@/components/NewsletterCard';
 import { FeaturedArticles } from '@/components/FeaturedArticles';
 import SpotlightBlogs from '@/components/SpotlightBlogs';
 import WebStoriesSection from '@/components/WebStoriesSection';
-import FaqSection from '@/components/FaqSection';
 import CategoriesSection from '@/components/CategoriesSection';
 import { BlogSearch } from '@/components/BlogSearch';
+
+const FaqSection = lazy(() => import('@/components/FaqSection'));
 
 export default async function Home() {
     // Fetch a larger batch of articles to distribute among sections
@@ -33,15 +34,21 @@ export default async function Home() {
         </div>
       </section>
 
-      <Suspense fallback={<SectionSkeleton />}>
-        <div className="py-16 md:py-24 space-y-16 md:space-y-24">
+      <div className="py-16 md:py-24 space-y-16 md:space-y-24">
+          <Suspense fallback={<SectionSkeleton />}>
             <FeaturedArticles articles={featuredArticles} />
-            <CategoriesSection />
+          </Suspense>
+          <CategoriesSection />
+          <Suspense>
             <SpotlightBlogs articles={spotlightArticles} />
+          </Suspense>
+          <Suspense>
             <WebStoriesSection articles={webStoryArticles} />
+          </Suspense>
+          <Suspense fallback={<FaqSkeleton />}>
             <FaqSection />
-        </div>
-      </Suspense>
+          </Suspense>
+      </div>
     </div>
   );
 }
@@ -83,3 +90,25 @@ const SectionSkeleton = () => (
     </section>
 );
 
+const FaqSkeleton = () => (
+  <section className="w-full py-12 md:py-16">
+    <div className="container px-4 md:px-6">
+      <div className="flex flex-col items-center justify-center space-y-4 text-center">
+        <Skeleton className="h-10 w-1/2" />
+        <Skeleton className="h-6 w-3/4" />
+      </div>
+      <div className="mx-auto max-w-4xl pt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="md:col-span-1 space-y-3">
+            <Skeleton className="h-16 w-full" />
+            <Skeleton className="h-16 w-full" />
+            <Skeleton className="h-16 w-full" />
+        </div>
+        <div className="md:col-span-2 space-y-3">
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-12 w-full" />
+        </div>
+      </div>
+    </div>
+  </section>
+);

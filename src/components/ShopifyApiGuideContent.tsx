@@ -8,14 +8,10 @@ import {
     AccordionTrigger,
   } from "@/components/ui/accordion";
 import { Card, CardContent } from '@/components/ui/card';
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import Link from "next/link";
-import { Skeleton } from "./ui/skeleton";
-
-const GraphiQLMock = React.lazy(() => import("./GraphiQLMock").then(module => ({ default: module.GraphiQLMock })));
-
 
 const apiGuideData = {
     storefrontApi: [
@@ -163,14 +159,6 @@ export function ShopifyApiGuideContent() {
             />
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
         </div>
-
-        <section id="interactive-example" className="mb-12">
-            <h2 className="text-2xl font-bold font-headline mb-6">Interactive Example</h2>
-            <Suspense fallback={<Skeleton className="h-[500px] w-full" />}>
-                <GraphiQLMock />
-            </Suspense>
-        </section>
-
 
         {filteredData.storefrontApi.length > 0 && (
             <section id="storefront-api" className="mb-12">
