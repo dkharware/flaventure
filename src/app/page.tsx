@@ -2,21 +2,12 @@
 import React, { Suspense, lazy } from 'react';
 import { getArticles } from '@/lib/shopify';
 import { Skeleton } from '@/components/ui/skeleton';
-import { FeaturedArticles } from '@/components/FeaturedArticles';
-import SpotlightBlogs from '@/components/SpotlightBlogs';
-import WebStoriesSection from '@/components/WebStoriesSection';
 import CategoriesSection from '@/components/CategoriesSection';
 import { BlogSearch } from '@/components/BlogSearch';
 
 const FaqSection = lazy(() => import('@/components/FaqSection'));
 
 export default async function Home() {
-    // Fetch a larger batch of articles to distribute among sections
-    const { articles } = await getArticles(12);
-
-    const featuredArticles = articles.slice(0, 5); // 1 for hero, 4 for popular
-    const spotlightArticles = articles.slice(5, 11); // Next 6
-    const webStoryArticles = articles.slice(11); // Remaining articles
 
   return (
     <div className="w-full">
@@ -34,16 +25,7 @@ export default async function Home() {
       </section>
 
       <div className="py-16 md:py-24 space-y-16 md:space-y-24">
-          <Suspense fallback={<SectionSkeleton />}>
-            <FeaturedArticles articles={featuredArticles} />
-          </Suspense>
           <CategoriesSection />
-          <Suspense>
-            <SpotlightBlogs articles={spotlightArticles} />
-          </Suspense>
-          <Suspense>
-            <WebStoriesSection articles={webStoryArticles} />
-          </Suspense>
           <Suspense fallback={<FaqSkeleton />}>
             <FaqSection />
           </Suspense>
@@ -51,43 +33,6 @@ export default async function Home() {
     </div>
   );
 }
-
-
-const SectionSkeleton = () => (
-    <section className="container py-16 md:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <Skeleton className="aspect-square w-full rounded-2xl" />
-            <div className="space-y-4">
-                <Skeleton className="h-10 w-3/4" />
-                <Skeleton className="h-5 w-full" />
-                <Skeleton className="h-5 w-5/6" />
-                <div className="flex gap-4">
-                    <Skeleton className="h-6 w-1/4" />
-                    <Skeleton className="h-6 w-1/4" />
-                    <Skeleton className="h-6 w-1/4" />
-                </div>
-                <Skeleton className="h-12 w-1/3" />
-            </div>
-        </div>
-         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="space-y-3">
-                <Skeleton className="h-56 w-full rounded-2xl" />
-                <Skeleton className="h-6 w-3/4" />
-                <Skeleton className="h-5 w-1/2" />
-            </div>
-             <div className="space-y-3">
-                <Skeleton className="h-56 w-full rounded-2xl" />
-                <Skeleton className="h-6 w-3/4" />
-                <Skeleton className="h-5 w-1/2" />
-            </div>
-             <div className="space-y-3">
-                <Skeleton className="h-56 w-full rounded-2xl" />
-                <Skeleton className="h-6 w-3/4" />
-                <Skeleton className="h-5 w-1/2" />
-            </div>
-         </div>
-    </section>
-);
 
 const FaqSkeleton = () => (
   <section className="w-full py-12 md:py-16">
