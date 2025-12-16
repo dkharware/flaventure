@@ -23,16 +23,14 @@ const mockComments: Comment[] = [
 
 const CommentTime = ({ timestamp }: { timestamp: Date }) => {
   const [formattedDate, setFormattedDate] = useState('');
-  const [isClient, setIsClient] = useState(false);
   
   useEffect(() => {
-    setIsClient(true);
     setFormattedDate(
       `${new Date(timestamp).toLocaleDateString()} at ${new Date(timestamp).toLocaleTimeString()}`
     );
   }, [timestamp]);
 
-  if (!isClient) {
+  if (!formattedDate) {
       return <span className="text-xs text-muted-foreground"></span>;
   }
 
