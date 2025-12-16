@@ -29,12 +29,12 @@ export default async function Home() {
       </section>
 
       <div className="py-16 md:py-24 space-y-16 md:space-y-24">
+          <Suspense fallback={<WebStoriesSkeleton />}>
+            <WebStories />
+          </Suspense>
           <CategoriesSection />
           <Suspense fallback={<RecentPostsSkeleton />}>
             <RecentPosts />
-          </Suspense>
-          <Suspense fallback={<WebStoriesSkeleton />}>
-            <WebStories />
           </Suspense>
           <PromoSection />
           <Suspense fallback={<FaqSkeleton />}>
