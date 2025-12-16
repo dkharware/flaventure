@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from './ui/button';
 import { ClipboardCopy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -47,8 +47,15 @@ const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
 
 export function ArticleContent({ content }: { content: string }) {
   const contentRef = useRef<HTMLDivElement>(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
     const contentElement = contentRef.current;
     if (!contentElement) return;
 
@@ -86,7 +93,7 @@ export function ArticleContent({ content }: { content: string }) {
         }
       });
     };
-  }, [content]);
+  }, [content, isClient]);
 
   return (
     <div

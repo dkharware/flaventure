@@ -11,8 +11,8 @@ import type { FormEvent } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import Image from 'next/image';
 import { Skeleton } from './ui/skeleton';
-import { GoogleAd } from './GoogleAd';
 import { OtieAdBanner } from './OtieAdBanner';
+import { useEffect, useState } from 'react';
 
 
 interface Tag {
@@ -35,8 +35,13 @@ interface BlogSidebarProps {
 export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const isLoading = !tags || !recentPosts;
+  useEffect(() => {
+    if (tags && recentPosts) {
+      setIsLoading(false);
+    }
+  }, [tags, recentPosts]);
   
   const isFilterActive = searchParams.has('query') || searchParams.has('tag');
 
