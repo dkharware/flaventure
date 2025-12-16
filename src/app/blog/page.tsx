@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Metadata } from 'next';
-import { BlogSidebar } from '@/components/BlogSidebar';
 import { Suspense } from 'react';
 import { Eye, User, ArrowRight, AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +14,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { BlogSearch } from '@/components/BlogSearch';
 import { NextPageProps } from '../types';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { SidebarWrapper } from '@/components/SidebarWrapper';
 
 export const metadata: Metadata = {
   title: 'E-commerce & Web Dev Blog | storedevguide',
@@ -197,17 +197,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
               </Suspense>
             </main>
             <aside className="lg:col-span-1 lg:mt-0">
-                 <Suspense fallback={
-                    <div className="space-y-8">
-                        <Skeleton className="h-24 w-full" />
-                        <Skeleton className="h-48 w-full" />
-                        <Skeleton className="h-64 w-full" />
-                    </div>
-                 }>
-                    <div className="lg:sticky lg:top-28">
-                      <BlogSidebar tags={tagsData} recentPosts={recentPostsData} />
-                    </div>
-                </Suspense>
+                 <SidebarWrapper tags={tagsData} recentPosts={recentPostsData} />
             </aside>
         </div>
     </div>
