@@ -40,6 +40,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'media.dev.to',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   reactStrictMode: false,

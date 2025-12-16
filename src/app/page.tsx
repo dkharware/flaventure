@@ -4,6 +4,7 @@ import { getArticles } from '@/lib/shopify';
 import { Skeleton } from '@/components/ui/skeleton';
 import CategoriesSection from '@/components/CategoriesSection';
 import { BlogSearch } from '@/components/BlogSearch';
+import { WhatsappBanner } from '@/components/WhatsappBanner';
 
 const FaqSection = lazy(() => import('@/components/FaqSection'));
 
@@ -11,6 +12,7 @@ export default async function Home() {
 
   return (
     <div className="w-full">
+      <WhatsappBanner />
       <section className="relative w-full overflow-hidden hero-gradient-bg hero-grid-bg">
         <div className="container mx-auto py-24 px-3 md:py-32 md:px-6 text-center">
             
