@@ -8,18 +8,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { getArticles } from "@/lib/shopify";
 
-const stories = [
-    { title: "Intro to Headless", imageUrl: "https://picsum.photos/seed/story1/300/500", href: "#", dataAiHint: "code interface" },
-    { title: "Shopify API Tricks", imageUrl: "https://picsum.photos/seed/story2/300/500", href: "#", dataAiHint: "data diagram" },
-    { title: "Performance Wins", imageUrl: "https://picsum.photos/seed/story3/300/500", href: "#", dataAiHint: "speed dashboard" },
-    { title: "Liquid Cheatsheet", imageUrl: "https://picsum.photos/seed/story4/300/500", href: "#", dataAiHint: "code snippet" },
-    { title: "AI in E-commerce", imageUrl: "https://picsum.photos/seed/story5/300/500", href: "#", dataAiHint: "robot shopping" },
-    { title: "Styling with Tailwind", imageUrl: "https://picsum.photos/seed/story6/300/500", href: "#", dataAiHint: "design palette" },
-    { title: "Next.js & Shopify", imageUrl: "https://picsum.photos/seed/story7/300/500", href: "#", dataAiHint: "framework logo" },
-];
+export async function WebStories() {
+    const { articles } = await getArticles(7);
 
-export function WebStories() {
+    if (!articles || articles.length === 0) {
+        return null;
+    }
+
     return (
         <section className="w-full py-12 md:py-16">
             <div className="container px-4 md:px-6">
@@ -40,21 +37,21 @@ export function WebStories() {
                     className="w-full max-w-6xl mx-auto pt-8"
                 >
                     <CarouselContent>
-                        {stories.map((story, index) => (
-                            <CarouselItem key={index} className="sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
-                                <Link href={story.href} className="block group">
+                        {articles.map((article, index) => (
+                            <CarouselItem key={article.id} className="sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+                                <Link href={`/blog/${article.handle}`} className="block group">
                                     <div className="relative aspect-[9/16] w-full rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
                                         <Image
-                                            src={story.imageUrl}
-                                            alt={story.title}
+                                            src={article.image?.url || `https://picsum.photos/seed/story${index}/300/500`}
+                                            alt={article.image?.altText || article.title}
                                             fill
                                             className="object-cover"
-                                            data-ai-hint={story.dataAiHint}
+                                            data-ai-hint="technology abstract"
                                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                                         <div className="absolute bottom-0 left-0 right-0 p-4">
-                                            <h3 className="font-semibold text-white text-base leading-tight drop-shadow-md">{story.title}</h3>
+                                            <h3 className="font-semibold text-white text-base leading-tight drop-shadow-md line-clamp-3">{article.title}</h3>
                                         </div>
                                     </div>
                                 </Link>

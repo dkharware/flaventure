@@ -1,6 +1,5 @@
 
 import React, { Suspense, lazy } from 'react';
-import { getArticles } from '@/lib/shopify';
 import { Skeleton } from '@/components/ui/skeleton';
 import CategoriesSection from '@/components/CategoriesSection';
 import { BlogSearch } from '@/components/BlogSearch';
@@ -31,8 +30,12 @@ export default async function Home() {
 
       <div className="py-16 md:py-24 space-y-16 md:space-y-24">
           <CategoriesSection />
-          <RecentPosts />
-          <WebStories />
+          <Suspense fallback={<RecentPostsSkeleton />}>
+            <RecentPosts />
+          </Suspense>
+          <Suspense fallback={<WebStoriesSkeleton />}>
+            <WebStories />
+          </Suspense>
           <PromoSection />
           <Suspense fallback={<FaqSkeleton />}>
             <FaqSection />
@@ -41,6 +44,39 @@ export default async function Home() {
     </div>
   );
 }
+
+const RecentPostsSkeleton = () => (
+    <section className="w-full py-12 md:py-16">
+        <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <Skeleton className="h-10 w-1/3" />
+                <Skeleton className="h-6 w-1/2" />
+            </div>
+            <div className="mx-auto grid max-w-5xl items-start gap-8 pt-8 sm:grid-cols-2 md:gap-12 lg:grid-cols-3">
+                <Skeleton className="h-80 w-full" />
+                <Skeleton className="h-80 w-full" />
+                <Skeleton className="h-80 w-full" />
+            </div>
+        </div>
+    </section>
+);
+
+const WebStoriesSkeleton = () => (
+    <section className="w-full py-12 md:py-16">
+        <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <Skeleton className="h-10 w-1/3" />
+                <Skeleton className="h-6 w-1/2" />
+            </div>
+            <div className="w-full max-w-6xl mx-auto pt-8 flex gap-4">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <Skeleton key={index} className="aspect-[9/16] w-full basis-1/5 rounded-xl" />
+              ))}
+            </div>
+        </div>
+    </section>
+);
+
 
 const FaqSkeleton = () => (
   <section className="w-full py-12 md:py-16">
