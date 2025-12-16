@@ -144,12 +144,6 @@ export default function RootLayout({
           </LoaderProvider>
         <SpeedInsights />
         <Analytics />
-        <Script 
-          src="https://quge5.com/88/tag.min.js" 
-          data-zone="192397" 
-          data-cfasync="false"
-          strategy="afterInteractive" 
-        />
       </body>
     </html>
   );
