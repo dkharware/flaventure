@@ -1,5 +1,5 @@
 
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import CategoriesSection from '@/components/CategoriesSection';
 import { BlogSearch } from '@/components/BlogSearch';
@@ -7,8 +7,7 @@ import { WhatsappBanner } from '@/components/WhatsappBanner';
 import { PromoSection } from '@/components/PromoSection';
 import { RecentPosts } from '@/components/RecentPosts';
 import { WebStories } from '@/components/WebStories';
-
-const FaqSection = lazy(() => import('@/components/FaqSection'));
+import FaqSection from '@/components/FaqSection';
 
 export default async function Home() {
 
