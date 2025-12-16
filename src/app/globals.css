@@ -27,7 +27,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 81 50% 52%; /* #95c047 */
+    --ring: 81 50% 52%; /* #95bf47 */
     --info: 160 60% 45%; /* green */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -56,7 +56,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 81 50% 52%; /* #95c047 */
+    --ring: 81 50% 52%; /* #95bf47 */
     --info: 160 60% 45%; /* green */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -119,7 +119,7 @@
         background-color: hsl(var(--info));
     }
     .animate-text-gradient {
-      background: linear-gradient(to right, hsl(var(--foreground)), hsl(var(--primary)), hsl(var(--info)), hsl(var(--foreground)));
+      background: linear-gradient(to right, hsl(var(--foreground)), hsl(var(--ring)), hsl(var(--foreground)));
       background-size: 200% auto;
       -webkit-background-clip: text;
       background-clip: text;
