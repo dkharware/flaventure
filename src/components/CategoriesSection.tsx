@@ -52,7 +52,7 @@ export default function CategoriesSection() {
     }, []);
 
     return (
-        <section className="w-full py-12 md:py-16">
+        <section className="w-full py-8">
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
@@ -62,12 +62,12 @@ export default function CategoriesSection() {
                         </p>
                     </div>
                 </div>
-                <div className="mx-auto max-w-7xl pt-8">
-                   <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 md:gap-6">
+                <div className="mx-auto pt-8">
+                   <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10 gap-4 md:gap-6">
                         {isLoading ? (
-                            Array.from({ length: 12 }).map((_, index) => <CategoryCardSkeleton key={index} />)
+                            Array.from({ length: 10 }).map((_, index) => <CategoryCardSkeleton key={index} />)
                         ) : (
-                            tags.slice(0, 16).map((tag, index) => (
+                            tags.slice(0, 20).map((tag, index) => (
                                <CategoryCard key={index} tag={tag} index={index} />
                             ))
                         )}

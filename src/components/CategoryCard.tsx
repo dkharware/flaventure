@@ -45,7 +45,7 @@ export function CategoryCard({ tag, index }: CategoryCardProps) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
                 <div className="absolute inset-0 flex items-center justify-center p-2">
                     <div className="py-1.5 px-4 rounded-full border border-white/20 bg-black/30 backdrop-blur-sm">
-                         <p className="font-semibold text-xs md:text-sm text-white text-center">{tag.name}</p>
+                         <p className="font-semibold text-sm md:text-base text-white text-center">{tag.name}</p>
                     </div>
                 </div>
             </div>
