@@ -103,7 +103,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <aside className="hidden lg:block lg:col-span-3">
-                <div className="sticky top-28">
+                <div>
                   <TableOfContents content={article.contentHtml} />
                 </div>
             </aside>
