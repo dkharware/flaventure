@@ -8,8 +8,8 @@ const socialLinks = [
         url: 'https://www.linkedin.com/company/storedevguide/?viewAsMember=true',
     },
     {
-        name: 'Quora',
-        url: 'https://www.quora.com/profile/StoreDevGuide',
+        name: 'WhatsApp',
+        url: 'https://whatsapp.com/channel/0029VbCGPhEATRSinMYM2H2p',
     },
     {
         name: 'Shopify Community',
