@@ -9,26 +9,26 @@
   }
   
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
     --primary: 45 96% 58%; /* yellow */
     --primary-foreground: 240 10% 3.9%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
     --ring: 45 96% 58%; /* yellow */
-    --info: 0 0% 98%; /* white/foreground */
+    --info: 240 10% 3.9%; /* black/foreground */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -97,8 +97,8 @@
       background-image:
         linear-gradient(rgba(255, 255, 255, 0) 2px, transparent 2px),
         linear-gradient(90deg, rgba(255, 255, 255, 0) 2px, transparent 2px),
-        linear-gradient(hsla(0, 0%, 100%, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, hsla(0, 0%, 100%, 0.05) 1px, transparent 1px);
+        linear-gradient(hsla(0, 0%, 0%, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, hsla(0, 0%, 0%, 0.05) 1px, transparent 1px);
       background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
       background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
     }
