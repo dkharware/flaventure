@@ -63,11 +63,11 @@ export default function CategoriesSection() {
                     </div>
                 </div>
                 <div className="mx-auto pt-8">
-                   <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10 gap-4 md:gap-6">
+                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
                         {isLoading ? (
-                            Array.from({ length: 10 }).map((_, index) => <CategoryCardSkeleton key={index} />)
+                            Array.from({ length: 12 }).map((_, index) => <CategoryCardSkeleton key={index} />)
                         ) : (
-                            tags.slice(0, 20).map((tag, index) => (
+                            tags.slice(0, 12).map((tag, index) => (
                                <CategoryCard key={index} tag={tag} index={index} />
                             ))
                         )}
