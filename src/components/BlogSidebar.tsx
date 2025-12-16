@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import Image from 'next/image';
 import { Skeleton } from './ui/skeleton';
 import { GoogleAd } from './GoogleAd';
+import { OtieAdBanner } from './OtieAdBanner';
 
 
 interface Tag {
@@ -133,7 +134,7 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
         </CardContent>
       </Card>
 
-       <GoogleAd className="bg-background/50 backdrop-blur-lg p-4" />
+       <OtieAdBanner className="bg-background/50 backdrop-blur-lg p-0" />
 
       <Card className="bg-background/50 backdrop-blur-lg">
         <CardHeader>
