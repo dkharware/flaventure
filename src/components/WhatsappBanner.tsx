@@ -38,7 +38,7 @@ export function WhatsappBanner() {
   return (
     <div
       className={cn(
-        'relative z-50 bg-gradient-to-r from-green-400 to-teal-500 text-white transition-transform duration-500',
+        'relative z-50 bg-gradient-to-r from-[#95bf47] to-teal-500 text-white transition-transform duration-500',
         isVisible ? 'translate-y-0' : '-translate-y-full'
       )}
     >
