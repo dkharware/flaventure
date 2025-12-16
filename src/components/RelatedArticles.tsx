@@ -22,9 +22,13 @@ interface RelatedArticlesProps {
 }
 
 export default function RelatedArticles({ articles }: RelatedArticlesProps) {
+    if (!articles || articles.length === 0) {
+        return null;
+    }
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {articles.map((related: any) => (
+            {articles.map((related) => (
                 <Link key={related.id} href={`/blog/${related.handle}`} className="block group">
                     <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                         {related.image && (

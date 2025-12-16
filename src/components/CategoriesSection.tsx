@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -68,7 +67,7 @@ export default function CategoriesSection() {
                             Array.from({ length: 12 }).map((_, index) => <CategoryCardSkeleton key={index} />)
                         ) : (
                             tags.slice(0, 12).map((tag, index) => (
-                               <CategoryCard key={index} tag={tag} index={index} />
+                               <CategoryCard key={tag.name} tag={tag} index={index} />
                             ))
                         )}
                    </div>
@@ -77,4 +76,3 @@ export default function CategoriesSection() {
         </section>
     );
 }
-

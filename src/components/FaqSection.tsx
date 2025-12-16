@@ -1,4 +1,3 @@
-
 'use client';
 
 import { FaqClient } from '@/components/FaqClient';
