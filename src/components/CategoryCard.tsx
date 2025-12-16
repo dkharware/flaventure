@@ -28,12 +28,12 @@ const getAiHintForTag = (tagName: string): string => {
 }
 
 export function CategoryCard({ tag, index }: CategoryCardProps) {
-    const imageUrl = tag.imageUrl || `https://picsum.photos/seed/${tag.name.toLowerCase()}${index}/150/150`;
+    const imageUrl = tag.imageUrl || `https://picsum.photos/seed/${tag.name.toLowerCase()}${index}/300/150`;
     const aiHint = getAiHintForTag(tag.name);
 
     return (
         <Link href={`/blog?tag=${encodeURIComponent(tag.name)}`} className="block group">
-            <div className="relative aspect-square w-full rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
+            <div className="relative aspect-[2/1] w-full rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
                 <Image
                     src={imageUrl}
                     alt={`Image for ${tag.name}`}
@@ -56,7 +56,7 @@ export function CategoryCard({ tag, index }: CategoryCardProps) {
 
 export const CategoryCardSkeleton = () => (
     <div className="space-y-2 text-center">
-        <Skeleton className="aspect-square w-full rounded-xl" />
+        <Skeleton className="aspect-[2/1] w-full rounded-xl" />
         <Skeleton className="h-4 w-3/4 mx-auto" />
     </div>
 )
