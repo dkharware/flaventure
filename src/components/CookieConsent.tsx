@@ -18,7 +18,7 @@ export function CookieConsent() {
       }
     } catch (e) {
       // localStorage is not available
-      return;
+      setShowConsent(true);
     }
   }, []);
 
