@@ -38,7 +38,7 @@ export function WhatsappBanner() {
   return (
     <div
       className={cn(
-        'relative z-50 bg-gradient-to-r from-green-500 to-green-600 text-white transition-transform duration-500',
+        'relative z-50 bg-gradient-to-r from-green-400 to-teal-500 text-white transition-transform duration-500',
         isVisible ? 'translate-y-0' : '-translate-y-full'
       )}
     >
@@ -49,7 +49,7 @@ export function WhatsappBanner() {
             Join Now
           </Link>
         </p>
-        <Button onClick={handleDismiss} variant="ghost" size="icon" className="absolute top-1/2 right-2 -translate-y-1/2 h-8 w-8 hover:bg-green-700/50">
+        <Button onClick={handleDismiss} variant="ghost" size="icon" className="absolute top-1/2 right-2 -translate-y-1/2 h-8 w-8 hover:bg-white/10">
             <X className="h-5 w-5" />
             <span className="sr-only">Dismiss</span>
         </Button>
