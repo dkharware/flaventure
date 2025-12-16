@@ -36,9 +36,7 @@ export default async function Home() {
             <RecentPosts />
           </Suspense>
           <PromoSection />
-          <Suspense fallback={<FaqSkeleton />}>
-            <FaqSection />
-          </Suspense>
+          <FaqSection />
       </div>
     </div>
   );
@@ -69,33 +67,9 @@ const WebStoriesSkeleton = () => (
             </div>
             <div className="w-full max-w-6xl mx-auto pt-8 flex gap-4">
               {Array.from({ length: 5 }).map((_, index) => (
-                <Skeleton key={index} className="aspect-[9/16] w-full basis-1/5 rounded-xl" />
+                <Skeleton key={index} className="h-[400px] w-full basis-1/5 rounded-xl" />
               ))}
             </div>
         </div>
     </section>
-);
-
-
-const FaqSkeleton = () => (
-  <section className="w-full py-12 md:py-16">
-    <div className="container px-4 md:px-6">
-      <div className="flex flex-col items-center justify-center space-y-4 text-center">
-        <Skeleton className="h-10 w-1/2" />
-        <Skeleton className="h-6 w-3/4" />
-      </div>
-      <div className="mx-auto max-w-4xl pt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-1 space-y-3">
-            <Skeleton className="h-16 w-full" />
-            <Skeleton className="h-16 w-full" />
-            <Skeleton className="h-16 w-full" />
-        </div>
-        <div className="md:col-span-2 space-y-3">
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
-        </div>
-      </div>
-    </div>
-  </section>
 );
