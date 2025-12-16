@@ -8,7 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -26,25 +27,23 @@ export default function ContactPage() {
     errors: {},
   };
   const [state, formAction] = useFormState(sendContactMessage, initialState);
-  const { toast } = useToast();
 
   useEffect(() => {
     if (state.message) {
-      toast({
-        title: 'Success!',
+      toast.success('Success!', {
         description: state.message,
       });
     } else if (state.errors && Object.keys(state.errors).length > 0) {
         const errorMessages = Object.values(state.errors).flat().join('\n');
-        toast({
-            variant: 'destructive',
-            title: 'Oops! Something went wrong.',
+        toast.error('Oops! Something went wrong.', {
             description: errorMessages,
         });
     }
-  }, [state, toast]);
+  }, [state]);
 
   return (
+    <>
+    <Toaster />
     <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
       <Card className="max-w-2xl mx-auto bg-background/50 backdrop-blur-lg">
         <CardHeader>
@@ -82,5 +81,6 @@ export default function ContactPage() {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 }

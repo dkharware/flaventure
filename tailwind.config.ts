@@ -21,6 +21,7 @@ export default {
       },
       fontFamily: {
         body: [
+          'Figtree',
           '-apple-system',
           'BlinkMacSystemFont',
           '"Segoe UI"',
@@ -29,12 +30,9 @@ export default {
           'Arial',
           '"Noto Sans"',
           'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-          '"Noto Color Emoji"',
         ],
         headline: [
+            'Figtree',
             '-apple-system',
             'BlinkMacSystemFont',
             '"Segoe UI"',
@@ -43,10 +41,6 @@ export default {
             'Arial',
             '"Noto Sans"',
             'sans-serif',
-            '"Apple Color Emoji"',
-            '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
-            '"Noto Color Emoji"',
         ],
         code: ['monospace'],
       },
