@@ -5,6 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import CategoriesSection from '@/components/CategoriesSection';
 import { BlogSearch } from '@/components/BlogSearch';
 import { WhatsappBanner } from '@/components/WhatsappBanner';
+import { PromoSection } from '@/components/PromoSection';
 
 const FaqSection = lazy(() => import('@/components/FaqSection'));
 
@@ -28,6 +29,7 @@ export default async function Home() {
 
       <div className="py-16 md:py-24 space-y-16 md:space-y-24">
           <CategoriesSection />
+          <PromoSection />
           <Suspense fallback={<FaqSkeleton />}>
             <FaqSection />
           </Suspense>
