@@ -15,8 +15,8 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 0 0% 98%; /* white */
-    --primary-foreground: 240 10% 3.9%; /* black */
+    --primary: 240 10% 3.9%; /* black */
+    --primary-foreground: 0 0% 98%; /* white */
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
@@ -119,7 +119,7 @@
         background-color: hsl(var(--info));
     }
     .animate-text-gradient {
-      background: linear-gradient(to right, hsl(var(--foreground)), hsl(var(--primary-foreground)), hsl(var(--info)), hsl(var(--foreground)));
+      background: linear-gradient(to right, hsl(var(--foreground)), hsl(var(--primary)), hsl(var(--info)), hsl(var(--foreground)));
       background-size: 200% auto;
       -webkit-background-clip: text;
       background-clip: text;
