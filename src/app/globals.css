@@ -93,6 +93,12 @@
                     hsl(var(--background));
     }
 
+    .promo-gradient-bg {
+        background: radial-gradient(circle at top, hsl(var(--primary) / 0.15), transparent 70%),
+                    radial-gradient(circle at bottom, hsl(var(--info) / 0.15), transparent 70%),
+                    hsl(var(--background));
+    }
+
     .hero-grid-bg {
       background-image:
         linear-gradient(rgba(255, 255, 255, 0) 2px, transparent 2px),
