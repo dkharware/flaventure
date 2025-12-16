@@ -41,7 +41,7 @@ export async function WebStories() {
                         {articles.map((article, index) => (
                             <CarouselItem key={article.id} className="sm:basis-1/3 md:basis-1/4 lg:basis-1/3">
                                 <Link href={`/blog/${article.handle}`} className="block group">
-                                    <div className="relative aspect-[9/16] w-full rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
+                                    <div className="relative h-[400px] w-full rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
                                         <Image
                                             src={article.image?.url || `https://picsum.photos/seed/story${index}/300/500`}
                                             alt={article.image?.altText || article.title}
