@@ -1,11 +1,7 @@
-'use client';
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { getAllTags, getArticles } from '@/lib/shopify';
 import placeholderTags from '@/lib/placeholder-tags.json';
-import { Skeleton } from './ui/skeleton';
-import { CategoryCard, CategoryCardSkeleton } from './CategoryCard';
+import { CategoryCard } from './CategoryCard';
 
 interface Tag {
     name: string;
@@ -13,42 +9,30 @@ interface Tag {
     imageUrl?: string;
 }
 
-export default function CategoriesSection() {
-    const [tags, setTags] = useState<Tag[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
+export default async function CategoriesSection() {
+    let tags: Tag[] = [];
+    try {
         const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+        if (!hasApiKeys || (process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN.includes('your-store-name'))) {
+            tags = placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`}));
+        } else {
+            const fetchedTags = await getAllTags();
+            const tagsWithImages = await Promise.all(fetchedTags.map(async (tag: Tag) => {
+                const { articles } = await getArticles(1, `tag:'${tag.name}'`);
+                const imageUrl = articles[0]?.image?.url;
+                return { ...tag, imageUrl };
+            }));
 
-        async function fetchTags() {
-            setIsLoading(true);
-            try {
-                if (!hasApiKeys || (process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN.includes('your-store-name'))) {
-                    setTags(placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`})));
-                    return;
-                }
-                
-                const fetchedTags = await getAllTags();
-                const tagsWithImages = await Promise.all(fetchedTags.map(async (tag: Tag) => {
-                    const { articles } = await getArticles(1, `tag:'${tag.name}'`);
-                    const imageUrl = articles[0]?.image?.url;
-                    return { ...tag, imageUrl };
-                }));
-
-                if (tagsWithImages && tagsWithImages.length > 0) {
-                    setTags(tagsWithImages);
-                } else {
-                    setTags(placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`})));
-                }
-            } catch (error) {
-                console.error("Failed to fetch tags, using placeholders.", error);
-                setTags(placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`})));
-            } finally {
-                setIsLoading(false);
+            if (tagsWithImages && tagsWithImages.length > 0) {
+                tags = tagsWithImages;
+            } else {
+                tags = placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`}));
             }
         }
-        fetchTags();
-    }, []);
+    } catch (error) {
+        console.error("Failed to fetch tags, using placeholders.", error);
+        tags = placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`}));
+    }
 
     return (
         <section className="w-full py-8">
@@ -63,13 +47,9 @@ export default function CategoriesSection() {
                 </div>
                 <div className="mx-auto pt-8">
                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
-                        {isLoading ? (
-                            Array.from({ length: 12 }).map((_, index) => <CategoryCardSkeleton key={index} />)
-                        ) : (
-                            tags.slice(0, 12).map((tag, index) => (
-                               <CategoryCard key={tag.name} tag={tag} index={index} />
-                            ))
-                        )}
+                        {tags.slice(0, 12).map((tag, index) => (
+                           <CategoryCard key={tag.name} tag={tag} index={index} />
+                        ))}
                    </div>
                 </div>
             </div>

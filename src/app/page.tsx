@@ -31,7 +31,9 @@ export default async function Home() {
           <Suspense fallback={<WebStoriesSkeleton />}>
             <WebStories />
           </Suspense>
-          <CategoriesSection />
+          <Suspense fallback={<CategoriesSectionSkeleton />}>
+            <CategoriesSection />
+          </Suspense>
           <Suspense fallback={<RecentPostsSkeleton />}>
             <RecentPosts />
           </Suspense>
@@ -69,6 +71,29 @@ const WebStoriesSkeleton = () => (
               {Array.from({ length: 5 }).map((_, index) => (
                 <Skeleton key={index} className="h-[400px] w-full basis-1/5 rounded-xl" />
               ))}
+            </div>
+        </div>
+    </section>
+);
+
+
+const CategoriesSectionSkeleton = () => (
+    <section className="w-full py-8">
+        <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <div className="space-y-2">
+                    <Skeleton className="h-10 w-72 mx-auto" />
+                    <Skeleton className="h-6 w-96 mx-auto" />
+                </div>
+            </div>
+            <div className="mx-auto pt-8">
+               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+                    {Array.from({ length: 12 }).map((_, index) => (
+                        <div key={index} className="space-y-2 text-center">
+                            <Skeleton className="aspect-[2/1] w-full rounded-xl" />
+                        </div>
+                    ))}
+               </div>
             </div>
         </div>
     </section>
