@@ -1,6 +1,4 @@
 
-'use client';
-
 import Link from 'next/link';
 import {
   Carousel,
@@ -8,7 +6,6 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { Badge } from './ui/badge';
-import { useEffect, useState } from 'react';
 import { getAllTags } from '@/lib/shopify';
 import placeholderTags from '@/lib/placeholder-tags.json';
 
@@ -17,28 +14,26 @@ interface Tag {
     count: number;
 }
 
-export function BlogTags() {
-    const [tags, setTags] = useState<Tag[]>(placeholderTags);
+export async function BlogTags() {
+    let tags: Tag[] = [];
+    const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN && !process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN.includes('your-store-name');
 
-    useEffect(() => {
-        const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-
-        if (!hasApiKeys) {
-            return;
-        }
-
-        const fetchTags = async () => {
-            try {
-                const liveTags = await getAllTags();
-                if (liveTags.length > 0) {
-                    setTags(liveTags);
-                }
-            } catch (error) {
-                console.error("Failed to fetch live tags, using placeholders.", error);
+    try {
+        if (hasApiKeys) {
+            const liveTags = await getAllTags();
+            if (liveTags.length > 0) {
+                tags = liveTags;
+            } else {
+                tags = placeholderTags;
             }
-        };
-        fetchTags();
-    }, []);
+        } else {
+            tags = placeholderTags;
+        }
+    } catch (error) {
+        console.error("Failed to fetch live tags, using placeholders.", error);
+        tags = placeholderTags;
+    }
+
 
     if (!tags || tags.length === 0) {
         return null;
