@@ -147,20 +147,11 @@ export default function Header() {
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                    <NavigationMenuItem>
-                    <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                        {toolsComponents.map((component) => (
-                           <ListItem
-                            key={component.title}
-                            title={component.title}
-                            href={component.href}
-                           >
-                            {component.description}
-                           </ListItem>
-                        ))}
-                        </ul>
-                    </NavigationMenuContent>
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                        <Link href="/tools">
+                        Tools
+                        </Link>
+                    </NavigationMenuLink>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
@@ -232,18 +223,9 @@ export default function Header() {
                                 ))}
                             </AccordionContent>
                         </AccordionItem>
-                         <AccordionItem value="tools">
-                            <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full font-semibold text-base")}>
-                                <div className="flex items-center"><Wrench className="mr-2 h-4 w-4" /> Tools</div>
-                            </AccordionTrigger>
-                            <AccordionContent className="pl-4">
-                                {toolsComponents.map(item => (
-                                    <Link key={item.title} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block p-2 text-muted-foreground hover:text-primary">
-                                        {item.title}
-                                    </Link>
-                                ))}
-                            </AccordionContent>
-                        </AccordionItem>
+                         <Link href="/tools" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
+                            <Wrench className="mr-2 h-4 w-4" /> Tools
+                        </Link>
                          <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
                             <Info className="mr-2 h-4 w-4" /> About
                         </Link>

@@ -13,6 +13,7 @@ async function generateSitemapXml() {
       '/privacy-policy',
       '/site-map',
       '/terms-and-conditions',
+      '/tools',
       ];
     
       const { articles } = await getArticles(250);

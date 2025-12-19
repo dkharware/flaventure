@@ -57,7 +57,7 @@ export function FeaturedTools() {
                 </div>
                  <div className="mt-8 flex justify-center">
                     <Button asChild variant="outline">
-                        <Link href="/tools/meta-tag-generator">View All Tools <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        <Link href="/tools">View All Tools <ArrowRight className="ml-2 h-4 w-4" /></Link>
                     </Button>
                 </div>
             </div>
