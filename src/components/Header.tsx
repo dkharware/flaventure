@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, Info, ChevronDown, BookCopy, Wrench, Sparkles, Home, LayoutTemplate, Utensils } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, Info, ChevronDown, BookCopy, Wrench, Sparkles, Home, LayoutTemplate, Utensils, Code } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -65,23 +65,23 @@ const resourceComponents = [
 
 const toolsComponents = [
     {
-      title: "AI Content Generator",
-      href: "/tools/shopify-ai-content-generator",
-      icon: <Sparkles className="h-4 w-4" />,
-      description: "Create blog post ideas, descriptions, and social media copy.",
-    },
-    {
-      title: "Meta Tag Generator",
-      href: "/tools/meta-tag-generator",
+      title: "All Tools & Guides",
+      href: "/tools",
       icon: <Wrench className="h-4 w-4" />,
-      description: "Generate SEO-friendly meta tags for your articles.",
+      description: "Browse our full suite of tools for bloggers and developers."
     },
     {
-      title: "Recipe Schema Generator",
-      href: "/tools/recipe-schema-generator",
-      icon: <Utensils className="h-4 w-4" />,
-      description: "Get rich snippets for your recipes in Google search.",
+      title: "Shopify API Guide",
+      href: "/tutorials/shopify-api-guide",
+      icon: <BookCopy className="h-4 w-4" />,
+      description: "A comprehensive guide to the Storefront and Admin APIs."
     },
+    {
+      title: "Liquid Cheatsheet",
+      href: "/shopify-liquid-cheatsheet",
+      icon: <Code className="h-4 w-4" />,
+      description: "A quick reference for Liquid objects, tags, and filters."
+    }
 ];
 
 export default function Header() {
@@ -147,11 +147,20 @@ export default function Header() {
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                    <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <Link href="/tools">
-                        Tools
-                        </Link>
-                    </NavigationMenuLink>
+                    <NavigationMenuTrigger>Tools & Guides</NavigationMenuTrigger>
+                     <NavigationMenuContent>
+                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                        {toolsComponents.map((component) => (
+                           <ListItem
+                            key={component.title}
+                            title={component.title}
+                            href={component.href}
+                           >
+                            {component.description}
+                           </ListItem>
+                        ))}
+                        </ul>
+                    </NavigationMenuContent>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
@@ -223,9 +232,18 @@ export default function Header() {
                                 ))}
                             </AccordionContent>
                         </AccordionItem>
-                         <Link href="/tools" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
-                            <Wrench className="mr-2 h-4 w-4" /> Tools
-                        </Link>
+                         <AccordionItem value="tools">
+                            <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full font-semibold text-base")}>
+                                <div className="flex items-center"><Wrench className="mr-2 h-4 w-4" /> Tools & Guides</div>
+                            </AccordionTrigger>
+                            <AccordionContent className="pl-4">
+                                {toolsComponents.map(item => (
+                                    <Link key={item.title} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block p-2 text-muted-foreground hover:text-primary">
+                                        {item.title}
+                                    </Link>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
                          <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
                             <Info className="mr-2 h-4 w-4" /> About
                         </Link>
