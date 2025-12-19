@@ -23,6 +23,56 @@ import FaqSection from '@/components/FaqSection';
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+// Server-side function to extract FAQs from HTML content
+const extractFaqsFromHtml = (html: string): FaqItem[] => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+
+    const faqHeading = Array.from(tempDiv.querySelectorAll('h2, h3')).find(h => 
+        h.textContent?.toLowerCase().includes('frequently asked questions') ||
+        h.textContent?.toLowerCase().includes('faq')
+    );
+
+    if (!faqHeading) return [];
+
+    const extractedFaqs: FaqItem[] = [];
+    let currentNode = faqHeading.nextElementSibling;
+    let currentQuestion = '';
+    let currentAnswer = '';
+
+    while (currentNode) {
+        if (currentNode.tagName.match(/H[2-4]/)) {
+            if (currentQuestion && currentAnswer) {
+                extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
+            }
+            currentQuestion = currentNode.textContent || '';
+            currentAnswer = '';
+        } else if (currentQuestion) {
+            currentAnswer += currentNode.outerHTML;
+        }
+
+        if (currentNode.nextElementSibling?.tagName === 'H2') {
+             if (currentQuestion && currentAnswer) {
+                extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
+            }
+            break;
+        }
+        
+        currentNode = currentNode.nextElementSibling;
+    }
+    if (currentQuestion && currentAnswer) {
+         extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
+    }
+
+    return extractedFaqs;
+}
+
+
 export default async function ArticlePage({ params }: NextPageProps<{ handle: string }>) {
   const resolvedParams = await params;
   const article = await getArticleByHandle(resolvedParams.handle);
@@ -83,6 +133,8 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
       "item": item.href ? `${siteUrl}${item.href}` : fullUrl
     }))
   };
+
+  const articleFaqs = extractFaqsFromHtml(article.contentHtml);
 
   return (
     <>
@@ -159,7 +211,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                     )}
                     
                     <div className="prose dark:prose-invert max-w-none mx-auto">
-                      <ArticleContent content={article.contentHtml} />
+                      <ArticleContent content={article.contentHtml} faqs={articleFaqs} />
                     </div>
 
                     <div className="flex items-center justify-center mt-8 space-x-4">
@@ -210,7 +262,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
             </aside>
         </div>
       </div>
-      <FaqSection filter="Blogging & Content" />
+      {articleFaqs.length === 0 && <FaqSection filter="Blogging & Content" />}
     </>
   );
 }

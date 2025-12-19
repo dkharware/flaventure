@@ -50,10 +50,9 @@ const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
   );
 };
 
-export function ArticleContent({ content }: { content: string }) {
+export function ArticleContent({ content, faqs }: { content: string, faqs: FaqItem[] }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
-  const [faqs, setFaqs] = useState<FaqItem[]>([]);
 
   useEffect(() => {
     setIsClient(true);
@@ -65,7 +64,6 @@ export function ArticleContent({ content }: { content: string }) {
     const contentElement = contentRef.current;
     if (!contentElement) return;
     
-    // Create a temporary div to parse the content without affecting the DOM
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = content;
 
@@ -78,51 +76,17 @@ export function ArticleContent({ content }: { content: string }) {
         }
     });
 
-    // FAQ Extraction
-    const faqHeading = Array.from(tempDiv.querySelectorAll('h2, h3')).find(h => 
-        h.textContent?.toLowerCase().includes('frequently asked questions') ||
-        h.textContent?.toLowerCase().includes('faq')
-    );
-
-    if (faqHeading) {
-        const extractedFaqs: FaqItem[] = [];
-        let currentNode = faqHeading.nextElementSibling;
-        let currentQuestion = '';
-        let currentAnswer = '';
-
-        while (currentNode) {
-            if (currentNode.tagName.match(/H[2-4]/)) {
-                if (currentQuestion && currentAnswer) {
-                    extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
-                }
-                currentQuestion = currentNode.textContent || '';
-                currentAnswer = '';
-            } else if (currentQuestion) {
-                currentAnswer += currentNode.outerHTML;
-            }
-            
-            // If the next sibling is an H2 (potentially a new major section), stop processing.
-            if (currentNode.nextElementSibling?.tagName === 'H2') {
-                 if (currentQuestion && currentAnswer) {
-                    extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
-                }
-                break;
-            }
-            
-            currentNode = currentNode.nextElementSibling;
-        }
-        if (currentQuestion && currentAnswer) {
-             extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
-        }
-        
-        if (extractedFaqs.length > 0) {
-            setFaqs(extractedFaqs);
-            // Hide the original FAQ section
-            let elementToHide = faqHeading;
+    if (faqs.length > 0) {
+        const faqHeading = Array.from(tempDiv.querySelectorAll('h2, h3')).find(h => 
+            h.textContent?.toLowerCase().includes('frequently asked questions') ||
+            h.textContent?.toLowerCase().includes('faq')
+        );
+        if (faqHeading) {
+            let elementToHide: Element | null = faqHeading;
             while(elementToHide) {
                 (elementToHide as HTMLElement).style.display = 'none';
                  if (elementToHide.nextElementSibling?.tagName === 'H2') break;
-                elementToHide = elementToHide.nextElementSibling as HTMLElement;
+                elementToHide = elementToHide.nextElementSibling;
             }
         }
     }
@@ -142,12 +106,10 @@ export function ArticleContent({ content }: { content: string }) {
       ReactDOM.render(<CopyButton textToCopy={textToCopy} />, buttonContainer);
     });
 
-    // Update the actual content
     if(contentRef.current) {
         contentRef.current.innerHTML = tempDiv.innerHTML;
     }
 
-    // Cleanup on unmount
     return () => {
       preElements.forEach(pre => {
         const container = pre.querySelector('.copy-button-container');
@@ -157,7 +119,7 @@ export function ArticleContent({ content }: { content: string }) {
         }
       });
     };
-  }, [content, isClient]);
+  }, [content, isClient, faqs]);
 
   return (
     <>
