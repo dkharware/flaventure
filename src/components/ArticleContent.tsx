@@ -53,6 +53,7 @@ interface FaqItem {
 
 export function ArticleContent({ content, faqContent }: { content: string, faqContent?: string | null }) {
   const contentRef = useRef<HTMLDivElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
   const [faqs, setFaqs] = useState<FaqItem[]>([]);
 
   useEffect(() => {
@@ -61,7 +62,6 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
     const mainContentElement = contentRef.current;
     const portals: { container: Element, component: React.ReactElement }[] = [];
 
-    // Add IDs to headings for ToC
     const headingElements = mainContentElement.querySelectorAll('h2, h3');
     headingElements.forEach(h => {
         const text = h.textContent || '';
@@ -70,13 +70,11 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
         }
     });
 
-    // Add lazy loading to images
     const imageElements = mainContentElement.querySelectorAll('img');
     imageElements.forEach(img => {
       img.setAttribute('loading', 'lazy');
     });
 
-    // Add copy buttons to pre elements
     const preElements = mainContentElement.querySelectorAll('pre');
     preElements.forEach((pre) => {
       const code = pre.querySelector('code');
@@ -94,13 +92,25 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
       });
     });
     
-    // Extract FAQs from metafield content if it exists
-    if (faqContent) {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = faqContent;
-      
+    portals.forEach(({container, component}) => {
+        ReactDOM.render(component, container);
+    });
+
+    return () => {
+        portals.forEach(({container}) => {
+            if (container.parentNode) {
+              ReactDOM.unmountComponentAtNode(container);
+              container.remove();
+            }
+        });
+    };
+  }, [content]);
+
+  useEffect(() => {
+    if (faqRef.current && faqContent) {
+      const faqContainer = faqRef.current;
       const extractedFaqs: FaqItem[] = [];
-      const questionElements = tempDiv.querySelectorAll('h3, h4');
+      const questionElements = faqContainer.querySelectorAll('h3, h4');
 
       questionElements.forEach(qElement => {
         const question = qElement.textContent?.trim();
@@ -116,22 +126,15 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
           extractedFaqs.push({ question, answer: answerHtml });
         }
       });
+      
       setFaqs(extractedFaqs);
-    }
-    
-    portals.forEach(({container, component}) => {
-        ReactDOM.render(component, container);
-    });
 
-    return () => {
-        portals.forEach(({container}) => {
-            if (container.parentNode) {
-              ReactDOM.unmountComponentAtNode(container);
-              container.remove();
-            }
-        });
-    };
-  }, [content, faqContent]);
+      // Hide the original rendered content after extraction
+      while (faqContainer.firstChild) {
+        faqContainer.removeChild(faqContainer.firstChild);
+      }
+    }
+  }, [faqContent]);
   
 
   return (
@@ -140,6 +143,10 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
             ref={contentRef}
             dangerouslySetInnerHTML={{ __html: content }}
         />
+
+        {/* Hidden div to render and parse FAQ content */}
+        <div ref={faqRef} dangerouslySetInnerHTML={{ __html: faqContent || '' }} className="hidden" />
+
         {faqs.length > 0 && (
             <div className="mt-12 not-prose">
                  <h2 className="text-3xl font-bold font-headline mb-6 text-center">Frequently Asked Questions</h2>
@@ -158,3 +165,5 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
     </>
   );
 }
+
+    
