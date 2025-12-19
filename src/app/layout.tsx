@@ -24,7 +24,7 @@ const figtree = Figtree({
 
 
 const siteUrl = getSiteUrl();
-const faviconUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/favicon.ico";
+const faviconUrl = "https://cdn.shopify.com/s/files/1/0944/6896/4636/files/favicon.ico";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -158,5 +158,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-    
