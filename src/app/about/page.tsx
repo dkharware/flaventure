@@ -54,47 +54,43 @@ export default async function AboutPage() {
         <CardHeader className="text-center">
            <CardTitle className="text-3xl font-headline">About the Author</CardTitle>
         </CardHeader>
-        <CardContent>
-            <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="flex-shrink-0 text-center">
-                    <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-primary/10">
-                        <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/White%20Minimalist%20Blog%20Tips%20Instagram%20Post.png" alt={authorName} />
-                        <AvatarFallback>{authorName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
-                    <h3 className="text-2xl font-headline">{authorName}</h3>
-                    <p className="text-sm text-muted-foreground">{authorTitle}</p>
-                    <div className="flex justify-center gap-3 pt-4">
-                        <Button variant="outline" size="icon" asChild>
-                            <a href={`mailto:${authorEmail}`} aria-label="Email"><Mail className="h-4 w-4" /></a>
-                        </Button>
-                        <Button variant="outline" size="icon" asChild>
-                            <a href="https://www.linkedin.com/in/deepak-singh-kharware/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin className="h-4 w-4" /></a>
-                        </Button>
-                        <Button variant="outline" size="icon" asChild>
-                            <a href="https://github.com/dkharware" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github className="h-4 w-4" /></a>
-                        </Button>
-                    </div>
-                </div>
-                <div className="prose dark:prose-invert max-w-none text-muted-foreground text-base">
-                    <p>
-                        I’m a passionate Front-End Developer with 5+ years of experience specializing in Shopify and Headless Commerce. I created storedevguide to share my knowledge and help others navigate the complexities of e-commerce development.
-                    </p>
-                    <ul>
-                        <li><strong>Frontend:</strong> React, Next.js, HTML, CSS, JavaScript</li>
-                        <li><strong>Shopify:</strong> Liquid, Custom Themes, Hydrogen, Storefront API</li>
-                        <li><strong>Expertise:</strong> Headless Commerce, Performance Optimization, UI/UX</li>
-                    </ul>
-                    <p>
-                        Through this platform, I aim to provide the practical insights and tools I wish I had when I started my journey.
-                    </p>
-                     <Button asChild className="mt-4 no-underline">
-                        <a href={resumeUrl} target="_blank" rel="noopener noreferrer" download>
-                            <Download className="mr-2 h-4 w-4" />
-                            Download Resume
-                        </a>
-                    </Button>
-                </div>
+        <CardContent className="flex flex-col items-center text-center">
+            <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-primary/10">
+                <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/White%20Minimalist%20Blog%20Tips%20Instagram%20Post.png" alt={authorName} />
+                <AvatarFallback>{authorName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+            </Avatar>
+            <h3 className="text-2xl font-headline">{authorName}</h3>
+            <p className="text-sm text-muted-foreground max-w-md mx-auto">{authorTitle}</p>
+            <div className="flex justify-center gap-3 pt-4">
+                <Button variant="outline" size="icon" asChild>
+                    <a href={`mailto:${authorEmail}`} aria-label="Email"><Mail className="h-4 w-4" /></a>
+                </Button>
+                <Button variant="outline" size="icon" asChild>
+                    <a href="https://www.linkedin.com/in/deepak-singh-kharware/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin className="h-4 w-4" /></a>
+                </Button>
+                <Button variant="outline" size="icon" asChild>
+                    <a href="https://github.com/dkharware" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github className="h-4 w-4" /></a>
+                </Button>
             </div>
+            <div className="prose dark:prose-invert max-w-2xl mx-auto text-left text-base text-muted-foreground mt-8">
+                <p>
+                    I’m a passionate Front-End Developer with 5+ years of experience specializing in Shopify and Headless Commerce. I created storedevguide to share my knowledge and help others navigate the complexities of e-commerce development.
+                </p>
+                <ul>
+                    <li><strong>Frontend:</strong> React, Next.js, HTML, CSS, JavaScript</li>
+                    <li><strong>Shopify:</strong> Liquid, Custom Themes, Hydrogen, Storefront API</li>
+                    <li><strong>Expertise:</strong> Headless Commerce, Performance Optimization, UI/UX</li>
+                </ul>
+                <p>
+                    Through this platform, I aim to provide the practical insights and tools I wish I had when I started my journey.
+                </p>
+            </div>
+            <Button asChild className="mt-6">
+                <a href={resumeUrl} target="_blank" rel="noopener noreferrer" download>
+                    <Download className="mr-2 h-4 w-4" />
+                    Download Resume
+                </a>
+            </Button>
         </CardContent>
       </Card>
     </div>
