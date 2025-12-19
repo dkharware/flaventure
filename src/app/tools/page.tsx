@@ -16,30 +16,30 @@ export const metadata: Metadata = {
 };
 
 const travelTools = [
-    { icon: <Map />, title: 'Trip Planner Tool', description: 'Organize your itinerary, bookings, and notes in one place.', status: 'Coming Soon' },
+    { icon: <Map />, title: 'Trip Planner Tool', description: 'Organize your itinerary, bookings, and notes in one place.', href: '/tools/trip-planner-tool', status: 'Coming Soon' },
     { icon: <Wallet />, title: 'Travel Budget Calculator', description: 'Estimate your trip costs for flights, accommodation, and daily expenses.', href: '/tools/travel-budget-calculator' },
-    { icon: <Plane />, title: 'Best Time to Visit Finder', description: 'Discover the ideal season to visit any destination based on weather and crowds.', status: 'Coming Soon' },
+    { icon: <Plane />, title: 'Best Time to Visit Finder', description: 'Discover the ideal season to visit any destination based on weather and crowds.', href: '/tools/best-time-to-visit-finder', status: 'Coming Soon' },
     { icon: <CheckSquare />, title: 'Packing Checklist Generator', description: 'Create a customized packing list based on your destination and activities.', href: '/tools/packing-checklist-generator' },
-    { icon: <Globe />, title: 'Visa Requirement Checker', description: 'Quickly check the visa requirements for your passport and destination.', status: 'Coming Soon' },
-    { icon: <CircleDollarSign />, title: 'Currency Converter', description: 'Get real-time exchange rates for currencies around the world.', status: 'Coming Soon' },
-    { icon: <Cloud />, title: 'Weather Forecast Tool', description: 'Get a 7-day weather forecast for any city or travel destination.', status: 'Coming Soon' },
-    { icon: <Route />, title: 'Route & Distance Finder', description: 'Plan your road trips and calculate distances between multiple points.', status: 'Coming Soon' },
-    { icon: <Hotel />, title: 'Hotel Price Comparison Tool', description: 'Compare hotel prices from various booking sites to find the best deal.', status: 'Coming Soon' },
-    { icon: <Ticket />, title: 'Flight Deals Finder', description: 'Search for the cheapest flights across multiple airlines and dates.', status: 'Coming Soon' }
+    { icon: <Globe />, title: 'Visa Requirement Checker', description: 'Quickly check the visa requirements for your passport and destination.', href: '/tools/visa-requirement-checker', status: 'Coming Soon' },
+    { icon: <CircleDollarSign />, title: 'Currency Converter', description: 'Get real-time exchange rates for currencies around the world.', href: '/tools/currency-converter', status: 'Coming Soon' },
+    { icon: <Cloud />, title: 'Weather Forecast Tool', description: 'Get a 7-day weather forecast for any city or travel destination.', href: '/tools/weather-forecast-tool', status: 'Coming Soon' },
+    { icon: <Route />, title: 'Route & Distance Finder', description: 'Plan your road trips and calculate distances between multiple points.', href: '/tools/route-distance-finder', status: 'Coming Soon' },
+    { icon: <Hotel />, title: 'Hotel Price Comparison Tool', description: 'Compare hotel prices from various booking sites to find the best deal.', href: '/tools/hotel-price-comparison-tool', status: 'Coming Soon' },
+    { icon: <Ticket />, title: 'Flight Deals Finder', description: 'Search for the cheapest flights across multiple airlines and dates.', href: '/tools/flight-deals-finder', status: 'Coming Soon' }
 ];
 
 const foodTools = [
     { icon: <Lightbulb />, title: 'Content Ideas Generator', description: 'Generate blog post ideas, engaging descriptions, and social media copy.', href: '/tools/shopify-ai-content-generator' },
     { icon: <AtSign />, title: 'Meta Tag Generator', description: 'Create SEO-friendly meta tags to improve search visibility.', href: '/tools/meta-tag-generator' },
     { icon: <Soup />, title: 'Recipe Schema Generator', description: 'Get rich snippets for your recipes in Google search results.', href: '/tools/recipe-schema-generator' },
-    { icon: <MapPin />, title: 'Local Food Finder', description: 'Discover the best local dishes and restaurants in cities worldwide.', status: 'Coming Soon' },
-    { icon: <HandPlatter />, title: 'Must-Try Dishes Finder', description: 'Find the most iconic and must-try dishes for any destination you visit.', status: 'Coming Soon' },
-    { icon: <UtensilsCrossed />, title: 'Restaurant Price Guide', description: 'Get an idea of meal prices to help you budget for dining out.', status: 'Coming Soon' },
-    { icon: <Vegan />, title: 'Veg/Vegan/Non-Veg Filter', description: 'Find restaurants and dishes that cater to your dietary preferences.', status: 'Coming Soon' },
-    { icon: <Wheat />, title: 'Food Allergy Checker', description: 'Check for common allergens in local dishes and communicate your needs.', status: 'Coming Soon' },
-    { icon: <Flame />, title: 'Spice Level Guide', description: 'Understand the spice levels of different cuisines and dishes.', status: 'Coming Soon' },
+    { icon: <MapPin />, title: 'Local Food Finder', description: 'Discover the best local dishes and restaurants in cities worldwide.', href: '/tools/local-food-finder', status: 'Coming Soon' },
+    { icon: <HandPlatter />, title: 'Must-Try Dishes Finder', description: 'Find the most iconic and must-try dishes for any destination you visit.', href: '/tools/must-try-dishes-finder', status: 'Coming Soon' },
+    { icon: <UtensilsCrossed />, title: 'Restaurant Price Guide', description: 'Get an idea of meal prices to help you budget for dining out.', href: '/tools/restaurant-price-guide', status: 'Coming Soon' },
+    { icon: <Vegan />, title: 'Veg/Vegan/Non-Veg Filter', description: 'Find restaurants and dishes that cater to your dietary preferences.', href: '/tools/veg-vegan-non-veg-filter', status: 'Coming Soon' },
+    { icon: <Wheat />, title: 'Food Allergy Checker', description: 'Check for common allergens in local dishes and communicate your needs.', href: '/tools/food-allergy-checker', status: 'Coming Soon' },
+    { icon: <Flame />, title: 'Spice Level Guide', description: 'Understand the spice levels of different cuisines and dishes.', href: '/tools/spice-level-guide', status: 'Coming Soon' },
     { icon: <Camera />, title: 'Food Photography Helper', description: 'Get tips and settings suggestions for taking beautiful food photos.', href: '/tools/food-photography-helper' },
-    { icon: <Hash />, title: 'Hashtag & Caption Generator', description: 'Generate engaging captions and relevant hashtags for your social media posts.', status: 'Coming Soon' },
+    { icon: <Hash />, title: 'Hashtag & Caption Generator', description: 'Generate engaging captions and relevant hashtags for your social media posts.', href: '/tools/hashtag-caption-generator', status: 'Coming Soon' },
 ];
 
 const ToolCard = ({ tool }: { tool: any }) => (
