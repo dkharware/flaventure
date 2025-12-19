@@ -28,7 +28,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <div className="py-8 md:py-12 space-y-8 md:space-y-12">
+      <div className="py-6 md:py-8 space-y-6 md:space-y-8">
           <Suspense fallback={<WebStoriesSkeleton />}>
             <WebStories />
           </Suspense>
