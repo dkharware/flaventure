@@ -1,8 +1,11 @@
+
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
 import { slugify } from '@/lib/utils';
 import { cn } from '@/lib/utils';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
+import { List } from 'lucide-react';
 
 interface Heading {
   id: string;
@@ -54,7 +57,6 @@ export function TableOfContents({ content }: { content: string }) {
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // Update URL hash without causing a page reload
     history.pushState(null, '', `#${id}`);
   };
 
@@ -63,23 +65,33 @@ export function TableOfContents({ content }: { content: string }) {
   }
 
   return (
-    <nav>
-      <ul className="space-y-2 text-sm">
-        {headings.map((h) => (
-          <li key={h.id}>
-            <a
-              href={`#${h.id}`}
-              onClick={(e) => handleLinkClick(e, h.id)}
-              className={cn(
-                'transition-colors hover:text-primary',
-                activeId === h.id ? 'text-primary font-semibold' : 'text-muted-foreground'
-              )}
-            >
-              {h.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <Accordion type="single" collapsible className="w-full">
+      <AccordionItem value="toc">
+        <AccordionTrigger className="text-lg font-semibold">
+          <div className="flex items-center gap-2">
+            <List className="h-5 w-5" />
+            Table of Contents
+          </div>
+        </AccordionTrigger>
+        <AccordionContent>
+          <ul className="space-y-2 text-sm pl-2 pt-2">
+            {headings.map((h) => (
+              <li key={h.id}>
+                <a
+                  href={`#${h.id}`}
+                  onClick={(e) => handleLinkClick(e, h.id)}
+                  className={cn(
+                    'transition-colors hover:text-primary block border-l-2 pl-4',
+                    activeId === h.id ? 'text-primary font-semibold border-primary' : 'text-muted-foreground border-transparent'
+                  )}
+                >
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }

@@ -1,12 +1,14 @@
 
+
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useInView } from 'react-intersection-observer';
 
 interface Comment {
   id: number;
@@ -43,9 +45,26 @@ const CommentTime = ({ timestamp }: { timestamp: Date }) => {
 
 
 export default function CommentSection() {
-  const [comments, setComments] = useState<Comment[]>(mockComments);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState({ author: '', text: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: '200px 0px',
+  });
+
+  useEffect(() => {
+    if (inView && !hasLoaded) {
+      // Simulate fetching comments
+      setTimeout(() => {
+        setComments(mockComments);
+        setHasLoaded(true);
+      }, 500);
+    }
+  }, [inView, hasLoaded]);
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,55 +88,61 @@ export default function CommentSection() {
   };
 
   return (
-    <div>
+    <div ref={ref} className="mt-16 pt-12 border-t border-border/10 min-h-[400px]">
       <h2 className="text-3xl font-bold font-headline mb-8 text-center">Join the Discussion</h2>
       
       <div className="max-w-2xl mx-auto">
-        <form onSubmit={handleSubmit} className="mb-8 space-y-4">
-            <div className="space-y-2">
-                <Label htmlFor="author">Your Name</Label>
-                <Input 
-                    id="author" 
-                    value={newComment.author} 
-                    onChange={e => setNewComment({ ...newComment, author: e.target.value })}
-                    placeholder="Enter your name"
-                    required
-                />
-            </div>
-            <div className="space-y-2">
-                <Label htmlFor="comment">Your Comment</Label>
-                <Textarea
-                    id="comment"
-                    value={newComment.text}
-                    onChange={e => setNewComment({ ...newComment, text: e.target.value })}
-                    placeholder="Write your comment here..."
-                    rows={4}
-                    required
-                />
-            </div>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Post Comment'}
-            </Button>
-        </form>
-
-        <div className="space-y-6">
-            <h3 className="font-semibold text-lg">{comments.length} Comment{comments.length !== 1 ? 's' : ''}</h3>
-            {comments.map((comment) => (
-            <div key={comment.id} className="flex items-start gap-4">
-              <Avatar>
-                <AvatarImage src={comment.avatar} alt={comment.author} />
-                <AvatarFallback>{comment.author.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                    <p className="font-semibold">{comment.author}</p>
-                    <CommentTime timestamp={comment.timestamp} />
+        {hasLoaded ? (
+          <>
+            <form onSubmit={handleSubmit} className="mb-8 space-y-4">
+                <div className="space-y-2">
+                    <Label htmlFor="author">Your Name</Label>
+                    <Input 
+                        id="author" 
+                        value={newComment.author} 
+                        onChange={e => setNewComment({ ...newComment, author: e.target.value })}
+                        placeholder="Enter your name"
+                        required
+                    />
                 </div>
-                <p className="text-muted-foreground mt-1">{comment.text}</p>
-              </div>
+                <div className="space-y-2">
+                    <Label htmlFor="comment">Your Comment</Label>
+                    <Textarea
+                        id="comment"
+                        value={newComment.text}
+                        onChange={e => setNewComment({ ...newComment, text: e.target.value })}
+                        placeholder="Write your comment here..."
+                        rows={4}
+                        required
+                    />
+                </div>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Submitting...' : 'Post Comment'}
+                </Button>
+            </form>
+
+            <div className="space-y-6">
+                <h3 className="font-semibold text-lg">{comments.length} Comment{comments.length !== 1 ? 's' : ''}</h3>
+                {comments.map((comment) => (
+                <div key={comment.id} className="flex items-start gap-4">
+                  <Avatar>
+                    <AvatarImage src={comment.avatar} alt={comment.author} />
+                    <AvatarFallback>{comment.author.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                        <p className="font-semibold">{comment.author}</p>
+                        <CommentTime timestamp={comment.timestamp} />
+                    </div>
+                    <p className="text-muted-foreground mt-1">{comment.text}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        ) : (
+          <div className="text-center text-muted-foreground">Loading comments...</div>
+        )}
       </div>
     </div>
   );

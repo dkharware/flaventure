@@ -1,4 +1,5 @@
 
+
 import { getArticleByHandle, getArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -18,6 +19,7 @@ import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { NextPageProps } from '@/app/types';
 import { FaqFromMetafield } from '@/components/FaqFromMetafield';
+import { Card, CardContent } from '@/components/ui/card';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
@@ -129,10 +131,6 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                         </div>
                     </header>
 
-                    <Suspense fallback={<Skeleton className="h-24 w-full mb-8" />}>
-                      <TableOfContents content={article.contentHtml} />
-                    </Suspense>
-
                     {article.image && (
                     <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden mb-8 shadow-lg">
                         <Image
@@ -146,6 +144,14 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                     </div>
                     )}
                     
+                    <Card className="mb-8 bg-background/50 backdrop-blur-lg">
+                      <CardContent className="p-4">
+                        <Suspense fallback={<Skeleton className="h-24 w-full" />}>
+                          <TableOfContents content={article.contentHtml} />
+                        </Suspense>
+                      </CardContent>
+                    </Card>
+
                     <div className="prose dark:prose-invert max-w-none mx-auto">
                       <ArticleContent content={article.contentHtml} />
                     </div>
@@ -167,9 +173,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                       <Skeleton className="h-24 w-full" />
                   </div>
               }>
-                  <div className="mt-16 pt-12 border-t border-border/10">
-                      <CommentSection />
-                  </div>
+                  <CommentSection />
               </Suspense>
             </main>
             <aside className="lg:col-span-3">
