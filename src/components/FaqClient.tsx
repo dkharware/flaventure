@@ -16,18 +16,8 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from './ui/card';
 import { cn } from '@/lib/utils';
-import { Briefcase, Code, FileText, GraduationCap, ShoppingCart } from 'lucide-react';
-
-interface Faq {
-    question: string;
-    answer: string;
-    _question?: string; // To handle the one case in data
-}
-
-interface FaqCategory {
-    category: string;
-    questions: Faq[];
-}
+import { Briefcase, Code, FileText, Newspaper, ShoppingCart } from 'lucide-react';
+import { FaqCategory } from '@/lib/faq-data';
 
 interface FaqClientProps {
     faqData: FaqCategory[];
@@ -38,6 +28,7 @@ const categoryIcons: { [key: string]: React.ReactNode } = {
     "Theme & App": <Code className="h-6 w-6" />,
     "Storefront API": <FileText className="h-6 w-6" />,
     "Headless Shopify": <Briefcase className="h-6 w-6" />,
+    "Blogging & Content": <Newspaper className="h-6 w-6" />,
 };
 
 export function FaqClient({ faqData }: FaqClientProps) {
@@ -66,7 +57,7 @@ export function FaqClient({ faqData }: FaqClientProps) {
                                         )}
                                     >
                                         <div className={cn('transition-colors', activeCategory === item.category ? 'text-primary-foreground' : 'text-primary')}>
-                                            {categoryIcons[item.category]}
+                                            {categoryIcons[item.category] || <Code className="h-6 w-6" />}
                                         </div>
                                         <h4 className="font-semibold text-sm">{item.category}</h4>
                                     </Card>
@@ -88,7 +79,7 @@ export function FaqClient({ faqData }: FaqClientProps) {
                         >
                            <CardContent className="p-4 flex items-center gap-4">
                                 <div className={cn('transition-colors', activeCategory === item.category ? 'text-primary-foreground' : 'text-primary')}>
-                                    {categoryIcons[item.category]}
+                                     {categoryIcons[item.category] || <Code className="h-6 w-6" />}
                                 </div>
                                 <h4 className="font-semibold">{item.category}</h4>
                            </CardContent>
@@ -99,8 +90,8 @@ export function FaqClient({ faqData }: FaqClientProps) {
             <div className="md:col-span-2 mt-4 md:mt-0">
                 <Accordion type="single" collapsible className="w-full" defaultValue={activeFaqs[0]?.question}>
                     {activeFaqs.map((faq, index) => (
-                        <AccordionItem value={faq.question || faq._question || ''} key={`${activeCategory}-${index}`}>
-                            <AccordionTrigger className="text-left">{faq.question || faq._question}</AccordionTrigger>
+                        <AccordionItem value={faq.question || ''} key={`${activeCategory}-${index}`}>
+                            <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                             <AccordionContent className="text-muted-foreground">{faq.answer}</AccordionContent>
                         </AccordionItem>
                     ))}
@@ -109,4 +100,5 @@ export function FaqClient({ faqData }: FaqClientProps) {
         </div>
       );
   }
-  
+
+    

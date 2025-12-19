@@ -210,7 +210,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
             </aside>
         </div>
       </div>
-      <FaqSection />
+      <FaqSection filter="Blogging & Content" />
     </>
   );
 }
@@ -247,3 +247,5 @@ export async function generateMetadata({ params }: NextPageProps<{ handle: strin
     }
   };
 }
+
+    
