@@ -87,6 +87,9 @@
   .prose li {
     @apply my-1;
   }
+  .prose hr {
+    @apply my-2;
+  }
 }
 
 @layer base {
