@@ -95,6 +95,34 @@ export function BlogSidebar() {
 
       <Card className="bg-background/50 backdrop-blur-lg">
         <CardHeader>
+          <CardTitle className="text-xl font-bold">Tags</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
+            <div className="flex flex-wrap gap-2">
+              <Skeleton className="h-6 w-16 rounded-full" />
+              <Skeleton className="h-6 w-20 rounded-full" />
+              <Skeleton className="h-6 w-12 rounded-full" />
+              <Skeleton className="h-6 w-24 rounded-full" />
+            </div>
+          ) : (
+            tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {tags.slice(0, 20).map(tag => (
+                  <Link key={tag.name} href={`/blog?tag=${encodeURIComponent(tag.name)}`}>
+                    <Badge variant={searchParams.get('tag') === tag.name ? 'default' : 'secondary'} className="hover:bg-primary hover:text-primary-foreground transition-colors text-sm">
+                      {tag.name}
+                    </Badge>
+                  </Link>
+                ))}
+              </div>
+            )
+          )}
+        </CardContent>
+      </Card>
+
+      <Card className="bg-background/50 backdrop-blur-lg">
+        <CardHeader>
           <CardTitle className="text-xl font-bold">Popular Articles</CardTitle>
         </CardHeader>
         <CardContent>
@@ -140,34 +168,6 @@ export function BlogSidebar() {
                   </li>
                 ))}
               </ul>
-            )
-          )}
-        </CardContent>
-      </Card>
-
-      <Card className="bg-background/50 backdrop-blur-lg">
-        <CardHeader>
-          <CardTitle className="text-xl font-bold">Tags</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isLoading ? (
-            <div className="flex flex-wrap gap-2">
-              <Skeleton className="h-6 w-16 rounded-full" />
-              <Skeleton className="h-6 w-20 rounded-full" />
-              <Skeleton className="h-6 w-12 rounded-full" />
-              <Skeleton className="h-6 w-24 rounded-full" />
-            </div>
-          ) : (
-            tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {tags.slice(0, 10).map(tag => (
-                  <Link key={tag.name} href={`/blog?tag=${encodeURIComponent(tag.name)}`}>
-                    <Badge variant={searchParams.get('tag') === tag.name ? 'default' : 'secondary'} className="hover:bg-primary hover:text-primary-foreground transition-colors text-sm">
-                      {tag.name}
-                    </Badge>
-                  </Link>
-                ))}
-              </div>
             )
           )}
         </CardContent>
