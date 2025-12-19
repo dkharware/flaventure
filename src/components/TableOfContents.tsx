@@ -22,11 +22,12 @@ export function TableOfContents({ content }: { content: string }) {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = content;
     const foundHeadings: Heading[] = [];
-    tempDiv.querySelectorAll('h2').forEach((h) => {
+    tempDiv.querySelectorAll('h2, h3').forEach((h) => {
       const text = h.textContent || '';
       const id = slugify(text);
       if (text) {
-        foundHeadings.push({ id, text, level: 2 });
+        const level = parseInt(h.tagName.substring(1), 10);
+        foundHeadings.push({ id, text, level });
       }
     });
     setHeadings(foundHeadings);
@@ -65,24 +66,24 @@ export function TableOfContents({ content }: { content: string }) {
   }
 
   return (
-    <Accordion type="single" collapsible className="w-full">
-      <AccordionItem value="toc">
-        <AccordionTrigger className="text-lg font-semibold">
+    <Accordion type="single" collapsible className="w-full" defaultValue="toc">
+      <AccordionItem value="toc" className="border-b-0">
+        <AccordionTrigger className="text-lg font-semibold hover:no-underline p-4">
           <div className="flex items-center gap-2">
             <List className="h-5 w-5" />
             Table of Contents
           </div>
         </AccordionTrigger>
-        <AccordionContent>
-          <ul className="space-y-2 text-sm pl-2 pt-2">
+        <AccordionContent className="p-4 pt-0">
+          <ul className="space-y-2 text-sm">
             {headings.map((h) => (
-              <li key={h.id}>
+              <li key={h.id} style={{ marginLeft: `${(h.level - 2) * 1}rem` }}>
                 <a
                   href={`#${h.id}`}
                   onClick={(e) => handleLinkClick(e, h.id)}
                   className={cn(
-                    'transition-colors hover:text-primary block border-l-2 pl-4',
-                    activeId === h.id ? 'text-primary font-semibold border-primary' : 'text-muted-foreground border-transparent'
+                    'transition-colors hover:text-primary block border-l-2 pl-4 py-1',
+                    activeId === h.id ? 'text-primary font-semibold border-primary' : 'text-muted-foreground border-transparent hover:border-muted'
                   )}
                 >
                   {h.text}

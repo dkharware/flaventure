@@ -1,5 +1,4 @@
 
-
 import { getArticleByHandle, getArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -23,7 +22,6 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
-
 
 export default async function ArticlePage({ params }: NextPageProps<{ handle: string }>) {
   const resolvedParams = await params;
@@ -145,10 +143,8 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                     )}
                     
                     <Card className="mb-8 bg-background/50 backdrop-blur-lg">
-                      <CardContent className="p-4">
-                        <Suspense fallback={<Skeleton className="h-24 w-full" />}>
-                          <TableOfContents content={article.contentHtml} />
-                        </Suspense>
+                      <CardContent className="p-0">
+                        <TableOfContents content={article.contentHtml} />
                       </CardContent>
                     </Card>
 
