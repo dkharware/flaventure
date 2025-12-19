@@ -153,7 +153,7 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
           ) : (
             tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {tags.map(tag => (
+                {tags.slice(0, 10).map(tag => (
                   <Link key={tag.name} href={`/blog?tag=${encodeURIComponent(tag.name)}`}>
                     <Badge variant={searchParams.get('tag') === tag.name ? 'default' : 'secondary'} className="hover:bg-primary hover:text-primary-foreground transition-colors text-sm">
                       {tag.name}
