@@ -53,7 +53,6 @@ interface FaqItem {
 
 export function ArticleContent({ content, faqContent }: { content: string, faqContent?: string | null }) {
   const contentRef = useRef<HTMLDivElement>(null);
-  const faqRef = useRef<HTMLDivElement>(null);
   const [faqs, setFaqs] = useState<FaqItem[]>([]);
 
   useEffect(() => {
@@ -107,10 +106,11 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
   }, [content]);
 
   useEffect(() => {
-    if (faqRef.current && faqContent) {
-      const faqContainer = faqRef.current;
+    if (faqContent) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = faqContent;
       const extractedFaqs: FaqItem[] = [];
-      const questionElements = faqContainer.querySelectorAll('h3, h4');
+      const questionElements = tempDiv.querySelectorAll('h3, h4');
 
       questionElements.forEach(qElement => {
         const question = qElement.textContent?.trim();
@@ -128,11 +128,6 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
       });
       
       setFaqs(extractedFaqs);
-
-      // Hide the original rendered content after extraction
-      while (faqContainer.firstChild) {
-        faqContainer.removeChild(faqContainer.firstChild);
-      }
     }
   }, [faqContent]);
   
@@ -143,9 +138,6 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
             ref={contentRef}
             dangerouslySetInnerHTML={{ __html: content }}
         />
-
-        {/* Hidden div to render and parse FAQ content */}
-        <div ref={faqRef} dangerouslySetInnerHTML={{ __html: faqContent || '' }} className="hidden" />
 
         {faqs.length > 0 && (
             <div className="mt-12 not-prose">
@@ -165,5 +157,3 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
     </>
   );
 }
-
-    
