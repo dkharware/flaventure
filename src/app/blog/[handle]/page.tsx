@@ -102,20 +102,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
       </div>
       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            <aside className="hidden lg:block lg:col-span-3">
-               <TableOfContents content={article.contentHtml} />
-            </aside>
-            <main className="lg:col-span-6">
-                <div className="lg:hidden mb-8">
-                    <Accordion type="single" collapsible className="w-full border rounded-lg px-4 bg-card">
-                        <AccordionItem value="toc">
-                            <AccordionTrigger className="text-lg font-semibold">Table of Contents</AccordionTrigger>
-                            <AccordionContent>
-                                <TableOfContents content={article.contentHtml} />
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
-                </div>
+            <main className="lg:col-span-9">
                 <article>
                     <header className="mb-8">
                         <div className="mb-4 flex flex-wrap gap-2">
@@ -147,6 +134,15 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                             </div>
                         </div>
                     </header>
+
+                    <Accordion type="single" collapsible className="w-full border rounded-lg px-4 bg-card mb-8">
+                        <AccordionItem value="toc">
+                            <AccordionTrigger className="text-lg font-semibold">Table of Contents</AccordionTrigger>
+                            <AccordionContent>
+                                <TableOfContents content={article.contentHtml} />
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
 
                     {article.image && (
                     <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden mb-8 shadow-lg">
