@@ -22,7 +22,7 @@ export function TableOfContents({ content }: { content: string }) {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = content;
     const foundHeadings: Heading[] = [];
-    tempDiv.querySelectorAll('h2, h3').forEach((h) => {
+    tempDiv.querySelectorAll('h2').forEach((h) => {
       const text = h.textContent || '';
       const id = slugify(text);
       if (text) {
