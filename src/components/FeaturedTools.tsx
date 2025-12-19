@@ -1,28 +1,28 @@
 
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Sparkles, Wrench } from 'lucide-react';
+import { Sparkles, Wrench, Utensils } from 'lucide-react';
 import { Button } from './ui/button';
 import { ArrowRight } from 'lucide-react';
 
 const tools = [
     {
-      title: "Shopify AI Content Generator",
+      title: "AI Content Generator",
       href: "/tools/shopify-ai-content-generator",
       icon: <Sparkles className="h-6 w-6" />,
-      description: "Generate product descriptions, blog posts, and marketing copy in seconds.",
+      description: "Generate blog post ideas, engaging descriptions, and social media copy for your travel and food content.",
     },
     {
       title: "Meta Tag Generator",
       href: "/tools/meta-tag-generator",
       icon: <Wrench className="h-6 w-6" />,
-      description: "Create SEO-friendly meta tags to improve search visibility and social sharing.",
+      description: "Create SEO-friendly meta tags to improve your blog's search visibility and social sharing.",
     },
     {
-      title: "Product Schema Generator",
-      href: "/tools/product-schema-generator",
-      icon: <Wrench className="h-6 w-6" />,
-      description: "Enhance your search listings with rich snippets like price and availability.",
+      title: "Recipe Schema Generator",
+      href: "/tools/recipe-schema-generator",
+      icon: <Utensils className="h-6 w-6" />,
+      description: "Enhance your recipe posts with rich snippets like ratings, cook time, and nutrition details.",
     },
 ];
 
@@ -32,9 +32,9 @@ export function FeaturedTools() {
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
-                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Free Shopify Developer Tools</h2>
+                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Free Blogger Tools</h2>
                         <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                           A collection of free tools, including AI content generators and SEO utilities, to speed up your Shopify development workflow.
+                           A collection of free tools, including AI content generators and SEO utilities, to speed up your content creation workflow.
                         </p>
                     </div>
                 </div>

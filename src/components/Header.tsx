@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, Info, ChevronDown, BookCopy, Wrench, Sparkles, Home, LayoutTemplate } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, Info, ChevronDown, BookCopy, Wrench, Sparkles, Home, LayoutTemplate, Utensils } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -62,6 +62,27 @@ const resourceComponents = [
     },
 ];
 
+const toolsComponents = [
+    {
+      title: "AI Content Generator",
+      href: "/tools/shopify-ai-content-generator",
+      icon: <Sparkles className="h-4 w-4" />,
+      description: "Create blog post ideas, descriptions, and social media copy.",
+    },
+    {
+      title: "Meta Tag Generator",
+      href: "/tools/meta-tag-generator",
+      icon: <Wrench className="h-4 w-4" />,
+      description: "Generate SEO-friendly meta tags for your articles.",
+    },
+    {
+      title: "Recipe Schema Generator",
+      href: "/tools/recipe-schema-generator",
+      icon: <Utensils className="h-4 w-4" />,
+      description: "Get rich snippets for your recipes in Google search.",
+    },
+];
+
 export default function Header() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
@@ -113,6 +134,22 @@ export default function Header() {
                     <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                         {resourceComponents.map((component) => (
+                           <ListItem
+                            key={component.title}
+                            title={component.title}
+                            href={component.href}
+                           >
+                            {component.description}
+                           </ListItem>
+                        ))}
+                        </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                   <NavigationMenuItem>
+                    <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                        {toolsComponents.map((component) => (
                            <ListItem
                             key={component.title}
                             title={component.title}
@@ -187,6 +224,18 @@ export default function Header() {
                             </AccordionTrigger>
                             <AccordionContent className="pl-4">
                                 {resourceComponents.map(item => (
+                                    <Link key={item.title} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block p-2 text-muted-foreground hover:text-primary">
+                                        {item.title}
+                                    </Link>
+                                ))}
+                            </AccordionContent>
+                        </AccordionItem>
+                         <AccordionItem value="tools">
+                            <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full font-semibold text-base")}>
+                                <div className="flex items-center"><Wrench className="mr-2 h-4 w-4" /> Tools</div>
+                            </AccordionTrigger>
+                            <AccordionContent className="pl-4">
+                                {toolsComponents.map(item => (
                                     <Link key={item.title} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block p-2 text-muted-foreground hover:text-primary">
                                         {item.title}
                                     </Link>
