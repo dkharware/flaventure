@@ -9,6 +9,7 @@ import FaqSection from '@/components/FaqSection';
 import { AboutUsHome } from '@/components/AboutUsHome';
 import { FeaturedTools } from '@/components/FeaturedTools';
 import { FeaturedTemplates } from '@/components/FeaturedTemplates';
+import { FeaturedBlogSection } from '@/components/FeaturedBlogSection';
 
 export default async function Home() {
 
@@ -31,6 +32,9 @@ export default async function Home() {
           <Suspense fallback={<WebStoriesSkeleton />}>
             <WebStories />
           </Suspense>
+           <Suspense fallback={<FeaturedBlogSectionSkeleton />}>
+            <FeaturedBlogSection />
+          </Suspense>
           <Suspense fallback={<CategoriesSectionSkeleton />}>
             <CategoriesSection />
           </Suspense>
@@ -45,6 +49,44 @@ export default async function Home() {
     </div>
   );
 }
+
+const FeaturedBlogSectionSkeleton = () => (
+    <section className="w-full py-12 md:py-16">
+        <div className="container px-4 md:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                    <Skeleton className="aspect-video w-full" />
+                    <Skeleton className="h-8 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                </div>
+                <div className="space-y-4">
+                    <div className="flex gap-4">
+                        <Skeleton className="h-24 w-24" />
+                        <div className="space-y-2 flex-grow">
+                            <Skeleton className="h-5 w-full" />
+                            <Skeleton className="h-5 w-5/6" />
+                        </div>
+                    </div>
+                     <div className="flex gap-4">
+                        <Skeleton className="h-24 w-24" />
+                        <div className="space-y-2 flex-grow">
+                            <Skeleton className="h-5 w-full" />
+                            <Skeleton className="h-5 w-5/6" />
+                        </div>
+                    </div>
+                     <div className="flex gap-4">
+                        <Skeleton className="h-24 w-24" />
+                        <div className="space-y-2 flex-grow">
+                            <Skeleton className="h-5 w-full" />
+                            <Skeleton className="h-5 w-5/6" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+);
 
 const RecentPostsSkeleton = () => (
     <section className="w-full py-12 md:py-16">
