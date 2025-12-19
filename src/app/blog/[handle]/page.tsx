@@ -217,19 +217,26 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: NextPageProps<{ handle: string }>): Promise<Metadata> {
   const resolvedParams = await params;
   const article = await getArticleByHandle(resolvedParams.handle);
+  const siteUrl = getSiteUrl();
 
   if (!article) {
     return {
       title: 'Article Not Found',
     };
   }
+  
+  const fullUrl = `${siteUrl}/blog/${article.handle}`;
 
   return {
     title: article.title,
     description: article.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160),
+    alternates: {
+      canonical: fullUrl,
+    },
     openGraph: {
         title: article.title,
         description: article.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160),
+        url: fullUrl,
         images: article.image ? [
             {
                 url: article.image.url,
@@ -239,3 +246,5 @@ export async function generateMetadata({ params }: NextPageProps<{ handle: strin
     }
   };
 }
+
+    

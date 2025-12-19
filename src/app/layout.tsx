@@ -19,6 +19,7 @@ import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 const figtree = Figtree({
   subsets: ['latin'],
   variable: '--font-figtree',
+  display: 'swap',
 });
 
 
@@ -118,9 +119,9 @@ export default function RootLayout({
         <meta name="p:domain_verify" content="9e86368e858272577ac859ef29ea3e3b"/>
         <Script
             src="https://www.googletagmanager.com/gtag/js?id=G-0H420BHZNW"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
             {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
@@ -157,3 +158,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+    
