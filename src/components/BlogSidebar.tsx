@@ -11,7 +11,6 @@ import type { FormEvent } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import Image from 'next/image';
 import { Skeleton } from './ui/skeleton';
-import { OtieAdBanner } from './OtieAdBanner';
 import { useEffect, useState } from 'react';
 
 
@@ -138,8 +137,6 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
           )}
         </CardContent>
       </Card>
-
-       <OtieAdBanner className="bg-background/50 backdrop-blur-lg p-0" />
 
       <Card className="bg-background/50 backdrop-blur-lg">
         <CardHeader>

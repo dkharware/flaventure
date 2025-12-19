@@ -9,7 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Eye, User } from 'lucide-react';
 import { Skeleton } from './ui/skeleton';
-import { AdBanner } from './AdBanner';
 
 interface Article {
   id: string;
@@ -144,20 +143,13 @@ export function ArticleList({ initialArticles, initialPageInfo, query }: Article
     };
   }, [handleLoadMore, isLoading]);
   
-  const articlesWithAd = [...articles];
-  if (articlesWithAd.length >= 4) {
-    articlesWithAd.splice(4, 0, 'ad' as any);
-  }
 
   return (
     <>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-            {articlesWithAd.map((article, index) => {
-              if(article === 'ad' as any) {
-                return <AdBanner key={`ad-${index}`} />;
-              }
-              return <ArticleCard key={article.id} article={article} />;
-            })}
+            {articles.map((article) => (
+              <ArticleCard key={article.id} article={article} />
+            ))}
             {isLoading && (
               <>
                 <ArticleCardSkeleton />

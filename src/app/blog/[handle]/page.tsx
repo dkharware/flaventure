@@ -17,7 +17,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { NextPageProps } from '@/app/types';
-import { OtieAdBanner } from '@/components/OtieAdBanner';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
@@ -171,9 +170,6 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                       <ShareButtons title={article.title} />
                     </div>
                 </article>
-                 <div className="mt-16 pt-12 border-t border-border/10">
-                    <OtieAdBanner />
-                 </div>
                  <Suspense fallback={
                   <div className="mt-16 pt-12 border-t border-border/10 space-y-4">
                       <Skeleton className="h-8 w-1/2 mx-auto" />

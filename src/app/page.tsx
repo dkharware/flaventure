@@ -3,8 +3,6 @@ import React, { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import CategoriesSection from '@/components/CategoriesSection';
 import { BlogSearch } from '@/components/BlogSearch';
-import { WhatsappBanner } from '@/components/WhatsappBanner';
-import { PromoSection } from '@/components/PromoSection';
 import { RecentPosts } from '@/components/RecentPosts';
 import { WebStories } from '@/components/WebStories';
 import FaqSection from '@/components/FaqSection';
@@ -16,7 +14,6 @@ export default async function Home() {
 
   return (
     <div className="w-full">
-      <WhatsappBanner />
       <section className="relative w-full overflow-hidden hero-gradient-bg hero-grid-bg">
         <div className="container mx-auto py-24 px-3 md:py-32 md:px-6 text-center">
             
@@ -43,7 +40,6 @@ export default async function Home() {
           <AboutUsHome />
           <FeaturedTools />
           <FeaturedTemplates />
-          <PromoSection />
           <FaqSection />
       </div>
     </div>
