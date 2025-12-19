@@ -9,9 +9,9 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'Free Tools & Guides for Developers & Bloggers | Flaventure',
-    description: 'A curated collection of free tools designed for developers and bloggers, including schema generators, AI content tools, API guides, and Liquid cheatsheets.',
-    keywords: ['developer tools', 'blogger tools', 'schema generator', 'AI content generator', 'Shopify API guide', 'Liquid cheatsheet'],
+    title: 'Free Tools & Guides for Travelers & Food Bloggers | Flaventure',
+    description: 'A curated collection of free tools designed for travelers and food bloggers, including a travel budget calculator, packing checklist generator, and food photography helper.',
+    keywords: ['travel tools', 'food blogger tools', 'travel budget calculator', 'packing checklist', 'food photography'],
 };
 
 const bloggerTools = [
@@ -21,13 +21,6 @@ const bloggerTools = [
     { icon: <Wrench />, title: 'Packing Checklist Generator', description: 'Create a customized packing list for your next trip.', href: '/tools/packing-checklist-generator' },
     { icon: <Code />, title: 'Travel Budget Calculator', description: 'Estimate costs for flights, accommodation, and activities.', href: '/tools/travel-budget-calculator' },
     { icon: <Sparkles />, title: 'Food Photography Helper', description: 'A simple guide with tips for taking better food photos.', href: '/tools/food-photography-helper' },
-];
-
-const developerTools = [
-    { icon: <BookOpen />, title: 'Shopify API Guide', description: 'A comprehensive guide to the Storefront and Admin APIs.', href: '/tutorials/shopify-api-guide' },
-    { icon: <ScrollText />, title: 'Shopify Liquid Cheatsheet', description: 'A quick reference for Liquid objects, tags, and filters.', href: '/shopify-liquid-cheatsheet' },
-    { icon: <FileJson />, title: 'Product Schema Generator', description: 'Create JSON-LD schema for products to improve SEO.', href: '/tools/product-schema-generator' },
-    { icon: <Code />, title: 'Liquid to JSON Converter', description: 'A handy tool to extract and format JSON from Liquid script tags.', href: '/tools/liquid-to-json-converter' },
 ];
 
 const ToolCard = ({ tool }: { tool: any }) => (
@@ -56,7 +49,7 @@ export default function ToolsPage() {
                     <div className="text-center my-8">
                         <h1 className="text-4xl md:text-5xl font-headline font-bold">Tools & Guides</h1>
                         <p className="text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                            A suite of free tools and guides to help you create better content, optimize your SEO, and build amazing digital experiences.
+                            A suite of free tools and guides to help you create better content, plan your travels, and optimize your blog.
                         </p>
                     </div>
                 </div>
@@ -71,20 +64,6 @@ export default function ToolsPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {bloggerTools.map((tool) => (
-                             <ToolCard key={tool.title} tool={tool} />
-                        ))}
-                    </div>
-                </section>
-
-                <section id="developer-tools">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold font-headline">👩‍💻 Tools & Guides for Developers</h2>
-                        <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-                           Accelerate your development workflow with these handy tools, cheatsheets, and in-depth guides for Shopify and web development.
-                        </p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {developerTools.map((tool) => (
                              <ToolCard key={tool.title} tool={tool} />
                         ))}
                     </div>
