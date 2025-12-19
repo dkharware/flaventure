@@ -139,7 +139,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="light"
           enableSystem
-          disableTransitionOnChange
+          disableTransitionOnChange={true}
         >
           <LoaderProvider>
               <div className="flex flex-col min-h-screen relative overflow-x-hidden">
