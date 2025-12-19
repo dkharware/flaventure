@@ -5,11 +5,12 @@ import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 export async function FeaturedBlogSection() {
-    const { articles } = await getArticles(4);
+    const { articles } = await getArticles(6);
 
-    if (!articles || articles.length < 4) {
+    if (!articles || articles.length < 6) {
         return null; // Don't render if we don't have enough articles
     }
 
@@ -55,8 +56,8 @@ export async function FeaturedBlogSection() {
 
                     {/* Side Articles on the Right */}
                     <div className="space-y-6">
-                        {sideArticles.map((article) => (
-                             <Link key={article.id} href={`/blog/${article.handle}`} className="group block">
+                        {sideArticles.map((article, index) => (
+                             <Link key={article.id} href={`/blog/${article.handle}`} className={cn("group block", index >= 2 ? 'hidden md:block' : 'block')}>
                                 <div className="flex items-start gap-4">
                                     <div className="relative h-24 w-24 flex-shrink-0 rounded-xl overflow-hidden">
                                         <Image
