@@ -8,6 +8,13 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { loadMoreArticles } from '@/app/actions/loadMoreArticles';
 import { Skeleton } from "./ui/skeleton";
 import { Loader2 } from "lucide-react";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+  } from "@/components/ui/carousel"
 
 interface Article {
   id: string;
@@ -27,13 +34,14 @@ export function WebStories() {
     const [articles, setArticles] = useState<Article[]>([]);
     const [pageInfo, setPageInfo] = useState<PageInfo | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isFetchingMore, setIsFetchingMore] = useState(false);
     const loaderRef = useRef<HTMLDivElement>(null);
 
     const handleLoadMore = useCallback(async () => {
-        if (!pageInfo?.hasNextPage || isLoading) {
+        if (!pageInfo?.hasNextPage || isFetchingMore) {
             return;
         }
-        setIsLoading(true);
+        setIsFetchingMore(true);
         const { articles: newArticles, pageInfo: newPageInfo } = await loadMoreArticles(
           5,
           undefined,
@@ -41,8 +49,8 @@ export function WebStories() {
         );
         setArticles(prev => [...prev, ...newArticles]);
         setPageInfo(newPageInfo);
-        setIsLoading(false);
-    }, [pageInfo, isLoading]);
+        setIsFetchingMore(false);
+    }, [pageInfo, isFetchingMore]);
 
     useEffect(() => {
         const initialLoad = async () => {
@@ -62,7 +70,7 @@ export function WebStories() {
                     handleLoadMore();
                 }
             },
-            { threshold: 1.0 }
+            { rootMargin: '0px 0px 0px 500px' } // Pre-load when the loader is 500px away
         );
 
         const loader = loaderRef.current;
@@ -114,39 +122,51 @@ export function WebStories() {
                 </div>
 
                 <div className="relative pt-8">
-                    <div className="flex w-full gap-4 overflow-x-auto pb-4 hide-scrollbar">
-                        {articles.map((article, index) => (
-                            <div key={`${article.id}-${index}`} className="flex-shrink-0 w-[calc(80vw)] sm:w-1/3 md:w-1/4 lg:w-[28%]">
-                                <Link href={`/blog/${article.handle}`} className="block group h-full">
-                                    <div className="relative h-[400px] w-full rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
-                                        <Image
-                                            src={article.image?.url || `https://picsum.photos/seed/story${index}/300/500`}
-                                            alt={article.image?.altText || article.title}
-                                            fill
-                                            className="object-cover"
-                                            data-ai-hint="technology abstract"
-                                            sizes="(max-width: 640px) 80vw, (max-width: 1024px) 40vw, 30vw"
-                                            priority={index < 3}
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                                        <div className="absolute bottom-0 left-0 right-0 p-4 text-white flex flex-col justify-end h-full">
-                                            <div>
-                                                <h3 className="font-bold text-lg leading-tight drop-shadow-md line-clamp-3 mb-2">{article.title}</h3>
-                                                <Badge variant="secondary" className="mt-2 bg-gray-500/30 text-white/90 border-none">
-                                                    {new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
-                                                </Badge>
+                    <Carousel
+                        opts={{
+                            align: "start",
+                            dragFree: true,
+                        }}
+                        className="w-full"
+                    >
+                        <CarouselContent className="-ml-2 md:-ml-4">
+                            {articles.map((article, index) => (
+                                <CarouselItem key={`${article.id}-${index}`} className="pl-2 md:pl-4 basis-[80vw] sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+                                    <Link href={`/blog/${article.handle}`} className="block group h-full p-px">
+                                        <div className="relative h-[400px] w-full rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
+                                            <Image
+                                                src={article.image?.url || `https://picsum.photos/seed/story${index}/300/500`}
+                                                alt={article.image?.altText || article.title}
+                                                fill
+                                                className="object-cover"
+                                                data-ai-hint="technology abstract"
+                                                sizes="(max-width: 640px) 80vw, (max-width: 1024px) 33vw, 20vw"
+                                                priority={index < 3}
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                                            <div className="absolute bottom-0 left-0 right-0 p-4 text-white flex flex-col justify-end h-full">
+                                                <div>
+                                                    <h3 className="font-bold text-lg leading-tight drop-shadow-md line-clamp-3 mb-2">{article.title}</h3>
+                                                    <Badge variant="secondary" className="mt-2 bg-gray-500/30 text-white/90 border-none">
+                                                        {new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+                                                    </Badge>
+                                                </div>
                                             </div>
                                         </div>
+                                    </Link>
+                                </CarouselItem>
+                            ))}
+                            {pageInfo?.hasNextPage && (
+                               <CarouselItem className="pl-4 basis-auto">
+                                    <div ref={loaderRef} className="flex h-full w-24 items-center justify-center">
+                                        {isFetchingMore && <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />}
                                     </div>
-                                </Link>
-                            </div>
-                        ))}
-                        {pageInfo?.hasNextPage && (
-                           <div ref={loaderRef} className="flex-shrink-0 w-24 flex items-center justify-center">
-                              {isLoading && <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />}
-                           </div>
-                        )}
-                    </div>
+                               </CarouselItem>
+                            )}
+                        </CarouselContent>
+                         <CarouselPrevious className="hidden md:flex" />
+                        <CarouselNext className="hidden md:flex" />
+                    </Carousel>
                 </div>
             </div>
         </section>
