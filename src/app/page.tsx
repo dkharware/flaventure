@@ -18,9 +18,9 @@ export default async function Home() {
       <section className="relative w-full overflow-hidden hero-gradient-bg hero-grid-bg">
         <div className="container mx-auto py-24 px-3 md:py-32 md:px-6 text-center">
             
-            <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-6xl md:text-7xl">Your Expert Guide to Shopify, Headless Commerce, and AI</h1>
+            <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-6xl md:text-7xl">Embark on a Flavorful Adventure</h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-                In-depth articles, tutorials, and free tools for Shopify developers and merchants. Master everything from themes to headless builds and AI integration.
+                In-depth travel guides, authentic food stories, and adventure inspiration for the curious traveler. Your journey starts here.
             </p>
             <div className="mt-8 max-w-xl mx-auto">
               <BlogSearch />
@@ -42,8 +42,6 @@ export default async function Home() {
             <RecentPosts />
           </Suspense>
           <AboutUsHome />
-          <FeaturedTools />
-          <FeaturedTemplates />
           <FaqSection />
       </div>
     </div>

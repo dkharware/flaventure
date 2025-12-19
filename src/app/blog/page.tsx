@@ -18,8 +18,8 @@ import { SidebarWrapper } from '@/components/SidebarWrapper';
 import FaqSection from '@/components/FaqSection';
 
 export const metadata: Metadata = {
-  title: 'E-commerce & Web Dev Blog | storedevguide',
-  description: 'Read the latest articles on Shopify, Webflow, headless commerce, and modern web development from the storedevguide team.',
+  title: 'Travel & Food Adventure Blog | Flaventure',
+  description: 'Explore delicious recipes, travel guides, and adventure stories from around the world on the Flaventure blog.',
 };
 
 
@@ -53,9 +53,9 @@ function MissingApiKeyWarning() {
   return (
     <Alert variant="destructive" className="mb-8 bg-yellow-500/10 border-yellow-500/50 text-yellow-200">
       <AlertTriangle className="h-4 w-4 !text-yellow-400" />
-      <AlertTitle className="text-yellow-300 font-bold">Configuration Needed</AlertTitle>
+      <AlertTitle className="text-yellow-300 font-bold">Demo Content Active</AlertTitle>
       <AlertDescription>
-        You are seeing placeholder data. To connect your own Shopify store, set the <code>NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN</code> and <code>NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN</code> environment variables on your deployment server.
+        This site is currently displaying placeholder content. The backend can be configured to connect to a live data source.
       </AlertDescription>
     </Alert>
   );
@@ -75,8 +75,8 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
   
   const { articles, pageInfo } = await getArticles(POSTS_PER_PAGE + 1, query);
   
-  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Explore Articles & Guides");
-  const pageDescription = tagQuery || searchQuery ? `Browsing articles for: ${tagQuery || searchQuery}` : "Your go-to resource for in-depth tutorials, expert insights, and the latest trends in e-commerce development.";
+  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Explore Our Stories");
+  const pageDescription = tagQuery || searchQuery ? `Browsing stories for: ${tagQuery || searchQuery}` : "Our latest articles, travel guides, and delicious recipes from around the world.";
 
   const featuredArticle = articles.length > 0 ? articles[0] : null;
   const initialArticles = articles.slice(1);
@@ -153,7 +153,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
                                         />
                                         <div className="text-xs text-muted-foreground mt-4 pt-4 border-t border-border/10 flex flex-wrap gap-x-4 gap-y-2 items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <Image src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={featuredArticle.authorV2.name} width={20} height={20} className="rounded-full" />
+                                                <Image src="https://picsum.photos/seed/author/20/20" alt={featuredArticle.authorV2.name} width={20} height={20} className="rounded-full" />
                                                 <span>{featuredArticle.authorV2.name}</span>
                                             </div>
                                             <span>{new Date(featuredArticle.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>

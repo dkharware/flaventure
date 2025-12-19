@@ -6,26 +6,26 @@ import { Mail, Linkedin, Github, Download } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function AboutPage() {
-  const authorName = "Deepak Kharware";
-  const authorTitle = "Front-End Developer | Shopify Specialist | Headless Commerce Expert | Team Lead";
-  const authorEmail = "dkharware@gmail.com";
-  const resumeUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/Resume.pdf";
+  const authorName = "Alex Doe";
+  const authorTitle = "Founder, Lead Writer & Chief Explorer";
+  const authorEmail = "hello@flaventure.com";
+  const resumeUrl = "#";
 
   return (
     <div className="container mx-auto py-8 md:py-12 px-4 md:px-6 space-y-12">
       <Card className="max-w-4xl mx-auto bg-background/50 backdrop-blur-lg">
         <CardHeader className="text-center">
-          <CardTitle className="text-4xl font-headline">About storedevguide</CardTitle>
+          <CardTitle className="text-4xl font-headline">About Flaventure</CardTitle>
           <CardDescription className="text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-            Your expert resource for everything Shopify and modern e-commerce development.
+            Your trusted guide to the world's most delicious destinations and exciting adventures.
           </CardDescription>
         </CardHeader>
         <CardContent className="prose dark:prose-invert max-w-none text-muted-foreground text-base">
             <p>
-                storedevguide is a dedicated knowledge hub for developers, merchants, and agencies working with Shopify. Whether you're building a custom theme, diving into headless commerce with Next.js, or leveraging the latest AI tools for e-commerce, we provide comprehensive guides, in-depth tutorials, and ready-to-use resources to help you succeed.
+                Flaventure is a celebration of global cultures, told through the universal languages of food and travel. We believe that the best way to understand a place is to taste it, and the greatest adventures often begin with a single bite. Our mission is to inspire you to explore the world, one delicious meal at a time.
             </p>
             <p>
-                Our content covers a wide range of topics, from fundamental Liquid skills to advanced Storefront API integrations, always with a focus on best practices, performance, and scalability.
+                From hidden street food stalls in bustling cities to serene culinary retreats, we bring you authentic stories, practical travel tips, and mouth-watering recipes to fuel your wanderlust.
             </p>
         </CardContent>
       </Card>
@@ -38,13 +38,13 @@ export default async function AboutPage() {
             <div>
                 <h3 className="text-xl font-headline text-foreground mt-0">Our Mission</h3>
                 <p className="text-muted-foreground">
-                    To empower developers and merchants by providing clear, actionable, and expert-backed content that demystifies Shopify development. We aim to be the go-to resource for building high-quality, performant, and scalable e-commerce solutions.
+                    To inspire curious travelers to connect with the world through authentic food experiences. We provide the stories, guides, and encouragement to help you embark on your own flavorful adventures, responsibly and respectfully.
                 </p>
             </div>
             <div>
                 <h3 className="text-xl font-headline text-foreground mt-0">Our Vision</h3>
                 <p className="text-muted-foreground">
-                   To foster a community of skilled e-commerce developers who are equipped to build the future of online retail. We envision a world where any brand can achieve its digital potential through powerful, custom-built Shopify experiences.
+                   To build a global community of food-loving adventurers who share a passion for exploration and cultural understanding. We envision a world where travel is a gateway to connection, and every meal tells a story.
                 </p>
             </div>
         </CardContent>
@@ -56,7 +56,7 @@ export default async function AboutPage() {
         </CardHeader>
         <CardContent className="flex flex-col items-center text-center">
             <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-primary/10">
-                <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/White%20Minimalist%20Blog%20Tips%20Instagram%20Post.png" alt={authorName} />
+                <AvatarImage src="https://picsum.photos/seed/author/200/200" alt={authorName} />
                 <AvatarFallback>{authorName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
             </Avatar>
             <h3 className="text-2xl font-headline">{authorName}</h3>
@@ -66,31 +66,24 @@ export default async function AboutPage() {
                     <a href={`mailto:${authorEmail}`} aria-label="Email"><Mail className="h-4 w-4" /></a>
                 </Button>
                 <Button variant="outline" size="icon" asChild>
-                    <a href="https://www.linkedin.com/in/deepak-singh-kharware/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin className="h-4 w-4" /></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin className="h-4 w-4" /></a>
                 </Button>
                 <Button variant="outline" size="icon" asChild>
-                    <a href="https://github.com/dkharware" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github className="h-4 w-4" /></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github className="h-4 w-4" /></a>
                 </Button>
             </div>
             <div className="prose dark:prose-invert max-w-2xl mx-auto text-left text-base text-muted-foreground mt-8">
                 <p>
-                    I’m a passionate Front-End Developer with 5+ years of experience specializing in Shopify and Headless Commerce. I created storedevguide to share my knowledge and help others navigate the complexities of e-commerce development.
+                    I’m a lifelong traveler with an insatiable appetite for discovery. I created Flaventure to share my passion for exploring the world's cultures through food and to help others find their own unforgettable adventures.
                 </p>
                 <ul>
-                    <li><strong>Frontend:</strong> React, Next.js, HTML, CSS, JavaScript</li>
-                    <li><strong>Shopify:</strong> Liquid, Custom Themes, Hydrogen, Storefront API</li>
-                    <li><strong>Expertise:</strong> Headless Commerce, Performance Optimization, UI/UX</li>
+                    <li><strong>Passions:</strong> Street Food, Landscape Photography, Cultural History</li>
+                    <li><strong>Favorite Destinations:</strong> Southeast Asia, the Mediterranean Coast, and anywhere with a bustling morning market.</li>
                 </ul>
                 <p>
-                    Through this platform, I aim to provide the practical insights and tools I wish I had when I started my journey.
+                    Through this platform, I aim to provide the practical insights and inspiration I wish I had when I first started exploring the world.
                 </p>
             </div>
-            <Button asChild className="mt-6">
-                <a href={resumeUrl} target="_blank" rel="noopener noreferrer" download>
-                    <Download className="mr-2 h-4 w-4" />
-                    Download Resume
-                </a>
-            </Button>
         </CardContent>
       </Card>
     </div>

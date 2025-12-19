@@ -4,16 +4,16 @@ import { Logo } from './Logo';
 
 const socialLinks = [
     {
-        name: 'LinkedIn',
-        url: 'https://www.linkedin.com/company/storedevguide/?viewAsMember=true',
+        name: 'Instagram',
+        url: '#',
     },
     {
-        name: 'WhatsApp',
-        url: 'https://whatsapp.com/channel/0029VbCGPhEATRSinMYM2H2p',
+        name: 'Facebook',
+        url: '#',
     },
     {
-        name: 'Shopify Community',
-        url: 'https://community.shopify.com/u/dkharware/',
+        name: 'Pinterest',
+        url: '#',
     }
 ];
 
@@ -23,11 +23,11 @@ export default function Footer() {
       <div className="container mx-auto py-8 px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2" aria-label="storedevguide Home">
+            <Link href="/" className="flex items-center gap-2" aria-label="Flaventure Home">
               <Logo width={136} height={51} />
             </Link>
             <p className="text-sm text-muted-foreground">
-              Explore in-depth articles on Shopify themes, headless commerce, and e-commerce development.
+              Your passport to the world's most exciting flavors and adventures.
             </p>
           </div>
           
@@ -41,12 +41,11 @@ export default function Footer() {
           </div>
 
            <div>
-            <h3 className="font-bold text-foreground mb-4">Resources</h3>
+            <h3 className="font-bold text-foreground mb-4">Explore</h3>
             <ul className="space-y-2">
-              <li><Link href="/shopify-liquid-cheatsheet" className="text-sm text-muted-foreground hover:text-primary transition-colors">Liquid Cheatsheet</Link></li>
-              <li><Link href="/tutorials/shopify-api-guide" className="text-sm text-muted-foreground hover:text-primary transition-colors">API Guide</Link></li>
-               <li><Link href="/tools/meta-tag-generator" className="text-sm text-muted-foreground hover:text-primary transition-colors">Shopify Tools</Link></li>
-              <li><Link href="/shopify-templates-boilerplates" className="text-sm text-muted-foreground hover:text-primary transition-colors">Templates</Link></li>
+              <li><Link href="/blog?tag=Destinations" className="text-sm text-muted-foreground hover:text-primary transition-colors">Destinations</Link></li>
+              <li><Link href="/blog?tag=Recipes" className="text-sm text-muted-foreground hover:text-primary transition-colors">Recipes</Link></li>
+               <li><Link href="/blog?tag=Travel%20Tips" className="text-sm text-muted-foreground hover:text-primary transition-colors">Travel Tips</Link></li>
             </ul>
           </div>
 
@@ -60,7 +59,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-border/10 flex flex-col md:flex-row justify-between items-center text-sm">
-            <p className="text-muted-foreground mb-4 md:mb-0">&copy; {new Date().getFullYear()} storedevguide. All rights reserved.</p>
+            <p className="text-muted-foreground mb-4 md:mb-0">&copy; {new Date().getFullYear()} Flaventure. All rights reserved.</p>
              <div className="flex flex-wrap gap-x-4 gap-y-2">
                 {socialLinks.map(link => (
                      <a 

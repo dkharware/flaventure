@@ -57,10 +57,10 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
     },
      "publisher": {
       "@type": "Organization",
-      "name": "storedevguide",
+      "name": "Flaventure",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/newlogo.webp"
+        "url": "https://cdn.shopify.com/s/files/1/0944/6896/4636/files/logo.webp"
       }
     },
     "description": article.contentHtml.replace(/<[^>]*>?/gm, '').substring(0, 160)
@@ -110,7 +110,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                         <div className="text-muted-foreground text-sm flex items-center flex-wrap gap-x-6 gap-y-2">
                             {article.authorV2 && (
                                 <div className="flex items-center gap-2">
-                                    <Image src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={article.authorV2.name} width={24} height={24} className="rounded-full" />
+                                    <Image src="https://picsum.photos/seed/author/24/24" alt={article.authorV2.name} width={24} height={24} className="rounded-full" />
                                     <span>{article.authorV2.name}</span>
                                 </div>
                             )}
@@ -246,5 +246,3 @@ export async function generateMetadata({ params }: NextPageProps<{ handle: strin
     }
   };
 }
-
-    

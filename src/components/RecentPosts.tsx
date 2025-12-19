@@ -18,9 +18,9 @@ export async function RecentPosts() {
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
-                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Latest Shopify Articles & Guides</h2>
+                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Recent Adventures & Recipes</h2>
                         <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                            Check out our most recent articles, tutorials, and insights on Shopify and e-commerce development.
+                            Check out our most recent stories, travel guides, and culinary discoveries from around the globe.
                         </p>
                     </div>
                 </div>
@@ -34,7 +34,7 @@ export async function RecentPosts() {
                                     width={400}
                                     height={250}
                                     className="aspect-[16/10] w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                    data-ai-hint="blog post"
+                                    data-ai-hint="travel landscape"
                                     priority={index === 0}
                                 />
                                 <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
@@ -63,7 +63,7 @@ export async function RecentPosts() {
                 </div>
                  <div className="mt-8 flex justify-center">
                     <Button asChild>
-                        <Link href="/blog">Read The Blog <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        <Link href="/blog">See All Stories <ArrowRight className="ml-2 h-4 w-4" /></Link>
                     </Button>
                 </div>
             </div>

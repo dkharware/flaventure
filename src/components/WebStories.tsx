@@ -112,9 +112,9 @@ export function WebStories() {
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
-                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Shopify Web Stories</h2>
+                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Latest Stories</h2>
                         <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                            Quick, visual guides and expert insights into Shopify development and the latest e-commerce trends.
+                            Quick, visual stories and dispatches from our latest food and travel adventures.
                         </p>
                     </div>
                 </div>
@@ -137,7 +137,7 @@ export function WebStories() {
                                                 alt={article.image?.altText || article.title}
                                                 fill
                                                 className="object-cover"
-                                                data-ai-hint="technology abstract"
+                                                data-ai-hint="travel food"
                                                 sizes="(max-width: 640px) 80vw, (max-width: 1024px) 33vw, 20vw"
                                                 priority={index < 3}
                                             />

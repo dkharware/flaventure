@@ -29,40 +29,35 @@ const faviconUrl = "https://cdn.shopify.com/s/files/1/0944/6896/4636/files/favic
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Shopify Headless, Hydrogen & AI Developer Guides | storedevguide',
-    template: '%s | storedevguide',
+    default: 'Flaventure - Travel and Food Adventure Blog',
+    template: '%s | Flaventure',
   },
-  description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Hydrogen, headless commerce with Next.js, and free developer tools.',
+  description: 'Explore the world with Flaventure. In-depth travel guides, delicious food stories, and adventure inspiration for the curious traveler.',
   keywords: [
-    'Shopify', 
-    'Shopify AI',
-    'Hydrogen',
-    'Headless Shopify',
-    'AI for e-commerce',
-    'Shopify theme',
-    'Shopify app bridge',
-    'Shopify storefront',
-    'Shopify development',
-    'Storefront API',
-    'Shopify blog',
-    'storedevguide',
-    'Next.js Shopify',
-    'Shopify tools'
+    'Travel blog', 
+    'Food blog',
+    'Adventure travel',
+    'Culinary travel',
+    'Travel guides',
+    'Food stories',
+    'Backpacking',
+    'Solo travel',
+    'Flaventure'
   ],
-  authors: [{ name: 'storedevguide', url: siteUrl }],
-  creator: 'storedevguide',
-  publisher: 'storedevguide',
+  authors: [{ name: 'Flaventure', url: siteUrl }],
+  creator: 'Flaventure',
+  publisher: 'Flaventure',
   openGraph: {
-    title: 'Shopify Headless, Hydrogen & AI Developer Guides | storedevguide',
-    description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Hydrogen, headless commerce with Next.js, and free developer tools.',
+    title: 'Flaventure - Travel and Food Adventure Blog',
+    description: 'Explore the world with Flaventure. In-depth travel guides, delicious food stories, and adventure inspiration for the curious traveler.',
     url: siteUrl,
-    siteName: 'storedevguide',
+    siteName: 'Flaventure',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'storedevguide - Shopify AI, Hydrogen, and Headless Developer Guides',
+        alt: 'Flaventure - A travel and food adventure blog',
       },
     ],
     locale: 'en_US',
@@ -70,8 +65,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Shopify Headless, Hydrogen & AI Developer Guides | storedevguide',
-    description: 'Your expert resource for Shopify. In-depth articles on AI in e-commerce, Shopify themes, Hydrogen, headless commerce with Next.js, and free developer tools.',
+    title: 'Flaventure - Travel and Food Adventure Blog',
+    description: 'Explore the world with Flaventure. In-depth travel guides, delicious food stories, and adventure inspiration for the curious traveler.',
     images: ['/og-image.png'],
   },
   icons: {
@@ -90,7 +85,7 @@ export default function RootLayout({
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "storedevguide",
+    "name": "Flaventure",
     "url": siteUrl,
     "description": metadata.description,
     "potentialAction": {
@@ -103,10 +98,10 @@ export default function RootLayout({
     },
     "publisher": {
       "@type": "Organization",
-      "name": "storedevguide",
+      "name": "Flaventure",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/storedevguide.com.webp",
+        "url": "https://cdn.shopify.com/s/files/1/0944/6896/4636/files/logo.webp",
         "width": 150,
         "height": 40
       }

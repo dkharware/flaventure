@@ -37,28 +37,28 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './
 
 const resourceComponents = [
     {
-      title: "Shopify Liquid Cheatsheet",
-      href: "/shopify-liquid-cheatsheet",
+      title: "Travel Guides",
+      href: "/blog?tag=guides",
       icon: <BookCopy className="h-4 w-4" />,
-      description: "A quick reference guide for Shopify Liquid syntax and objects.",
+      description: "In-depth guides to unforgettable destinations.",
     },
     {
-      title: "Shopify API Guide",
-      href: "/tutorials/shopify-api-guide",
-      icon: <Wrench className="h-4 w-4" />,
-      description: "A guide to using the Storefront and Admin APIs.",
-    },
-    {
-      title: "Shopify AI Content Generator",
-      href: "/tools/shopify-ai-content-generator",
+      title: "Recipe Collection",
+      href: "/blog?tag=recipes",
       icon: <Sparkles className="h-4 w-4" />,
-      description: "Generate product descriptions and blog posts with AI.",
+      description: "Authentic recipes from around the world.",
     },
     {
-      title: "Meta Tag Generator",
-      href: "/tools/meta-tag-generator",
+      title: "Travel Tips",
+      href: "/blog?tag=tips",
       icon: <Wrench className="h-4 w-4" />,
-      description: "Generate SEO-friendly meta tags for products and pages.",
+      description: "Expert tips to make your travels smoother.",
+    },
+    {
+      title: "Adventure Stories",
+      href: "/blog?tag=stories",
+      icon: <Newspaper className="h-4 w-4" />,
+      description: "Tales of exploration and culinary discovery.",
     },
 ];
 
@@ -93,7 +93,7 @@ export default function Header() {
     <header className="sticky top-0 left-0 right-0 z-[60] transition-all duration-300 shadow-sm bg-background/80 backdrop-blur-lg">
       <div className="container mx-auto flex items-center justify-between gap-4 h-20 px-4 md:px-6">
           <div className="flex-1 md:flex-initial">
-          <Link href="/" className="flex items-center gap-2" aria-label="storedevguide Home">
+          <Link href="/" className="flex items-center gap-2" aria-label="Flaventure Home">
               <Logo width={120} height={32} priority />
           </Link>
           </div>
@@ -109,14 +109,7 @@ export default function Header() {
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <Link href="/shopify-templates-boilerplates">
-                        Templates
-                        </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger>Resources & Tools</NavigationMenuTrigger>
+                    <NavigationMenuTrigger>Explore</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                         {resourceComponents.map((component) => (
@@ -153,7 +146,7 @@ export default function Header() {
                       ref={inputRef}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search for articles, guides, and tutorials..."
+                      placeholder="Search for destinations, recipes, and stories..."
                       className="h-12 text-base pr-12"
                     />
                     <Button type="submit" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10" aria-label="Submit search">
@@ -177,23 +170,20 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent className="overflow-y-auto w-full max-w-xs">
                 <SheetHeader>
-                    <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 mb-4" aria-label="storedevguide Home">
+                    <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 mb-4" aria-label="Flaventure Home">
                         <Logo width={150} height={40}/>
                     </Link>
                     <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
-                    <SheetDescription className="sr-only">A list of navigation links for the storedevguide website.</SheetDescription>
+                    <SheetDescription className="sr-only">A list of navigation links for the Flaventure website.</SheetDescription>
                 </SheetHeader>
                 <div className="flex flex-col space-y-2 mt-4 pt-2">
                     <Accordion type="multiple" className="w-full">
                         <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
                             <Newspaper className="mr-2 h-4 w-4" /> Blog
                         </Link>
-                        <Link href="/shopify-templates-boilerplates" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
-                            <LayoutTemplate className="mr-2 h-4 w-4" /> Templates
-                        </Link>
                         <AccordionItem value="resources">
                             <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full font-semibold text-base")}>
-                                <div className="flex items-center"><BookCopy className="mr-2 h-4 w-4" /> Resources & Tools</div>
+                                <div className="flex items-center"><BookCopy className="mr-2 h-4 w-4" /> Explore</div>
                             </AccordionTrigger>
                             <AccordionContent className="pl-4">
                                 {resourceComponents.map(item => (

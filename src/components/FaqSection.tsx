@@ -22,7 +22,7 @@ export default function FaqSection({ filter }: FaqSectionProps) {
                     <div className="space-y-2">
                         <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Frequently Asked Questions</h2>
                         <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                           Find answers to common questions about Shopify and e-commerce development.
+                           Find answers to common questions about travel, food, and our blog.
                         </p>
                     </div>
                 </div>

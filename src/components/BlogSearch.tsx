@@ -32,7 +32,7 @@ export function BlogSearch({ initialQuery = '', className }: BlogSearchProps) {
       <Input 
         type="search" 
         name="search"
-        placeholder="Search anything you are looking for" 
+        placeholder="Search for destinations, recipes, stories..." 
         defaultValue={initialQuery}
         className="h-14 text-base bg-background/80 rounded-full pl-12 pr-16 shadow-lg"
         aria-label="Search articles"

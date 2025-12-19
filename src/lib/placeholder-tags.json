@@ -1,10 +1,10 @@
 
 [
-    { "name": "Shopify", "count": 20 },
-    { "name": "Headless", "count": 15 },
-    { "name": "Theme Development", "count": 12 },
-    { "name": "Storefront API", "count": 10 },
-    { "name": "Webflow", "count": 8 },
-    { "name": "Next.js", "count": 7 },
-    { "name": "Performance", "count": 5 }
+    { "name": "Europe", "count": 20 },
+    { "name": "Asia", "count": 15 },
+    { "name": "Food Guide", "count": 12 },
+    { "name": "Adventure", "count": 10 },
+    { "name": "South America", "count": 8 },
+    { "name": "Recipes", "count": 7 },
+    { "name": "Travel Tips", "count": 5 }
 ]

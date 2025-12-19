@@ -49,7 +49,7 @@ export default function ContactPage() {
         <CardHeader>
           <CardTitle className="text-2xl md:text-3xl font-headline">Contact Us</CardTitle>
           <CardDescription>
-            Have a question or feedback? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.
+            Have a question, story idea, or just want to say hello? We'd love to hear from you. Fill out the form below and we'll get back to you.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -68,7 +68,7 @@ export default function ContactPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" placeholder="contact@shopifydevguide.com" required />
+              <Input id="email" name="email" type="email" placeholder="you@example.com" required />
               {state?.errors?.email && <p className="text-sm text-destructive">{state.errors.email.join(', ')}</p>}
             </div>
             <div className="space-y-2">

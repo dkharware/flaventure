@@ -16,8 +16,8 @@ export function AboutUsHome() {
                         <div className="md:col-span-2 p-8 flex justify-center">
                            <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-lg overflow-hidden">
                                 <Image 
-                                    src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/White%20Minimalist%20Blog%20Tips%20Instagram%20Post.png"
-                                    alt="storedevguide Logo"
+                                    src="https://picsum.photos/seed/about-us/400/400"
+                                    alt="Flaventure Logo"
                                     fill
                                     className="object-cover"
                                     sizes="(max-width: 768px) 50vw, 256px"
@@ -25,12 +25,12 @@ export function AboutUsHome() {
                            </div>
                         </div>
                         <div className="md:col-span-3 p-8 text-center md:text-left">
-                            <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl text-black">What is storedevguide?</h2>
+                            <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl text-black">What is Flaventure?</h2>
                             <p className="mt-4 text-slate-700 text-lg">
-                                storedevguide is a dedicated resource hub for Shopify developers, agencies, and merchants. Our mission is to provide high-quality tutorials, in-depth guides, and free tools to help you build better, faster, and more scalable e-commerce experiences.
+                                Flaventure is your passport to the world's most exciting flavors and adventures. Our mission is to bring you authentic stories, stunning photography, and practical guides to inspire your next journey.
                             </p>
                             <p className="mt-2 text-slate-700 text-lg">
-                                Whether you're working with themes, diving into headless commerce, or exploring AI, we've got you covered.
+                                Whether you're a seasoned globetrotter or a curious foodie, we've got something for you.
                             </p>
                             <Button asChild className="mt-6" size="lg">
                                 <Link href="/about">
