@@ -1,5 +1,5 @@
 
-import { getArticleByHandle } from '@/lib/shopify';
+import { getArticleByHandle, getArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import type { Metadata } from 'next';
@@ -17,7 +17,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { NextPageProps } from '@/app/types';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import FaqSection from '@/components/FaqSection';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
@@ -130,14 +129,9 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                         </div>
                     </header>
 
-                    <Accordion type="single" collapsible className="w-full border rounded-lg px-4 bg-card mb-8">
-                        <AccordionItem value="toc">
-                            <AccordionTrigger className="text-lg font-semibold">Table of Contents</AccordionTrigger>
-                            <AccordionContent>
-                                <TableOfContents content={article.contentHtml} />
-                            </AccordionContent>
-                        </AccordionItem>
-                    </Accordion>
+                    <Suspense fallback={<Skeleton className="h-24 w-full mb-8" />}>
+                      <TableOfContents content={article.contentHtml} />
+                    </Suspense>
 
                     {article.image && (
                     <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden mb-8 shadow-lg">
