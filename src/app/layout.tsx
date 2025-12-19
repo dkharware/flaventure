@@ -114,7 +114,7 @@ export default function RootLayout({
       <head>
         <meta name="p:domain_verify" content="9e86368e858272577ac859ef29ea3e3b"/>
         <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-0H420BHZNW"
+            src="https://www.googletagmanager.com/gtag/js?id=G-XWFE9JJLHR"
             strategy="lazyOnload"
         />
         <Script id="google-analytics" strategy="lazyOnload">
@@ -122,7 +122,7 @@ export default function RootLayout({
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', 'G-0H420BHZNW');
+                gtag('config', 'G-XWFE9JJLHR');
             `}
         </Script>
         <Script
