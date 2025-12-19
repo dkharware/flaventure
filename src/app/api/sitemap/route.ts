@@ -20,10 +20,6 @@ async function generateSitemapXml() {
       '/tools/meta-tag-generator',
       '/tools/recipe-schema-generator',
       '/tools/shopify-ai-content-generator',
-      '/tutorials/shopify-api-guide',
-      '/shopify-liquid-cheatsheet',
-      '/tools/product-schema-generator',
-      '/tools/liquid-to-json-converter',
       ];
     
       const { articles } = await getArticles(250);

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 
-const POSTS_PER_PAGE = 11; // 1 for featured, 10 for grid on first page
+const POSTS_PER_PAGE = 10;
 
 function FeaturedArticleSkeleton() {
     return (
@@ -45,17 +45,13 @@ function FeaturedArticleSkeleton() {
     );
 }
 
-function MissingApiKeyWarning() {
-  if (process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN && !process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN.includes('your-store-name')) {
-    return null;
-  }
-
+function DemoContentWarning() {
   return (
     <Alert variant="destructive" className="mb-8 bg-yellow-500/10 border-yellow-500/50 text-yellow-200">
       <AlertTriangle className="h-4 w-4 !text-yellow-400" />
       <AlertTitle className="text-yellow-300 font-bold">Demo Content Active</AlertTitle>
       <AlertDescription>
-        This site is currently displaying placeholder content. The backend can be configured to connect to a live data source.
+        This site is currently displaying placeholder content. The data is statically generated and does not connect to a live CMS.
       </AlertDescription>
     </Alert>
   );
@@ -104,7 +100,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
-              <MissingApiKeyWarning />
+              <DemoContentWarning />
               <Suspense fallback={
                 <div className="space-y-12">
                     <FeaturedArticleSkeleton />

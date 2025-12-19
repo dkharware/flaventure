@@ -1,6 +1,5 @@
 
 import { getAllTags, getArticles } from '@/lib/shopify';
-import placeholderTags from '@/lib/placeholder-tags.json';
 import { CategoryCard } from './CategoryCard';
 
 interface Tag {
@@ -12,26 +11,16 @@ interface Tag {
 export default async function CategoriesSection() {
     let tags: Tag[] = [];
     try {
-        const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-        if (!hasApiKeys || (process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN.includes('your-store-name'))) {
-            tags = placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`}));
-        } else {
-            const fetchedTags = await getAllTags();
-            const tagsWithImages = await Promise.all(fetchedTags.map(async (tag: Tag) => {
-                const { articles } = await getArticles(1, `tag:'${tag.name}'`);
-                const imageUrl = articles[0]?.image?.url;
-                return { ...tag, imageUrl };
-            }));
+        const fetchedTags = await getAllTags();
+        const tagsWithImages = await Promise.all(fetchedTags.map(async (tag: Tag) => {
+            const { articles } = await getArticles(1, `tag:'${tag.name}'`);
+            const imageUrl = articles[0]?.image?.url;
+            return { ...tag, imageUrl: imageUrl || `https://picsum.photos/seed/${tag.name}/200` };
+        }));
+        tags = tagsWithImages;
 
-            if (tagsWithImages && tagsWithImages.length > 0) {
-                tags = tagsWithImages;
-            } else {
-                tags = placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`}));
-            }
-        }
     } catch (error) {
-        console.error("Failed to fetch tags, using placeholders.", error);
-        tags = placeholderTags.map(tag => ({...tag, imageUrl: `https://picsum.photos/seed/${tag.name}/200`}));
+        console.error("Failed to fetch tags for categories.", error);
     }
 
     return (

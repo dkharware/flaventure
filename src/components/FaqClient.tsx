@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent } from './ui/card';
 import { cn } from '@/lib/utils';
-import { Briefcase, Code, FileText, Newspaper, ShoppingCart } from 'lucide-react';
+import { HelpCircle, Utensils, Plane } from 'lucide-react';
 import { FaqCategory } from '@/lib/faq-data';
 
 interface FaqClientProps {
@@ -24,11 +24,9 @@ interface FaqClientProps {
 }
 
 const categoryIcons: { [key: string]: React.ReactNode } = {
-    "Shopify": <ShoppingCart className="h-6 w-6" />,
-    "Theme & App": <Code className="h-6 w-6" />,
-    "Storefront API": <FileText className="h-6 w-6" />,
-    "Headless Shopify": <Briefcase className="h-6 w-6" />,
-    "Blogging & Content": <Newspaper className="h-6 w-6" />,
+    "General": <HelpCircle className="h-6 w-6" />,
+    "Travel": <Plane className="h-6 w-6" />,
+    "Food": <Utensils className="h-6 w-6" />,
 };
 
 export function FaqClient({ faqData }: FaqClientProps) {
@@ -57,7 +55,7 @@ export function FaqClient({ faqData }: FaqClientProps) {
                                         )}
                                     >
                                         <div className={cn('transition-colors', activeCategory === item.category ? 'text-primary-foreground' : 'text-primary')}>
-                                            {categoryIcons[item.category] || <Code className="h-6 w-6" />}
+                                            {categoryIcons[item.category] || <HelpCircle className="h-6 w-6" />}
                                         </div>
                                         <h4 className="font-semibold text-sm">{item.category}</h4>
                                     </Card>
@@ -79,7 +77,7 @@ export function FaqClient({ faqData }: FaqClientProps) {
                         >
                            <CardContent className="p-4 flex items-center gap-4">
                                 <div className={cn('transition-colors', activeCategory === item.category ? 'text-primary-foreground' : 'text-primary')}>
-                                     {categoryIcons[item.category] || <Code className="h-6 w-6" />}
+                                     {categoryIcons[item.category] || <HelpCircle className="h-6 w-6" />}
                                 </div>
                                 <h4 className="font-semibold">{item.category}</h4>
                            </CardContent>
@@ -100,5 +98,3 @@ export function FaqClient({ faqData }: FaqClientProps) {
         </div>
       );
   }
-
-    

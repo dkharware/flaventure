@@ -11,7 +11,7 @@ export interface FaqCategory {
 
 export const faqData: FaqCategory[] = [
     {
-        category: "Blogging & Content",
+        category: "General",
         questions: [
             {
                 question: "How do you choose your destinations?",

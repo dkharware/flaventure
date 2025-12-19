@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/carousel";
 import { Badge } from './ui/badge';
 import { getAllTags } from '@/lib/shopify';
-import placeholderTags from '@/lib/placeholder-tags.json';
 
 interface Tag {
     name: string;
@@ -15,25 +14,7 @@ interface Tag {
 }
 
 export async function BlogTags() {
-    let tags: Tag[] = [];
-    const hasApiKeys = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN && process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN && !process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN.includes('your-store-name');
-
-    try {
-        if (hasApiKeys) {
-            const liveTags = await getAllTags();
-            if (liveTags.length > 0) {
-                tags = liveTags;
-            } else {
-                tags = placeholderTags;
-            }
-        } else {
-            tags = placeholderTags;
-        }
-    } catch (error) {
-        console.error("Failed to fetch live tags, using placeholders.", error);
-        tags = placeholderTags;
-    }
-
+    let tags: Tag[] = await getAllTags();
 
     if (!tags || tags.length === 0) {
         return null;

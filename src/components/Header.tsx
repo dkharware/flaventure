@@ -68,19 +68,19 @@ const toolsComponents = [
       title: "All Tools & Guides",
       href: "/tools",
       icon: <Wrench className="h-4 w-4" />,
-      description: "Browse our full suite of tools for bloggers and developers."
+      description: "Browse our full suite of tools for travelers and foodies."
     },
     {
-      title: "Shopify API Guide",
-      href: "/tutorials/shopify-api-guide",
-      icon: <BookCopy className="h-4 w-4" />,
-      description: "A comprehensive guide to the Storefront and Admin APIs."
+      title: "AI Content Generator",
+      href: "/tools/shopify-ai-content-generator",
+      icon: <Sparkles className="h-4 w-4" />,
+      description: "Generate blog post ideas and engaging descriptions."
     },
     {
-      title: "Liquid Cheatsheet",
-      href: "/shopify-liquid-cheatsheet",
+      title: "Recipe Schema Generator",
+      href: "/tools/recipe-schema-generator",
       icon: <Code className="h-4 w-4" />,
-      description: "A quick reference for Liquid objects, tags, and filters."
+      description: "Get rich snippets for your recipes in Google search."
     }
 ];
 
@@ -147,7 +147,7 @@ export default function Header() {
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                    <NavigationMenuItem>
-                    <NavigationMenuTrigger>Tools & Guides</NavigationMenuTrigger>
+                    <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
                      <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                         {toolsComponents.map((component) => (
@@ -234,7 +234,7 @@ export default function Header() {
                         </AccordionItem>
                          <AccordionItem value="tools">
                             <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full font-semibold text-base")}>
-                                <div className="flex items-center"><Wrench className="mr-2 h-4 w-4" /> Tools & Guides</div>
+                                <div className="flex items-center"><Wrench className="mr-2 h-4 w-4" /> Tools</div>
                             </AccordionTrigger>
                             <AccordionContent className="pl-4">
                                 {toolsComponents.map(item => (

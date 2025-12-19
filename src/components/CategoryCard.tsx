@@ -17,14 +17,14 @@ interface CategoryCardProps {
 
 const getAiHintForTag = (tagName: string): string => {
     const lowerCaseTag = tagName.toLowerCase();
-    if (lowerCaseTag.includes('shopify')) return 'ecommerce store';
-    if (lowerCaseTag.includes('headless')) return 'code architecture';
-    if (lowerCaseTag.includes('theme')) return 'design layout';
-    if (lowerCaseTag.includes('api')) return 'data connection';
-    if (lowerCaseTag.includes('next.js')) return 'framework';
-    if (lowerCaseTag.includes('performance')) return 'speed dashboard';
-    if (lowerCaseTag.includes('webflow')) return 'web design';
-    return 'technology abstract'; // fallback
+    if (lowerCaseTag.includes('food')) return 'delicious food';
+    if (lowerCaseTag.includes('travel')) return 'travel destination';
+    if (lowerCaseTag.includes('europe')) return 'european city';
+    if (lowerCaseTag.includes('asia')) return 'asian landscape';
+    if (lowerCaseTag.includes('america')) return 'american landmark';
+    if (lowerCaseTag.includes('guide')) return 'travel map';
+    if (lowerCaseTag.includes('adventure')) return 'mountain adventure';
+    return 'travel abstract'; // fallback
 }
 
 export function CategoryCard({ tag, index }: CategoryCardProps) {

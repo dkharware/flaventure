@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function AiContentGeneratorPage() {
     const breadcrumbItems = [
         { label: 'Home', href: '/' },
-        { label: 'Tools', href: '#' },
+        { label: 'Tools', href: '/tools' },
         { label: 'AI Content Generator' },
     ];
 

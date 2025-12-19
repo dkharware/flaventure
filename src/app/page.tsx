@@ -8,7 +8,6 @@ import { WebStories } from '@/components/WebStories';
 import FaqSection from '@/components/FaqSection';
 import { AboutUsHome } from '@/components/AboutUsHome';
 import { FeaturedTools } from '@/components/FeaturedTools';
-import { FeaturedTemplates } from '@/components/FeaturedTemplates';
 import { FeaturedBlogSection } from '@/components/FeaturedBlogSection';
 import { Map, Plane, UtensilsCrossed, Mountain } from 'lucide-react';
 
@@ -48,6 +47,7 @@ export default async function Home() {
             <RecentPosts />
           </Suspense>
           <AboutUsHome />
+          <FeaturedTools />
           <FaqSection />
       </div>
     </div>
