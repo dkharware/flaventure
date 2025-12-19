@@ -28,12 +28,12 @@ const templates = [
 
 export function FeaturedTemplates() {
     return (
-        <section className="w-full py-12 md:py-16 bg-muted/40">
+        <section className="w-full py-12 md:py-16 promo-gradient-bg">
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
-                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Templates & Boilerplates</h2>
-                        <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
+                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl text-black">Templates & Boilerplates</h2>
+                        <p className="max-w-[700px] text-slate-700 md:text-xl/relaxed">
                            Kickstart your next Shopify project with our free, production-ready code templates.
                         </p>
                     </div>
