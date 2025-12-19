@@ -43,19 +43,17 @@ const foodTools = [
 ];
 
 const ToolCard = ({ tool }: { tool: any }) => (
-    <Card className="flex flex-col bg-background/50 backdrop-blur-lg transition-all hover:shadow-lg hover:-translate-y-1 h-full">
-        <Link href={tool.href || '#'} className="flex flex-col h-full group">
-            <CardHeader>
-                <div className="flex items-center gap-4 mb-2">
-                    <div className="text-primary">{tool.icon}</div>
-                    <CardTitle className="group-hover:text-primary transition-colors text-base font-bold">{tool.title}</CardTitle>
-                </div>
-                <CardDescription className="text-xs">{tool.description}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow flex flex-col justify-end mt-auto">
+    <Card className="flex flex-col bg-background/50 backdrop-blur-lg h-full">
+        <Link href={tool.href || '#'} className="flex flex-col h-full group p-6">
+            <div className="flex items-center gap-4 mb-2">
+                <div className="text-primary">{tool.icon}</div>
+                <CardTitle className="group-hover:text-primary transition-colors text-base font-bold">{tool.title}</CardTitle>
+            </div>
+            <CardDescription className="text-xs flex-grow">{tool.description}</CardDescription>
+            <div className="mt-4">
                 {tool.status && <Badge variant="outline">{tool.status}</Badge>}
                 {!tool.status && <Badge variant="secondary">Available Now</Badge>}
-            </CardContent>
+            </div>
         </Link>
     </Card>
 );
