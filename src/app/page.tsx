@@ -10,6 +10,7 @@ import { AboutUsHome } from '@/components/AboutUsHome';
 import { FeaturedTools } from '@/components/FeaturedTools';
 import { FeaturedTemplates } from '@/components/FeaturedTemplates';
 import { FeaturedBlogSection } from '@/components/FeaturedBlogSection';
+import { Map, Plane, UtensilsCrossed, Mountain } from 'lucide-react';
 
 export default async function Home() {
 
@@ -17,8 +18,13 @@ export default async function Home() {
     <div className="w-full">
       <section className="relative w-full overflow-hidden hero-gradient-bg hero-grid-bg">
         <div className="container mx-auto py-24 px-3 md:py-32 md:px-6 text-center">
-            
-            <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-6xl md:text-7xl">Embark on a Flavorful Adventure</h1>
+            <div className="relative inline-block">
+                <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-6xl md:text-7xl">Embark on a Flavorful Adventure</h1>
+                <Plane className="absolute -top-8 -left-12 h-12 w-12 text-primary/50 opacity-50 -rotate-12 animate-float-1" />
+                <UtensilsCrossed className="absolute -top-4 -right-12 h-10 w-10 text-accent/50 opacity-50 rotate-12 animate-float-2" />
+                <Map className="absolute -bottom-8 -left-8 h-10 w-10 text-primary/50 opacity-50 rotate-6 animate-float-3" />
+                <Mountain className="absolute -bottom-10 -right-10 h-12 w-12 text-accent/50 opacity-50 -rotate-6 animate-float-1" />
+            </div>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
                 In-depth travel guides, authentic food stories, and adventure inspiration for the curious traveler. Your journey starts here.
             </p>
