@@ -5,15 +5,15 @@ import { ProductSchemaGenerator } from '@/components/tools/ProductSchemaGenerato
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
-    title: 'Free Shopify Product Schema Generator (JSON-LD) | Rich Snippets Tool',
-    description: 'Easily create JSON-LD schema markup for your Shopify products. Enhance your search engine listings with rich snippets, including price, availability, and reviews to improve CTR.',
-    keywords: ['Shopify product schema', 'JSON-LD generator', 'structured data', 'Shopify SEO', 'rich snippets', 'Google search results'],
+    title: 'Free Product Schema Generator (JSON-LD) | Flaventure Tools',
+    description: 'Easily create JSON-LD schema markup for your products. Enhance your search engine listings with rich snippets, including price, availability, and reviews to improve CTR.',
+    keywords: ['product schema', 'JSON-LD generator', 'structured data', 'e-commerce SEO', 'rich snippets', 'Google search results'],
 };
 
 export default function ProductSchemaGeneratorPage() {
     const breadcrumbItems = [
         { label: 'Home', href: '/' },
-        { label: 'Tools', href: '/tools/meta-tag-generator' },
+        { label: 'Tools', href: '#' },
         { label: 'Product Schema Generator' },
     ];
 
@@ -25,7 +25,7 @@ export default function ProductSchemaGeneratorPage() {
             <div className="text-center my-8">
                 <h1 className="text-4xl md:text-5xl font-headline font-bold">Product Schema Generator</h1>
                 <p className="text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                    Generate JSON-LD schema markup for your Shopify products to get rich snippets and improve your SEO.
+                    Generate JSON-LD schema markup for your products to get rich snippets and improve your SEO.
                 </p>
             </div>
         </div>
@@ -56,7 +56,7 @@ export default function ProductSchemaGeneratorPage() {
                           <li><strong>Improved SEO:</strong> While not a direct ranking factor, the higher CTR and better user experience signals to Google that your page is a relevant and valuable result, which can indirectly boost your rankings over time.</li>
                           <li><strong>Voice Search Optimization:</strong> Virtual assistants like Google Assistant use structured data to provide direct answers for product queries.</li>
                       </ol>
-                      <p>Using this tool, you can easily generate the required JSON-LD code. Simply fill in your product details, and then copy the generated script into your Shopify theme's product template.</p>
+                      <p>Using this tool, you can easily generate the required JSON-LD code. Simply fill in your product details, and then copy the generated script into your website's HTML.</p>
                   </CardContent>
               </Card>
           </div>

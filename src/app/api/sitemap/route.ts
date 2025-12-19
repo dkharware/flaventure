@@ -6,25 +6,13 @@ async function generateSitemapXml() {
     const siteUrl = getSiteUrl();
 
     const staticRoutes = [
-        '/',
-        '/about',
-        '/blog',
-        '/contact',
-        '/nextjs-shopify-starter-template',
-        '/privacy-policy',
-        '/shopify-hydrogen-starter',
-        '/shopify-liquid-cheatsheet',
-        '/shopify-liquid-snippets-pack',
-        '/shopify-tailwind-theme-template',
-        '/shopify-templates-boilerplates',
-        '/shopify-theme-starter-template',
-        '/site-map',
-        '/terms-and-conditions',
-        '/tools/liquid-to-json-converter',
-        '/tools/meta-tag-generator',
-        '/tools/product-schema-generator',
-        '/tools/shopify-ai-content-generator',
-        '/tutorials/shopify-api-guide',
+      '/',
+      '/about',
+      '/blog',
+      '/contact',
+      '/privacy-policy',
+      '/site-map',
+      '/terms-and-conditions',
       ];
     
       const { articles } = await getArticles(250);

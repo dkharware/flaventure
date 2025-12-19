@@ -18,10 +18,10 @@ export function slugify(text: string) {
 
 export function getSiteUrl() {
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'production') {
-    return 'https://storedevguide.com';
+    return 'https://flaventure.com';
   }
   if (process.env.NEXT_PUBLIC_VERCEL_URL) {
     return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
   }
-  return 'http://localhost:9002';
+  return 'http://localhost:3000';
 }

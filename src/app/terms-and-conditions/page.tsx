@@ -20,20 +20,15 @@ export default function TermsAndConditionsPage() {
           <p>Last updated: {lastUpdated}</p>
           
           <p>
-            Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the storedevguide website (the "Service") operated by storedevguide ("us", "we", or "our").
+            Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the Flaventure website (the "Service") operated by Flaventure ("us", "we", or "our").
           </p>
           <p>
             Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who access or use the Service.
           </p>
 
-          <h3 className="text-xl font-headline text-foreground">Accounts</h3>
-          <p>
-            When you create an account with us, you must provide us with information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.
-          </p>
-          
           <h3 className="text-xl font-headline text-foreground">Intellectual Property</h3>
           <p>
-            The Service and its original content (excluding Content provided by users), features, and functionality are and will remain the exclusive property of storedevguide and its licensors.
+            The Service and its original content (excluding Content provided by users), features, and functionality are and will remain the exclusive property of Flaventure and its licensors.
           </p>
 
           <h3 className="text-xl font-headline text-foreground">User Content</h3>

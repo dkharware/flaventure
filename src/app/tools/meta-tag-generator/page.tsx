@@ -6,9 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 
 export const metadata: Metadata = {
-    title: 'Free Shopify Meta Tag Generator | SEO & Social Media',
-    description: 'Generate SEO-friendly meta tags (title, description), Open Graph tags for Facebook, and Twitter cards for your Shopify products, pages, and articles to improve search visibility and social sharing.',
-    keywords: ['Shopify meta tags', 'meta tag generator', 'Shopify SEO', 'Open Graph generator', 'Twitter card generator', 'social media SEO'],
+    title: 'Free Meta Tag Generator for SEO & Social Media | Flaventure Tools',
+    description: 'Generate SEO-friendly meta tags (title, description), Open Graph tags, and Twitter cards for your blog posts and pages to improve search visibility and social sharing.',
+    keywords: ['meta tags', 'meta tag generator', 'SEO tool', 'Open Graph generator', 'Twitter card generator', 'social media SEO'],
 };
 
 export default function MetaTagGeneratorPage() {
@@ -24,9 +24,9 @@ export default function MetaTagGeneratorPage() {
         <div className="container mx-auto px-4 md:px-6">
             <Breadcrumbs items={breadcrumbItems} />
             <div className="text-center my-8">
-                <h1 className="text-4xl md:text-5xl font-headline font-bold">Shopify Meta Tag Generator</h1>
+                <h1 className="text-4xl md:text-5xl font-headline font-bold">Meta Tag Generator</h1>
                 <p className="text-lg text-muted-foreground mt-2 max-w-3xl mx-auto">
-                    Create perfect, SEO-friendly meta tags for your Shopify store content to boost search rankings and social media appearance.
+                    Create perfect, SEO-friendly meta tags for your content to boost search rankings and social media appearance.
                 </p>
             </div>
         </div>
@@ -51,9 +51,9 @@ export default function MetaTagGeneratorPage() {
                                 <li><strong>Twitter Card Tags (twitter:*):</strong> Similar to Open Graph, but specifically for Twitter. They allow you to attach photos and videos to Tweets that link to your content.</li>
                             </ul>
 
-                             <h3>How This Improves Your Shopify SEO</h3>
+                             <h3>How This Improves Your SEO</h3>
                             <p>
-                                By providing search engines and social platforms with clear, structured information, you increase your chances of ranking higher and gaining more traffic. Well-crafted meta tags lead to better click-through rates from search results and more engaging social media shares, driving more potential customers to your store.
+                                By providing search engines and social platforms with clear, structured information, you increase your chances of ranking higher and gaining more traffic. Well-crafted meta tags lead to better click-through rates from search results and more engaging social media shares, driving more potential customers to your site.
                             </p>
                         </CardContent>
                     </Card>

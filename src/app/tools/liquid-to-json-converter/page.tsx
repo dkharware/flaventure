@@ -5,7 +5,7 @@ import { LiquidToJsonConverter } from '@/components/tools/LiquidToJsonConverter'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const metadata: Metadata = {
-    title: 'Free Shopify Liquid to JSON Converter | Online Tool for Developers',
+    title: 'Free Shopify Liquid to JSON Converter | Flaventure Tools',
     description: 'A free online tool to convert Shopify Liquid objects and code snippets into clean, valid JSON format. Instantly debug Liquid data or prepare it for headless storefronts.',
     keywords: ['Shopify Liquid to JSON', 'Liquid converter', 'Shopify development tools', 'JSON converter', 'Liquid debug', 'Shopify API', 'headless commerce'],
 };
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function LiquidToJsonConverterPage() {
     const breadcrumbItems = [
         { label: 'Home', href: '/' },
-        { label: 'Tools', href: '/tools/meta-tag-generator' },
+        { label: 'Tools', href: '#' },
         { label: 'Liquid to JSON Converter' },
     ];
 

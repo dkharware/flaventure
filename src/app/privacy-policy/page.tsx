@@ -21,17 +21,12 @@ export default function PrivacyPolicyPage() {
           <p>Last updated: {lastUpdated}</p>
           
           <p>
-            storedevguide ("us", "we", or "our") operates the storedevguide website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
+            Flaventure ("us", "we", or "our") operates the Flaventure website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
           </p>
 
           <h3 className="text-xl font-headline text-foreground">Information Collection and Use</h3>
           <p>
-            We collect several different types of information for various purposes to provide and improve our Service to you. This may include, but is not limited to, your name, email address, and the content you provide for your resume.
-          </p>
-
-          <h3 className="text-xl font-headline text-foreground">Resume Data</h3>
-          <p>
-            The information you provide to build your resume is processed to generate the resume document. We may use anonymized data to improve our AI suggestion models, but we will not share your personal resume content with third parties without your explicit consent.
+            We collect several different types of information for various purposes to provide and improve our Service to you.
           </p>
 
           <h3 className="text-xl font-headline text-foreground">Log Data</h3>
