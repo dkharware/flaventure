@@ -31,28 +31,18 @@ interface FaqItem {
 const extractFaqsFromHtml = (html: string | null | undefined): FaqItem[] => {
   if (!html) return [];
 
-  // A simple and robust parser is needed. Cheerio would be ideal,
-  // but for a server component without new dependencies, a regex-based approach will work for a known structure.
-  // This assumes a structure like: <h3>Question</h3><p>Answer</p>
   const faqs: FaqItem[] = [];
-  const questionRegex = /<h[34]>(.*?)<\/h[34]>/g;
-  const contentParts = html.split(questionRegex);
-  
-  if (contentParts.length > 1) {
-    for (let i = 1; i < contentParts.length; i += 2) {
-      const question = contentParts[i].replace(/<[^>]*>?/gm, '').trim();
-      const answerHtml = contentParts[i + 1] || '';
-      
-      // Find the end of the answer (the start of the next question)
-      const nextQuestionIndex = answerHtml.search(/<h[34]>/);
-      const answer = nextQuestionIndex !== -1 ? answerHtml.substring(0, nextQuestionIndex).trim() : answerHtml.trim();
+  const regex = /<h[34]>(.*?)<\/h[34]>([\s\S]*?)(?=<h[34]>|$)/g;
+  let match;
 
-      if (question && answer) {
-        faqs.push({ question, answer });
-      }
+  while ((match = regex.exec(html)) !== null) {
+    const question = match[1].replace(/<[^>]*>?/gm, '').trim();
+    const answer = match[2].trim();
+    if (question && answer) {
+      faqs.push({ question, answer });
     }
   }
-
+  
   return faqs;
 };
 
