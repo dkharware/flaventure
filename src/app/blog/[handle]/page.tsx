@@ -247,5 +247,3 @@ export async function generateMetadata({ params }: NextPageProps<{ handle: strin
     }
   };
 }
-
-    
