@@ -66,7 +66,7 @@ export function TableOfContents({ content }: { content: string }) {
 
   return (
     <nav className="sticky top-28">
-      <h3 className="font-headline font-semibold text-lg mb-2">On this page</h3>
+      <h3 className="font-headline font-semibold text-lg mb-2">Table of Contents</h3>
       <ul className="space-y-2 text-sm">
         {headings.map((h) => (
           <li key={h.id}>

@@ -110,7 +110,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                 <div className="lg:hidden mb-8">
                     <Accordion type="single" collapsible className="w-full border rounded-lg px-4 bg-card">
                         <AccordionItem value="toc">
-                            <AccordionTrigger className="text-lg font-semibold">On this page</AccordionTrigger>
+                            <AccordionTrigger className="text-lg font-semibold">Table of Contents</AccordionTrigger>
                             <AccordionContent>
                                 <TableOfContents content={article.contentHtml} />
                             </AccordionContent>
