@@ -73,13 +73,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
     query = `tag:'${tagQuery}'`;
   }
   
-  const [articlesData, tagsData, recentPostsData] = await Promise.all([
-      getArticles(POSTS_PER_PAGE + 1, query),
-      getAllTags(),
-      getArticles(5).then(res => res.articles)
-  ]);
-  
-  const { articles, pageInfo } = articlesData;
+  const { articles, pageInfo } = await getArticles(POSTS_PER_PAGE + 1, query);
   
   const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Explore Articles & Guides");
   const pageDescription = tagQuery || searchQuery ? `Browsing articles for: ${tagQuery || searchQuery}` : "Your go-to resource for in-depth tutorials, expert insights, and the latest trends in e-commerce development.";
@@ -198,7 +192,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
               </Suspense>
             </main>
             <aside className="lg:col-span-1 lg:mt-0">
-                 <SidebarWrapper tags={tagsData} recentPosts={recentPostsData} />
+                 <SidebarWrapper />
             </aside>
         </div>
     </div>

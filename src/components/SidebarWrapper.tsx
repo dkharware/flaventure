@@ -5,25 +5,7 @@ import { Suspense } from 'react';
 import { BlogSidebar } from './BlogSidebar';
 import { Skeleton } from './ui/skeleton';
 
-interface Tag {
-  name: string;
-  count: number;
-}
-interface Article {
-  id: string;
-  handle: string;
-  title: string;
-  image?: { url: string; altText: string };
-  readTime?: number;
-  viewCount?: number;
-}
-
-interface SidebarWrapperProps {
-    tags: Tag[];
-    recentPosts: Article[];
-}
-
-export function SidebarWrapper({ tags, recentPosts }: SidebarWrapperProps) {
+export function SidebarWrapper() {
     return (
         <div className="lg:sticky lg:top-28">
             <Suspense fallback={
@@ -33,7 +15,7 @@ export function SidebarWrapper({ tags, recentPosts }: SidebarWrapperProps) {
                     <Skeleton className="h-64 w-full" />
                 </div>
             }>
-                <BlogSidebar tags={tags} recentPosts={recentPosts} />
+                <BlogSidebar />
             </Suspense>
         </div>
     );

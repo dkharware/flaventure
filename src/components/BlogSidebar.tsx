@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import Image from 'next/image';
 import { Skeleton } from './ui/skeleton';
 import { useEffect, useState } from 'react';
+import { getAllTags, getArticles } from '@/lib/shopify';
 
 
 interface Tag {
@@ -26,21 +27,27 @@ interface Article {
   readTime?: number;
   viewCount?: number;
 }
-interface BlogSidebarProps {
-    tags: Tag[];
-    recentPosts: Article[];
-}
 
-export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
+export function BlogSidebar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [recentPosts, setRecentPosts] = useState<Article[]>([]);
 
   useEffect(() => {
-    if (tags && recentPosts) {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const [tagsData, recentPostsData] = await Promise.all([
+        getAllTags(),
+        getArticles(5).then(res => res.articles)
+      ]);
+      setTags(tagsData);
+      setRecentPosts(recentPostsData);
       setIsLoading(false);
-    }
-  }, [tags, recentPosts]);
+    };
+    fetchData();
+  }, []);
   
   const isFilterActive = searchParams.has('query') || searchParams.has('tag');
 
@@ -60,7 +67,7 @@ export function BlogSidebar({ tags, recentPosts }: BlogSidebarProps) {
   };
 
   return (
-    <div className="space-y-8 sticky top-28">
+    <div className="space-y-8">
       <Card className="bg-background/50 backdrop-blur-lg">
         <CardHeader>
           <CardTitle className="text-xl font-bold">Search</CardTitle>
