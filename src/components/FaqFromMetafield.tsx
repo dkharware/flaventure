@@ -30,13 +30,21 @@ export function FaqFromMetafield({ htmlContent }: FaqFromMetafieldProps) {
 
   let nodes: RichTextNode[] = [];
   try {
-    const parsedContent = JSON.parse(htmlContent);
-    if (parsedContent?.children && Array.isArray(parsedContent.children)) {
-      nodes = parsedContent.children;
+    // First, check if the content is a JSON string.
+    if (htmlContent.trim().startsWith('{')) {
+      const parsedContent = JSON.parse(htmlContent);
+      if (parsedContent?.children && Array.isArray(parsedContent.children)) {
+        nodes = parsedContent.children;
+      }
     }
   } catch (error) {
     console.error("Failed to parse FAQ metafield JSON:", error);
-    // If it's not JSON, it might be plain HTML, so we try to render it directly.
+    // If JSON parsing fails, we'll fall back to rendering the raw content below,
+    // which prevents showing a broken page.
+  }
+
+  // If we successfully parsed nodes, render them.
+  if (nodes.length > 0) {
     return (
         <Card className="bg-background/50 backdrop-blur-lg">
             <CardHeader>
@@ -45,19 +53,16 @@ export function FaqFromMetafield({ htmlContent }: FaqFromMetafieldProps) {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <div
-                className="prose dark:prose-invert max-w-none"
-                dangerouslySetInnerHTML={{ __html: htmlContent }}
-                />
+                <div className="prose dark:prose-invert max-w-none">
+                    {nodes.map(renderNode)}
+                </div>
             </CardContent>
         </Card>
     );
   }
 
-  if (nodes.length === 0) {
-    return null;
-  }
-
+  // Fallback: If it's not valid JSON or something went wrong,
+  // render the content directly. This handles plain HTML or text.
   return (
     <Card className="bg-background/50 backdrop-blur-lg">
       <CardHeader>
@@ -66,9 +71,10 @@ export function FaqFromMetafield({ htmlContent }: FaqFromMetafieldProps) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="prose dark:prose-invert max-w-none">
-            {nodes.map(renderNode)}
-        </div>
+        <div
+          className="prose dark:prose-invert max-w-none"
+          dangerouslySetInnerHTML={{ __html: htmlContent }}
+        />
       </CardContent>
     </Card>
   );
