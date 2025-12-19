@@ -8,6 +8,9 @@ import { PromoSection } from '@/components/PromoSection';
 import { RecentPosts } from '@/components/RecentPosts';
 import { WebStories } from '@/components/WebStories';
 import FaqSection from '@/components/FaqSection';
+import { AboutUsHome } from '@/components/AboutUsHome';
+import { FeaturedTools } from '@/components/FeaturedTools';
+import { FeaturedTemplates } from '@/components/FeaturedTemplates';
 
 export default async function Home() {
 
@@ -37,6 +40,9 @@ export default async function Home() {
           <Suspense fallback={<RecentPostsSkeleton />}>
             <RecentPosts />
           </Suspense>
+          <AboutUsHome />
+          <FeaturedTools />
+          <FeaturedTemplates />
           <PromoSection />
           <FaqSection />
       </div>
