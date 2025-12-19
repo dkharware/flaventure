@@ -11,7 +11,7 @@ interface LogoProps {
 export const Logo = ({ width, height, className, priority = false }: LogoProps) => {
     return (
         <Image 
-            src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/storedevguide.com.webp" 
+            src="https://cdn.shopify.com/s/files/1/0944/6896/4636/files/logo.webp" 
             alt="storedevguide logo"
             width={width} 
             height={height}
