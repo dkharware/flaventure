@@ -13,6 +13,7 @@ async function generateSitemapXml() {
       '/privacy-policy',
       '/site-map',
       '/terms-and-conditions',
+      '/disclaimer',
       '/tools',
       '/tools/travel-budget-calculator',
       '/tools/packing-checklist-generator',

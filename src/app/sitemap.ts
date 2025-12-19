@@ -14,6 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/privacy-policy',
     '/site-map',
     '/terms-and-conditions',
+    '/disclaimer',
     '/tools',
     '/tools/travel-budget-calculator',
     '/tools/packing-checklist-generator',
