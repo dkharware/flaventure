@@ -66,6 +66,9 @@
     --radius: 0.8rem;
   }
 
+  .prose p, .prose ul, .prose ol, .prose h2, .prose h3 {
+    @apply my-3;
+  }
   .prose li {
     @apply my-1;
   }
