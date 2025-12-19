@@ -65,6 +65,10 @@
     --chart-5: 350 75% 55%;
     --radius: 0.8rem;
   }
+
+  .prose li {
+    @apply my-1;
+  }
 }
 
 @layer base {
