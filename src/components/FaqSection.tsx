@@ -2,14 +2,13 @@
 'use client';
 
 import { FaqClient } from '@/components/FaqClient';
-import { faqData as allFaqData, FaqCategory } from '@/lib/faq-data';
+import { faqData as allFaqData } from '@/lib/faq-data';
 
 interface FaqSectionProps {
     filter?: string;
 }
 
 export default function FaqSection({ filter }: FaqSectionProps) {
-
     const filteredData = filter 
         ? allFaqData.filter(category => category.category === filter)
         : allFaqData;
@@ -17,7 +16,7 @@ export default function FaqSection({ filter }: FaqSectionProps) {
     const dataToShow = filteredData.length > 0 ? filteredData : allFaqData;
 
     return (
-        <section id="fallback-faq" className="w-full py-12 md:py-16">
+        <section id="faq" className="w-full py-12 md:py-16">
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
@@ -34,5 +33,3 @@ export default function FaqSection({ filter }: FaqSectionProps) {
         </section>
     );
 }
-
-    

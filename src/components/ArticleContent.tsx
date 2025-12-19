@@ -1,14 +1,13 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { ClipboardCopy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { slugify } from '@/lib/utils';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
   const [isCopied, setIsCopied] = React.useState(false);
@@ -46,15 +45,9 @@ const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
   );
 };
 
-interface FaqItem {
-  question: string;
-  answer: string;
-}
-
-export function ArticleContent({ content, faqContent }: { content: string, faqContent?: string | null }) {
+export function ArticleContent({ content }: { content: string }) {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [faqs, setFaqs] = useState<FaqItem[]>([]);
-
+  
   useEffect(() => {
     if (!contentRef.current) return;
 
@@ -105,55 +98,10 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
     };
   }, [content]);
 
-  useEffect(() => {
-    if (faqContent) {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = faqContent;
-      const extractedFaqs: FaqItem[] = [];
-      const questionElements = tempDiv.querySelectorAll('h3, h4');
-
-      questionElements.forEach(qElement => {
-        const question = qElement.textContent?.trim();
-        let nextElement = qElement.nextElementSibling;
-        let answerHtml = '';
-
-        while (nextElement && !['H3', 'H4'].includes(nextElement.tagName)) {
-          answerHtml += nextElement.outerHTML;
-          nextElement = nextElement.nextElementSibling;
-        }
-
-        if (question && answerHtml) {
-          extractedFaqs.push({ question, answer: answerHtml });
-        }
-      });
-      
-      setFaqs(extractedFaqs);
-    }
-  }, [faqContent]);
-  
-
   return (
-    <>
-        <div
-            ref={contentRef}
-            dangerouslySetInnerHTML={{ __html: content }}
-        />
-
-        {faqs.length > 0 && (
-            <div className="mt-12 not-prose">
-                 <h2 className="text-3xl font-bold font-headline mb-6 text-center">Frequently Asked Questions</h2>
-                <Accordion type="single" collapsible className="w-full">
-                    {faqs.map((faq, index) => (
-                        <AccordionItem value={`faq-${index}`} key={index}>
-                            <AccordionTrigger>{faq.question}</AccordionTrigger>
-                            <AccordionContent>
-                                <div className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: faq.answer }} />
-                            </AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
-            </div>
-        )}
-    </>
+    <div
+        ref={contentRef}
+        dangerouslySetInnerHTML={{ __html: content }}
+    />
   );
 }

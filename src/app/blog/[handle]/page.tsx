@@ -17,7 +17,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { NextPageProps } from '@/app/types';
-import FaqSection from '@/components/FaqSection';
+import { FaqFromMetafield } from '@/components/FaqFromMetafield';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
@@ -147,8 +147,14 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                     )}
                     
                     <div className="prose dark:prose-invert max-w-none mx-auto">
-                      <ArticleContent content={article.contentHtml} faqContent={article.faq?.value} />
+                      <ArticleContent content={article.contentHtml} />
                     </div>
+
+                    {article.faq?.value && (
+                      <div className="mt-12">
+                        <FaqFromMetafield htmlContent={article.faq.value} />
+                      </div>
+                    )}
 
                     <div className="flex items-center justify-center mt-8 space-x-4">
                       <LikeButton />
@@ -197,8 +203,6 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
             <RelatedArticles currentArticleHandle={article.handle} tags={article.tags} />
           </Suspense>
       </div>
-      
-      {!article.faq?.value && <FaqSection filter="Blogging & Content" />}
     </>
   );
 }
@@ -235,5 +239,3 @@ export async function generateMetadata({ params }: NextPageProps<{ handle: strin
     }
   };
 }
-
-    
