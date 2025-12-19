@@ -14,6 +14,7 @@ import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { cn } from '@/lib/utils';
 import { Figtree } from 'next/font/google';
+import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 
 const figtree = Figtree({
   subsets: ['latin'],
@@ -148,6 +149,7 @@ export default function RootLayout({
                 <NavigationEvents />
               </Suspense>
               <CookieConsent />
+              <ScrollToTopButton />
           </LoaderProvider>
         <SpeedInsights />
         <Analytics />
