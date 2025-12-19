@@ -18,6 +18,7 @@ import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { NextPageProps } from '@/app/types';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import FaqSection from '@/components/FaqSection';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
@@ -209,6 +210,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
             </aside>
         </div>
       </div>
+      <FaqSection />
     </>
   );
 }

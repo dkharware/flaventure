@@ -15,6 +15,7 @@ import { BlogSearch } from '@/components/BlogSearch';
 import { NextPageProps } from '../types';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { SidebarWrapper } from '@/components/SidebarWrapper';
+import FaqSection from '@/components/FaqSection';
 
 export const metadata: Metadata = {
   title: 'E-commerce & Web Dev Blog | storedevguide',
@@ -201,6 +202,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
             </aside>
         </div>
     </div>
+    <FaqSection />
     </>
   );
 }
