@@ -20,7 +20,7 @@ export function TableOfContents({ content }: { content: string }) {
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = content;
     const foundHeadings: Heading[] = [];
-    tempDiv.querySelectorAll('h2, h3').forEach((h) => {
+    tempDiv.querySelectorAll('h2').forEach((h) => {
       const text = h.textContent || '';
       const id = slugify(text);
       const level = Number(h.tagName.substring(1));
@@ -75,7 +75,6 @@ export function TableOfContents({ content }: { content: string }) {
               onClick={(e) => handleLinkClick(e, h.id)}
               className={cn(
                 'transition-colors hover:text-primary',
-                h.level === 3 && 'pl-4',
                 activeId === h.id ? 'text-primary font-semibold' : 'text-muted-foreground'
               )}
             >
