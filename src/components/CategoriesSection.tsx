@@ -39,9 +39,9 @@ export default async function CategoriesSection() {
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
-                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Explore Categories</h2>
+                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Explore Shopify Topics</h2>
                         <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                           Find articles on the topics that interest you most.
+                           Find articles on the topics that interest you most, from Shopify themes and headless commerce to AI and performance optimization.
                         </p>
                     </div>
                 </div>

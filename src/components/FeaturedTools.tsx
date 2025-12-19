@@ -32,9 +32,9 @@ export function FeaturedTools() {
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
-                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Developer Tools</h2>
+                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Free Shopify Developer Tools</h2>
                         <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                           A collection of free tools to speed up your Shopify development workflow.
+                           A collection of free tools, including AI content generators and SEO utilities, to speed up your Shopify development workflow.
                         </p>
                     </div>
                 </div>

@@ -64,6 +64,9 @@ export function WebStories() {
     }, []);
 
     useEffect(() => {
+        const loader = loaderRef.current;
+        if (!loader) return;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting) {
@@ -73,17 +76,12 @@ export function WebStories() {
             { rootMargin: '0px 0px 0px 500px' } // Pre-load when the loader is 500px away
         );
 
-        const loader = loaderRef.current;
-        if (loader) {
-            observer.observe(loader);
-        }
-
+        observer.observe(loader);
+        
         return () => {
-            if (loader) {
-                observer.unobserve(loader);
-            }
+            observer.disconnect();
         };
-    }, [handleLoadMore]);
+    }, [handleLoadMore, articles]); // Re-run when articles change to ensure observer is attached if loader re-appears
 
     if (isLoading && articles.length === 0) {
         return (
@@ -114,9 +112,9 @@ export function WebStories() {
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">
-                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Web Stories</h2>
+                        <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl">Shopify Web Stories</h2>
                         <p className="max-w-[700px] text-muted-foreground md:text-xl/relaxed">
-                            Quick, visual guides and insights into the world of e-commerce development.
+                            Quick, visual guides and expert insights into Shopify development and the latest e-commerce trends.
                         </p>
                     </div>
                 </div>

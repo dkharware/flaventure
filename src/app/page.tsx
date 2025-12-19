@@ -20,7 +20,7 @@ export default async function Home() {
             
             <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-6xl md:text-7xl">Your Expert Guide to Shopify, Headless Commerce, and AI</h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-                Welcome! Thought-provoking articles, inspiring stories, and expert insights across industries and interests.
+                In-depth articles, tutorials, and free tools for Shopify developers and merchants. Master everything from themes to headless builds and AI integration.
             </p>
             <div className="mt-8 max-w-xl mx-auto">
               <BlogSearch />
