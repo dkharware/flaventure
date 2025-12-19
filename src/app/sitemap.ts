@@ -15,6 +15,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/site-map',
     '/terms-and-conditions',
     '/tools',
+    '/tools/travel-budget-calculator',
+    '/tools/packing-checklist-generator',
+    '/tools/food-photography-helper',
+    '/tools/meta-tag-generator',
+    '/tools/recipe-schema-generator',
+    '/tools/shopify-ai-content-generator',
   ].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
