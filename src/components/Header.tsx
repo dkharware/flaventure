@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, Info, ChevronDown, BookCopy, Wrench, Sparkles, Home } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, Info, ChevronDown, BookCopy, Wrench, Sparkles, Home, LayoutTemplate } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -37,32 +37,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './
 
 const resourceComponents = [
     {
-      title: "All Articles",
-      href: "/blog",
-      icon: <Newspaper className="h-4 w-4" />,
-      description: "Browse all our latest posts on Shopify, web development, and more.",
-    },
-    {
       title: "Shopify Liquid Cheatsheet",
       href: "/shopify-liquid-cheatsheet",
       icon: <BookCopy className="h-4 w-4" />,
-      description: "Your complete quick reference guide for Shopify Liquid syntax and objects.",
+      description: "A quick reference guide for Shopify Liquid syntax and objects.",
     },
     {
       title: "Shopify API Guide",
       href: "/tutorials/shopify-api-guide",
       icon: <Wrench className="h-4 w-4" />,
-      description: "A comprehensive guide to using the Storefront and Admin APIs.",
+      description: "A guide to using the Storefront and Admin APIs.",
     },
-     {
-      title: "Templates & Boilerplates",
-      href: "/shopify-templates-boilerplates",
-      icon: <Wrench className="h-4 w-4" />,
-      description: "Download free, production-ready code templates and starters.",
-    },
-];
-
-const toolComponents = [
     {
       title: "Shopify AI Content Generator",
       href: "/tools/shopify-ai-content-generator",
@@ -75,24 +60,6 @@ const toolComponents = [
       icon: <Wrench className="h-4 w-4" />,
       description: "Generate SEO-friendly meta tags for products and pages.",
     },
-    {
-      title: "Liquid to JSON Converter",
-      href: "/tools/liquid-to-json-converter",
-      icon: <Wrench className="h-4 w-4" />,
-      description: "Convert Liquid objects to JSON for debugging and headless use.",
-    },
-    {
-      title: "Product Schema Generator",
-      href: "/tools/product-schema-generator",
-      icon: <Wrench className="h-4 w-4" />,
-      description: "Create JSON-LD schema markup for your products to improve SEO.",
-    },
-];
-
-const mainLinks = [
-  { href: '/blog', label: 'Blog', icon: <Newspaper className="mr-2 h-4 w-4" /> },
-  { href: '/about', label: 'About', icon: <Info className="mr-2 h-4 w-4" /> },
-  { href: '/contact', label: 'Contact', icon: <Phone className="mr-2 h-4 w-4" /> },
 ];
 
 export default function Header() {
@@ -142,26 +109,17 @@ export default function Header() {
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
-                    <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                        <Link href="/shopify-templates-boilerplates">
+                        Templates
+                        </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Resources & Tools</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                         {resourceComponents.map((component) => (
-                           <ListItem
-                            key={component.title}
-                            title={component.title}
-                            href={component.href}
-                           >
-                            {component.description}
-                           </ListItem>
-                        ))}
-                        </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                        {toolComponents.map((component) => (
                            <ListItem
                             key={component.title}
                             title={component.title}
@@ -230,24 +188,15 @@ export default function Header() {
                         <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
                             <Newspaper className="mr-2 h-4 w-4" /> Blog
                         </Link>
+                        <Link href="/shopify-templates-boilerplates" onClick={() => setIsMobileMenuOpen(false)} className={cn(navigationMenuTriggerStyle(), "justify-start w-full font-semibold text-base")}>
+                            <LayoutTemplate className="mr-2 h-4 w-4" /> Templates
+                        </Link>
                         <AccordionItem value="resources">
                             <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full font-semibold text-base")}>
-                                <div className="flex items-center"><BookCopy className="mr-2 h-4 w-4" /> Resources</div>
+                                <div className="flex items-center"><BookCopy className="mr-2 h-4 w-4" /> Resources & Tools</div>
                             </AccordionTrigger>
                             <AccordionContent className="pl-4">
                                 {resourceComponents.map(item => (
-                                    <Link key={item.title} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block p-2 text-muted-foreground hover:text-primary">
-                                        {item.title}
-                                    </Link>
-                                ))}
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="tools">
-                             <AccordionTrigger className={cn(navigationMenuTriggerStyle(), "justify-between w-full font-semibold text-base")}>
-                                <div className="flex items-center"><Wrench className="mr-2 h-4 w-4" /> Tools</div>
-                            </AccordionTrigger>
-                            <AccordionContent className="pl-4">
-                                {toolComponents.map(item => (
                                     <Link key={item.title} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className="block p-2 text-muted-foreground hover:text-primary">
                                         {item.title}
                                     </Link>

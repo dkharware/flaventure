@@ -17,7 +17,7 @@ export default async function Home() {
       <section className="relative w-full overflow-hidden hero-gradient-bg hero-grid-bg">
         <div className="container mx-auto py-24 px-3 md:py-32 md:px-6 text-center">
             
-            <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-6xl md:text-7xl animate-text-gradient">Hey, We're storedevguide. See our thoughts, stories and ideas.</h1>
+            <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-6xl md:text-7xl">Hey, We're storedevguide. See our thoughts, stories and ideas.</h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
                 Welcome! Thought-provoking articles, inspiring stories, and expert insights across industries and interests.
             </p>
