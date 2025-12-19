@@ -33,17 +33,17 @@ export function BlogSidebar() {
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
   const [tags, setTags] = useState<Tag[]>([]);
-  const [recentPosts, setRecentPosts] = useState<Article[]>([]);
+  const [popularPosts, setPopularPosts] = useState<Article[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const [tagsData, recentPostsData] = await Promise.all([
+      const [tagsData, popularPostsData] = await Promise.all([
         getAllTags(),
-        getArticles(5).then(res => res.articles)
+        getArticles(5, undefined, {}, false).then(res => res.articles)
       ]);
-      setTags(tagsData);
-      setRecentPosts(recentPostsData);
+      setTags(tagsData.slice(0, 20));
+      setPopularPosts(popularPostsData);
       setIsLoading(false);
     };
     fetchData();
@@ -108,7 +108,7 @@ export function BlogSidebar() {
           ) : (
             tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
-                {tags.slice(0, 20).map(tag => (
+                {tags.map(tag => (
                   <Link key={tag.name} href={`/blog?tag=${encodeURIComponent(tag.name)}`}>
                     <Badge variant={searchParams.get('tag') === tag.name ? 'default' : 'secondary'} className="hover:bg-primary hover:text-primary-foreground transition-colors text-sm">
                       {tag.name}
@@ -128,7 +128,7 @@ export function BlogSidebar() {
         <CardContent>
           {isLoading ? (
             <ul className="space-y-4">
-              {Array.from({ length: 3 }).map((_, i) => (
+              {Array.from({ length: 5 }).map((_, i) => (
                 <li key={i} className="flex items-start gap-4 border-b border-border/20 pb-4 last:border-b-0 last:pb-0">
                   <Skeleton className="h-14 w-14 rounded-md" />
                   <div className="flex-grow space-y-2">
@@ -139,9 +139,9 @@ export function BlogSidebar() {
               ))}
             </ul>
           ) : (
-            recentPosts.length > 0 && (
+            popularPosts.length > 0 && (
               <ul className="space-y-4">
-                {recentPosts.map(post => (
+                {popularPosts.map(post => (
                   <li key={post.id} className="border-b border-border/20 pb-4 last:border-b-0 last:pb-0">
                     <Link href={`/blog/${post.handle}`} className="group flex items-start gap-4">
                       {post.image && (

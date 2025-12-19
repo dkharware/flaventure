@@ -81,8 +81,8 @@ const ArticleFragment = gql`
 `;
 
 const ARTICLES_QUERY = gql`
-  query GetArticles($first: Int, $last: Int, $before: String, $after: String, $query: String) {
-    articles(first: $first, last: $last, before: $before, after: $after, sortKey: PUBLISHED_AT, reverse: true, query: $query) {
+  query GetArticles($first: Int, $last: Int, $before: String, $after: String, $query: String, $reverse: Boolean) {
+    articles(first: $first, last: $last, before: $before, after: $after, sortKey: PUBLISHED_AT, reverse: $reverse, query: $query) {
         edges {
           cursor
           node {
@@ -167,10 +167,11 @@ const getPlaceholderArticles = (count?: number) => {
 export async function getArticles(
     count: number = 12, 
     query?: string, 
-    pagination: { before?: string; after?: string } = {}
+    pagination: { before?: string; after?: string } = {},
+    reverse: boolean = true
 ) {
     const isPagingBackwards = !!pagination.before;
-    const variables: Record<string, any> = { query };
+    const variables: Record<string, any> = { query, reverse };
 
     if (isPagingBackwards) {
         variables.last = count;
