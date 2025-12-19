@@ -58,7 +58,7 @@ export default async function AboutPage() {
             <div className="flex flex-col md:flex-row items-center gap-8">
                 <div className="flex-shrink-0 text-center">
                     <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-primary/10">
-                        <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/blob-2025-11-30%20at%2013.33.48.jpg" alt={authorName} />
+                        <AvatarImage src="https://5lgivccarqkvddiv.public.blob.vercel-storage.com/White%20Minimalist%20Blog%20Tips%20Instagram%20Post.png" alt={authorName} />
                         <AvatarFallback>{authorName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                     </Avatar>
                     <h3 className="text-2xl font-headline">{authorName}</h3>
