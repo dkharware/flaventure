@@ -13,6 +13,13 @@ import { CookieConsent } from '@/components/CookieConsent';
 import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { cn } from '@/lib/utils';
+import { Figtree } from 'next/font/google';
+
+const figtree = Figtree({
+  subsets: ['latin'],
+  variable: '--font-figtree',
+});
+
 
 const siteUrl = getSiteUrl();
 const faviconUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/favicon.ico";
@@ -105,7 +112,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={figtree.variable}>
       <head>
         <meta name="p:domain_verify" content="9e86368e858272577ac859ef29ea3e3b"/>
         <Script

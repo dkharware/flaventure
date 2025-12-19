@@ -40,7 +40,7 @@ export function CategoryCard({ tag, index }: CategoryCardProps) {
                     fill
                     className="object-cover transition-opacity duration-300"
                     data-ai-hint={aiHint}
-                    sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, 12.5vw"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
                 <div className="absolute inset-0 flex items-center justify-center p-2">

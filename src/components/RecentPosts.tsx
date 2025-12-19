@@ -25,7 +25,7 @@ export async function RecentPosts() {
                     </div>
                 </div>
                 <div className="mx-auto grid max-w-5xl items-start gap-8 pt-8 sm:grid-cols-2 md:gap-12 lg:grid-cols-3">
-                    {articles.map((article) => (
+                    {articles.map((article, index) => (
                          <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
                             <div className="relative overflow-hidden rounded-xl">
                                 <Image
@@ -35,6 +35,7 @@ export async function RecentPosts() {
                                     height={250}
                                     className="aspect-[16/10] w-full object-cover transition-transform duration-300 group-hover:scale-105"
                                     data-ai-hint="blog post"
+                                    priority={index === 0}
                                 />
                                 <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
                                     {article.tags?.slice(0, 1).map((tag: string) => (

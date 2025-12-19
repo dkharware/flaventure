@@ -21,7 +21,7 @@ export function AboutUsHome() {
                                     alt={authorName}
                                     fill
                                     className="object-cover"
-                                    sizes="(max-width: 768px) 100vw, 30vw"
+                                    sizes="(max-width: 768px) 80vw, 30vw"
                                 />
                             </div>
                         </div>

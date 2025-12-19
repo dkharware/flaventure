@@ -48,7 +48,8 @@ export async function WebStories() {
                                             fill
                                             className="object-cover"
                                             data-ai-hint="technology abstract"
-                                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                                            sizes="(max-width: 640px) 80vw, (max-width: 1024px) 40vw, 30vw"
+                                            priority={index < 3}
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                                         <div className="absolute bottom-0 left-0 right-0 p-4 text-white flex flex-col justify-end h-full">
