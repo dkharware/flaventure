@@ -68,10 +68,17 @@
 
   .prose {
     --tw-prose-body: hsl(var(--foreground));
+    --tw-prose-links: hsl(var(--primary));
   }
 
   .dark .prose {
       --tw-prose-body: hsl(var(--foreground));
+      --tw-prose-links: hsl(var(--primary));
+  }
+
+  .prose a:hover {
+    color: #8bf80b;
+    text-decoration: underline;
   }
 
   .prose p, .prose ul, .prose ol, .prose h2, .prose h3 {
