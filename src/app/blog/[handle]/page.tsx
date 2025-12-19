@@ -18,33 +18,10 @@ import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { NextPageProps } from '@/app/types';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import FaqSection from '@/components/FaqSection';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
-
-interface FaqItem {
-  question: string;
-  answer: string;
-}
-
-// Server-side function to extract FAQs from the metafield HTML content
-const extractFaqsFromHtml = (html: string | null | undefined): FaqItem[] => {
-  if (!html) return [];
-
-  const faqs: FaqItem[] = [];
-  const regex = /<h[34]>(.*?)<\/h[34]>([\s\S]*?)(?=<h[34]>|$)/g;
-  let match;
-
-  while ((match = regex.exec(html)) !== null) {
-    const question = match[1].replace(/<[^>]*>?/gm, '').trim();
-    const answer = match[2].trim();
-    if (question && answer) {
-      faqs.push({ question, answer });
-    }
-  }
-  
-  return faqs;
-};
 
 
 export default async function ArticlePage({ params }: NextPageProps<{ handle: string }>) {
@@ -69,8 +46,6 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
   
   const siteUrl = getSiteUrl();
   const fullUrl = `${siteUrl}/blog/${article.handle}`;
-
-  const articleFaqs = extractFaqsFromHtml(article.faq?.value);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -184,25 +159,8 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                     )}
                     
                     <div className="prose dark:prose-invert max-w-none mx-auto">
-                      <ArticleContent content={article.contentHtml} />
+                      <ArticleContent content={article.contentHtml} faqContent={article.faq?.value} />
                     </div>
-                    
-                    {articleFaqs.length > 0 && (
-                        <div className="mt-12 not-prose">
-                             <h2 className="text-3xl font-bold font-headline mb-6 text-center">Frequently Asked Questions</h2>
-                            <Accordion type="single" collapsible className="w-full">
-                                {articleFaqs.map((faq, index) => (
-                                    <AccordionItem value={`faq-${index}`} key={index}>
-                                        <AccordionTrigger>{faq.question}</AccordionTrigger>
-                                        <AccordionContent>
-                                            <div className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: faq.answer }} />
-                                        </AccordionContent>
-                                    </AccordionItem>
-                                ))}
-                            </Accordion>
-                        </div>
-                    )}
-
 
                     <div className="flex items-center justify-center mt-8 space-x-4">
                       <LikeButton />
@@ -254,7 +212,8 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
             </Suspense>
         )}
       </div>
-
+      
+      {!article.faq?.value && <FaqSection filter="Blogging & Content" />}
     </>
   );
 }
