@@ -25,16 +25,16 @@ interface SidebarWrapperProps {
 
 export function SidebarWrapper({ tags, recentPosts }: SidebarWrapperProps) {
     return (
-        <Suspense fallback={
-            <div className="space-y-8">
-                <Skeleton className="h-24 w-full" />
-                <Skeleton className="h-48 w-full" />
-                <Skeleton className="h-64 w-full" />
-            </div>
-         }>
-            <div className="lg:sticky lg:top-28">
-              <BlogSidebar tags={tags} recentPosts={recentPosts} />
-            </div>
-        </Suspense>
+        <div className="lg:sticky lg:top-28">
+            <Suspense fallback={
+                <div className="space-y-8">
+                    <Skeleton className="h-24 w-full" />
+                    <Skeleton className="h-48 w-full" />
+                    <Skeleton className="h-64 w-full" />
+                </div>
+            }>
+                <BlogSidebar tags={tags} recentPosts={recentPosts} />
+            </Suspense>
+        </div>
     );
 }
