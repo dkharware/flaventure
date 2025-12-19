@@ -15,6 +15,7 @@ import { getSiteUrl } from '@/lib/utils';
 import { cn } from '@/lib/utils';
 import { Figtree } from 'next/font/google';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const figtree = Figtree({
   subsets: ['latin'],
@@ -134,6 +135,12 @@ export default function RootLayout({
           "font-body antialiased"
         )}
       >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
           <LoaderProvider>
               <div className="flex flex-col min-h-screen relative overflow-x-hidden">
                 <Header />
@@ -147,6 +154,7 @@ export default function RootLayout({
               <CookieConsent />
               <ScrollToTopButton />
           </LoaderProvider>
+        </ThemeProvider>
         <SpeedInsights />
         <Analytics />
       </body>

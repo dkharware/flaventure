@@ -34,6 +34,7 @@ import type { FormEvent } from 'react';
 import { Input } from './ui/input';
 import { LiveSearch } from './LiveSearch';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 const resourceComponents = [
     {
@@ -193,6 +194,7 @@ export default function Header() {
                   </form>
                 </DialogContent>
               </Dialog>
+              <ThemeSwitcher />
               <Button asChild className="rounded-full hidden sm:flex">
                   <Link href="/contact">Contact</Link>
               </Button>
