@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
@@ -23,9 +22,8 @@ export function TableOfContents({ content }: { content: string }) {
     tempDiv.querySelectorAll('h2').forEach((h) => {
       const text = h.textContent || '';
       const id = slugify(text);
-      const level = Number(h.tagName.substring(1));
       if (text) {
-        foundHeadings.push({ id, text, level });
+        foundHeadings.push({ id, text, level: 2 });
       }
     });
     setHeadings(foundHeadings);
@@ -65,8 +63,7 @@ export function TableOfContents({ content }: { content: string }) {
   }
 
   return (
-    <nav className="sticky top-28">
-      <h3 className="font-headline font-semibold text-lg mb-2">Table of Contents</h3>
+    <nav>
       <ul className="space-y-2 text-sm">
         {headings.map((h) => (
           <li key={h.id}>
