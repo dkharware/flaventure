@@ -70,6 +70,12 @@ export function ArticleContent({ content, faqContent }: { content: string, faqCo
         }
     });
 
+    // Add lazy loading to images
+    const imageElements = mainContentElement.querySelectorAll('img');
+    imageElements.forEach(img => {
+      img.setAttribute('loading', 'lazy');
+    });
+
     // Add copy buttons to pre elements
     const preElements = mainContentElement.querySelectorAll('pre');
     preElements.forEach((pre) => {
