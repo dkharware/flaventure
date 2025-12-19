@@ -177,23 +177,6 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                       <CommentSection />
                   </div>
               </Suspense>
-
-              {relatedArticles.length > 0 && (
-                   <Suspense fallback={
-                      <div className="mt-16 pt-12 border-t border-border/10 space-y-8">
-                          <h2 className="text-3xl font-bold font-headline mb-8 text-center"><Skeleton className="h-8 w-1/3 mx-auto" /></h2>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                              <Skeleton className="h-64 w-full" />
-                              <Skeleton className="h-64 w-full" />
-                          </div>
-                      </div>
-                   }>
-                      <div className="mt-16 pt-12 border-t border-border/10">
-                          <h2 className="text-3xl font-bold font-headline mb-8 text-center">Related Articles</h2>
-                          <RelatedArticles articles={relatedArticles} />
-                      </div>
-                   </Suspense>
-              )}
             </main>
             <aside className="lg:col-span-3">
                  <Suspense fallback={
@@ -210,6 +193,26 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
             </aside>
         </div>
       </div>
+      
+      {relatedArticles.length > 0 && (
+          <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
+            <Suspense fallback={
+                <div className="mt-16 pt-12 border-t border-border/10 space-y-8">
+                    <h2 className="text-3xl font-bold font-headline mb-8 text-center"><Skeleton className="h-8 w-1/3 mx-auto" /></h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <Skeleton className="h-64 w-full" />
+                        <Skeleton className="h-64 w-full" />
+                    </div>
+                </div>
+            }>
+                <div className="mt-16 pt-12 border-t border-border/10">
+                    <h2 className="text-3xl font-bold font-headline mb-8 text-center">Related Articles</h2>
+                    <RelatedArticles articles={relatedArticles} />
+                </div>
+            </Suspense>
+          </div>
+      )}
+
       <FaqSection filter="Blogging & Content" />
     </>
   );

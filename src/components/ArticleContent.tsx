@@ -66,31 +66,33 @@ const extractFaqsFromHtml = (html: string): FaqItem[] => {
 
     const extractedFaqs: FaqItem[] = [];
     let currentNode = faqHeading.nextElementSibling;
-    let currentQuestion = '';
-    let currentAnswer = '';
-
+    
     while (currentNode) {
         if (currentNode.tagName.match(/H[2-4]/)) {
+            let currentQuestion = currentNode.textContent || '';
+            let currentAnswer = '';
+            let nextSibling = currentNode.nextElementSibling;
+
+            while (nextSibling && !nextSibling.tagName.match(/H[2-4]/)) {
+                currentAnswer += nextSibling.outerHTML;
+                
+                // Stop if we hit the next major section of the page
+                if (nextSibling.nextElementSibling?.tagName === 'H2') {
+                    break;
+                }
+                nextSibling = nextSibling.nextElementSibling;
+            }
+
             if (currentQuestion && currentAnswer) {
                 extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
             }
-            currentQuestion = currentNode.textContent || '';
-            currentAnswer = '';
-        } else if (currentQuestion) {
-            currentAnswer += currentNode.outerHTML;
+            
+            currentNode = nextSibling;
+            if (currentNode?.tagName === 'H2') break;
+        } else {
+             // If we start and don't immediately find a question heading, move to the next element
+            currentNode = currentNode.nextElementSibling;
         }
-
-        if (currentNode.nextElementSibling?.tagName === 'H2') {
-             if (currentQuestion && currentAnswer) {
-                extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
-            }
-            break;
-        }
-        
-        currentNode = currentNode.nextElementSibling;
-    }
-    if (currentQuestion && currentAnswer) {
-         extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
     }
 
     return extractedFaqs;
