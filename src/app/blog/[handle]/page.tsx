@@ -1,5 +1,5 @@
 
-import { getArticleByHandle, getRelatedArticles, getAllTags, getArticles } from '@/lib/shopify';
+import { getArticleByHandle, getAllTags, getArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import type { Metadata } from 'next';
@@ -23,6 +23,41 @@ import FaqSection from '@/components/FaqSection';
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
 
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+// Server-side function to extract FAQs from the metafield HTML content
+const extractFaqsFromHtml = (html: string | null | undefined): FaqItem[] => {
+  if (!html) return [];
+
+  // A simple and robust parser is needed. Cheerio would be ideal,
+  // but for a server component without new dependencies, a regex-based approach will work for a known structure.
+  // This assumes a structure like: <h3>Question</h3><p>Answer</p>
+  const faqs: FaqItem[] = [];
+  const questionRegex = /<h[34]>(.*?)<\/h[34]>/g;
+  const contentParts = html.split(questionRegex);
+  
+  if (contentParts.length > 1) {
+    for (let i = 1; i < contentParts.length; i += 2) {
+      const question = contentParts[i].replace(/<[^>]*>?/gm, '').trim();
+      const answerHtml = contentParts[i + 1] || '';
+      
+      // Find the end of the answer (the start of the next question)
+      const nextQuestionIndex = answerHtml.search(/<h[34]>/);
+      const answer = nextQuestionIndex !== -1 ? answerHtml.substring(0, nextQuestionIndex).trim() : answerHtml.trim();
+
+      if (question && answer) {
+        faqs.push({ question, answer });
+      }
+    }
+  }
+
+  return faqs;
+};
+
+
 export default async function ArticlePage({ params }: NextPageProps<{ handle: string }>) {
   const resolvedParams = await params;
   const article = await getArticleByHandle(resolvedParams.handle);
@@ -43,9 +78,10 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
     { label: article.title },
   ];
   
-  const pdfUrl = article.pdf?.value;
   const siteUrl = getSiteUrl();
   const fullUrl = `${siteUrl}/blog/${article.handle}`;
+
+  const articleFaqs = extractFaqsFromHtml(article.faq?.value);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -161,6 +197,23 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                     <div className="prose dark:prose-invert max-w-none mx-auto">
                       <ArticleContent content={article.contentHtml} />
                     </div>
+                    
+                    {articleFaqs.length > 0 && (
+                        <div className="mt-12 not-prose">
+                             <h2 className="text-3xl font-bold font-headline mb-6 text-center">Frequently Asked Questions</h2>
+                            <Accordion type="single" collapsible className="w-full">
+                                {articleFaqs.map((faq, index) => (
+                                    <AccordionItem value={`faq-${index}`} key={index}>
+                                        <AccordionTrigger>{faq.question}</AccordionTrigger>
+                                        <AccordionContent>
+                                            <div className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                ))}
+                            </Accordion>
+                        </div>
+                    )}
+
 
                     <div className="flex items-center justify-center mt-8 space-x-4">
                       <LikeButton />
@@ -179,23 +232,23 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
               </Suspense>
             </main>
             <aside className="lg:col-span-3">
-                 <Suspense fallback={
-                   <div className="space-y-8">
-                      <Skeleton className="h-24 w-full" />
-                      <Skeleton className="h-48 w-full" />
-                      <Skeleton className="h-64 w-full" />
-                   </div>
-                }>
-                    <div className="lg:sticky lg:top-28">
-                        <BlogSidebar tags={tagsData} recentPosts={recentPostsData} />
+                 <div className="lg:sticky lg:top-28">
+                    <Suspense fallback={
+                    <div className="space-y-8">
+                        <Skeleton className="h-24 w-full" />
+                        <Skeleton className="h-48 w-full" />
+                        <Skeleton className="h-64 w-full" />
                     </div>
-                </Suspense>
+                    }>
+                        <BlogSidebar tags={tagsData} recentPosts={recentPostsData} />
+                    </Suspense>
+                </div>
             </aside>
         </div>
       </div>
       
-      {relatedArticles.length > 0 && (
-          <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
+       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
+        {relatedArticles.length > 0 && (
             <Suspense fallback={
                 <div className="mt-16 pt-12 border-t border-border/10 space-y-8">
                     <h2 className="text-3xl font-bold font-headline mb-8 text-center"><Skeleton className="h-8 w-1/3 mx-auto" /></h2>
@@ -210,10 +263,10 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                     <RelatedArticles articles={relatedArticles} />
                 </div>
             </Suspense>
-          </div>
-      )}
+        )}
+      </div>
 
-      <FaqSection filter="Blogging & Content" />
+      {articleFaqs.length === 0 && <FaqSection filter="Blogging & Content" />}
     </>
   );
 }

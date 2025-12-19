@@ -109,6 +109,9 @@ const ARTICLE_QUERY = gql`
         pdf: metafield(namespace: "custom", key: "pdf_url") {
           value
         }
+        faq: metafield(namespace: "custom", key: "faq") {
+          value
+        }
       }
     }
   }
@@ -196,14 +199,15 @@ export async function getArticleByHandle(handle: string) {
 
     if (!articleNode || response.errors) {
         const placeholder = getPlaceholderArticles().find(p => p.handle === handle) || getPlaceholderArticles(1)[0];
-        return { ...placeholder, contentHtml: placeholder.excerptHtml, pdf: null };
+        return { ...placeholder, contentHtml: placeholder.excerptHtml, pdf: null, faq: null };
     }
 
     const processedArticle = processArticleNode(articleNode);
 
     return {
         ...processedArticle,
-        pdf: articleNode.pdf
+        pdf: articleNode.pdf,
+        faq: articleNode.faq
     };
 }
 
