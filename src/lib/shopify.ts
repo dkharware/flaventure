@@ -32,13 +32,13 @@ const processArticleNode = (node: any) => {
     viewCount: getDeterministicViewCount(node.handle),
     readTime: getDeterministicReadTime(contentForReadingTime),
     image: node.image || { url: `https://picsum.photos/seed/${node.handle}/600/400`, altText: `Placeholder for ${node.title}`},
-    authorV2: node.authorV2 || { name: 'Alex Doe' },
+    authorV2: node.authorV2 || { name: 'Raksha Rajput' },
   };
 };
 
 const fallbackArticles = placeholderArticles.map(article => processArticleNode({
     ...article,
-    authorV2: { name: 'Alex Doe' },
+    authorV2: { name: 'Raksha Rajput' },
     content: article.excerptHtml,
 }));
 
@@ -362,5 +362,3 @@ export async function getArticleSuggestions(searchTerm: string) {
 export function isUsingPlaceholderData() {
     return !SHOPIFY_STORE_DOMAIN || !SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 }
-
-    

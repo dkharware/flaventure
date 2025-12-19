@@ -6,7 +6,7 @@ import { Mail, Linkedin, Github, Download } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function AboutPage() {
-  const authorName = "Alex Doe";
+  const authorName = "Raksha Rajput";
   const authorTitle = "Founder, Lead Writer & Chief Explorer";
   const authorEmail = "hello@flaventure.com";
   const resumeUrl = "#";
@@ -56,7 +56,7 @@ export default async function AboutPage() {
         </CardHeader>
         <CardContent className="flex flex-col items-center text-center">
             <Avatar className="w-32 h-32 mx-auto mb-4 border-4 border-primary/10">
-                <AvatarImage src="https://picsum.photos/seed/author/200/200" alt={authorName} />
+                <AvatarImage src="https://picsum.photos/seed/raksha/200/200" alt={authorName} />
                 <AvatarFallback>{authorName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
             </Avatar>
             <h3 className="text-2xl font-headline">{authorName}</h3>
@@ -74,14 +74,17 @@ export default async function AboutPage() {
             </div>
             <div className="prose dark:prose-invert max-w-2xl mx-auto text-left text-base text-muted-foreground mt-8">
                 <p>
-                    I’m a lifelong traveler with an insatiable appetite for discovery. I created Flaventure to share my passion for exploring the world's cultures through food and to help others find their own unforgettable adventures.
+                    I’m Raksha, a lifelong traveler with an insatiable appetite for discovery. My two greatest passions are exploring the world's diverse cultures and recreating the flavors I find in my own kitchen. I started Flaventure to merge these loves and share them with you.
+                </p>
+                <p>
+                    For me, food is more than just sustenance; it's a story, a connection to a place, and a gateway to understanding its people. I believe that a city's best-kept secrets are often found in its bustling morning markets, and its heart can be tasted in a home-cooked meal.
                 </p>
                 <ul>
-                    <li><strong>Passions:</strong> Street Food, Landscape Photography, Cultural History</li>
-                    <li><strong>Favorite Destinations:</strong> Southeast Asia, the Mediterranean Coast, and anywhere with a bustling morning market.</li>
+                    <li><strong>Passions:</strong> Street Food, Landscape Photography, Recreating Traditional Recipes, Cultural History</li>
+                    <li><strong>Favorite Destinations:</strong> The Mediterranean Coast for its fresh ingredients, Southeast Asia for its vibrant street food, and anywhere with a story to tell.</li>
                 </ul>
                 <p>
-                    Through this platform, I aim to provide the practical insights and inspiration I wish I had when I first started exploring the world.
+                    Through this platform, I aim to provide the practical insights and culinary inspiration I wish I had when I first started exploring the world. Let's embark on this flavorful adventure together!
                 </p>
             </div>
         </CardContent>

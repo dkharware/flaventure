@@ -152,7 +152,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
                                         />
                                         <div className="text-xs text-muted-foreground mt-4 pt-4 border-t border-border/10 flex flex-wrap gap-x-4 gap-y-2 items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <Image src="https://picsum.photos/seed/author/20/20" alt={featuredArticle.authorV2.name} width={20} height={20} className="rounded-full" />
+                                                <Image src="https://picsum.photos/seed/raksha/20/20" alt={featuredArticle.authorV2.name} width={20} height={20} className="rounded-full" />
                                                 <span>{featuredArticle.authorV2.name}</span>
                                             </div>
                                             <span>{new Date(featuredArticle.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -199,5 +199,3 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
     </>
   );
 }
-
-    
