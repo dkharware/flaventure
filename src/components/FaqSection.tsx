@@ -17,7 +17,7 @@ export default function FaqSection({ filter }: FaqSectionProps) {
     const dataToShow = filteredData.length > 0 ? filteredData : allFaqData;
 
     return (
-        <section className="w-full py-12 md:py-16">
+        <section id="fallback-faq" className="w-full py-12 md:py-16">
             <div className="container px-4 md:px-6">
                 <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">

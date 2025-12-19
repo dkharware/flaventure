@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Button } from './ui/button';
 import { ClipboardCopy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -50,7 +50,54 @@ const CopyButton = ({ textToCopy }: { textToCopy: string }) => {
   );
 };
 
-export function ArticleContent({ content, faqs }: { content: string, faqs: FaqItem[] }) {
+// This function now runs on the client
+const extractFaqsFromHtml = (html: string): FaqItem[] => {
+    if (typeof window === 'undefined') return [];
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+
+    const faqHeading = Array.from(tempDiv.querySelectorAll('h2, h3')).find(h => 
+        h.textContent?.toLowerCase().includes('frequently asked questions') ||
+        h.textContent?.toLowerCase().includes('faq')
+    );
+
+    if (!faqHeading) return [];
+
+    const extractedFaqs: FaqItem[] = [];
+    let currentNode = faqHeading.nextElementSibling;
+    let currentQuestion = '';
+    let currentAnswer = '';
+
+    while (currentNode) {
+        if (currentNode.tagName.match(/H[2-4]/)) {
+            if (currentQuestion && currentAnswer) {
+                extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
+            }
+            currentQuestion = currentNode.textContent || '';
+            currentAnswer = '';
+        } else if (currentQuestion) {
+            currentAnswer += currentNode.outerHTML;
+        }
+
+        if (currentNode.nextElementSibling?.tagName === 'H2') {
+             if (currentQuestion && currentAnswer) {
+                extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
+            }
+            break;
+        }
+        
+        currentNode = currentNode.nextElementSibling;
+    }
+    if (currentQuestion && currentAnswer) {
+         extractedFaqs.push({ question: currentQuestion, answer: currentAnswer.trim() });
+    }
+
+    return extractedFaqs;
+};
+
+
+export function ArticleContent({ content }: { content: string }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
 
@@ -58,17 +105,21 @@ export function ArticleContent({ content, faqs }: { content: string, faqs: FaqIt
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    if (!isClient) return;
+  const faqs = useMemo(() => {
+      if (!isClient) return [];
+      return extractFaqsFromHtml(content);
+  }, [content, isClient]);
 
-    const contentElement = contentRef.current;
-    if (!contentElement) return;
+  useEffect(() => {
+    if (!isClient || !contentRef.current) return;
+
+    const mainContentElement = contentRef.current;
     
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = content;
+    // Portal for rendering buttons
+    const portals: { container: Element, component: React.ReactElement }[] = [];
 
     // Add IDs to headings for ToC
-    const headingElements = tempDiv.querySelectorAll('h2, h3');
+    const headingElements = mainContentElement.querySelectorAll('h2, h3');
     headingElements.forEach(h => {
         const text = h.textContent || '';
         if (text) {
@@ -76,23 +127,26 @@ export function ArticleContent({ content, faqs }: { content: string, faqs: FaqIt
         }
     });
 
+    // Hide the original FAQ section if it was extracted
     if (faqs.length > 0) {
-        const faqHeading = Array.from(tempDiv.querySelectorAll('h2, h3')).find(h => 
+        const faqHeading = Array.from(mainContentElement.querySelectorAll('h2, h3')).find(h => 
             h.textContent?.toLowerCase().includes('frequently asked questions') ||
             h.textContent?.toLowerCase().includes('faq')
         );
         if (faqHeading) {
             let elementToHide: Element | null = faqHeading;
             while(elementToHide) {
-                (elementToHide as HTMLElement).style.display = 'none';
-                 if (elementToHide.nextElementSibling?.tagName === 'H2') break;
+                if (elementToHide instanceof HTMLElement) {
+                    elementToHide.style.display = 'none';
+                }
+                 if (elementToHide.nextElementSibling?.tagName === 'H2' || !elementToHide.nextElementSibling) break;
                 elementToHide = elementToHide.nextElementSibling;
             }
         }
     }
     
     // Add copy buttons to pre elements
-    const preElements = tempDiv.querySelectorAll('pre');
+    const preElements = mainContentElement.querySelectorAll('pre');
     preElements.forEach((pre) => {
       const code = pre.querySelector('code');
       const textToCopy = code?.innerText || '';
@@ -102,24 +156,31 @@ export function ArticleContent({ content, faqs }: { content: string, faqs: FaqIt
       const buttonContainer = document.createElement('div');
       buttonContainer.className = 'copy-button-container';
       pre.appendChild(buttonContainer);
-
-      ReactDOM.render(<CopyButton textToCopy={textToCopy} />, buttonContainer);
+      
+      portals.push({
+        container: buttonContainer,
+        component: <CopyButton textToCopy={textToCopy} />
+      });
+    });
+    
+    portals.forEach(({container, component}) => {
+        ReactDOM.render(component, container);
     });
 
-    if(contentRef.current) {
-        contentRef.current.innerHTML = tempDiv.innerHTML;
-    }
-
     return () => {
-      preElements.forEach(pre => {
-        const container = pre.querySelector('.copy-button-container');
-        if (container) {
-          ReactDOM.unmountComponentAtNode(container);
-          container.remove();
-        }
-      });
+        portals.forEach(({container}) => {
+            ReactDOM.unmountComponentAtNode(container);
+            container.remove();
+        });
     };
   }, [content, isClient, faqs]);
+  
+  useEffect(() => {
+    const faqSection = document.getElementById('fallback-faq');
+    if (faqSection) {
+        faqSection.style.display = faqs.length > 0 ? 'none' : 'block';
+    }
+  }, [faqs])
 
   return (
     <>
@@ -128,7 +189,7 @@ export function ArticleContent({ content, faqs }: { content: string, faqs: FaqIt
             dangerouslySetInnerHTML={{ __html: content }}
         />
         {faqs.length > 0 && (
-            <div className="mt-12">
+            <div className="mt-12 not-prose">
                  <h2 className="text-3xl font-bold font-headline mb-6 text-center">Frequently Asked Questions</h2>
                 <Accordion type="single" collapsible className="w-full">
                     {faqs.map((faq, index) => (
