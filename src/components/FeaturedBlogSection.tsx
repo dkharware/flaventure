@@ -18,7 +18,7 @@ export async function FeaturedBlogSection() {
     const sideArticles = articles.slice(1);
 
     return (
-        <section className="w-full py-12 md:py-16 promo-gradient-bg">
+        <section className="w-full py-8 md:py-12 promo-gradient-bg">
             <div className="container px-4 md:px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                     {/* Featured Article on the Left */}
@@ -83,5 +83,3 @@ export async function FeaturedBlogSection() {
         </section>
     );
 }
-
-    

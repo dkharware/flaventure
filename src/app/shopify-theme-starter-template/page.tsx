@@ -18,7 +18,7 @@ export default function ShopifyThemeStarterPage() {
     ];
 
     return (
-        <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
+        <div className="container mx-auto py-8 md:py-12 px-4 md:px-6">
             <Breadcrumbs items={breadcrumbItems} className="mb-8" />
             
             <Card className="max-w-4xl mx-auto bg-background/50 backdrop-blur-lg">

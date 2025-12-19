@@ -66,6 +66,14 @@
     --radius: 0.8rem;
   }
 
+  .prose {
+    --tw-prose-body: hsl(var(--foreground));
+  }
+
+  .dark .prose {
+      --tw-prose-body: hsl(var(--foreground));
+  }
+
   .prose p, .prose ul, .prose ol, .prose h2, .prose h3 {
     @apply my-3;
   }

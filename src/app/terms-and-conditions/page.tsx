@@ -11,7 +11,7 @@ export default function TermsAndConditionsPage() {
   }, []);
 
   return (
-    <div className="container mx-auto py-12 px-6 md:px-10">
+    <div className="container mx-auto py-8 md:py-12 px-6 md:px-10">
       <Card className="max-w-4xl mx-auto bg-background/50 backdrop-blur-lg">
         <CardHeader>
           <CardTitle className="text-3xl font-headline">Terms and Conditions</CardTitle>

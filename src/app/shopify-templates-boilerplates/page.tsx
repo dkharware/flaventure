@@ -70,7 +70,7 @@ export default function TemplatesHubPage() {
                 </div>
             </div>
 
-            <div className="container mx-auto py-8 px-4 md:py-12 md:px-6">
+            <div className="container mx-auto py-8 md:py-12 px-4 md:px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {templates.map((template) => (
                         <Card key={template.title} className="flex flex-col bg-background/50 backdrop-blur-lg">

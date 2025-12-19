@@ -28,7 +28,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <div className="py-16 md:py-24 space-y-16 md:space-y-24">
+      <div className="py-8 md:py-12 space-y-8 md:space-y-12">
           <Suspense fallback={<WebStoriesSkeleton />}>
             <WebStories />
           </Suspense>
@@ -51,7 +51,7 @@ export default async function Home() {
 }
 
 const FeaturedBlogSectionSkeleton = () => (
-    <section className="w-full py-12 md:py-16">
+    <section className="w-full py-8 md:py-12">
         <div className="container px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="space-y-4">
@@ -89,7 +89,7 @@ const FeaturedBlogSectionSkeleton = () => (
 );
 
 const RecentPostsSkeleton = () => (
-    <section className="w-full py-12 md:py-16">
+    <section className="w-full py-8 md:py-12">
         <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
                 <Skeleton className="h-10 w-1/3" />
@@ -105,7 +105,7 @@ const RecentPostsSkeleton = () => (
 );
 
 const WebStoriesSkeleton = () => (
-    <section className="w-full py-12 md:py-16">
+    <section className="w-full py-8 md:py-12">
         <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
                 <Skeleton className="h-10 w-1/3" />

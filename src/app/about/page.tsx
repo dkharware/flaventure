@@ -12,7 +12,7 @@ export default async function AboutPage() {
   const resumeUrl = "https://5lgivccarqkvddiv.public.blob.vercel-storage.com/Resume.pdf";
 
   return (
-    <div className="container mx-auto py-12 px-4 md:px-6 space-y-12">
+    <div className="container mx-auto py-8 md:py-12 px-4 md:px-6 space-y-12">
       <Card className="max-w-4xl mx-auto bg-background/50 backdrop-blur-lg">
         <CardHeader className="text-center">
           <CardTitle className="text-4xl font-headline">About storedevguide</CardTitle>

@@ -9,7 +9,7 @@ import { Logo } from './Logo';
 export function AboutUsHome() {
 
     return (
-        <section className="w-full py-12 md:py-16">
+        <section className="w-full py-8 md:py-12">
             <div className="container px-4 md:px-6">
                 <Card className="promo-gradient-bg border-border/20">
                     <div className="grid md:grid-cols-5 items-center">
