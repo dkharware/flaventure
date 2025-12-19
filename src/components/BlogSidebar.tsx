@@ -40,7 +40,7 @@ export function BlogSidebar() {
       setIsLoading(true);
       const [tagsData, popularPostsData] = await Promise.all([
         getAllTags(),
-        getArticles(5, undefined, {}, false).then(res => res.articles)
+        getArticles(5).then(res => res.articles)
       ]);
       setTags(tagsData.slice(0, 20));
       setPopularPosts(popularPostsData);
