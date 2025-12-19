@@ -1,5 +1,5 @@
 
-import { getArticles, getAllTags } from '@/lib/shopify';
+import { getArticles, getAllTags, isUsingPlaceholderData } from '@/lib/shopify';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -46,12 +46,15 @@ function FeaturedArticleSkeleton() {
 }
 
 function DemoContentWarning() {
+  if (!isUsingPlaceholderData()) {
+    return null;
+  }
   return (
     <Alert variant="destructive" className="mb-8 bg-yellow-500/10 border-yellow-500/50 text-yellow-200">
       <AlertTriangle className="h-4 w-4 !text-yellow-400" />
       <AlertTitle className="text-yellow-300 font-bold">Demo Content Active</AlertTitle>
       <AlertDescription>
-        This site is currently displaying placeholder content. The data is statically generated and does not connect to a live CMS.
+        This site is displaying placeholder content. To connect your own Shopify store, add your credentials to the `.env` file.
       </AlertDescription>
     </Alert>
   );
@@ -196,3 +199,5 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
     </>
   );
 }
+
+    
