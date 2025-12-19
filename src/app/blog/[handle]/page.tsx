@@ -18,6 +18,7 @@ import Script from 'next/script';
 import { getSiteUrl } from '@/lib/utils';
 import { NextPageProps } from '@/app/types';
 import { OtieAdBanner } from '@/components/OtieAdBanner';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const CommentSection = lazy(() => import('@/components/CommentSection'));
 const RelatedArticles = lazy(() => import('@/components/RelatedArticles'));
@@ -103,11 +104,19 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
       <div className="container mx-auto py-8 px-3 md:py-12 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <aside className="hidden lg:block lg:col-span-3">
-                <div>
-                  <TableOfContents content={article.contentHtml} />
-                </div>
+               <TableOfContents content={article.contentHtml} />
             </aside>
             <main className="lg:col-span-6">
+                <div className="lg:hidden mb-8">
+                    <Accordion type="single" collapsible className="w-full border rounded-lg px-4 bg-card">
+                        <AccordionItem value="toc">
+                            <AccordionTrigger className="text-lg font-semibold">On this page</AccordionTrigger>
+                            <AccordionContent>
+                                <TableOfContents content={article.contentHtml} />
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </div>
                 <article>
                     <header className="mb-8">
                         <div className="mb-4 flex flex-wrap gap-2">
