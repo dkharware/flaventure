@@ -1,5 +1,5 @@
 
-import { getArticleByHandle, getAllTags, getArticles } from '@/lib/shopify';
+import { getArticleByHandle, getAllTags, getArticles, getRelatedArticles } from '@/lib/shopify';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import type { Metadata } from 'next';
