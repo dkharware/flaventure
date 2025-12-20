@@ -9,4 +9,4 @@ Disallow:
 Allow: /
 
 # Specify the location of the sitemap
-Sitemap: https://storedevguide.com/sitemap.xml
+Sitemap: https://flaventure.com/sitemap.xml
