@@ -82,7 +82,8 @@ export default function BlogPage() {
   const pageTitle = tag ? `Posts tagged with "${tag}"` : (query ? `Search results for "${query}"` : "Explore Our Stories");
   const pageDescription = tag || query ? `Browsing stories for: ${tag || query}` : "Our latest articles, travel guides, and delicious recipes from around the world.";
 
-  const featuredArticle = articles.length > 0 ? articles[0] : null;
+  const isSearchActive = !!clientQuery || !!tag;
+  const featuredArticle = !isSearchActive && articles.length > 0 ? articles[0] : null;
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -131,7 +132,7 @@ export default function BlogPage() {
                     </div>
                 ) : articles.length > 0 ? (
                     <div className="space-y-12">
-                      {featuredArticle && !query && !tag && (
+                      {featuredArticle && (
                          <div className="block group">
                             <Card className="h-full flex flex-col md:flex-row overflow-hidden bg-background/50 backdrop-blur-lg border-border/20 transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                                 {featuredArticle.image && (
@@ -187,7 +188,7 @@ export default function BlogPage() {
                       )}
 
                       <ArticleList 
-                        initialArticles={articles.slice(featuredArticle && !query && !tag ? 1 : 0)} 
+                        initialArticles={articles.slice(featuredArticle ? 1 : 0)} 
                         initialPageInfo={pageInfo} 
                         query={initialLoadQuery}
                         clientQuery={clientQuery}
