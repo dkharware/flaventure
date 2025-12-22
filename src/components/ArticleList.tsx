@@ -44,7 +44,7 @@ const HighlightedText = ({ text, highlight }: { text: string; highlight: string 
       <span>
         {parts.map((part, i) =>
           regex.test(part) ? (
-            <mark key={i} className="bg-primary/20 text-primary-foreground p-0">
+            <mark key={i} className="bg-muted text-foreground p-0">
               {part}
             </mark>
           ) : (
@@ -128,6 +128,10 @@ export function ArticleCardSkeleton() {
 
 export function ArticleList({ initialArticles, initialPageInfo, query, clientQuery }: ArticleListProps) {
   const [allArticles, setAllArticles] = useState(initialArticles);
+
+  useEffect(() => {
+    setAllArticles(initialArticles);
+  }, [initialArticles]);
 
   const filteredArticles = useMemo(() => {
     if (!clientQuery) {
