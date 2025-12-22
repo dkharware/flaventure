@@ -13,6 +13,7 @@ import Image from 'next/image';
 import { Skeleton } from './ui/skeleton';
 import { useEffect, useState } from 'react';
 import { getAllTags, getArticles } from '@/lib/shopify';
+import { ClientOnlyDate } from './ClientOnlyDate';
 
 
 interface Tag {
@@ -159,7 +160,7 @@ export function BlogSidebar() {
                         <p className="font-semibold group-hover:text-primary transition-colors line-clamp-2 text-sm">{post.title}</p>
                         <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
                             <Calendar className="h-3 w-3" />
-                           <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                            <ClientOnlyDate dateString={post.publishedAt} />
                         </div>
                       </div>
                     </Link>
