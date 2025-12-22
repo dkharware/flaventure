@@ -5,9 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "./ui/badge";
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { loadMoreArticles } from '@/app/actions/loadMoreArticles';
+import { getArticles } from '@/lib/shopify';
 import { Skeleton } from "./ui/skeleton";
-import { Loader2 } from "lucide-react";
 import {
     Carousel,
     CarouselContent,
@@ -34,54 +33,17 @@ export function WebStories() {
     const [articles, setArticles] = useState<Article[]>([]);
     const [pageInfo, setPageInfo] = useState<PageInfo | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [isFetchingMore, setIsFetchingMore] = useState(false);
-    const loaderRef = useRef<HTMLDivElement>(null);
-
-    const handleLoadMore = useCallback(async () => {
-        if (!pageInfo?.hasNextPage || isFetchingMore) {
-            return;
-        }
-        setIsFetchingMore(true);
-        const { articles: newArticles, pageInfo: newPageInfo } = await loadMoreArticles(
-          5,
-          undefined,
-          pageInfo.endCursor
-        );
-        setArticles(prev => [...prev, ...newArticles]);
-        setPageInfo(newPageInfo);
-        setIsFetchingMore(false);
-    }, [pageInfo, isFetchingMore]);
 
     useEffect(() => {
         const initialLoad = async () => {
             setIsLoading(true);
-            const { articles: initialArticles, pageInfo: initialPageInfo } = await loadMoreArticles(7, undefined, null);
+            const { articles: initialArticles, pageInfo: initialPageInfo } = await getArticles(7, undefined, {}, false);
             setArticles(initialArticles);
             setPageInfo(initialPageInfo);
             setIsLoading(false);
         };
         initialLoad();
     }, []);
-
-    useEffect(() => {
-        const loader = loaderRef.current;
-        if (!loader) return;
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    handleLoadMore();
-                }
-            },
-            { rootMargin: '0px 0px 0px 500px' } // Pre-load when the loader is 500px away
-        );
-
-        observer.observe(loader);
-        
-        return () => {
-            observer.disconnect();
-        };
-    }, [handleLoadMore, articles]); // Re-run when articles change to ensure observer is attached if loader re-appears
 
     if (isLoading && articles.length === 0) {
         return (
@@ -146,7 +108,7 @@ export function WebStories() {
                                                 <div>
                                                     <h3 className="font-bold text-lg leading-tight drop-shadow-md line-clamp-3 mb-2">{article.title}</h3>
                                                     <Badge variant="secondary" className="mt-2 bg-gray-500/30 text-white/90 border-none">
-                                                        {new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+                                                        <ClientOnlyDate dateString={article.publishedAt} options={{ month: 'long', day: 'numeric' }} />
                                                     </Badge>
                                                 </div>
                                             </div>
@@ -154,13 +116,6 @@ export function WebStories() {
                                     </Link>
                                 </CarouselItem>
                             ))}
-                            {pageInfo?.hasNextPage && (
-                               <CarouselItem className="pl-4 basis-auto">
-                                    <div ref={loaderRef} className="flex h-full w-24 items-center justify-center">
-                                        {isFetchingMore && <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />}
-                                    </div>
-                               </CarouselItem>
-                            )}
                         </CarouselContent>
                          <CarouselPrevious className="hidden md:flex" />
                         <CarouselNext className="hidden md:flex" />
@@ -169,4 +124,21 @@ export function WebStories() {
             </div>
         </section>
     );
+}
+
+// Add ClientOnlyDate to avoid hydration errors
+function ClientOnlyDate({ dateString, options }: { dateString: string, options?: Intl.DateTimeFormatOptions }) {
+  const [formattedDate, setFormattedDate] = useState('');
+
+  useEffect(() => {
+      setFormattedDate(
+          new Date(dateString).toLocaleDateString('en-US', options)
+      );
+  }, [dateString, options]);
+
+  if (!formattedDate) {
+      return null;
+  }
+
+  return <>{formattedDate}</>;
 }

@@ -5,8 +5,8 @@ import { getArticles, getAllTags, isUsingPlaceholderData } from '@/lib/shopify';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Suspense, useState, useEffect } from 'react';
-import { Eye, User, ArrowRight, AlertTriangle } from 'lucide-react';
+import { Suspense, useState, useEffect, useMemo } from 'react';
+import { Eye, ArrowRight, AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
@@ -68,17 +68,22 @@ function BlogPageContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [clientQuery, setClientQuery] = useState(query);
 
-  const initialLoadQuery = query || (tag ? `tag:'${tag}'` : undefined);
+  const initialLoadQuery = query || (tag ? `tag:'${tag}'` : '');
 
   useEffect(() => {
     setIsLoading(true);
-    getArticles(100, initialLoadQuery).then(({ articles, pageInfo }) => {
+    const effectiveQuery = clientQuery || (tag ? `tag:'${tag}'` : '');
+    getArticles(100, effectiveQuery).then(({ articles, pageInfo }) => {
       setArticles(articles);
       setPageInfo(pageInfo);
       setIsLoading(false);
     });
-  }, [tag, query, initialLoadQuery]);
-  
+  }, [tag, clientQuery]);
+
+  useEffect(() => {
+    setClientQuery(query);
+  }, [query]);
+
   const pageTitle = tag ? `Posts tagged with "${tag}"` : (query ? `Search results for "${query}"` : "Explore Our Stories");
   const pageDescription = tag || query ? `Browsing stories for: ${tag || query}` : "Our latest articles, travel guides, and delicious recipes from around the world.";
 
@@ -90,6 +95,18 @@ function BlogPageContent() {
     { label: 'Blog' },
   ];
 
+  const handleSearch = (newQuery: string) => {
+    const params = new URLSearchParams(window.location.search);
+    if (newQuery) {
+      params.set('query', newQuery);
+    } else {
+      params.delete('query');
+    }
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.pushState({}, '', newUrl); // Update URL without navigation
+    setClientQuery(newQuery);
+  };
+  
   return (
     <>
       <div className="w-full bg-background/50 backdrop-blur-lg border-b py-8">
@@ -99,7 +116,7 @@ function BlogPageContent() {
             <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
             <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>
             <div className="mt-6 max-w-xl mx-auto">
-              <BlogSearch initialQuery={clientQuery} onSearch={setClientQuery} isLive={true} />
+              <BlogSearch initialQuery={clientQuery} onSearch={handleSearch} isLive={true} />
             </div>
           </div>
         </div>
@@ -112,7 +129,7 @@ function BlogPageContent() {
               
                 {isLoading ? (
                     <div className="space-y-12">
-                        {!tag && !query && <FeaturedArticleSkeleton />}
+                        {!isSearchActive && <FeaturedArticleSkeleton />}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                             <ArticleCardSkeleton />
                             <ArticleCardSkeleton />
@@ -179,7 +196,7 @@ function BlogPageContent() {
 
                       <ArticleList 
                         initialArticles={articles.slice(featuredArticle ? 1 : 0)} 
-                        initialPageInfo={pageInfo} 
+                        initialPageInfo={pageInfo}
                         query={initialLoadQuery}
                         clientQuery={clientQuery}
                       />
@@ -207,9 +224,9 @@ function BlogPageContent() {
 }
 
 export default function BlogPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <BlogPageContent />
-    </Suspense>
-  )
+    return (
+      <Suspense fallback={<div className="container py-12">Loading...</div>}>
+        <BlogPageContent />
+      </Suspense>
+    );
 }
