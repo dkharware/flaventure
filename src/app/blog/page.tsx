@@ -1,10 +1,11 @@
 
+'use client';
+
 import { getArticles, getAllTags, isUsingPlaceholderData } from '@/lib/shopify';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { Metadata } from 'next';
-import { Suspense } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { Eye, User, ArrowRight, AlertTriangle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -12,18 +13,10 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArticleList, ArticleCardSkeleton } from '@/components/ArticleList';
 import { Skeleton } from '@/components/ui/skeleton';
 import { BlogSearch } from '@/components/BlogSearch';
-import { NextPageProps } from '../types';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { SidebarWrapper } from '@/components/SidebarWrapper';
 import FaqSection from '@/components/FaqSection';
-
-export const metadata: Metadata = {
-  title: 'Travel & Food Adventure Blog | Flaventure',
-  description: 'Explore delicious recipes, travel guides, and adventure stories from around the world on the Flaventure blog.',
-};
-
-
-const POSTS_PER_PAGE = 10;
+import { useSearchParams } from 'next/navigation';
 
 function FeaturedArticleSkeleton() {
     return (
@@ -46,7 +39,12 @@ function FeaturedArticleSkeleton() {
 }
 
 function DemoContentWarning() {
-  if (!isUsingPlaceholderData()) {
+  const [isDemo, setIsDemo] = useState(false);
+  useEffect(() => {
+    setIsDemo(isUsingPlaceholderData());
+  }, []);
+
+  if (!isDemo) {
     return null;
   }
   return (
@@ -60,25 +58,31 @@ function DemoContentWarning() {
   );
 }
 
-export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
-  const resolvedSearchParams = await searchParams;
-  const searchQuery = resolvedSearchParams?.query as string;
-  const tagQuery = resolvedSearchParams?.tag as string;
+export default function BlogPage() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query') || '';
+  const tag = searchParams.get('tag') || '';
 
-  let query;
-  if (searchQuery) {
-    query = `title:*${searchQuery}* OR body:*${searchQuery}*`;
-  } else if (tagQuery) {
-    query = `tag:'${tagQuery}'`;
-  }
+  const [articles, setArticles] = useState<any[]>([]);
+  const [pageInfo, setPageInfo] = useState<any>({ hasNextPage: false });
+  const [isLoading, setIsLoading] = useState(true);
+  const [clientQuery, setClientQuery] = useState(query);
+
+  const initialLoadQuery = query || (tag ? `tag:'${tag}'` : undefined);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getArticles(100, initialLoadQuery).then(({ articles, pageInfo }) => {
+      setArticles(articles);
+      setPageInfo(pageInfo);
+      setIsLoading(false);
+    });
+  }, [tag, query, initialLoadQuery]);
   
-  const { articles, pageInfo } = await getArticles(POSTS_PER_PAGE + 1, query);
-  
-  const pageTitle = tagQuery ? `Posts tagged with "${tagQuery}"` : (searchQuery ? `Search results for "${searchQuery}"` : "Explore Our Stories");
-  const pageDescription = tagQuery || searchQuery ? `Browsing stories for: ${tagQuery || searchQuery}` : "Our latest articles, travel guides, and delicious recipes from around the world.";
+  const pageTitle = tag ? `Posts tagged with "${tag}"` : (query ? `Search results for "${query}"` : "Explore Our Stories");
+  const pageDescription = tag || query ? `Browsing stories for: ${tag || query}` : "Our latest articles, travel guides, and delicious recipes from around the world.";
 
   const featuredArticle = articles.length > 0 ? articles[0] : null;
-  const initialArticles = articles.slice(1);
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -94,7 +98,7 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
             <h1 className="text-4xl font-bold font-headline tracking-tight sm:text-5xl">{pageTitle}</h1>
             <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">{pageDescription}</p>
             <div className="mt-6 max-w-xl mx-auto">
-              <BlogSearch initialQuery={searchQuery} />
+              <BlogSearch initialQuery={clientQuery} onSearch={setClientQuery} isLive={true} />
             </div>
           </div>
         </div>
@@ -115,9 +119,19 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
                     </div>
                 </div>
               }>
-                {articles && articles.length > 0 ? (
+                {isLoading ? (
                     <div className="space-y-12">
-                      {featuredArticle && !searchQuery && !tagQuery && (
+                        {!tag && !query && <FeaturedArticleSkeleton />}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                            <ArticleCardSkeleton />
+                            <ArticleCardSkeleton />
+                            <ArticleCardSkeleton />
+                            <ArticleCardSkeleton />
+                        </div>
+                    </div>
+                ) : articles.length > 0 ? (
+                    <div className="space-y-12">
+                      {featuredArticle && !query && !tag && (
                          <div className="block group">
                             <Card className="h-full flex flex-col md:flex-row overflow-hidden bg-background/50 backdrop-blur-lg border-border/20 transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                                 {featuredArticle.image && (
@@ -173,9 +187,10 @@ export default async function BlogPage({ searchParams }: NextPageProps<{}>) {
                       )}
 
                       <ArticleList 
-                        initialArticles={searchQuery || tagQuery ? articles : initialArticles} 
+                        initialArticles={articles.slice(featuredArticle && !query && !tag ? 1 : 0)} 
                         initialPageInfo={pageInfo} 
-                        query={query} 
+                        query={initialLoadQuery}
+                        clientQuery={clientQuery}
                       />
                       
                     </div>

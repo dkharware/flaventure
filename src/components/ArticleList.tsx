@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useMemo, Fragment } from 'react';
 import { loadMoreArticles } from '@/app/actions/loadMoreArticles';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -31,9 +31,31 @@ interface ArticleListProps {
   initialArticles: Article[];
   initialPageInfo: PageInfo;
   query?: string;
+  clientQuery?: string;
 }
 
-function ArticleCard({ article }: { article: Article }) {
+const HighlightedText = ({ text, highlight }: { text: string; highlight: string }) => {
+    if (!highlight.trim()) {
+      return <span>{text}</span>;
+    }
+    const regex = new RegExp(`(${highlight})`, 'gi');
+    const parts = text.split(regex);
+    return (
+      <span>
+        {parts.map((part, i) =>
+          regex.test(part) ? (
+            <mark key={i} className="bg-primary/20 text-primary-foreground p-0">
+              {part}
+            </mark>
+          ) : (
+            <Fragment key={i}>{part}</Fragment>
+          )
+        )}
+      </span>
+    );
+};
+
+function ArticleCard({ article, highlight }: { article: Article, highlight?: string }) {
     return (
         <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
         <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-background/50 backdrop-blur-lg">
@@ -55,7 +77,9 @@ function ArticleCard({ article }: { article: Article }) {
             )}
             <div className="p-4 flex-grow flex flex-col">
                 <CardHeader className="p-0">
-                    <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-3">{article.title}</CardTitle>
+                    <CardTitle className="text-base font-headline group-hover:text-primary transition-colors line-clamp-3">
+                      <HighlightedText text={article.title} highlight={highlight || ''} />
+                    </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-grow flex flex-col p-0 mt-2">
                     <div
@@ -102,64 +126,32 @@ export function ArticleCardSkeleton() {
 }
 
 
-export function ArticleList({ initialArticles, initialPageInfo, query }: ArticleListProps) {
-  const [articles, setArticles] = useState(initialArticles);
-  const [pageInfo, setPageInfo] = useState(initialPageInfo);
-  const [isLoading, setIsLoading] = useState(false);
-  const loaderRef = useRef<HTMLDivElement>(null);
+export function ArticleList({ initialArticles, initialPageInfo, query, clientQuery }: ArticleListProps) {
+  const [allArticles, setAllArticles] = useState(initialArticles);
 
-  const handleLoadMore = useCallback(async () => {
-    if (!pageInfo.hasNextPage || isLoading) {
-        return;
+  const filteredArticles = useMemo(() => {
+    if (!clientQuery) {
+        return allArticles;
     }
-    setIsLoading(true);
-    const { articles: newArticles, pageInfo: newPageInfo } = await loadMoreArticles(
-      12,
-      query,
-      pageInfo.endCursor
+    return allArticles.filter(article =>
+      article.title.toLowerCase().includes(clientQuery.toLowerCase())
     );
-    setArticles(prev => [...prev, ...newArticles]);
-    setPageInfo(newPageInfo);
-    setIsLoading(false);
-  }, [pageInfo, isLoading, query]);
-
-  useEffect(() => {
-    const loader = loaderRef.current;
-    if (!loader) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading) {
-          handleLoadMore();
-        }
-      },
-      { threshold: 1.0 }
-    );
-    
-    observer.observe(loader);
-
-    return () => {
-      observer.unobserve(loader);
-    };
-  }, [handleLoadMore, isLoading]);
+  }, [allArticles, clientQuery]);
   
 
   return (
     <>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-            {articles.map((article) => (
-              <ArticleCard key={article.id} article={article} />
+            {filteredArticles.map((article) => (
+              <ArticleCard key={article.id} article={article} highlight={clientQuery} />
             ))}
-            {isLoading && (
-              <>
-                <ArticleCardSkeleton />
-                <ArticleCardSkeleton />
-                <ArticleCardSkeleton />
-                <ArticleCardSkeleton />
-              </>
-            )}
         </div>
-        <div ref={loaderRef} className="col-span-full h-1" />
+        {filteredArticles.length === 0 && clientQuery && (
+          <div className="text-center py-16 border border-border/20 rounded-lg bg-card col-span-full">
+              <h2 className="text-xl font-semibold">No Articles Found</h2>
+              <p className="text-muted-foreground mt-2">No articles match your search for "{clientQuery}".</p>
+          </div>
+        )}
     </>
   );
 }

@@ -2,7 +2,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import type { FormEvent } from 'react';
+import React, { FormEvent, useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Search } from 'lucide-react';
@@ -11,20 +11,34 @@ import { cn } from '@/lib/utils';
 interface BlogSearchProps {
   initialQuery?: string;
   className?: string;
+  isLive?: boolean;
+  onSearch?: (query: string) => void;
 }
 
-export function BlogSearch({ initialQuery = '', className }: BlogSearchProps) {
+export function BlogSearch({ initialQuery = '', className, isLive = false, onSearch }: BlogSearchProps) {
   const router = useRouter();
+  const [query, setQuery] = useState(initialQuery);
+
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const searchQuery = formData.get('search') as string;
-    if (searchQuery.trim()) {
-        router.push(`/blog?query=${encodeURIComponent(searchQuery)}`);
+    if (isLive && onSearch) {
+        onSearch(query);
     } else {
-        router.push('/blog');
+        const searchPath = query.trim() ? `/blog?query=${encodeURIComponent(query)}` : '/blog';
+        router.push(searchPath);
     }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const newQuery = event.target.value;
+      setQuery(newQuery);
+      if (isLive && onSearch) {
+          onSearch(newQuery);
+      }
   };
 
   return (
@@ -33,7 +47,8 @@ export function BlogSearch({ initialQuery = '', className }: BlogSearchProps) {
         type="search" 
         name="search"
         placeholder="Search for destinations, recipes, stories..." 
-        defaultValue={initialQuery}
+        value={query}
+        onChange={handleChange}
         className="h-14 text-base bg-background/80 rounded-full pl-12 pr-16 shadow-lg"
         aria-label="Search articles"
       />
