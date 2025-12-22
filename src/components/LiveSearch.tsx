@@ -57,6 +57,8 @@ export function LiveSearch({ query, onClose, className }: LiveSearchProps) {
     router.push(`/blog?query=${encodeURIComponent(query)}`);
   }
 
+  if (!query) return null;
+
   return (
     <Card className={cn("absolute top-full mt-2 w-full shadow-lg z-50", className)}>
       <CardContent className="p-2">

@@ -32,7 +32,6 @@ import { ListItem } from './ListItem';
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { Input } from './ui/input';
-import { LiveSearch } from './LiveSearch';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
@@ -93,13 +92,12 @@ export default function Header() {
   
   const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (searchQuery.trim()) {
-        router.push(`/blog?query=${encodeURIComponent(searchQuery.trim())}`);
-        setSearchQuery('');
-        setIsSearchOpen(false);
-    } else {
-        router.push('/blog');
-    }
+    const targetUrl = searchQuery.trim() 
+      ? `/blog?query=${encodeURIComponent(searchQuery.trim())}` 
+      : '/blog';
+    router.push(targetUrl);
+    setSearchQuery('');
+    setIsSearchOpen(false);
   };
 
   useEffect(() => {
@@ -190,7 +188,6 @@ export default function Header() {
                     <Button type="submit" size="icon" className="absolute right-1 top-1/2 -translate-y-1/2 h-10 w-10" aria-label="Submit search">
                       <Search className="h-5 w-5" />
                     </Button>
-                    {searchQuery && <LiveSearch query={searchQuery} onClose={() => setIsSearchOpen(false)} />}
                   </form>
                 </DialogContent>
               </Dialog>
