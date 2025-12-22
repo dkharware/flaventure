@@ -60,7 +60,7 @@ function ArticleCard({ article, highlight }: { article: Article, highlight?: str
         <Link key={article.id} href={`/blog/${article.handle}`} className="block group">
         <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-background/50 backdrop-blur-lg">
             {article.image && (
-            <div className="relative h-48 w-full overflow-hidden">
+            <div className="relative h-[17rem] w-full overflow-hidden">
                 <Image
                 src={article.image.url}
                 alt={article.image.altText || article.title}
@@ -109,7 +109,7 @@ function ArticleCard({ article, highlight }: { article: Article, highlight?: str
 export function ArticleCardSkeleton() {
     return (
         <Card className="h-full flex flex-col overflow-hidden bg-background/50 backdrop-blur-lg">
-            <Skeleton className="h-48 w-full" />
+            <Skeleton className="h-[17rem] w-full" />
             <div className="p-4 flex-grow flex flex-col">
                 <Skeleton className="h-4 w-5/6 mb-4" />
                 <div className="flex-grow space-y-2">

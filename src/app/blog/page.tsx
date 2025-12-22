@@ -21,7 +21,7 @@ import { useSearchParams } from 'next/navigation';
 function FeaturedArticleSkeleton() {
     return (
         <Card className="h-full flex flex-col md:flex-row overflow-hidden bg-background/50 backdrop-blur-lg">
-            <Skeleton className="h-48 md:h-auto md:w-1/2" />
+            <Skeleton className="h-[17rem] md:h-auto md:w-1/2" />
             <div className="flex-1 flex flex-col p-6 space-y-4">
                 <Skeleton className="h-6 w-3/4" />
                 <div className="space-y-2">
@@ -136,7 +136,7 @@ export default function BlogPage() {
                          <div className="block group">
                             <Card className="h-full flex flex-col md:flex-row overflow-hidden bg-background/50 backdrop-blur-lg border-border/20 transition-all duration-300 hover:shadow-xl hover:border-primary/20">
                                 {featuredArticle.image && (
-                                <div className="relative h-48 md:h-auto md:w-1/2 overflow-hidden">
+                                <div className="relative h-[17rem] md:h-auto md:w-1/2 overflow-hidden">
                                     <Link href={`/blog/${featuredArticle.handle}`}>
                                         <Image
                                         src={featuredArticle.image.url}
