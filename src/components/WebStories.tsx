@@ -93,8 +93,8 @@ export function WebStories() {
                     </div>
                     <div className="w-full max-w-6xl mx-auto pt-8 flex gap-4 overflow-hidden">
                       {Array.from({ length: 4 }).map((_, index) => (
-                        <div key={index} className="flex-shrink-0 w-full sm:w-1/3 md:w-1/4 lg:w-1/3">
-                            <Skeleton className="h-[400px] w-full rounded-xl" />
+                        <div key={index} className="flex-shrink-0 w-full sm:w-1/3 md:w-1/4 lg:w-1/4">
+                            <Skeleton className="h-[350px] w-full rounded-xl" />
                         </div>
                       ))}
                     </div>
@@ -129,17 +129,17 @@ export function WebStories() {
                     >
                         <CarouselContent className="-ml-2 md:-ml-4">
                             {articles.map((article, index) => (
-                                <CarouselItem key={`${article.id}-${index}`} className="pl-2 md:pl-4 basis-[80vw] sm:basis-1/3 md:basis-1/4 lg:basis-1/5">
+                                <CarouselItem key={`${article.id}-${index}`} className="pl-2 md:pl-4 basis-[80vw] sm:basis-1/3 md:basis-1/4">
                                     <Link href={`/blog/${article.handle}`} className="block group h-full p-px">
-                                        <div className="relative h-[400px] w-full rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
+                                        <div className="relative h-[350px] w-full rounded-xl overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-105">
                                             <Image
                                                 src={article.image?.url || `https://picsum.photos/seed/story${index}/300/500`}
                                                 alt={article.image?.altText || article.title}
                                                 fill
                                                 className="object-cover"
                                                 data-ai-hint="travel food"
-                                                sizes="(max-width: 640px) 80vw, (max-width: 1024px) 33vw, 20vw"
-                                                priority={index < 3}
+                                                sizes="(max-width: 640px) 80vw, (max-width: 1024px) 33vw, 25vw"
+                                                priority={index < 4}
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                                             <div className="absolute bottom-0 left-0 right-0 p-4 text-white flex flex-col justify-end h-full">
