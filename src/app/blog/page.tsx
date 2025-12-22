@@ -58,7 +58,7 @@ function DemoContentWarning() {
   );
 }
 
-export default function BlogPage() {
+function BlogPageContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('query') || '';
   const tag = searchParams.get('tag') || '';
@@ -109,17 +109,7 @@ export default function BlogPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
             <main className="lg:col-span-3">
               <DemoContentWarning />
-              <Suspense fallback={
-                <div className="space-y-12">
-                    <FeaturedArticleSkeleton />
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                        <ArticleCardSkeleton />
-                        <ArticleCardSkeleton />
-                        <ArticleCardSkeleton />
-                        <ArticleCardSkeleton />
-                    </div>
-                </div>
-              }>
+              
                 {isLoading ? (
                     <div className="space-y-12">
                         {!tag && !query && <FeaturedArticleSkeleton />}
@@ -204,7 +194,7 @@ export default function BlogPage() {
                         </Button>
                     </div>
                 )}
-              </Suspense>
+              
             </main>
             <aside className="lg:col-span-1 lg:mt-0">
                  <SidebarWrapper />
@@ -214,4 +204,12 @@ export default function BlogPage() {
     <FaqSection />
     </>
   );
+}
+
+export default function BlogPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BlogPageContent />
+    </Suspense>
+  )
 }
