@@ -58,7 +58,7 @@ async function shopifyFetch<T>(query: string, variables: Record<string, any> = {
                 'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_ACCESS_TOKEN,
             },
             body: JSON.stringify({ query, variables }),
-            cache: 'no-store', // Use 'no-store' for dynamic, real-time data
+            next: { revalidate: 60 }, // Use ISR to cache and revalidate data.
         });
 
         if (!response.ok) {
