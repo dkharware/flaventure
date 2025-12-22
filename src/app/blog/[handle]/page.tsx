@@ -135,7 +135,7 @@ export default async function ArticlePage({ params }: NextPageProps<{ handle: st
                         src={article.image.url}
                         alt={article.image.altText || article.title}
                         fill
-                        className="object-cover"
+                        className="object-cover object-top"
                         priority
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 800px"
                         />
