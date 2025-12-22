@@ -3,7 +3,7 @@
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, X } from 'lucide-react';
+import { Search, X, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Badge } from '@/components/ui/badge';
@@ -23,6 +23,7 @@ interface Article {
   id: string;
   handle: string;
   title: string;
+  publishedAt: string;
   image?: { url: string; altText: string };
   readTime?: number;
   viewCount?: number;
@@ -156,13 +157,10 @@ export function BlogSidebar() {
                       )}
                       <div className="flex-grow">
                         <p className="font-semibold group-hover:text-primary transition-colors line-clamp-2 text-sm">{post.title}</p>
-                        {post.readTime && post.viewCount && (
-                          <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
-                            <span>{post.readTime} min read</span>
-                            <span>&bull;</span>
-                            <span>{post.viewCount.toLocaleString()} views</span>
-                          </div>
-                        )}
+                        <div className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
+                            <Calendar className="h-3 w-3" />
+                           <span>{new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                        </div>
                       </div>
                     </Link>
                   </li>
