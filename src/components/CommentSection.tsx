@@ -27,8 +27,15 @@ const CommentTime = ({ timestamp }: { timestamp: Date }) => {
   const [formattedDate, setFormattedDate] = useState('');
   
   useEffect(() => {
+    // This effect runs only on the client, after hydration
     setFormattedDate(
-      `${new Date(timestamp).toLocaleDateString()} at ${new Date(timestamp).toLocaleTimeString()}`
+      new Date(timestamp).toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      })
     );
   }, [timestamp]);
 
