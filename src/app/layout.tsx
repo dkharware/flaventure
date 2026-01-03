@@ -113,6 +113,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={figtree.variable}>
       <head>
         <meta name="p:domain_verify" content="9e86368e858272577ac859ef29ea3e3b"/>
+        <meta name="google-adsense-account" content="ca-pub-5982137810610586" />
         <Script
             src="https://www.googletagmanager.com/gtag/js?id=G-XWFE9JJLHR"
             strategy="lazyOnload"
