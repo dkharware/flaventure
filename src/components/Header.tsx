@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Newspaper, Phone, Menu, Search, Info, ChevronDown, BookCopy, Wrench, Sparkles, Home, LayoutTemplate, Utensils, Code } from 'lucide-react';
+import { Newspaper, Phone, Menu, Search, Info, ChevronDown, BookCopy, Wrench, Sparkles, Home, LayoutTemplate, Utensils, Code, Map, Mountain, UtensilsCrossed } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -37,29 +37,35 @@ import { ThemeSwitcher } from './ThemeSwitcher';
 
 const resourceComponents = [
     {
-      title: "Travel Guides",
-      href: "/blog?tag=guides",
+      title: "Travel Guide",
+      href: "/blog?tag=travel%20guide",
       icon: <BookCopy className="h-4 w-4" />,
       description: "In-depth guides to unforgettable destinations.",
     },
     {
-      title: "Recipe Collection",
-      href: "/blog?tag=recipes",
-      icon: <Sparkles className="h-4 w-4" />,
-      description: "Authentic recipes from around the world.",
+      title: "Adventure",
+      href: "/blog?tag=Adventure",
+      icon: <Mountain className="h-4 w-4" />,
+      description: "Tales of exploration and thrilling journeys.",
     },
     {
-      title: "Travel Tips",
-      href: "/blog?tag=tips",
-      icon: <Wrench className="h-4 w-4" />,
-      description: "Expert tips to make your travels smoother.",
+      title: "Famous Food",
+      href: "/blog?tag=Famous%20Food",
+      icon: <UtensilsCrossed className="h-4 w-4" />,
+      description: "Discover iconic dishes from around the world.",
     },
     {
-      title: "Adventure Stories",
-      href: "/blog?tag=stories",
-      icon: <Newspaper className="h-4 w-4" />,
-      description: "Tales of exploration and culinary discovery.",
+      title: "Must-Visit Places",
+      href: "/blog?tag=Must-Visit%20Places",
+      icon: <Map className="h-4 w-4" />,
+      description: "Iconic locations you need to see.",
     },
+    {
+        title: "Food Recipes",
+        href: "/blog?tag=Food%20Recipes",
+        icon: <Sparkles className="h-4 w-4" />,
+        description: "Authentic recipes to try from your travels.",
+    }
 ];
 
 const toolsComponents = [

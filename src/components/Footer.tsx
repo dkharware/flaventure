@@ -47,6 +47,7 @@ export default function Footer() {
               <li><Link href="/blog?tag=Adventure" className="text-sm text-muted-foreground hover:text-primary transition-colors">Adventure</Link></li>
               <li><Link href="/blog?tag=Famous%20Food" className="text-sm text-muted-foreground hover:text-primary transition-colors">Famous Food</Link></li>
               <li><Link href="/blog?tag=Must-Visit%20Places" className="text-sm text-muted-foreground hover:text-primary transition-colors">Must-Visit Places</Link></li>
+              <li><Link href="/blog?tag=Food%20Recipes" className="text-sm text-muted-foreground hover:text-primary transition-colors">Food Recipes</Link></li>
             </ul>
           </div>
 
