@@ -43,9 +43,12 @@ export default function Footer() {
            <div>
             <h3 className="font-bold text-foreground mb-4">Explore</h3>
             <ul className="space-y-2">
-              <li><Link href="/blog?tag=Destinations" className="text-sm text-muted-foreground hover:text-primary transition-colors">Destinations</Link></li>
+              <li><Link href="/blog?tag=Adventure" className="text-sm text-muted-foreground hover:text-primary transition-colors">Adventure</Link></li>
+              <li><Link href="/blog?tag=Food%20Guide" className="text-sm text-muted-foreground hover:text-primary transition-colors">Food Guides</Link></li>
               <li><Link href="/blog?tag=Recipes" className="text-sm text-muted-foreground hover:text-primary transition-colors">Recipes</Link></li>
-               <li><Link href="/blog?tag=Travel%20Tips" className="text-sm text-muted-foreground hover:text-primary transition-colors">Travel Tips</Link></li>
+              <li><Link href="/blog?tag=Travel%20Tips" className="text-sm text-muted-foreground hover:text-primary transition-colors">Travel Tips</Link></li>
+              <li><Link href="/blog?tag=Europe" className="text-sm text-muted-foreground hover:text-primary transition-colors">Europe</Link></li>
+              <li><Link href="/blog?tag=Asia" className="text-sm text-muted-foreground hover:text-primary transition-colors">Asia</Link></li>
             </ul>
           </div>
 
